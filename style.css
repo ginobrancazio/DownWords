@@ -1,0 +1,96 @@
+body {
+  font-family: sans-serif;
+  text-align: center;
+  padding: 2em;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  height: 100vh;
+}
+
+#timer {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 1em;
+}
+
+#letter-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 60px); /* Adjust number of columns based on grid size */
+  gap: 10px;
+  justify-content: center;
+  margin-bottom: 1em;
+}
+
+.letter {
+  width: 60px;
+  height: 60px;
+  background: #eee;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  border: 2px solid #ccc;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.letter.selected {
+  background: #a0d2eb;
+  border-color: #007acc;
+}
+
+#selected-words-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;  /* Two columns */
+  gap: 20px;  /* Increase the gap between words */
+  width: 15%;  /* Make sure the container doesn't stretch too wide */
+  margin-top: 20px;
+  justify-items: center;  /* Center the words horizontally */
+}
+
+#selected-words-container div {
+  padding: 0.5em;
+  margin: 0.2em auto;
+  width: fit-content;
+  border-radius: 5px;
+  text-align: center;
+}
+
+#selected-words-container div:hover {
+  background-color: #f1f1f1;
+}
+
+#selected-words-container div:empty {
+  background: none;
+}
+
+.selected-word {
+  font-weight: bold;
+}
+
+.selected-word-match {
+  background-color: #76e77d; /* Green for a match */
+}
+
+.selected-word-mismatch {
+  background-color: #f7a0eb; /* Default color for non-matched words */
+}
+
+.button-container {
+  margin-top: 10px;
+}
+
+button {
+  padding: 2px 2px;
+  margin: 2px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+#hint-display,
+#theme-display {
+  margin-top: 10px;
+  font-size: 16px;
+}
