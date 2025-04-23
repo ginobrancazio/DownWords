@@ -147,9 +147,9 @@ function updateWordGroups() {
     wordGroups.push(wordDiv);
     
     // Apply the same colour to grid letters
-    //group.forEach(obj => {
-    //  obj.element.style.backgroundColor = wordDiv.style.backgroundColor;
-   // });
+    group.forEach(obj => {
+      obj.element.style.backgroundColor = wordDiv.style.backgroundColor;
+    });
   });
 
   // Arrange the words into two columns by splitting the array into two parts
