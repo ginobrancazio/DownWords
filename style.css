@@ -17,20 +17,20 @@ body {
 
 #letter-grid {
   display: grid;
-  grid-template-columns: repeat(5, 50px); /* Adjust number of columns based on grid size */
-  gap: 10px;
+  grid-template-columns: repeat(5, 50px); /* Adjust to make the squares smaller */
+  gap: 8px;  /* Reduce the gap between letters */
   justify-content: center;
   margin-bottom: 1em;
 }
 
 .letter {
-  width: 50px;
-  height: 50px;
+  width: 50px;  /* Smaller square size */
+  height: 50px;  /* Smaller square size */
   background: #eee;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 20px;
+  font-size: 20px;  /* Adjust font size for smaller squares */
   border: 2px solid #ccc;
   cursor: pointer;
   transition: 0.2s;
@@ -43,11 +43,11 @@ body {
 
 #selected-words-container {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;  /* Three columns */
-  gap: 20px;  /* Increase the gap between words */
-  width: 15%;  /* Make sure the container doesn't stretch too wide */
+  grid-template-columns: repeat(3, 1fr);  /* Update to 3 columns */
+  gap: 20px;
+  width: 30%;  /* Adjust the width to fit better */
   margin-top: 20px;
-  justify-items: center;  /* Center the words horizontally */
+  justify-items: center;
 }
 
 #selected-words-container div {
@@ -78,19 +78,18 @@ body {
   background-color: #f7a0eb; /* Default color for non-matched words */
 }
 
-.button-container {
-  margin-top: 10px;
-}
+@media (max-width: 600px) { /* For smaller screens */
+  #letter-grid {
+    grid-template-columns: repeat(5, 40px); /* Further reduce size for small screens */
+  }
 
-button {
-  padding: 2px 2px;
-  margin: 2px;
-  font-size: 16px;
-  cursor: pointer;
-}
+  .letter {
+    width: 40px;
+    height: 40px;
+    font-size: 18px;  /* Adjust font size for smaller screens */
+  }
 
-#hint-display,
-#theme-display {
-  margin-top: 10px;
-  font-size: 16px;
+  #selected-words-container {
+    width: 50%;  /* Adjust the width to fit better on small screens */
+  }
 }
