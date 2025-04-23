@@ -50,15 +50,6 @@ body {
   justify-items: center;
 }
 
-#selected-words-container {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 20px; /* Adjusted gap between words */
-  width: 15%;
-  margin-top: 20px;
-  justify-items: center;
-}
-
 @media (max-width: 600px) {
   #selected-words-container {
     grid-template-columns: 1fr;  /* Single column */
