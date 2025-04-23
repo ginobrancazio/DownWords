@@ -45,7 +45,7 @@ body {
   display: grid;
   grid-template-columns: repeat(3, 1fr);  /* Update to 3 columns */
   gap: 10px;
-  width: 50%;  /* Adjust the width to fit better */
+  width: 30%;  /* Adjust the width to fit better */
   margin-top: 20px;
   justify-items: center;
 }
