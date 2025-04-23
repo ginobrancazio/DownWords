@@ -125,7 +125,7 @@ function updateWordGroups() {
 
       // Make the matched letters invisible but preserve the grid layout
       group.forEach(obj => {
-        obj.element.style.visibility = 'hidden';  // Hide the letter but keep the space
+        obj.element.style.backgroundColor = '#bdbdbd';  // Hide the letter but keep the space
       });
 
       // Add the word to matchedWords and check if all words are matched
