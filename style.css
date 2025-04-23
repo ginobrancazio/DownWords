@@ -18,7 +18,7 @@ body {
 #letter-grid {
   display: grid;
   grid-template-columns: repeat(5, 50px); /* Adjust to make the squares smaller */
-  gap: 8px;  /* Reduce the gap between letters */
+  gap: 2px;  /* Reduce the gap between letters */
   justify-content: center;
   margin-bottom: 1em;
 }
