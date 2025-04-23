@@ -1,0 +1,183 @@
+const grid = document.getElementById('letter-grid');
+const wordsContainer = document.getElementById('selected-words-container');
+const timerDisplay = document.getElementById('timer');
+const successMessage = document.getElementById('success-message');
+const hintDisplay = document.getElementById('hint-display');
+const themeDisplay = document.getElementById('theme-display');
+
+const words = ['FLIGHT', 'TICKET', 'BORDER', 'CRUISE', 'RESORT', 'TRAVEL']; // Your words list
+let selectedLetters = [];
+let matchedWords = [];
+
+const colours = ['#a0d2eb', '#ffc6a0', '#c8e6a0', '#f7a0eb', '#d0a0ff'];
+
+// Hint and Theme Text
+const hintText = "Hint: The words are related to travel and vacation.";
+const themeText = "Theme: This is a travel-themed word search game.";
+
+// Set the hint and theme as hidden by default
+hintDisplay.style.display = 'none';
+themeDisplay.style.display = 'none';
+
+// Determine the height of the grid (based on the longest word)
+const numRows = Math.max(...words.map(word => word.length)); 
+const numCols = words.length;
+
+// Create the grid based on the words list
+const gridArray = Array.from({ length: numRows }, () => Array(numCols).fill(null));
+
+words.forEach((word, colIndex) => {
+  [...word].forEach((letter, rowIndex) => {
+    gridArray[rowIndex][colIndex] = letter;
+  });
+});
+
+// Shuffle each row randomly
+gridArray.forEach(row => {
+  row.sort(() => Math.random() - 0.5);  // Shuffle letters within the row
+});
+
+// Create the grid elements
+grid.style.gridTemplateColumns = `repeat(${numCols}, 60px)`;
+grid.style.gridTemplateRows = `repeat(${numRows}, 60px)`;
+
+gridArray.forEach((row, rowIndex) => {
+  row.forEach((letter, colIndex) => {
+    const div = document.createElement('div');
+    div.classList.add('letter');
+    div.textContent = letter || '';  // Fill empty cells with nothing
+    div.dataset.row = rowIndex;
+    div.dataset.col = colIndex;
+
+    div.addEventListener('click', () => {
+      const isSelected = div.classList.contains('selected');
+
+      if (isSelected) {
+        // Remove from selectedLetters and unselect the letter
+        selectedLetters = selectedLetters.filter(obj => obj.element !== div);
+        div.classList.remove('selected');
+        div.style.backgroundColor = '';
+      } else {
+        // Add to selectedLetters
+        selectedLetters.push({ letter, element: div, rowIndex, colIndex });
+        div.classList.add('selected');
+      }
+
+      updateWordGroups();
+    });
+
+    grid.appendChild(div);
+  });
+});
+
+// Timer functionality
+let timer;
+let timeLeft = 0;
+
+function startTimer() {
+  timer = setInterval(() => {
+    timeLeft++;
+    timerDisplay.textContent = `Time: ${timeLeft}`;
+  }, 1000);  // Update the timer every second
+}
+
+function stopTimer() {
+  clearInterval(timer);
+}
+
+// Update word groups and check for matches
+function updateWordGroups() {
+  // Clear all previous colours
+  selectedLetters.forEach(obj => obj.element.style.backgroundColor = '');
+
+  // Group by click order (the first N letters for each word form a group)
+  const groups = [];
+  let currentIndex = 0;
+
+  words.forEach(word => {
+    const group = selectedLetters.slice(currentIndex, currentIndex + word.length);
+    groups.push(group);
+    currentIndex += word.length;
+  });
+
+  // Sort each group by rowIndex to display letters in vertical order within the group
+  groups.forEach(group => {
+    group.sort((a, b) => a.rowIndex - b.rowIndex);
+  });
+
+  // Apply colours and display words
+  wordsContainer.innerHTML = '';  // Clear previous words
+  const wordGroups = [];
+  
+  groups.forEach((group, i) => {
+    const word = group.map(obj => obj.letter).join('');
+    const wordDiv = document.createElement('div');
+    wordDiv.textContent = word;
+    wordDiv.style.padding = '0.5em';
+    wordDiv.style.margin = '0.2em auto';
+    wordDiv.style.width = 'fit-content';
+    wordDiv.style.borderRadius = '5px';
+
+    // Check if the selected letters match the word
+    if (words.includes(word)) {
+      wordDiv.style.backgroundColor = '#76e77d';  // Green for a match
+      wordDiv.textContent = `✔️ ${word}`;  // Add a checkmark to indicate a valid word
+
+      // Make the matched letters invisible but preserve the grid layout
+      group.forEach(obj => {
+        obj.element.style.visibility = 'hidden';  // Hide the letter but keep the space
+      });
+
+      // Add the word to matchedWords and check if all words are matched
+      if (!matchedWords.includes(word)) {
+        matchedWords.push(word);
+      }
+      
+      if (matchedWords.length === words.length) {
+        stopTimer();
+        successMessage.textContent = `Congratulations! You found all the words in ${timeLeft} seconds.`;
+        successMessage.style.color = 'green';  // You can style it as needed
+        // Remove the grid once all words are matched
+        grid.style.display = 'none';  // Hide the grid
+      }
+    } else {
+      wordDiv.style.backgroundColor = colours[i % colours.length];
+    }
+
+    wordGroups.push(wordDiv);
+    
+    // Apply the same colour to grid letters
+    group.forEach(obj => {
+      obj.element.style.backgroundColor = wordDiv.style.backgroundColor;
+    });
+  });
+
+  // Arrange the words into two columns by splitting the array into two parts
+  const halfIndex = Math.ceil(wordGroups.length / 2);
+  const firstColumn = wordGroups.slice(0, halfIndex);
+  const secondColumn = wordGroups.slice(halfIndex);
+
+  // Clear the container and add the columns
+  wordsContainer.innerHTML = '';
+
+  // Append the two columns
+  firstColumn.forEach(wordDiv => wordsContainer.appendChild(wordDiv));
+  secondColumn.forEach(wordDiv => wordsContainer.appendChild(wordDiv));
+}
+
+// Start the timer when the page loads
+window.onload = () => {
+  startTimer();
+};
+
+// Hint Button functionality
+document.getElementById('hint-button').addEventListener('click', () => {
+  hintDisplay.textContent = hintText;
+  hintDisplay.style.display = 'block'; // Reveal the hint
+});
+
+// Theme Button functionality
+document.getElementById('theme-button').addEventListener('click', () => {
+  themeDisplay.textContent = themeText;
+  themeDisplay.style.display = 'block'; // Reveal the theme
+});
