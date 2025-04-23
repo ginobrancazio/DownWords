@@ -50,12 +50,21 @@ body {
   justify-items: center;
 }
 
-#selected-words-container div {
-  padding: 0.5em;
-  margin: 0.2em auto;
-  width: fit-content;
-  border-radius: 5px;
-  text-align: center;
+#selected-words-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px; /* Adjusted gap between words */
+  width: 15%;
+  margin-top: 20px;
+  justify-items: center;
+}
+
+@media (max-width: 600px) {
+  #selected-words-container {
+    grid-template-columns: 1fr;  /* Single column */
+    width: 100%;  /* Full width on smaller screens */
+    gap: 10px;  /* Smaller gap for better fit */
+  }
 }
 
 #selected-words-container div:hover {
