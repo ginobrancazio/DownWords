@@ -44,8 +44,8 @@ body {
 #selected-words-container {
   display: grid;
   grid-template-columns: repeat(3, 1fr);  /* Update to 3 columns */
-  gap: 20px;
-  width: 30%;  /* Adjust the width to fit better */
+  gap: 10px;
+  width: 50%;  /* Adjust the width to fit better */
   margin-top: 20px;
   justify-items: center;
 }
