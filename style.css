@@ -77,7 +77,7 @@ body {
 
 @media (max-width: 600px) {
   #letter-grid {
-    grid-template-columns: repeat(5, 40px); /* Keep the smaller square size for mobile */
+    grid-template-columns: repeat(5, 50px); /* Keep the smaller square size for mobile */
     gap: 1px; /* Reduce the gap between letters */
   }
 
