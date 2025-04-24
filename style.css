@@ -92,3 +92,20 @@ body {
     justify-items: center;
   }
 }
+#instructions {
+  margin-top: 2em;
+  max-width: 600px;
+  text-align: left;
+}
+
+#instructions ul {
+  padding-left: 1.2em;
+}
+
+.instructions-gif {
+  margin-top: 1em;
+  max-width: 100%;
+  height: auto;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+}
