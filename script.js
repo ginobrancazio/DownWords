@@ -5,15 +5,16 @@ const successMessage = document.getElementById('success-message');
 const hintDisplay = document.getElementById('hint-display');
 const themeDisplay = document.getElementById('theme-display');
 
-const words = ['FLIGHT', 'TICKET', 'BORDER', 'CRUISE', 'RESORT', 'TRAVEL']; // Your words list
+const words = ['PIANO', 'NOTES', 'DISCO', 'VOCAL', 'CHOIR', 'MUSIC']; // Your words list
+
 let selectedLetters = [];
 let matchedWords = [];
 
 const colours = ['#a0d2eb', '#ffc6a0', '#c8e6a0', '#f7a0eb', '#d0a0ff'];
 
 // Hint and Theme Text
-const hintText = "Hint: The words are related to travel and vacation.";
-const themeText = "Theme: This is a travel-themed word search game.";
+const hintText = "Hint: Art form that uses sound and rhythm";
+const themeText = "Theme: Music";
 
 // Set the hint and theme as hidden by default
 hintDisplay.style.display = 'none';
