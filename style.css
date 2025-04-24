@@ -86,10 +86,13 @@ body {
   }
 
   #selected-words-container {
-    grid-template-columns: 3fr;
-    width: 100%;
-    gap: 10px;
-    justify-items: center;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);  /* Three columns layout */
+  gap: 10px;
+  width: 100%;  /* Adjust to fit three columns nicely */
+  margin-top: 20px;
+  justify-items: start; /* Align content to the left of each cell */
+  word-break: break-word;
   }
 }
 #instructions {
@@ -109,4 +112,6 @@ body {
   object-fit: cover; /* Ensures the GIF scales properly */
   border: 1px solid #ccc;
   border-radius: 8px;
+  justify-items: center;
+  
 }
