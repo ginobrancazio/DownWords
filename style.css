@@ -92,7 +92,7 @@ body {
 
 #instructions {
   margin-top: 2em;
-   max-width: 400px;
+   max-width: 600px;
   text-align: left;
 }
 
@@ -102,7 +102,7 @@ body {
 
 .instructions-gif {
   margin-top: 1em;
-  max-width: 400px;
+  max-width: 600px;
   object-fit: cover; /* Ensures the GIF scales properly */
   border: 1px solid #ccc;
   border-radius: 8px;
