@@ -196,3 +196,8 @@ document.getElementById('theme-button').addEventListener('click', () => {
   themeDisplay.textContent = themeText;
   themeDisplay.style.display = 'block'; // Reveal the theme
 });
+
+//Reset Button
+document.getElementById('reset-button').addEventListener('click', () => {
+    location.reload(); // Reloads the page, effectively resetting everything
+});
