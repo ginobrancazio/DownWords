@@ -154,6 +154,12 @@ function updateWordGroups() {
         successSound.play(); // Play success sound
         // Remove the grid once all words are matched
         grid.style.display = 'none';  // Hide the grid
+         hintDisplay.style.display = 'none'; //Hide the Hint text
+          themeDisplay.style.display = 'none'; //hide the theme text
+        document.getElementById('hint-button').style.display = 'none'; //hide all the buttons
+      document.getElementById('theme-button').style.display = 'none';
+      document.getElementById('solution-button').style.display = 'none';
+
       }
     } else {
       wordDiv.style.backgroundColor = colours[i % colours.length];
