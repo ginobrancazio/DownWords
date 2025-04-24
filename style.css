@@ -75,6 +75,27 @@ body {
   background-color: #f7a0eb;
 }
 
+#instructions {
+  margin-top: 2em;
+   max-width: 200px;
+  text-align: left;
+}
+
+#instructions ul {
+  padding-left: 1.2em;
+}
+
+.instructions-gif {
+  margin-top: 1em;
+  max-width: 200px;
+  /*object-fit: cover; /* Ensures the GIF scales properly */
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
 @media (max-width: 600px) {
   #letter-grid {
     grid-template-columns: repeat(5, 65px); /* Keep the smaller square size for mobile */
