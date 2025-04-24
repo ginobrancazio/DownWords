@@ -15,6 +15,21 @@ body {
   margin-bottom: 1em;
 }
 
+#success-message {
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+#hint-display {
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+#theme-display {
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
 #letter-grid {
   display: grid;
   grid-template-columns: repeat(5, 50px);
