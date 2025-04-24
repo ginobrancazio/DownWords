@@ -44,8 +44,8 @@ body {
 #selected-words-container {
   display: grid;
   grid-template-columns: repeat(3, 1fr);  /* Three columns layout */
-  gap: 2px;
-  width: 90%;  /* Adjust to fit three columns nicely */
+  gap: 10px;
+  width: 50%;  /* Adjust to fit three columns nicely */
   margin-top: 20px;
   justify-items: start; /* Align content to the left of each cell */
   word-break: break-word;
@@ -76,7 +76,7 @@ body {
 
 @media (max-width: 600px) {
   #letter-grid {
-    grid-template-columns: repeat(5, 40px);
+    grid-template-columns: repeat(2, 40px);
   }
 
   .letter {
@@ -86,7 +86,7 @@ body {
   }
 
   #selected-words-container {
-    grid-template-columns: 1fr;
+    grid-template-columns: 3fr;
     width: 100%;
     gap: 10px;
     justify-items: center;
