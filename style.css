@@ -20,7 +20,7 @@ body {
   grid-template-columns: repeat(5, 50px);
   gap: 2px;
   justify-content: center;
-  margin-bottom: 1em;
+  margin-bottom: 10em;
 }
 
 .letter {
