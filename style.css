@@ -44,7 +44,7 @@ body {
 #selected-words-container {
   display: grid;
   grid-template-columns: repeat(3, 1fr);  /* Three columns layout */
-  gap: 10px;
+  gap: 2px;
   width: 90%;  /* Adjust to fit three columns nicely */
   margin-top: 20px;
   justify-items: start; /* Align content to the left of each cell */
