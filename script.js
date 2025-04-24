@@ -140,10 +140,12 @@ function updateWordGroups() {
       // Add the word to matchedWords and check if all words are matched
       if (!matchedWords.includes(word)) {
         matchedWords.push(word);
+      // Play match sound
+        matchSound.play();
       }
 
-      // Play match sound
-      matchSound.play();
+      
+      
       
       if (matchedWords.length === words.length) {
         stopTimer();
