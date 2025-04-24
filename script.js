@@ -5,6 +5,11 @@ const successMessage = document.getElementById('success-message');
 const hintDisplay = document.getElementById('hint-display');
 const themeDisplay = document.getElementById('theme-display');
 
+// Add the audio elements
+const letterClickSound = new Audio('click-sound.mp3');
+const matchSound = new Audio('match-sound.mp3');
+const successSound = new Audio('success-sound.mp3');
+
 const words = ['CORAL', 'WHALE', 'TIDES', 'WATER', 'BEACH', 'OCEAN']; // Your words list
 
 let selectedLetters = [];
@@ -51,6 +56,9 @@ gridArray.forEach((row, rowIndex) => {
     div.dataset.col = colIndex;
 
     div.addEventListener('click', () => {
+      // Play click sound
+      letterClickSound.play();
+
       const isSelected = div.classList.contains('selected');
 
       if (isSelected) {
@@ -126,18 +134,22 @@ function updateWordGroups() {
 
       // Make the matched letters invisible but preserve the grid layout
       group.forEach(obj => {
-        obj.element.style.visibility = 'hidden';  // Hide the letter but keep the space
+        obj.element.style.opacity = '0.3';  // Hide the letter but keep the space
       });
 
       // Add the word to matchedWords and check if all words are matched
       if (!matchedWords.includes(word)) {
         matchedWords.push(word);
       }
+
+      // Play match sound
+      matchSound.play();
       
       if (matchedWords.length === words.length) {
         stopTimer();
         successMessage.textContent = `Congratulations! You found all the words in ${timeLeft} seconds.`;
         successMessage.style.color = 'green';  // You can style it as needed
+        successSound.play(); // Play success sound
         // Remove the grid once all words are matched
         grid.style.display = 'none';  // Hide the grid
       }
@@ -153,7 +165,7 @@ function updateWordGroups() {
     });
   });
 
-  // Arrange the words into two columns by splitting the array into two parts
+  // Arrange the words into two columns by splitting the array into two part
   const halfIndex = Math.ceil(wordGroups.length / 2);
   const firstColumn = wordGroups.slice(0, halfIndex);
   const secondColumn = wordGroups.slice(halfIndex);
