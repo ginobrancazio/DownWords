@@ -107,11 +107,12 @@ body {
 
 .instructions-gif {
   margin-top: 1em;
-  width: 250px; /* Adjust width to match the letter grid */
+  width: 250px; /* Adjust to match the letter grid size */
   height: 250px; /* Ensure the height is the same as the width */
   object-fit: cover; /* Ensures the GIF scales properly */
   border: 1px solid #ccc;
   border-radius: 8px;
-  justify-items: center;
-  
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
 }
