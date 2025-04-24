@@ -10,7 +10,7 @@ const letterClickSound = new Audio('click-sound.mp3');
 const matchSound = new Audio('match-sound.mp3');
 const successSound = new Audio('finish-sound.mp3');
 
-const words = ['CORAL', 'WHALE', 'TIDES', 'WATER', 'BEACH', 'OCEAN']; // Your words list
+const words = ['STUDENT', 'TEACHER', 'LIBRARY', 'UNIFORM', 'SUBJECT', 'SCHOOLS']; // Your words list
 
 let selectedLetters = [];
 let matchedWords = [];
@@ -18,8 +18,8 @@ let matchedWords = [];
 const colours = ['#a0d2eb', '#ffc6a0', '#c8e6a0', '#f7a0eb', '#d0a0ff'];
 
 // Hint and Theme Text
-const hintText = "Hint: Large bodies of saltwater";
-const themeText = "Theme: Ocean";
+const hintText = "Hint: Place for growing knowledge";
+const themeText = "Theme: Schools";
 
 // Set the hint and theme as hidden by default
 hintDisplay.style.display = 'none';
