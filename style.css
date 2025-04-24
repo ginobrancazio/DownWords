@@ -104,8 +104,9 @@ body {
 
 .instructions-gif {
   margin-top: 1em;
-  max-width: 100%;
-  height: auto;
+  width: 250px; /* Adjust width to match the letter grid */
+  height: 250px; /* Ensure the height is the same as the width */
+  object-fit: cover; /* Ensures the GIF scales properly */
   border: 1px solid #ccc;
   border-radius: 8px;
 }
