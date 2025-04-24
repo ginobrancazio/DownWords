@@ -8,7 +8,7 @@ const themeDisplay = document.getElementById('theme-display');
 // Add the audio elements
 const letterClickSound = new Audio('click-sound.mp3');
 const matchSound = new Audio('match-sound.mp3');
-const successSound = new Audio('success-sound.mp3');
+const successSound = new Audio('finish-sound.mp3');
 
 const words = ['CORAL', 'WHALE', 'TIDES', 'WATER', 'BEACH', 'OCEAN']; // Your words list
 
