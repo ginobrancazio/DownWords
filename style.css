@@ -145,7 +145,8 @@ body {
 
 .instructions-gif {
   margin-top: 1em;
-  max-width: 350px;
+  width: 90%;
+ /* max-width: 350px;
   /*object-fit: cover; /* Ensures the GIF scales properly */
   border: 1px solid #ccc;
   border-radius: 8px;
