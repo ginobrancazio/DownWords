@@ -10,9 +10,9 @@ body {
 }
 
 #timer {
-  font-size: 18px;
+  font-size: 16px;
   font-weight: bold;
-  margin-bottom: 1em;
+  margin-bottom: 3px;
 }
 
   @keyframes shake {
@@ -29,17 +29,17 @@ body {
 
 #success-message {
   margin-top: 5px;
-  margin-bottom: 5px;
+  margin-bottom: 1px;
 }
 
 #hint-display {
   margin-top: 5px;
-  margin-bottom: 5px;
+  margin-bottom: 1px;
 }
 
 #theme-display {
   margin-top: 5px;
-  margin-bottom: 5px;
+  margin-bottom: 1px;
 }
 
 #letter-grid {
@@ -91,7 +91,7 @@ body {
   display: flex;         /* Keep word and ✅ on the same line */
   align-items: center;
   gap: 0.5em;
-  font-size: 18px;/* Space between word and the check mark */
+  font-size: 16px;/* Space between word and the check mark */
 }
 
 .selected-word-match {
@@ -103,7 +103,7 @@ body {
 }
 
 #instructions {
-  margin-top: 5px;
+  margin-top: 1px;
    max-width: 600px;
   text-align: left;
 }
@@ -113,7 +113,7 @@ body {
 }
 
 .instructions-gif {
-  margin-top: 1em;
+  margin-top: 1px;
   max-width: 600px;
   object-fit: cover; /* Ensures the GIF scales properly */
   border: 1px solid #ccc;
@@ -140,13 +140,13 @@ body {
   grid-template-columns: repeat(3, 1fr);  /* Three columns layout */
   gap: 1px;
   width: 90%;  /* Adjust to fit three columns nicely */
-  margin-top: 10px;
+  margin-top: 5px;
   justify-items: start; /* Align content to the left of each cell */
   word-break: break-word;
 }
   
 #instructions {
-  margin-top: 2em;
+  margin-top: 2px;
    max-width: 600px;
   text-align: left;
 }
@@ -156,7 +156,7 @@ body {
 }
 
 .instructions-gif {
-  margin-top: 5px;
+  margin-top: 2px;
   width: 90%;
  /* max-width: 350px;
   /*object-fit: cover; /* Ensures the GIF scales properly */
