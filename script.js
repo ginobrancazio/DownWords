@@ -65,15 +65,26 @@ gridArray.forEach((row, rowIndex) => {
       const isSelected = div.classList.contains('selected');
 
       if (isSelected) {
-        // Remove from selectedLetters and unselect the letter
-        selectedLetters = selectedLetters.filter(obj => obj.element !== div);
-        div.classList.remove('selected');
-        div.style.backgroundColor = '';
-      } else {
-        // Add to selectedLetters
-        selectedLetters.push({ letter, element: div, rowIndex, colIndex });
-        div.classList.add('selected');
-      }
+  // Remove from selectedLetters and unselect the letter
+  selectedLetters = selectedLetters.filter(obj => obj.element !== div);
+  div.classList.remove('selected');
+  div.style.backgroundColor = '';
+} else {
+  // Count how many letters are already selected in this row
+  const selectedInRow = selectedLetters.filter(obj => obj.rowIndex === rowIndex).length;
+  const allowedPerRow = matchedWords.length + 1;
+
+  if (selectedInRow >= allowedPerRow) {
+    // Optionally give user feedback
+    div.classList.add('shake');
+    setTimeout(() => div.classList.remove('shake'), 300);
+    return;
+  }
+
+  // Add to selectedLetters
+  selectedLetters.push({ letter, element: div, rowIndex, colIndex });
+  div.classList.add('selected');
+}
 
       updateWordGroups();
     });
