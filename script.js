@@ -175,8 +175,9 @@ function updateWordGroups() {
          hintDisplay.style.display = 'none'; //Hide the Hint text
           themeDisplay.style.display = 'none'; //hide the theme text
         document.getElementById('hint-button').style.display = 'none'; //hide all the buttons
-      document.getElementById('theme-button').style.display = 'none';
-      document.getElementById('solution-button').style.display = 'none';
+        document.getElementById('theme-button').style.display = 'none';
+        document.getElementById('mute-button').style.display = 'none';
+        document.getElementById('grid-reset-button').style.display = 'none';
 
       }
     } else {
