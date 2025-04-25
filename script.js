@@ -226,8 +226,13 @@ document.getElementById('reset-button').addEventListener('click', () => {
 
 //Reset Grid Button 
 document.getElementById('grid-reset-button').addEventListener('click', () => {
-
-  grid.innerHTML = '';
+selectedLetters = []
+matchedWords = [];
+  
+wordsContainer.innerHTML = '';
+grid.innerHTML = '';
+  
+  
   
 // Create the grid based on the words list
 const gridArray = Array.from({ length: numRows }, () => Array(numCols).fill(null));
