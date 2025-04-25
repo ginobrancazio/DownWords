@@ -204,6 +204,8 @@ document.getElementById('hint-button').addEventListener('click', () => {
   hintDisplay.style.display = 'block'; // Reveal the hint
 });
 
+
+
 // Mute button functionality
 document.getElementById('mute-button').addEventListener('click', () => {
   isMuted = !isMuted;
@@ -217,7 +219,66 @@ document.getElementById('theme-button').addEventListener('click', () => {
   themeDisplay.style.display = 'block'; // Reveal the theme
 });
 
-//Reset Button
+//Reset Button for StartOver
 document.getElementById('reset-button').addEventListener('click', () => {
     location.reload(); // Reloads the page, effectively resetting everything
+});
+
+//Reset Grid Button 
+document.getElementById('grid-reset-button').addEventListener('click', () => {
+
+  grid.innerHTML = '';
+  
+// Create the grid based on the words list
+const gridArray = Array.from({ length: numRows }, () => Array(numCols).fill(null));
+
+words.forEach((word, colIndex) => {
+  [...word].forEach((letter, rowIndex) => {
+    gridArray[rowIndex][colIndex] = letter;
+  });
+});
+
+// Shuffle each row randomly
+gridArray.forEach(row => {
+  row.sort(() => Math.random() - 0.5);  // Shuffle letters within the row
+});
+
+// Create the grid elements
+grid.style.gridTemplateColumns = `repeat(${numCols}, 60px)`;
+grid.style.gridTemplateRows = `repeat(${numRows}, 60px)`;
+
+gridArray.forEach((row, rowIndex) => {
+  row.forEach((letter, colIndex) => {
+    const div = document.createElement('div');
+    div.classList.add('letter');
+    div.textContent = letter || '';  // Fill empty cells with nothing
+    div.dataset.row = rowIndex;
+    div.dataset.col = colIndex;
+
+    div.addEventListener('click', () => {
+      // Play click sound
+      if (!isMuted){
+      letterClickSound.play();
+      }
+      const isSelected = div.classList.contains('selected');
+
+      if (isSelected) {
+        // Remove from selectedLetters and unselect the letter
+        selectedLetters = selectedLetters.filter(obj => obj.element !== div);
+        div.classList.remove('selected');
+        div.style.backgroundColor = '';
+      } else {
+        // Add to selectedLetters
+        selectedLetters.push({ letter, element: div, rowIndex, colIndex });
+        div.classList.add('selected');
+      }
+
+      updateWordGroups();
+    });
+
+    grid.appendChild(div);
+  });
+});
+
+  
 });
