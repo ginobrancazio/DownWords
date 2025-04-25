@@ -10,11 +10,11 @@ const letterClickSound = new Audio('click-sound.mp3');
 const matchSound = new Audio('match-sound.mp3');
 const successSound = new Audio('finish-sound.mp3');
 
-const words = ['LONDON', 'CITIES', 'GENEVA', 'SYDNEY', 'MADRID', 'ZURICH']; // Your words list
+const words = ['SPACE', 'EARTH', 'ALIEN', 'ORBIT', 'COMET', 'SOLAR']; // Your words list
 
 // Hint and Theme Text
-const hintText = "Hint: Urban areas with many buildings";
-const themeText = "Theme: Cities";
+const hintText = "Hint: The final frontier";
+const themeText = "Theme: Space";
 
 let selectedLetters = [];
 let matchedWords = [];
