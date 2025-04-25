@@ -18,6 +18,8 @@ const themeText = "Theme: Cities";
 
 let selectedLetters = [];
 let matchedWords = [];
+let isMuted = false;
+
 
 const colours = ['#a0d2eb', '#ffc6a0', '#c8e6a0', '#f7a0eb', '#d0a0ff'];
 
@@ -57,8 +59,9 @@ gridArray.forEach((row, rowIndex) => {
 
     div.addEventListener('click', () => {
       // Play click sound
+      if (!isMuted){
       letterClickSound.play();
-
+      }
       const isSelected = div.classList.contains('selected');
 
       if (isSelected) {
@@ -196,6 +199,13 @@ document.getElementById('hint-button').addEventListener('click', () => {
   hintDisplay.textContent = hintText;
   hintDisplay.style.display = 'block'; // Reveal the hint
 });
+
+// Mute button functionality
+document.getElementById('mute-button').addEventListener('click', () => {
+  isMuted = !isMuted;
+  document.getElementById('mute-button').textContent = isMuted ? '🔊 Unmute' : '🔇 Mute';
+});
+
 
 // Theme Button functionality
 document.getElementById('theme-button').addEventListener('click', () => {
