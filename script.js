@@ -144,7 +144,9 @@ function updateWordGroups() {
       if (!matchedWords.includes(word)) {
         matchedWords.push(word);
       // Play match sound
+        if (!isMuted){
         matchSound.play();
+        }
       }
 
       
@@ -154,7 +156,9 @@ function updateWordGroups() {
         stopTimer();
         successMessage.textContent = `Congratulations! You found all the words in ${timeLeft} seconds.`;
         successMessage.style.color = 'green';  // You can style it as needed
+        if (!isMuted){
         successSound.play(); // Play success sound
+        }
         // Remove the grid once all words are matched
         grid.style.display = 'none';  // Hide the grid
          hintDisplay.style.display = 'none'; //Hide the Hint text
