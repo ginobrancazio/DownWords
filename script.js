@@ -179,6 +179,15 @@ function updateWordGroups() {
         document.getElementById('mute-button').style.display = 'none';
         document.getElementById('grid-reset-button').style.display = 'none';
 
+        if (typeof gtag === 'function') {
+          gtag('event', 'game_completed', {
+            'event_category': 'gameplay',
+            'event_label': 'DownWords Game Completed',
+            'value': timeLeft  // You could even track how long it took!
+            });
+          }
+
+
       }
     } else {
       wordDiv.style.backgroundColor = colours[i % colours.length];
