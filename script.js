@@ -37,13 +37,11 @@ timerDisplay.style.display = 'none';
 function getWordsForToday() {
   const today = new Date();
   let selectedWords = wordListsByDate['default']; // fallback
-  let selectedtheme = ThemesByDate['default'];
   const dates = Object.keys(wordListsByDate).filter(date => date !== 'default');
   
   for (let i = 0; i < dates.length; i++) {
     if (today >= new Date(dates[i])) {
       selectedWords = wordListsByDate[dates[i]];
-      selectedtheme = ThemesByDate[dates[i]];
     }
   }
   
