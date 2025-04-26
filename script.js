@@ -31,6 +31,8 @@ const HintsByDate = {
   'default': ['Hint: The Final Frontier']
 };
 
+//hide timer as default
+timerDisplay.style.display = 'none';
 
 function getWordsForToday() {
   const today = new Date();
@@ -316,17 +318,17 @@ document.getElementById('reset-button').addEventListener('click', () => {
 });
 
 //Hide Timer Button
-document.getElementById('hide-timer-button').addEventListener('click', () => {
- const hideTimerBtn = document.getElementById('hide-timer-button');
-
-  if (timerDisplay.style.display === 'none') {
-    timerDisplay.style.display = 'block';
-    hideTimerBtn.textContent = 'Hide Timer';
-  } else {
-    timerDisplay.style.display = 'none';
-    hideTimerBtn.textContent = 'Show Timer';
-  }
-});
+// document.getElementById('hide-timer-button').addEventListener('click', () => {
+// const hideTimerBtn = document.getElementById('hide-timer-button');
+//
+//  if (timerDisplay.style.display === 'none') {
+//  timerDisplay.style.display = 'block';
+//  hideTimerBtn.textContent = 'Hide Timer';
+//  } else {
+//  timerDisplay.style.display = 'none';
+//  hideTimerBtn.textContent = 'Show Timer';
+//  }
+//  });
 
 
 //Reset Grid Button 
