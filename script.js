@@ -20,14 +20,14 @@ const wordListsByDate = {
 const ThemesByDate = {
   '2025-04-26': ['Theme: SPACE'],
   '2025-04-27': ['Theme: SUMMER'],
-  '2025-04-27': ['Theme: NATURE'],
+  '2025-04-28': ['Theme: NATURE'],
   'default': ['Theme: SPACE']
 };
 
 const HintsByDate = {
   '2025-04-26': ['Hint: The Final Frontier'],
   '2025-04-27': ['Hint: When schools are out and trips begin.'],
-  '2025-04-27': ['Hint: Forests, rivers, and mountains belong here.'],
+  '2025-04-28': ['Hint: Forests, rivers, and mountains belong here.'],
   'default': ['Hint: The Final Frontier']
 };
 
