@@ -10,11 +10,81 @@ const letterClickSound = new Audio('click-sound.mp3');
 const matchSound = new Audio('match-sound.mp3');
 const successSound = new Audio('finish-sound.mp3');
 
-const words = ['SPACE', 'EARTH', 'ALIEN', 'ORBIT', 'COMET', 'SOLAR']; // Your words list
+const wordListsByDate = {
+  '2025-04-26': ['SPACE', 'EARTH', 'ALIEN', 'ORBIT', 'COMET', 'SOLAR'],
+  '2025-04-27': ['SUMMER', 'PICNIC', 'TRAVEL', 'GARDEN', 'BIKINI', 'SEASON'],
+  '2025-04-27': ['NATURE', 'FOREST', 'LEAVES', 'STREAM', 'JUNGLE', 'FLOWER'],
+  'default': ['SPACE', 'EARTH', 'ALIEN', 'ORBIT', 'COMET', 'SOLAR']
+};
+
+const ThemesByDate = {
+  '2025-04-26': ['Theme: SPACE'],
+  '2025-04-27': ['Theme: SUMMER'],
+  '2025-04-27': ['Theme: NATURE'],
+  'default': ['Theme: SPACE']
+};
+
+const HintsByDate = {
+  '2025-04-26': ['Hint: The Final Frontier'],
+  '2025-04-27': ['Hint: When schools are out and trips begin.'],
+  '2025-04-27': ['Hint: Forests, rivers, and mountains belong here.'],
+  'default': ['Hint: The Final Frontier']
+};
+
+
+function getWordsForToday() {
+  const today = new Date();
+  let selectedWords = wordListsByDate['default']; // fallback
+  let selectedtheme = ThemesByDate['default'];
+  const dates = Object.keys(wordListsByDate).filter(date => date !== 'default');
+  
+  for (let i = 0; i < dates.length; i++) {
+    if (today >= new Date(dates[i])) {
+      selectedWords = wordListsByDate[dates[i]];
+      selectedtheme = ThemesByDate[dates[i]];
+    }
+  }
+  
+  return selectedWords;
+}
+
+// get theme based on date in list above
+function getThemeForToday() {
+  const today = new Date();
+  let selectedtheme = ThemesByDate['default'];
+  const dates = Object.keys(wordListsByDate).filter(date => date !== 'default');
+  
+  for (let i = 0; i < dates.length; i++) {
+    if (today >= new Date(dates[i])) {
+      selectedtheme = ThemesByDate[dates[i]];
+    }
+  }
+  
+  return selectedtheme;
+}
+
+// get Hint based on date in list above
+function getHintForToday() {
+  const today = new Date();
+  let selectedhint = HintsByDate['default'];
+  const dates = Object.keys(wordListsByDate).filter(date => date !== 'default');
+  
+  for (let i = 0; i < dates.length; i++) {
+    if (today >= new Date(dates[i])) {
+      selectedhint = HintsByDate[dates[i]];
+    }
+  }
+  
+  return selectedhint;
+}
+
+
+//get word list
+const words = getWordsForToday();
 
 // Hint and Theme Text
-const hintText = "Hint: The final frontier";
-const themeText = "Theme: Space";
+const hintText = getHintForToday();
+const themeText = getThemeForToday();
 
 let selectedLetters = [];
 let matchedWords = [];
@@ -244,6 +314,20 @@ document.getElementById('theme-button').addEventListener('click', () => {
 document.getElementById('reset-button').addEventListener('click', () => {
     location.reload(); // Reloads the page, effectively resetting everything
 });
+
+//Hide Timer Button
+document.getElementById('hide-timer-button').addEventListener('click', () => {
+ const hideTimerBtn = document.getElementById('hide-timer-button');
+
+  if (timerDisplay.style.display === 'none') {
+    timerDisplay.style.display = 'block';
+    hideTimerBtn.textContent = 'Hide Timer';
+  } else {
+    timerDisplay.style.display = 'none';
+    hideTimerBtn.textContent = 'Show Timer';
+  }
+});
+
 
 //Reset Grid Button 
 document.getElementById('grid-reset-button').addEventListener('click', () => {
