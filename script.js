@@ -17,6 +17,7 @@ const wordListsByDate = {
   '26 April 2025': ['SPACE', 'EARTH', 'ALIEN', 'ORBIT', 'COMET', 'SOLAR'],
   '27 April 2025': ['SUMMER', 'PICNIC', 'TRAVEL', 'GARDEN', 'BIKINI', 'SEASON'],
   '28 April 2025': ['NATURE', 'FOREST', 'LEAVES', 'STREAM', 'JUNGLE', 'FLOWER'],
+  '29 April 2025': ['LEGAL', 'COURT', 'JUDGE', 'CASES', 'BENCH', 'TRIAL'],
   'default': ['SPACE', 'EARTH', 'ALIEN', 'ORBIT', 'COMET', 'SOLAR']
 };
 
@@ -25,6 +26,7 @@ const ThemesByDate = {
   '26 April 2025': ['Theme: SPACE'],
   '27 April 2025': ['Theme: SUMMER'],
   '28 April 2025': ['Theme: NATURE'],
+  '29 April 2025': ['Theme: TRIAL'],
   'default': ['Theme: SPACE']
 };
 
@@ -33,6 +35,7 @@ const HintsByDate = {
   '26 April 2025': ['Hint: The Final Frontier'],
   '27 April 2025': ['Hint: When schools are out and trips begin.'],
   '28 April 2025': ['Hint: Forests, rivers, and mountains belong here.'],
+  '29 April 2025': ['Hint: Prosecution and defence meet here.'],
   'default': ['Hint: The Final Frontier']
 };
 
