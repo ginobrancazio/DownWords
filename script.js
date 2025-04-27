@@ -297,6 +297,12 @@ document.getElementById('hint-button').addEventListener('click', () => {
   hintDisplay.style.display = 'block';
 });
 
+// Reveal theme when button is clicked
+document.getElementById('theme-button').addEventListener('click', () => {
+  themeDisplay.textContent = themetext;
+  themeDisplay.style.display = 'block';
+});
+
 // Toggle mute when button is clicked
 document.getElementById('mute-button').addEventListener('click', () => {
   isMuted = !isMuted;
