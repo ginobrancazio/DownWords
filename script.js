@@ -343,18 +343,22 @@ document.getElementById('mute-button').addEventListener('click', () => {
 });
 
 //share button functionality
-shareButton.addEventListener('click', () => {
-if (navigator.share) {
-    navigator.share({
-      title: 'DownWords Game',
-      text: document.getElementById('gameCompletionMessage').value,
-      url: window.location.href,
-    })
-    .then(() => console.log('Share successful'))
-    .catch((err) => console.error('Share failed', err));
+document.getElementById('shareButton').addEventListener('click', async () => {
+  const message = document.getElementById('gameCompletionMessage').value;
+
+  if (navigator.share) {
+    try {
+      await navigator.share({
+        title: 'DownWords Game',
+        text: message,
+        url: 'https://www.DownWordsGame.com' // optional, you can leave it out if you want
+      });
+    } catch (err) {
+      console.error('Error sharing:', err);
+    }
   } else {
-    // If the device doesn't support the share API, alert the user
-    alert('Your device does not support sharing. You can manually copy the text.');
+    // fallback if navigator.share is not available
+    alert('Sharing is not supported on this device. Copy the message manually!');
   }
 });
 
