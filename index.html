@@ -25,6 +25,12 @@
 <audio id="match-sound" src="match-sound.mp3"></audio>
 <audio id="finish-sound" src="finish-sound.mp3"></audio>
 
+<div id="game">
+  <!-- Game content here -->
+
+  
+
+  
   <!-- Word Grid -->
   <h1>DownWords</h1>
   <div id="timer">Time: 0</div>
@@ -50,8 +56,15 @@
   <!-- Selected Words Container -->
   <div id="selected-words-container"></div>
 
-  <div id="success-message"></div>
+<!-- Textbox to display the message, initially hidden -->
+  <textarea id="gameCompletionMessage" style="display:none;"></textarea>
 
+  <!-- Share button -->
+  <button id="shareButton" style="display:none;">Share</button>
+</div>
+   <!-- copy button -->
+  <button id="copyButton" style="display:none;">Copy</button>
+</div>
   
   <script src="script.js"></script>
   <div id="instructions">
