@@ -32,6 +32,31 @@ body {
   margin-bottom: 1px;
 }
 
+#gameCompletionMessage {
+  display: none; /* Start hidden */
+  width: 400px;
+  height: 0;
+  overflow: hidden;
+  background: #f0f0f0;
+  padding: 0 10px;
+  opacity: 0;
+  transition: height 0.9s ease, opacity 0.9s ease;
+  position: relative;
+  z-index: 10;
+}
+
+/* When active, grow and fade in */
+#gameCompletionMessage.active {
+  display: block;
+  min-height: 100px; /* Final height */
+  opacity: 1;
+  padding: 10px;
+  position: relative;
+    z-index: 2;
+    background: #f8f8f8;
+}
+    
+
 #hint-display {
   margin-top: 5px;
   margin-bottom: 1px;
