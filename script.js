@@ -226,6 +226,8 @@ function updateWordGroups() {
       // Make the matched letters invisible but preserve the grid layout
       group.forEach(obj => {
         obj.element.style.opacity = '0.3';  // Hide the letter but keep the space
+        obj.element.style.pointerEvents = 'none';  // Disable any interaction (clicking)
+
       });
 
       // Add the word to matchedWords and check if all words are matched
@@ -242,11 +244,43 @@ function updateWordGroups() {
       
       if (matchedWords.length === words.length) {
         stopTimer();
-        successMessage.textContent = `Congratulations! You found all the words in ${timeLeft} seconds.`;
-        successMessage.style.color = 'green';  // You can style it as needed
         if (!isMuted){
         successSound.play(); // Play success sound
         }
+
+const shareText = document.getElementById('gameCompletionMessage');
+const shareButton = document.getElementById('share-button'); 
+        
+// Build the share message
+  let message = `I completed today's DownWords in ${timeLeft}s compared to the average of 120s`;
+
+ // Both hint and theme are hidden, do something here
+
+if (getComputedStyle(hintDisplay).display === 'none' && getComputedStyle(themeDisplay).display === 'none') {
+  message += `\n🏆 - No hints`;
+}
+        
+        
+  // Check if the player was super fast
+  const averageTime = 100; // Set an average time for comparison
+  if (timeLeft < averageTime) {
+    message += `\n👑 - Super Fast`;
+  }
+message += `\n`;
+message += `\nwww.DownWordsGame.com`;
+        
+// Show the text box with the completion message
+//document.getElementById('gameCompletionMessage').style.display = 'block';
+ showCompletionMessage();
+
+// Populate the text box with the completion message
+document.getElementById('gameCompletionMessage').value = message
+
+//show the copy and share buttons
+document.getElementById('shareButton').style.display = 'block';
+document.getElementById('copyButton').style.display = 'block';
+
+        
         // Remove the grid once all words are matched
         grid.style.display = 'none';  // Hide the grid
          hintDisplay.style.display = 'none'; //Hide the Hint text
@@ -302,16 +336,30 @@ document.getElementById('hint-button').addEventListener('click', () => {
   hintDisplay.style.display = 'block'; // Reveal the hint
 });
 
-
-
 // Mute button functionality
 document.getElementById('mute-button').addEventListener('click', () => {
   isMuted = !isMuted;
   document.getElementById('mute-button').textContent = isMuted ? '🔊 Unmute' : '🔇 Mute';
 });
 
+//share button functionality
+shareButton.addEventListener('click', () => {
+if (navigator.share) {
+    navigator.share({
+      title: 'DownWords Game',
+      text: document.getElementById('gameCompletionMessage').value,
+      url: window.location.href,
+    })
+    .then(() => console.log('Share successful'))
+    .catch((err) => console.error('Share failed', err));
+  } else {
+    // If the device doesn't support the share API, alert the user
+    alert('Your device does not support sharing. You can manually copy the text.');
+  }
+});
 
-// Theme Button functionality
+
+// Theme Button functionality//
 document.getElementById('theme-button').addEventListener('click', () => {
   themeDisplay.textContent = themeText;
   themeDisplay.style.display = 'block'; // Reveal the theme
@@ -321,7 +369,7 @@ document.getElementById('theme-button').addEventListener('click', () => {
 document.getElementById('reset-button').addEventListener('click', () => {
     location.reload(); // Reloads the page, effectively resetting everything
 });
-
+//
 //Hide Timer Button
 // document.getElementById('hide-timer-button').addEventListener('click', () => {
 // const hideTimerBtn = document.getElementById('hide-timer-button');
@@ -335,6 +383,20 @@ document.getElementById('reset-button').addEventListener('click', () => {
 //  }
 //  });
 
+// Add copy button functionality
+document.getElementById('copyButton').addEventListener('click', () => {
+  document.getElementById('gameCompletionMessage').select();
+  document.execCommand('copy');
+  alert('Copied to clipboard!');
+});
+
+function showCompletionMessage() {
+  const message = document.getElementById('gameCompletionMessage');
+  message.style.display = 'block'; // Make it block first
+  setTimeout(() => {
+    message.classList.add('active'); // Then animate
+  }, 10); // Tiny delay so the browser can register the transition
+}
 
 //Reset Grid Button 
 document.getElementById('grid-reset-button').addEventListener('click', () => {
