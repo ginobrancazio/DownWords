@@ -260,16 +260,13 @@ if (getComputedStyle(hintDisplay).display === 'none' && getComputedStyle(themeDi
   message += `\n🏆 - No hints`;
 }
         
-        
-  // Check if the player was super fast
-  const averageTime = 241; // Set an average time for comparison
-  if (timeLeft < averageTime * 0.1) {
-    message += `\n👑 - Top 10% of players today!`;
-  }
-   else if (timeLeft < averageTime) {
-    return "\n🏅 - Top 50% of players today";
-  } else {
-    return "";
+ //check player speed   
+const averageTime = 241;
+if (timeLeft < averageTime * 0.2) {
+  message += `\n👑 - Top 20% of players today!`;
+} else if (timeLeft < averageTime) {
+  message += `\n🏅 - Top 50% of players today`;
+}
         
 message += `\n`;
 message += `\nwww.DownWordsGame.com`;
@@ -348,7 +345,7 @@ document.getElementById('mute-button').addEventListener('click', () => {
 });
 
 // Share button functionality
-shareButton.addEventListener('click', () => {
+document.getElementById('shareButton').addEventListener('click', () => {
   const message = document.getElementById('gameCompletionMessage').value;
   
   // Twitter URL
