@@ -15,7 +15,7 @@ const successSound = new Audio('finish-sound.mp3');
 const wordListsByDate = {
   '26 April 2025': ['SPACE', 'EARTH', 'ALIEN', 'ORBIT', 'COMET', 'SOLAR'],
   '27 April 2025': ['SUMMER', 'PICNIC', 'TRAVEL', 'GARDEN', 'BIKINI', 'SEASON'],
-  '28 April 2025': ['NATURE', 'FOREST', 'LEAVES', 'STREAM', 'JUNGLE', 'FLOWER'],
+  '28 April 2025': ['NATURE', 'FOREST'],
   '29 April 2025': ['LEGAL', 'COURT', 'JUDGE', 'CASES', 'BENCH', 'TRIAL'],
   'default': ['SPACE', 'EARTH', 'ALIEN', 'ORBIT', 'COMET', 'SOLAR']
 };
@@ -342,26 +342,38 @@ document.getElementById('mute-button').addEventListener('click', () => {
   document.getElementById('mute-button').textContent = isMuted ? '🔊 Unmute' : '🔇 Mute';
 });
 
-//share button functionality
-document.getElementById('shareButton').addEventListener('click', async () => {
+// Share button functionality
+shareButton.addEventListener('click', () => {
   const message = document.getElementById('gameCompletionMessage').value;
+  
+  // Twitter URL
+  const twitterUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(message)}`;
+  
+  // Facebook sharing using Facebook SDK
+  const facebookUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(window.location.href)}&quote=${encodeURIComponent(message)}`;
 
-  if (navigator.share) {
-    try {
-      await navigator.share({
-        title: 'DownWords Game',
-        text: message,
-        url: 'https://www.DownWordsGame.com' // optional, you can leave it out if you want
-      });
-    } catch (err) {
-      console.error('Error sharing:', err);
-    }
+  // Open the chosen social media window
+  const platform = prompt("Choose a platform to share on: Twitter or Facebook").toLowerCase();
+
+  if (platform === 'twitter') {
+    window.open(twitterUrl, '_blank');
+  } else if (platform === 'facebook') {
+    // Open the Facebook sharing window
+    FB.ui({
+      method: 'share',
+      href: window.location.href,
+      quote: message
+    }, function(response) {
+      if (response && !response.error_message) {
+        alert('Post was shared successfully.');
+      } else {
+        alert('There was an error sharing the post.');
+      }
+    });
   } else {
-    // fallback if navigator.share is not available
-    alert('Sharing is not supported on this device. Copy the message manually!');
+    alert('Invalid platform. Please choose Twitter or Facebook.');
   }
 });
-
 
 // Theme Button functionality//
 document.getElementById('theme-button').addEventListener('click', () => {
