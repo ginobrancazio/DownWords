@@ -1,94 +1,479 @@
+const grid = document.getElementById('letter-grid');
+const wordsContainer = document.getElementById('selected-words-container');
+const timerDisplay = document.getElementById('timer');
+const successMessage = document.getElementById('success-message');
+const hintDisplay = document.getElementById('hint-display');
+const themeDisplay = document.getElementById('theme-display');
 
-<!DOCTYPE html>
-<html lang="en">
+// Add the audio elements
+const letterClickSound = new Audio('click-sound.mp3');
+const matchSound = new Audio('match-sound.mp3');
+const successSound = new Audio('finish-sound.mp3');
 
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>DownWords by Gino Brancazio</title>
-  <link rel="stylesheet" href="style.css">
+// --- GAME DATA ---
+// Word lists by date
+const wordListsByDate = {
+  '26 April 2025': ['SPACE', 'EARTH', 'ALIEN', 'ORBIT', 'COMET', 'SOLAR'],
+  '27 April 2025': ['SUMMER', 'PICNIC', 'TRAVEL', 'GARDEN', 'BIKINI', 'SEASON'],
+  '28 April 2025': ['NATURE', 'FOREST'],
+  '29 April 2025': ['LEGAL', 'COURT', 'JUDGE', 'CASES', 'BENCH', 'TRIAL'],
+  'default': ['SPACE', 'EARTH', 'ALIEN', 'ORBIT', 'COMET', 'SOLAR']
+};
+
+// Themes by date
+const ThemesByDate = {
+  '26 April 2025': ['Theme: SPACE'],
+  '27 April 2025': ['Theme: SUMMER'],
+  '28 April 2025': ['Theme: NATURE'],
+  '29 April 2025': ['Theme: TRIAL'],
+  'default': ['Theme: SPACE']
+};
+
+// Hints by date
+const HintsByDate = {
+  '26 April 2025': ['Hint: The Final Frontier'],
+  '27 April 2025': ['Hint: When schools are out and trips begin.'],
+  '28 April 2025': ['Hint: Forests, rivers, and mountains belong here.'],
+  '29 April 2025': ['Hint: Prosecution and defence meet here.'],
+  'default': ['Hint: The Final Frontier']
+};
+
+//hide timer as default
+timerDisplay.style.display = 'none';
+
+function getWordsForToday() {
+  const today = new Date();
+  let selectedWords = wordListsByDate['default']; // fallback
+  const dates = Object.keys(wordListsByDate).filter(date => date !== 'default');
   
-  <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-6R3CEQKVLF"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-6R3CEQKVLF');
-</script>
+  for (let i = 0; i < dates.length; i++) {
+    if (today >= new Date(dates[i])) {
+      selectedWords = wordListsByDate[dates[i]];
+    }
+  }
   
+  return selectedWords;
+}
+
+// get theme based on date in list above
+function getThemeForToday() {
+  const today = new Date();
+  let selectedtheme = ThemesByDate['default'];
+  const dates = Object.keys(wordListsByDate).filter(date => date !== 'default');
   
-  <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v13.0" nonce="3XxAsY0w"></script>
-
-
-</head>
-
-<body>
-<audio id="click-sound" src="click-sound.mp3"></audio>
-<audio id="match-sound" src="match-sound.mp3"></audio>
-<audio id="finish-sound" src="finish-sound.mp3"></audio>
-
-<div id="game">
-  <!-- Game content here -->
-
+  for (let i = 0; i < dates.length; i++) {
+    if (today >= new Date(dates[i])) {
+      selectedtheme = ThemesByDate[dates[i]];
+    }
+  }
   
+  return selectedtheme;
+}
 
+// get Hint based on date in list above
+function getHintForToday() {
+  const today = new Date();
+  let selectedhint = HintsByDate['default'];
+  const dates = Object.keys(wordListsByDate).filter(date => date !== 'default');
   
-  <!-- Word Grid -->
-  <h1>DownWords</h1>
-  <div id="timer">Time: 0</div>
-  <!--<div id="current-date"></div> -->
-  <div id="letter-grid"></div>
-  <!-- Timer and Success Message -->
-</div>
-  <!-- Hint and Theme Buttons -->
-  <div class="button-container">
-    <button id="hint-button">Reveal Hint</button>
-    <button id="theme-button">Reveal Theme</button>
-    <button id="grid-reset-button">Reset Grid</button>
-    <button id="reset-button">Start Over</button>
-   <!--  <button id="hide-timer-button">Hide Timer</button> -->
-    <button id="mute-button">🔇 Mute</button>
-
-  </div>
-
-  <!-- Hint and Theme Display -->
-  <div id="hint-display"></div>
-  <div id="theme-display"></div>
-
-  <!-- Selected Words Container -->
-  <div id="selected-words-container"></div>
-
-<!-- Textbox to display the message, initially hidden -->
-  <textarea id="gameCompletionMessage" style="display:none;"></textarea>
-
-  <!-- Share button -->
-  <button id="shareButton" style="display:none;">Share</button>
-</div>
-   <!-- copy button -->
-  <button id="copyButton" style="display:none;">Copy</button>
-</div>
+  for (let i = 0; i < dates.length; i++) {
+    if (today >= new Date(dates[i])) {
+      selectedhint = HintsByDate[dates[i]];
+    }
+  }
   
-  <script src="script.js"></script>
-  <div id="instructions">
-  <h3>Instructions:</h3>
-  <ul>
-    <li>There are 6 hidden words in the grid</li>
-    <li>Each word runs vertically, one letter in each of the rows (top to bottom), but the letters are not necessarily connected.</li>
-    <li>Each letter is only used once.</li>
-    <li>Five of the words are connected by a theme</li>
-    <li>The remaining word is the theme that connects the other words</li>
-  </ul>
+  return selectedhint;
+}
+
+
+//get word list
+const words = getWordsForToday();
+
+// Hint and Theme Text
+const hintText = getHintForToday();
+const themeText = getThemeForToday();
+
+let selectedLetters = [];
+let matchedWords = [];
+let isMuted = false;
+
+
+const colours = ['#a0d2eb', '#ffc6a0', '#c8e6a0', '#f7a0eb', '#d0a0ff'];
+
+// Set the hint and theme as hidden by default
+hintDisplay.style.display = 'none';
+themeDisplay.style.display = 'none';
+
+// Determine the height of the grid (based on the longest word)
+const numRows = Math.max(...words.map(word => word.length)); 
+const numCols = words.length;
+
+// Create the grid based on the words list
+const gridArray = Array.from({ length: numRows }, () => Array(numCols).fill(null));
+
+words.forEach((word, colIndex) => {
+  [...word].forEach((letter, rowIndex) => {
+    gridArray[rowIndex][colIndex] = letter;
+  });
+});
+
+// Shuffle each row randomly
+gridArray.forEach(row => {
+  row.sort(() => Math.random() - 0.5);  // Shuffle letters within the row
+});
+
+// Create the grid elements
+grid.style.gridTemplateColumns = `repeat(${numCols}, 60px)`;
+grid.style.gridTemplateRows = `repeat(${numRows}, 60px)`;
+
+gridArray.forEach((row, rowIndex) => {
+  row.forEach((letter, colIndex) => {
+    const div = document.createElement('div');
+    div.classList.add('letter');
+    div.textContent = letter || '';  // Fill empty cells with nothing
+    div.dataset.row = rowIndex;
+    div.dataset.col = colIndex;
+
+    div.addEventListener('click', () => {
+      // Play click sound
+      if (!isMuted){
+      letterClickSound.play();
+      }
+      const isSelected = div.classList.contains('selected');
+
+      if (isSelected) {
+  // Remove from selectedLetters and unselect the letter
+  selectedLetters = selectedLetters.filter(obj => obj.element !== div);
+  div.classList.remove('selected');
+  div.style.backgroundColor = '';
+} else {
+  // Count how many letters are already selected in this row
+  const selectedInRow = selectedLetters.filter(obj => obj.rowIndex === rowIndex).length;
+  const allowedPerRow = matchedWords.length + 1;
+
+  if (selectedInRow >= allowedPerRow) {
+    // Optionally give user feedback
+    div.classList.add('shake');
+    setTimeout(() => div.classList.remove('shake'), 300);
+    return;
+  }
+
+  // Add to selectedLetters
+  selectedLetters.push({ letter, element: div, rowIndex, colIndex });
+  div.classList.add('selected');
+}
+
+      updateWordGroups();
+    });
+
+    grid.appendChild(div);
+  });
+});
+
+// Timer functionality
+let timer;
+let timeLeft = 0;
+
+function startTimer() {
+  timer = setInterval(() => {
+    timeLeft++;
+    timerDisplay.textContent = `Time: ${timeLeft}`;
+  }, 1000);  // Update the timer every second
+}
+
+function stopTimer() {
+  clearInterval(timer);
+}
+
+// Update word groups and check for matches
+function updateWordGroups() {
+  // Clear all previous colours
+  selectedLetters.forEach(obj => obj.element.style.backgroundColor = '');
+
+  // Group by click order (the first N letters for each word form a group)
+  const groups = [];
+  let currentIndex = 0;
+
+  words.forEach(word => {
+    const group = selectedLetters.slice(currentIndex, currentIndex + word.length);
+    groups.push(group);
+    currentIndex += word.length;
+  });
+
+  // Sort each group by rowIndex to display letters in vertical order within the group
+  groups.forEach(group => {
+    group.sort((a, b) => a.rowIndex - b.rowIndex);
+  });
+
+  // Apply colours and display words
+  wordsContainer.innerHTML = '';  // Clear previous words
+  const wordGroups = [];
+  
+  groups.forEach((group, i) => {
+    const word = group.map(obj => obj.letter).join('');
+    const wordDiv = document.createElement('div');
+    wordDiv.textContent = word;
+    wordDiv.style.padding = '0.5em';
+    wordDiv.style.margin = '0.2em auto';
+    wordDiv.style.width = 'fit-content';
+    wordDiv.style.borderRadius = '5px';
+
+    // Check if the selected letters match the word
+    if (words.includes(word)) {
+      wordDiv.style.backgroundColor = '#76e77d';  // Green for a match
+      wordDiv.textContent = `✔️ ${word}`;  // Add a checkmark to indicate a valid word
+
+      // Make the matched letters invisible but preserve the grid layout
+      group.forEach(obj => {
+        obj.element.style.opacity = '0.3';  // Hide the letter but keep the space
+        obj.element.style.pointerEvents = 'none';  // Disable any interaction (clicking)
+
+      });
+
+      // Add the word to matchedWords and check if all words are matched
+      if (!matchedWords.includes(word)) {
+        matchedWords.push(word);
+      // Play match sound
+        if (!isMuted){
+        matchSound.play();
+        }
+      }
+
+      
+      
+      
+      if (matchedWords.length === words.length) {
+        stopTimer();
+        if (!isMuted){
+        successSound.play(); // Play success sound
+        }
+
+const shareText = document.getElementById('gameCompletionMessage');
+const shareButton = document.getElementById('share-button'); 
+        
+// Build the share message
+  let message = `I completed today's DownWords in ${timeLeft}s compared to the average of 120s`;
+
+ // Both hint and theme are hidden, do something here
+
+if (getComputedStyle(hintDisplay).display === 'none' && getComputedStyle(themeDisplay).display === 'none') {
+  message += `\n🏆 - No hints`;
+}
+        
+        
+  // Check if the player was super fast
+  const averageTime = 100; // Set an average time for comparison
+  if (timeLeft < averageTime) {
+    message += `\n👑 - Super Fast`;
+  }
+message += `\n`;
+message += `\nwww.DownWordsGame.com`;
+        
+// Show the text box with the completion message
+//document.getElementById('gameCompletionMessage').style.display = 'block';
+ showCompletionMessage();
+
+// Populate the text box with the completion message
+document.getElementById('gameCompletionMessage').value = message
+
+//show the copy and share buttons
+document.getElementById('shareButton').style.display = 'block';
+document.getElementById('copyButton').style.display = 'block';
+
+        
+        // Remove the grid once all words are matched
+        grid.style.display = 'none';  // Hide the grid
+         hintDisplay.style.display = 'none'; //Hide the Hint text
+          themeDisplay.style.display = 'none'; //hide the theme text
+        document.getElementById('hint-button').style.display = 'none'; //hide all the buttons
+        document.getElementById('theme-button').style.display = 'none';
+        document.getElementById('mute-button').style.display = 'none';
+        document.getElementById('grid-reset-button').style.display = 'none';
+
+        if (typeof gtag === 'function') {
+          gtag('event', 'game_completed', {
+            'event_category': 'gameplay',
+            'event_label': 'DownWords Game Completed',
+            'value': timeLeft  // You could even track how long it took!
+            });
+          }
+
+
+      }
+    } else {
+      wordDiv.style.backgroundColor = colours[i % colours.length];
+    }
+
+    wordGroups.push(wordDiv);
     
-</div>
- <p>Example:</p>
-    <img src="Down Words.gif" alt="Example Gameplay" class="instructions-gif" />
-  <div id="linkedin-connect" style="text-align: center; margin-top: 20px;">
-    <p>Contact me on <a href="https://www.linkedin.com/in/ginobrancazio/" target="_blank">LinkedIn</a></p>
-    <p>V1.4.1</p>
-</div>
+    // Apply the same colour to grid letters
+    group.forEach(obj => {
+      obj.element.style.backgroundColor = wordDiv.style.backgroundColor;
+    });
+  });
 
-</body>
+  // Arrange the words into two columns by splitting the array into two part
+  const halfIndex = Math.ceil(wordGroups.length / 2);
+  const firstColumn = wordGroups.slice(0, halfIndex);
+  const secondColumn = wordGroups.slice(halfIndex);
 
-</html>
+  // Clear the container and add the columns
+  wordsContainer.innerHTML = '';
+
+  // Append the two columns
+  firstColumn.forEach(wordDiv => wordsContainer.appendChild(wordDiv));
+  secondColumn.forEach(wordDiv => wordsContainer.appendChild(wordDiv));
+}
+
+// Start the timer when the page loads
+window.onload = () => {
+  startTimer();
+};
+
+// Hint Button functionality
+document.getElementById('hint-button').addEventListener('click', () => {
+  hintDisplay.textContent = hintText;
+  hintDisplay.style.display = 'block'; // Reveal the hint
+});
+
+// Mute button functionality
+document.getElementById('mute-button').addEventListener('click', () => {
+  isMuted = !isMuted;
+  document.getElementById('mute-button').textContent = isMuted ? '🔊 Unmute' : '🔇 Mute';
+});
+
+// Share button functionality
+shareButton.addEventListener('click', () => {
+  const message = document.getElementById('gameCompletionMessage').value;
+  
+  // Twitter URL
+  const twitterUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(message)}`;
+  
+  // Facebook sharing using Facebook SDK
+  const facebookUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(window.location.href)}&quote=${encodeURIComponent(message)}`;
+
+  // Open the chosen social media window
+  const platform = prompt("Choose a platform to share on: Twitter or Facebook").toLowerCase();
+
+  if (platform === 'twitter') {
+    window.open(twitterUrl, '_blank');
+  } else if (platform === 'facebook') {
+    // Open the Facebook sharing window
+    FB.ui({
+      method: 'share',
+      href: window.location.href,
+      quote: message
+    }, function(response) {
+      if (response && !response.error_message) {
+        alert('Post was shared successfully.');
+      } else {
+        alert('There was an error sharing the post.');
+      }
+    });
+  } else {
+    alert('Invalid platform. Please choose Twitter or Facebook.');
+  }
+});
+
+// Theme Button functionality//
+document.getElementById('theme-button').addEventListener('click', () => {
+  themeDisplay.textContent = themeText;
+  themeDisplay.style.display = 'block'; // Reveal the theme
+});
+
+//Reset Button for StartOver
+document.getElementById('reset-button').addEventListener('click', () => {
+    location.reload(); // Reloads the page, effectively resetting everything
+});
+//
+//Hide Timer Button
+// document.getElementById('hide-timer-button').addEventListener('click', () => {
+// const hideTimerBtn = document.getElementById('hide-timer-button');
+//
+//  if (timerDisplay.style.display === 'none') {
+//  timerDisplay.style.display = 'block';
+//  hideTimerBtn.textContent = 'Hide Timer';
+//  } else {
+//  timerDisplay.style.display = 'none';
+//  hideTimerBtn.textContent = 'Show Timer';
+//  }
+//  });
+
+// Add copy button functionality
+document.getElementById('copyButton').addEventListener('click', () => {
+  document.getElementById('gameCompletionMessage').select();
+  document.execCommand('copy');
+  alert('Copied to clipboard!');
+});
+
+function showCompletionMessage() {
+  const message = document.getElementById('gameCompletionMessage');
+  message.style.display = 'block'; // Make it block first
+  setTimeout(() => {
+    message.classList.add('active'); // Then animate
+  }, 10); // Tiny delay so the browser can register the transition
+}
+
+//Reset Grid Button 
+document.getElementById('grid-reset-button').addEventListener('click', () => {
+selectedLetters = []
+matchedWords = [];
+  
+wordsContainer.innerHTML = '';
+grid.innerHTML = '';
+  
+  
+  
+// Create the grid based on the words list
+const gridArray = Array.from({ length: numRows }, () => Array(numCols).fill(null));
+
+words.forEach((word, colIndex) => {
+  [...word].forEach((letter, rowIndex) => {
+    gridArray[rowIndex][colIndex] = letter;
+  });
+});
+
+// Shuffle each row randomly
+gridArray.forEach(row => {
+  row.sort(() => Math.random() - 0.5);  // Shuffle letters within the row
+});
+
+// Create the grid elements
+grid.style.gridTemplateColumns = `repeat(${numCols}, 60px)`;
+grid.style.gridTemplateRows = `repeat(${numRows}, 60px)`;
+
+gridArray.forEach((row, rowIndex) => {
+  row.forEach((letter, colIndex) => {
+    const div = document.createElement('div');
+    div.classList.add('letter');
+    div.textContent = letter || '';  // Fill empty cells with nothing
+    div.dataset.row = rowIndex;
+    div.dataset.col = colIndex;
+
+    div.addEventListener('click', () => {
+      // Play click sound
+      if (!isMuted){
+      letterClickSound.play();
+      }
+      const isSelected = div.classList.contains('selected');
+
+      if (isSelected) {
+        // Remove from selectedLetters and unselect the letter
+        selectedLetters = selectedLetters.filter(obj => obj.element !== div);
+        div.classList.remove('selected');
+        div.style.backgroundColor = '';
+      } else {
+        // Add to selectedLetters
+        selectedLetters.push({ letter, element: div, rowIndex, colIndex });
+        div.classList.add('selected');
+      }
+
+      updateWordGroups();
+    });
+
+    grid.appendChild(div);
+  });
+});
+
+  
+});
