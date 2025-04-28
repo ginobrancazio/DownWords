@@ -361,7 +361,7 @@ shareButton.addEventListener('click', () => {
     // Open the Facebook sharing window
     FB.ui({
       method: 'share',
-      href: window.location.href,
+      //href: window.location.href,
       quote: message
     }, function(response) {
       if (response && !response.error_message) {
