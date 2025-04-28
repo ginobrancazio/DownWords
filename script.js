@@ -252,7 +252,7 @@ const shareText = document.getElementById('gameCompletionMessage');
 const shareButton = document.getElementById('share-button'); 
         
 // Build the share message
-  let message = `I completed today's DownWords in ${timeLeft}s compared to the average of 120s`;
+  let message = `I completed today's DownWords in ${timeLeft}s compared to the average of 241s`;
 
  // Both hint and theme are hidden, do something here
 
@@ -262,10 +262,15 @@ if (getComputedStyle(hintDisplay).display === 'none' && getComputedStyle(themeDi
         
         
   // Check if the player was super fast
-  const averageTime = 100; // Set an average time for comparison
-  if (timeLeft < averageTime) {
-    message += `\n👑 - Super Fast`;
+  const averageTime = 241; // Set an average time for comparison
+  if (timeLeft < averageTime * 0.1) {
+    message += `\n👑 - Top 10% of players today!`;
   }
+   else if (timeLeft < averageTime) {
+    return "\n🏅 - Top 50% of players today";
+  } else {
+    return "";
+        
 message += `\n`;
 message += `\nwww.DownWordsGame.com`;
         
@@ -348,31 +353,7 @@ shareButton.addEventListener('click', () => {
   
   // Twitter URL
   const twitterUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(message)}`;
-  
-  // Facebook sharing using Facebook SDK
-  const facebookUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(window.location.href)}&quote=${encodeURIComponent(message)}`;
-
-  // Open the chosen social media window
-  const platform = prompt("Choose a platform to share on: Twitter or Facebook").toLowerCase();
-
-  if (platform === 'twitter') {
-    window.open(twitterUrl, '_blank');
-  } else if (platform === 'facebook') {
-    // Open the Facebook sharing window
-    FB.ui({
-      method: 'share',
-      //href: window.location.href,
-      quote: message
-    }, function(response) {
-      if (response && !response.error_message) {
-        alert('Post was shared successfully.');
-      } else {
-        alert('There was an error sharing the post.');
-      }
-    });
-  } else {
-    alert('Invalid platform. Please choose Twitter or Facebook.');
-  }
+  window.open(twitterUrl, '_blank');
 });
 
 // Theme Button functionality//
