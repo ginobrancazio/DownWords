@@ -258,7 +258,7 @@ const playerTimeInSeconds = timeLeft; // e.g., 225 seconds (3m 45s)
 const averageTimeInSeconds = 163;     // e.g., 4m 1s
 
 // Build the share message
-let message = `I completed today's DownWords in ${timeLeft}s compared to the average of ${averageTimeInSeconds}s\n`;
+let message = `I completed today's DownWords in ${formatTime(timeLeft)} compared to the average of ${formatTime(averageTimeInSeconds)}\n`;
 
 // Convert times to blocks (each block represents 20 seconds)
 const playerBlocks = Math.floor(playerTimeInSeconds / 20);
