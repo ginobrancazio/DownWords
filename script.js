@@ -280,13 +280,8 @@ if (playerTimeInSeconds > averageTimeInSeconds) {
 // Average is always green blocks (no red needed)
 averageBlocksString = '🟩'.repeat(averageBlocks);
 
-  // If player blocks are less than average, add extra 🟥 to show overage
-  //while (playerBlocksString.length < averageBlocksString.length) {
-  //  playerBlocksString += '🟥';
-  //}
-
   // Format the final message
-  message += `\nPlayer (${formatTime(timeLeft)}): ${playerBlocksString}`;
+  message += `\nMe (${formatTime(timeLeft)}): ${playerBlocksString}`;
   message += `\nAverage (${formatTime(averageTimeInSeconds)}): ${averageBlocksString}\n`;
         
  // Both hint and theme are hidden, do something here
