@@ -27,11 +27,6 @@ body {
   animation: shake 0.3s ease;
 }
 
-#success-message {
-  margin-top: 5px;
-  margin-bottom: 1px;
-}
-
 #gameCompletionMessage {
   display: none;
   width: 90%;           /* Flexible width, not fixed */
@@ -55,7 +50,7 @@ body {
 
 #gameCompletionMessage.active {
   display: block;
-  min-height: 270px; /* Final height */
+  min-height: 200px; /* Final height */
   opacity: 1;
   padding: 10px;
   position: relative;
