@@ -15,7 +15,7 @@ const successSound = new Audio('finish-sound.mp3');
 const wordListsByDate = {
   '26 April 2025': ['SPACE', 'EARTH', 'ALIEN', 'ORBIT', 'COMET', 'SOLAR'],
   '27 April 2025': ['SUMMER', 'PICNIC', 'TRAVEL', 'GARDEN', 'BIKINI', 'SEASON'],
-  '28 April 2025': ['NATURE', 'FOREST'],
+  '28 April 2025': ['NATURE', 'FOREST', 'LEAVES', 'STREAM', 'JUNGLE', 'FLOWER'],
   '29 April 2025': ['LEGAL', 'COURT', 'JUDGE', 'CASES', 'BENCH', 'TRIAL'],
   '30 April 2025': ['DRINK', 'LATTE', 'WATER', 'JUICE', 'SHAKE', 'GLASS'],
   '01 May 2025': ['BIRDS', 'EAGLE', 'ROBIN', 'GOOSE', 'CRANE', 'RAVEN'],
