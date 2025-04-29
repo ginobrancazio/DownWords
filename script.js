@@ -16,11 +16,14 @@ const wordListsByDate = {
   '26 April 2025': ['SPACE', 'EARTH', 'ALIEN', 'ORBIT', 'COMET', 'SOLAR'],
   '27 April 2025': ['SUMMER', 'PICNIC', 'TRAVEL', 'GARDEN', 'BIKINI', 'SEASON'],
   '28 April 2025': ['NATURE', 'FOREST', 'LEAVES', 'STREAM', 'JUNGLE', 'FLOWER'],
-  '29 April 2025': ['LEGAL', 'COURT', 'JUDGE', 'CASES', 'BENCH', 'TRIAL'],
+  '29 April 2025': ['BOARD', 'GAMES', 'CARDS', 'TOKEN', 'SCORE', 'CATAN'],
   '30 April 2025': ['DRINK', 'LATTE', 'WATER', 'JUICE', 'SHAKE', 'GLASS'],
   '01 May 2025': ['BIRDS', 'EAGLE', 'ROBIN', 'GOOSE', 'CRANE', 'RAVEN'],
   '02 May 2025': ['SHAPES', 'CIRCLE', 'SQUARE', 'SPHERE', 'SPIRAL', 'SPIRAL'],
   '03 May 2025': ['PASTA', 'SAUCE', 'PLATE', 'ITALY', 'PENNE', 'PESTO'],
+  '10 May 2025': ['BOARD', 'GAMES', 'CARDS', 'TOKEN', 'SCORE', 'CHESS'],
+  '11 May 2025': ['POKER', 'CARDS', 'FLUSH', 'TABLE', 'RAISE', 'CHIPS'],
+
 
   'default': ['SPACE', 'EARTH', 'ALIEN', 'ORBIT', 'COMET', 'SOLAR']
 };
@@ -35,6 +38,8 @@ const ThemesByDate = {
   '01 May 2025':  ['Theme: BIRDS'],
   '02 May 2025':  ['Theme: SHAPES'],
   '03 May 2025':  ['Theme: PASTA'],
+  '10 May 2025':  ['Theme: GAMES'],
+  '11 May 2025':  ['Theme: POKER'],
   'default': ['Theme: SPACE']
 };
 
@@ -48,6 +53,8 @@ const HintsByDate = {
   '01 May 2025': ['Hint: They come in flocks or solo, soaring above.'],
   '02 May 2025': ['Hint: Geometric figures with defined sides or curves.'],
   '03 May 2025': ['Hint: You’ll find it on menus in Italian restaurants.'],
+  '10 May 2025': ['Hint: Rules based activities played with friends and family at tables.'],
+  '11 May 2025': ['Hint: Card game typically played in Casinos'],
   'default': ['Hint: The Final Frontier']
 };
 
