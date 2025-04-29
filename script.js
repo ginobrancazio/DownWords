@@ -19,6 +19,9 @@ const wordListsByDate = {
   '29 April 2025': ['LEGAL', 'COURT', 'JUDGE', 'CASES', 'BENCH', 'TRIAL'],
   '30 April 2025': ['DRINK', 'LATTE', 'WATER', 'JUICE', 'SHAKE', 'GLASS'],
   '01 May 2025': ['BIRDS', 'EAGLE', 'ROBIN', 'GOOSE', 'CRANE', 'RAVEN'],
+  '02 May 2025': ['SHAPES', 'CIRCLE', 'SQUARE', 'SPHERE', 'SPIRAL', 'SPIRAL'],
+  '03 May 2025': ['PASTA', 'SAUCE', 'PLATE', 'ITALY', 'PENNE', 'PESTO'],
+
   'default': ['SPACE', 'EARTH', 'ALIEN', 'ORBIT', 'COMET', 'SOLAR']
 };
 
@@ -30,8 +33,8 @@ const ThemesByDate = {
   '29 April 2025': ['Theme: TRIAL'],
   '30 April 2025': ['Theme: DRINK'],
   '01 May 2025':  ['Theme: BIRDS'],
-
-  
+  '02 May 2025':  ['Theme: SHAPES'],
+  '03 May 2025':  ['Theme: PASTA'],
   'default': ['Theme: SPACE']
 };
 
@@ -43,7 +46,8 @@ const HintsByDate = {
   '29 April 2025': ['Hint: Prosecution and defence meet here.'],
   '30 April 2025': ['Hint: Quenches thirst in many forms.'],
   '01 May 2025': ['Hint: They come in flocks or solo, soaring above.'],
-
+  '02 May 2025': ['Hint: Geometric figures with defined sides or curves.'],
+  '03 May 2025': ['Hint: You’ll find it on menus in Italian restaurants.'],
   'default': ['Hint: The Final Frontier']
 };
 
