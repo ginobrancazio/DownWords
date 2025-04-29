@@ -13,42 +13,17 @@ const successSound = new Audio('finish-sound.mp3');
 // --- GAME DATA ---
 // Word lists by date
 const wordListsByDate = {
-  '26 April 2025': ['SPACE', 'EARTH', 'ALIEN', 'ORBIT', 'COMET', 'SOLAR'],
-  '27 April 2025': ['SUMMER', 'PICNIC', 'TRAVEL', 'GARDEN', 'BIKINI', 'SEASON'],
-  '28 April 2025': ['NATURE', 'FOREST', 'LEAVES', 'STREAM', 'JUNGLE', 'FLOWER'],
-  '29 April 2025': ['LEGAL', 'COURT', 'JUDGE', 'CASES', 'BENCH', 'TRIAL'],
-  '30 April 2025': ['DRINK', 'LATTE', 'WATER', 'JUICE', 'SHAKE', 'GLASS'],
-  '01 May 2025': ['BIRDS', 'EAGLE', 'ROBIN', 'GOOSE', 'CRANE', 'RAVEN'],
-  '02 May 2025': ['SHAPES', 'CIRCLE', 'SQUARE', 'SPHERE', 'SPIRAL', 'SPIRAL'],
-  '03 May 2025': ['PASTA', 'SAUCE', 'PLATE', 'ITALY', 'PENNE', 'PESTO'],
-
-  'default': ['SPACE', 'EARTH', 'ALIEN', 'ORBIT', 'COMET', 'SOLAR']
+  'default': ['BOARD', 'GAMES', 'CARDS', 'TOKEN', 'SCORE', 'CATAN'],
 };
 
 // Themes by date
 const ThemesByDate = {
-  '26 April 2025': ['Theme: SPACE'],
-  '27 April 2025': ['Theme: SUMMER'],
-  '28 April 2025': ['Theme: NATURE'],
-  '29 April 2025': ['Theme: TRIAL'],
-  '30 April 2025': ['Theme: DRINK'],
-  '01 May 2025':  ['Theme: BIRDS'],
-  '02 May 2025':  ['Theme: SHAPES'],
-  '03 May 2025':  ['Theme: PASTA'],
-  'default': ['Theme: SPACE']
+  'default': ['Theme: GAMES']
 };
 
 // Hints by date
 const HintsByDate = {
-  '26 April 2025': ['Hint: The Final Frontier'],
-  '27 April 2025': ['Hint: When schools are out and trips begin.'],
-  '28 April 2025': ['Hint: Forests, rivers, and mountains belong here.'],
-  '29 April 2025': ['Hint: Prosecution and defence meet here.'],
-  '30 April 2025': ['Hint: Quenches thirst in many forms.'],
-  '01 May 2025': ['Hint: They come in flocks or solo, soaring above.'],
-  '02 May 2025': ['Hint: Geometric figures with defined sides or curves.'],
-  '03 May 2025': ['Hint: You’ll find it on menus in Italian restaurants.'],
-  'default': ['Hint: The Final Frontier']
+  'default': ['Hint: What RulesCon is all about!']
 };
 
 //hide timer as default
