@@ -366,12 +366,26 @@ window.onload = () => {
 document.getElementById('hint-button').addEventListener('click', () => {
   hintDisplay.textContent = hintText;
   hintDisplay.style.display = 'block'; // Reveal the hint
+
+  gtag('event', 'reveal_hint', {
+    event_category: 'help',
+    event_label: 'Reveal Hint Button',
+    value: 1
+  });
+  
 });
 
 // Mute button functionality
 document.getElementById('mute-button').addEventListener('click', () => {
   isMuted = !isMuted;
   document.getElementById('mute-button').textContent = isMuted ? '🔊 Unmute' : '🔇 Mute';
+
+gtag('event', 'mute_toggle', {
+    event_category: 'settings',
+    event_label: 'Mute Button',
+    value: 1
+  });
+  
 });
 
 // Share button functionality
@@ -381,17 +395,38 @@ document.getElementById('shareButton').addEventListener('click', () => {
   // Twitter URL
   const twitterUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(message)}`;
   window.open(twitterUrl, '_blank');
+
+   gtag('event', 'share_to_twitter', {
+    event_category: 'social',
+    event_label: 'Twitter Share Button',
+    value: 1
+  });
+  
 });
 
 // Theme Button functionality//
 document.getElementById('theme-button').addEventListener('click', () => {
   themeDisplay.textContent = themeText;
   themeDisplay.style.display = 'block'; // Reveal the theme
+
+  gtag('event', 'reveal_theme', {
+    event_category: 'help',
+    event_label: 'Reveal Theme Button',
+    value: 1
+  });
+  
 });
 
 //Reset Button for StartOver
 document.getElementById('reset-button').addEventListener('click', () => {
     location.reload(); // Reloads the page, effectively resetting everything
+
+gtag('event', 'start_over', {
+    event_category: 'game_control',
+    event_label: 'Start Over Button',
+    value: 1
+  });
+  
 });
 //
 //Hide Timer Button
@@ -412,6 +447,13 @@ document.getElementById('copyButton').addEventListener('click', () => {
   document.getElementById('gameCompletionMessage').select();
   document.execCommand('copy');
   alert('Copied to clipboard!');
+
+    gtag('event', 'copy_result', {
+    event_category: 'engagement',
+    event_label: 'Copy Result Button',
+    value: 1
+  });
+  
 });
 
 function showCompletionMessage() {
@@ -426,6 +468,12 @@ function showCompletionMessage() {
 document.getElementById('grid-reset-button').addEventListener('click', () => {
 selectedLetters = []
 matchedWords = [];
+
+gtag('event', 'grid_reset', {
+    event_category: 'game_control',
+    event_label: 'Grid Reset Button',
+    value: 1
+  });
   
 wordsContainer.innerHTML = '';
 grid.innerHTML = '';
