@@ -16,7 +16,7 @@ const wordListsByDate = {
   '26 April 2025': ['SPACE', 'EARTH', 'ALIEN', 'ORBIT', 'COMET', 'SOLAR'],
   '27 April 2025': ['SUMMER', 'PICNIC', 'TRAVEL', 'GARDEN', 'BIKINI', 'SEASON'],
   '28 April 2025': ['NATURE', 'FOREST'],
-  '29 April 2025': ['LEGAL', 'COURT', 'JUDGE', 'CASES', 'BENCH', 'TRIAL'],
+  '29 April 2025': ['LEGAL'],
   'default': ['SPACE', 'EARTH', 'ALIEN', 'ORBIT', 'COMET', 'SOLAR']
 };
 
@@ -53,6 +53,12 @@ function getWordsForToday() {
   }
   
   return selectedWords;
+}
+
+function formatTime(totalSeconds) {
+  const minutes = Math.floor(totalSeconds / 60);
+  const seconds = totalSeconds % 60;
+  return `${minutes}m ${seconds < 10 ? '0' : ''}${seconds}s`;
 }
 
 // get theme based on date in list above
@@ -248,20 +254,49 @@ function updateWordGroups() {
         successSound.play(); // Play success sound
         }
 
-const shareText = document.getElementById('gameCompletionMessage');
-const shareButton = document.getElementById('share-button'); 
-        
+const playerTimeInSeconds = timeLeft; // e.g., 225 seconds (3m 45s)
+const averageTimeInSeconds = 163;     // e.g., 4m 1s
+
 // Build the share message
-  let message = `I completed today's DownWords in ${timeLeft}s compared to the average of 241s`;
+let message = `I completed today's DownWords in ${timeLeft}s compared to the average of ${averageTimeInSeconds}s\n`;
 
+// Convert times to blocks (each block represents 20 seconds)
+const playerBlocks = Math.floor(playerTimeInSeconds / 20);
+const averageBlocks = Math.floor(averageTimeInSeconds / 20);
+
+// Build the block strings
+let playerBlocksString = '';
+let averageBlocksString = '';
+
+// If player is slower than average
+if (playerTimeInSeconds > averageTimeInSeconds) {
+  const extraTime = playerTimeInSeconds - averageTimeInSeconds;
+  const extraBlocks = Math.ceil(extraTime / 20);
+  playerBlocksString = '🟩'.repeat(averageBlocks) + '🟥'.repeat(extraBlocks);
+} else {
+  playerBlocksString = '🟩'.repeat(playerBlocks);
+}
+
+// Average is always green blocks (no red needed)
+averageBlocksString = '🟩'.repeat(averageBlocks);
+
+  // If player blocks are less than average, add extra 🟥 to show overage
+  //while (playerBlocksString.length < averageBlocksString.length) {
+  //  playerBlocksString += '🟥';
+  //}
+
+  // Format the final message
+  message += `\nPlayer (${formatTime(timeLeft)}): ${playerBlocksString}`;
+  message += `\nAverage (${formatTime(averageTimeInSeconds)}): ${averageBlocksString}\n`;
+        
  // Both hint and theme are hidden, do something here
-
 if (getComputedStyle(hintDisplay).display === 'none' && getComputedStyle(themeDisplay).display === 'none') {
   message += `\n🏆 - No hints`;
 }
         
  //check player speed   
 const averageTime = 241;
+
 if (timeLeft < averageTime * 0.2) {
   message += `\n👑 - Top 20% of players today!`;
 } else if (timeLeft < averageTime) {
@@ -453,5 +488,6 @@ gridArray.forEach((row, rowIndex) => {
   });
 });
 
+  
   
 });
