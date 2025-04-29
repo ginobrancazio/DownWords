@@ -281,8 +281,8 @@ if (playerTimeInSeconds > averageTimeInSeconds) {
 averageBlocksString = '🟩'.repeat(averageBlocks);
 
   // Format the final message
-  message += `\nMe (${formatTime(timeLeft)}): ${playerBlocksString}`;
-  message += `\nAverage (${formatTime(averageTimeInSeconds)}): ${averageBlocksString}\n`;
+  message += `\n${playerBlocksString}: Me (${formatTime(timeLeft)})`;
+  message += `\n${averageBlocksString}: Average (${formatTime(averageTimeInSeconds)}) \n`;
         
  // Both hint and theme are hidden, do something here
 if (getComputedStyle(hintDisplay).display === 'none' && getComputedStyle(themeDisplay).display === 'none') {
