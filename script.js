@@ -275,8 +275,10 @@ if (playerTimeInSeconds > averageTimeInSeconds) {
   const extraBlocks = Math.ceil(extraTime / blocklength);
   playerBlocksString = '🟩'.repeat(averageBlocks) + '🟥'.repeat(extraBlocks);
 } else {
-  playerBlocksString = '🟩'.repeat(playerBlocks);
+  const minimumPlayerBlocks = Math.max(1, playerBlocks); // Make sure at least 1 block
+  playerBlocksString = '🟩'.repeat(minimumPlayerBlocks);
 }
+
 
 // Average is always green blocks (no red needed)
 averageBlocksString = '🟩'.repeat(averageBlocks);
