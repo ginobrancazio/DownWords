@@ -55,7 +55,7 @@ body {
 
 #gameCompletionMessage.active {
   display: block;
-  min-height: 400px; /* Final height */
+  min-height: 300px; /* Final height */
   opacity: 1;
   padding: 10px;
   position: relative;
