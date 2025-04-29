@@ -255,14 +255,15 @@ function updateWordGroups() {
         }
 
 const playerTimeInSeconds = timeLeft; // e.g., 225 seconds (3m 45s)
-const averageTimeInSeconds = 163;     // e.g., 4m 1s
-
+const averageTimeInSeconds = 215;     // e.g., 4m 1s
+const blocklength = averageTimeInSeconds/8
+        
 // Build the share message
 let message = `I completed today's DownWords in ${formatTime(timeLeft)} compared to the average of ${formatTime(averageTimeInSeconds)}\n`;
 
-// Convert times to blocks (each block represents 20 seconds)
-const playerBlocks = Math.floor(playerTimeInSeconds / 20);
-const averageBlocks = Math.floor(averageTimeInSeconds / 20);
+// Convert times to blocks (each block represents one 8th of the average time)
+const playerBlocks = Math.floor(playerTimeInSeconds / blocklength);
+const averageBlocks = Math.floor(averageTimeInSeconds / blocklength);
 
 // Build the block strings
 let playerBlocksString = '';
@@ -270,8 +271,8 @@ let averageBlocksString = '';
 
 // If player is slower than average
 if (playerTimeInSeconds > averageTimeInSeconds) {
-  const extraTime = playerTimeInSeconds - averageTimeInSeconds;
-  const extraBlocks = Math.ceil(extraTime / 20);
+  const extraTime = Math.min(playerTimeInSeconds - averageTimeInSeconds, blocklength * 3);
+  const extraBlocks = Math.ceil(extraTime / blocklength);
   playerBlocksString = '🟩'.repeat(averageBlocks) + '🟥'.repeat(extraBlocks);
 } else {
   playerBlocksString = '🟩'.repeat(playerBlocks);
