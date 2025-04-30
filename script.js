@@ -323,6 +323,7 @@ if (timeLeft < averageTime * 0.2) {
         
 message += `\n`;
 message += `\nwww.DownWordsGame.com`;
+message += `\n#DownWordsGame`;
         
 // Show the text box with the completion message
 //document.getElementById('gameCompletionMessage').style.display = 'block';
