@@ -274,8 +274,8 @@ function updateWordGroups() {
         successSound.play(); // Play success sound
         }
 
-const playerTimeInSeconds = timeLeft; // e.g., 225 seconds (3m 45s)
-const averageTimeInSeconds = 215;     // e.g., 4m 1s
+const playerTimeInSeconds = timeLeft; 
+const averageTimeInSeconds = 143;     
 const blocklength = averageTimeInSeconds/8
         
 // Build the share message
