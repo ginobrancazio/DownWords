@@ -21,6 +21,7 @@ const wordListsByDate = {
   '01 May 2025': ['BIRDS', 'EAGLE', 'ROBIN', 'GOOSE', 'CRANE', 'RAVEN'],
   '02 May 2025': ['SHAPES', 'CIRCLE', 'SQUARE', 'SPHERE', 'SPIRAL', 'OBLONG'],
   '03 May 2025': ['PASTA', 'SAUCE', 'PLATE', 'ITALY', 'PENNE', 'PESTO'],
+  '04 May 2025': ['RIDDLE', 'CIPHER', 'ENIGMA', 'PUZZLE', 'JIGSAW', 'SUDOKU'],
   '10 May 2025': ['BOARD', 'GAMES', 'CARDS', 'TOKEN', 'SCORE', 'CHESS'],
   '11 May 2025': ['POKER', 'CARDS', 'FLUSH', 'TABLE', 'RAISE', 'CHIPS'],
 
@@ -38,6 +39,7 @@ const ThemesByDate = {
   '01 May 2025':  ['Theme: BIRDS'],
   '02 May 2025':  ['Theme: SHAPES'],
   '03 May 2025':  ['Theme: PASTA'],
+  '04 May 2025':  ['Theme: PUZZLE'],
   '10 May 2025':  ['Theme: GAMES'],
   '11 May 2025':  ['Theme: POKER'],
   'default': ['Theme: SPACE']
@@ -53,6 +55,7 @@ const HintsByDate = {
   '01 May 2025': ['Hint: They come in flocks or solo, soaring above.'],
   '02 May 2025': ['Hint: Geometric figures with defined sides or curves.'],
   '03 May 2025': ['Hint: You’ll find it on menus in Italian restaurants.'],
+  '04 May 2025': ['Hint: Something that needs solving, often for fun'],
   '10 May 2025': ['Hint: Rules based activities played with friends and family at tables.'],
   '11 May 2025': ['Hint: Card game typically played in Casinos'],
   'default': ['Hint: The Final Frontier']
