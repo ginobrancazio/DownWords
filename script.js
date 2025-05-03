@@ -29,7 +29,9 @@ const wordListsByDate = {
   '09 May 2025': ['NOISE', 'CRASH', 'WHOOPS', 'SHOUT', 'TRILL', 'CLICK'],
   '10 May 2025': ['BOARD', 'GAMES', 'CARDS', 'TOKEN', 'SCORE', 'CHESS'],
   '11 May 2025': ['POKER', 'CARDS', 'FLUSH', 'TABLE', 'RAISE', 'CHIPS'],
-
+  '12 May 2025': ['FICTION', 'TRAGEDY', 'MYSTERY', 'ROMANCE', 'FANTASY', 'HISTORY'],
+  '13 May 2025': ['VIRUS', 'GERMS', 'EBOLA', 'HANTA', 'MUMPS', 'FEVER'],
+  '14 May 2025': ['JOKER', 'PRANK', 'TRICK', 'CLOWN', 'FUNNY', 'LAUGH'],
 
   'default': ['SPACE', 'EARTH', 'ALIEN', 'ORBIT', 'COMET', 'SOLAR']
 };
@@ -52,6 +54,9 @@ const ThemesByDate = {
   '09 May 2025':  ['Theme: NOISE'],
   '10 May 2025':  ['Theme: GAMES'],
   '11 May 2025':  ['Theme: POKER'],
+  '12 May 2025':  ['Theme: FICTION'],
+  '13 May 2025':  ['Theme: VIRUS'],
+  '14 May 2025':  ['Theme: JOKER'],
   'default': ['Theme: SPACE']
 };
 
@@ -73,6 +78,9 @@ const HintsByDate = {
   '09 May 2025': ['Things you can hear'],
   '10 May 2025': ['Hint: Rules based activities played with friends and family at tables.'],
   '11 May 2025': ['Hint: Card game typically played in Casinos'],
+  '12 May 2025': ['Hint: Different types of made-up books'],
+  '13 May 2025': ['Hint: Tiny things that can make you very sick'],
+  '14 May 2025': ['Hint: A non-serious person who tries to make you laugh'],
   'default': ['Hint: The Final Frontier']
 };
 
