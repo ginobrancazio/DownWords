@@ -22,6 +22,11 @@ const wordListsByDate = {
   '02 May 2025': ['SHAPES', 'CIRCLE', 'SQUARE', 'SPHERE', 'SPIRAL', 'OBLONG'],
   '03 May 2025': ['PASTA', 'SAUCE', 'PLATE', 'ITALY', 'PENNE', 'PESTO'],
   '04 May 2025': ['RIDDLE', 'CIPHER', 'ENIGMA', 'PUZZLE', 'JIGSAW', 'SUDOKU'],
+  '05 May 2025': ['BODY', 'BUTT', 'NOSE', 'FOOT', 'NECK', 'KNEE'],
+  '06 May 2025': ['GREEN', 'GRAPE', 'GRASS', 'ALGAE', 'FROGS', 'APPLE'],
+  '07 May 2025': ['ANIMALS', 'LEOPARD', 'RACCOON', 'HAMSTER', 'GIRAFFE', 'MEERKAT'],
+  '08 May 2025': ['CAREER', 'DOCTOR', 'LAWYER', 'WAITER', 'BARBER', 'DANCER'],
+  '09 May 2025': ['NOISE', 'CRASH', 'WHOOPS', 'SHOUT', 'TRILL', 'CLICK'],
   '10 May 2025': ['BOARD', 'GAMES', 'CARDS', 'TOKEN', 'SCORE', 'CHESS'],
   '11 May 2025': ['POKER', 'CARDS', 'FLUSH', 'TABLE', 'RAISE', 'CHIPS'],
 
@@ -40,6 +45,11 @@ const ThemesByDate = {
   '02 May 2025':  ['Theme: SHAPES'],
   '03 May 2025':  ['Theme: PASTA'],
   '04 May 2025':  ['Theme: PUZZLE'],
+  '05 May 2025':  ['Theme: BODY'],
+  '06 May 2025':  ['Theme: GREEN'],
+  '07 May 2025':  ['Theme: ANIMALS'],]
+  '08 May 2025':  ['Theme: CAREER'],
+  '09 May 2025':  ['Theme: NOISE'],
   '10 May 2025':  ['Theme: GAMES'],
   '11 May 2025':  ['Theme: POKER'],
   'default': ['Theme: SPACE']
@@ -56,6 +66,11 @@ const HintsByDate = {
   '02 May 2025': ['Hint: Geometric figures with defined sides or curves.'],
   '03 May 2025': ['Hint: You’ll find it on menus in Italian restaurants.'],
   '04 May 2025': ['Hint: Something that needs solving, often for fun'],
+  '05 May 2025': ['The physical form of a person'],
+  '06 May 2025': ['Colour of grass and leaves'],
+  '07 May 2025': ['Found at the zoo'],
+  '08 May 2025': ['Job path or profession'],
+  '09 May 2025': ['Things you can hear'],
   '10 May 2025': ['Hint: Rules based activities played with friends and family at tables.'],
   '11 May 2025': ['Hint: Card game typically played in Casinos'],
   'default': ['Hint: The Final Frontier']
