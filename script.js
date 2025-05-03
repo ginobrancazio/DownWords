@@ -47,7 +47,7 @@ const ThemesByDate = {
   '04 May 2025':  ['Theme: PUZZLE'],
   '05 May 2025':  ['Theme: BODY'],
   '06 May 2025':  ['Theme: GREEN'],
-  '07 May 2025':  ['Theme: ANIMALS'],]
+  '07 May 2025':  ['Theme: ANIMALS'],
   '08 May 2025':  ['Theme: CAREER'],
   '09 May 2025':  ['Theme: NOISE'],
   '10 May 2025':  ['Theme: GAMES'],
