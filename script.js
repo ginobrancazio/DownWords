@@ -9,6 +9,8 @@ const themeDisplay = document.getElementById('theme-display');
 const letterClickSound = new Audio('click-sound.mp3');
 const matchSound = new Audio('match-sound.mp3');
 const successSound = new Audio('finish-sound.mp3');
+const bonusSound = new Audio('bonus.mp3');
+
 
 // --- GAME DATA ---
 // Word lists by date
@@ -400,23 +402,23 @@ function updateWordGroups() {
         // Format the final message
         message += `\n${playerBlocksString} - Me (${formatTime(timeLeft)})`;
         message += `\n${averageBlocksString} - Average (${formatTime(averageTimeInSeconds)}) \n`;
+
+           // Add bonus words found to the message
+        if (bonusWordsFound.size > 0) {
+          message += `\n🦆 - Found ${bonusWordsFound.size} bonus word${bonusWordsFound.size > 1 ? 's' : ''}: ${[...bonusWordsFound].join(', ')} \n`;
+        }
         
         // Both hint and theme are hidden, do something here
         if (getComputedStyle(hintDisplay).display === 'none' && getComputedStyle(themeDisplay).display === 'none') {
           message += `\n🏆 - No hints`;
         }
         
-        // Add bonus words found to the message
-        if (bonusWordsFound.size > 0) {
-          message += `\n🦆 Duck Hunter - Found ${bonusWordsFound.size} bonus word${bonusWordsFound.size > 1 ? 's' : ''}: ${[...bonusWordsFound].join(', ')}`;
-        }
-        
         //check player speed   
         const averageTime = 135;
 
-        if (timeLeft < averageTime * 0.2) {
+        if (timeLeft < averageTimeInSeconds * 0.2) {
           message += `\n👑 - Top 20% of players today!`;
-        } else if (timeLeft < averageTime) {
+        } else if (timeLeft < averageTimeInSeconds) {
           message += `\n🏅 - Top 50% of players today`;
         }
         
@@ -462,7 +464,7 @@ function updateWordGroups() {
 
         //Play a sound
         if (!isMuted){
-          matchSound.play();
+          bonusSound.play();
         }
         
         // Add to found bonus words
