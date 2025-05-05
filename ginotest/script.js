@@ -95,6 +95,27 @@ fetch('dictionary.txt')
       .filter(word => word.length > 0);
   });
 
+//check the word submitted
+function checkWord(foundWord, words, matchedWords, matchedBonusWords) {
+  const wordUpper = foundWord.toUpperCase();
+
+  if (words.includes(wordUpper)) {
+    if (!matchedWords.includes(wordUpper)) {
+      matchedWords.push(wordUpper);
+      return 'target'; // Found a word from the main list
+    }
+  } else if (englishWords.includes(wordUpper)) {
+    if (!matchedBonusWords.includes(wordUpper)) {
+      matchedBonusWords.push(wordUpper);
+      return 'bonus'; // Valid bonus word
+    }
+  }
+
+  return 'invalid'; // Not a valid English word
+}
+
+
+
 //hide timer as default
 timerDisplay.style.display = 'none';
 
@@ -282,6 +303,17 @@ function updateWordGroups() {
     wordDiv.style.borderRadius = '5px';
 
     // Check if the selected letters match the word
+
+const result = checkWord(playerInput, words, matchedWords, matchedBonusWords);
+
+if (result === 'target') {
+  showMessage('Nice! That’s a correct word!');
+} else if (result === 'bonus') {
+  showMessage('Bonus word! Impressive!');
+} else {
+  showMessage('Not a valid word.');
+}
+    
     if (words.includes(word)) {
       wordDiv.style.backgroundColor = '#76e77d';  // Green for a match
       wordDiv.textContent = `✔️ ${word}`;  // Add a checkmark to indicate a valid word
