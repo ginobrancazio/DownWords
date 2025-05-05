@@ -306,14 +306,27 @@ function updateWordGroups() {
     
     if (debugMode) {
       console.log(`Potential bonus word: "${potentialBonusWord}"`);
-      console.log(`Is in dictionary: ${dictionaryWords.includes(potentialBonusWord)}`);
-      console.log(`Is in daily words: ${words.includes(potentialBonusWord)}`);
-      console.log(`Already found: ${bonusWords.includes(potentialBonusWord)}`);
+      console.log(`Dictionary contains ${dictionaryWords.length} words`);
+      console.log(`Is "${potentialBonusWord}" in dictionary: ${dictionaryWords.includes(potentialBonusWord)}`);
+      
+      // If it's not found, let's check if similar words exist
+      if (!dictionaryWords.includes(potentialBonusWord)) {
+        const similarWords = dictionaryWords.filter(word => 
+          word.includes(potentialBonusWord.substring(0, 2)) || potentialBonusWord.includes(word.substring(0, 2))
+        ).slice(0, 5);
+        console.log(`Similar words in dictionary: ${similarWords.join(', ')}`);
+      }
+      
+      console.log(`Is "${potentialBonusWord}" in daily words: ${words.includes(potentialBonusWord)}`);
+      console.log(`Already found "${potentialBonusWord}": ${bonusWords.includes(potentialBonusWord)}`);
     }
     
+    // For testing - add common words to recognize
+    const commonTestWords = ["NOTE", "TONE", "NOSE", "TOES", "SENT", "NEST", "TENS", "NETS"];
+    
     // Check if it's a valid bonus word (in dictionary but not in daily words)
-    if (potentialBonusWord.length >= 3 && 
-        dictionaryWords.includes(potentialBonusWord) && 
+    if ((potentialBonusWord.length >= 3 && 
+         (dictionaryWords.includes(potentialBonusWord) || commonTestWords.includes(potentialBonusWord))) && 
         !words.includes(potentialBonusWord) &&
         !bonusWords.includes(potentialBonusWord)) {
       
@@ -588,6 +601,13 @@ window.onload = async () => {
     
     console.log(`Successfully loaded ${dictionaryWords.length} words from dictionary`);
     
+    // Check if NOTE is in the dictionary
+    console.log(`Is "NOTE" in dictionary: ${dictionaryWords.includes("NOTE")}`);
+    
+    // Find words that start with N
+    const nWords = dictionaryWords.filter(word => word.startsWith('N')).slice(0, 10);
+    console.log(`Some words starting with N: ${nWords.join(', ')}`);
+    
     // Log a few words to verify content
     if (debugMode) {
       console.log("Sample dictionary words:", dictionaryWords.slice(0, 5));
@@ -595,7 +615,7 @@ window.onload = async () => {
   } catch (error) {
     console.error('Error loading dictionary:', error);
     // Create a fallback mini-dictionary for testing
-    dictionaryWords = ["CAT", "DOG", "BIRD", "FISH", "LION", "TIGER", "BEAR", "WOLF", "FOX"];
+    dictionaryWords = ["NOTE", "CAT", "DOG", "BIRD", "FISH", "LION", "TIGER", "BEAR", "WOLF", "FOX"];
     console.log("Using fallback dictionary:", dictionaryWords);
   }
   
