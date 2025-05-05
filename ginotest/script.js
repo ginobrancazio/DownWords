@@ -1,5 +1,3 @@
-
-
 const grid = document.getElementById('letter-grid');
 const wordsContainer = document.getElementById('selected-words-container');
 const timerDisplay = document.getElementById('timer');
@@ -87,44 +85,13 @@ const HintsByDate = {
   'default': ['Hint: The Final Frontier']
 };
 
-// Add this near the top of your script for debugging
-let debugMode = true;
-
-// Modified window.onload function with better error handling and logging
-window.onload = async () => {
-  try {
-    console.log("Loading dictionary...");
-    const response = await fetch('dictionary.txt');
-    
-    if (!response.ok) {
-      throw new Error(`Failed to load dictionary: ${response.status} ${response.statusText}`);
-    }
-    
-    const text = await response.text();
-    dictionaryWords = text.split('\n')
-      .map(word => word.trim().toUpperCase())
-      .filter(word => word.length > 0); // Remove empty lines
-    
-    console.log(`Successfully loaded ${dictionaryWords.length} words from dictionary`);
-    
-    // Log a few words to verify content
-    if (debugMode) {
-      console.log("Sample dictionary words:", dictionaryWords.slice(0, 5));
-    }
-  } catch (error) {
-    console.error('Error loading dictionary:', error);
-    // Create a fallback mini-dictionary for testing
-    dictionaryWords = ["CAT", "DOG", "BIRD", "FISH", "LION", "TIGER", "BEAR", "WOLF", "FOX"];
-    console.log("Using fallback dictionary:", dictionaryWords);
-  }
-
-
 // Global variables for game state
 let selectedLetters = [];
 let matchedWords = [];
 let bonusWords = [];
 let dictionaryWords = [];
 let isMuted = false;
+let debugMode = true; // For debugging
 
 //hide timer as default
 timerDisplay.style.display = 'none';
@@ -324,20 +291,33 @@ function updateWordGroups() {
   // Check if there are any remaining letters that might form a bonus word
   const remainingLetters = selectedLetters.slice(currentIndex);
   
+  if (debugMode && remainingLetters.length > 0) {
+    console.log(`Checking ${remainingLetters.length} remaining letters for bonus words`);
+  }
+  
   // Sort each group by rowIndex to display letters in vertical order within the group
   groups.forEach(group => {
     group.sort((a, b) => a.rowIndex - b.rowIndex);
   });
   
-  if (remainingLetters.length > 0) {
+  if (remainingLetters.length >= 3) { // Only check if we have at least 3 letters
     remainingLetters.sort((a, b) => a.rowIndex - b.rowIndex);
     const potentialBonusWord = remainingLetters.map(obj => obj.letter).join('');
+    
+    if (debugMode) {
+      console.log(`Potential bonus word: "${potentialBonusWord}"`);
+      console.log(`Is in dictionary: ${dictionaryWords.includes(potentialBonusWord)}`);
+      console.log(`Is in daily words: ${words.includes(potentialBonusWord)}`);
+      console.log(`Already found: ${bonusWords.includes(potentialBonusWord)}`);
+    }
     
     // Check if it's a valid bonus word (in dictionary but not in daily words)
     if (potentialBonusWord.length >= 3 && 
         dictionaryWords.includes(potentialBonusWord) && 
         !words.includes(potentialBonusWord) &&
         !bonusWords.includes(potentialBonusWord)) {
+      
+      console.log(`BONUS WORD FOUND: ${potentialBonusWord}`);
       
       // It's a bonus word!
       if (!isMuted) {
@@ -349,7 +329,16 @@ function updateWordGroups() {
       
       // Display the bonus word
       const bonusWordsContainer = document.getElementById('bonus-words-container');
+      if (!bonusWordsContainer) {
+        console.error("Bonus words container not found! Creating it now...");
+        createBonusWordsContainer();
+      }
+      
       const bonusWordsList = document.getElementById('bonus-words-list');
+      if (!bonusWordsList) {
+        console.error("Bonus words list not found!");
+        return;
+      }
       
       bonusWordsContainer.style.display = 'block';
       
@@ -440,7 +429,7 @@ function updateWordGroups() {
 
         const playerTimeInSeconds = timeLeft; 
         const averageTimeInSeconds =  99;     
-        const blocklength = averageTimeInSeconds/8
+        const blocklength = averageTimeInSeconds/8;
         
         // Build the share message
         let message = `I completed today's DownWords in ${formatTime(timeLeft)} compared to the average of ${formatTime(averageTimeInSeconds)}\n`;
@@ -545,15 +534,69 @@ function updateWordGroups() {
   secondColumn.forEach(wordDiv => wordsContainer.appendChild(wordDiv));
 }
 
+// Helper function to create the bonus words container if needed
+function createBonusWordsContainer() {
+  const bonusContainer = document.createElement('div');
+  bonusContainer.id = 'bonus-words-container';
+  bonusContainer.innerHTML = '<h3>Bonus Words</h3><div id="bonus-words-list"></div>';
+  
+  // Add some basic styling
+  bonusContainer.style.marginTop = '20px';
+  bonusContainer.style.textAlign = 'center';
+  
+  // Add it to the page
+  document.body.insertBefore(bonusContainer, document.getElementById('selected-words-container').nextSibling);
+  
+  // Create styles for bonus words
+  const style = document.createElement('style');
+  style.textContent = `
+    #bonus-words-container {
+      margin-top: 20px;
+      text-align: center;
+    }
+    #bonus-words-list {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 10px;
+    }
+    .bonus-word {
+      background-color: #ffd700;
+      padding: 5px 10px;
+      border-radius: 5px;
+      font-weight: bold;
+      margin: 5px;
+    }
+  `;
+  document.head.appendChild(style);
+}
+
 // Load dictionary and start the timer when the page loads
 window.onload = async () => {
   try {
+    console.log("Loading dictionary...");
     const response = await fetch('dictionary.txt');
+    
+    if (!response.ok) {
+      throw new Error(`Failed to load dictionary: ${response.status} ${response.statusText}`);
+    }
+    
     const text = await response.text();
-    dictionaryWords = text.split('\n').map(word => word.trim().toUpperCase());
-    console.log(`Loaded ${dictionaryWords.length} words from dictionary`);
+    dictionaryWords = text.split('\n')
+      .map(word => word.trim().toUpperCase())
+      .filter(word => word.length > 0); // Remove empty lines
+    
+    console.log(`Successfully loaded ${dictionaryWords.length} words from dictionary`);
+    
+    // Log a few words to verify content
+    if (debugMode) {
+      console.log("Sample dictionary words:", dictionaryWords.slice(0, 5));
+    }
   } catch (error) {
-    console.error('Failed to load dictionary:', error);
+    console.error('Error loading dictionary:', error);
+    // Create a fallback mini-dictionary for testing
+    dictionaryWords = ["CAT", "DOG", "BIRD", "FISH", "LION", "TIGER", "BEAR", "WOLF", "FOX"];
+    console.log("Using fallback dictionary:", dictionaryWords);
   }
   
   // Start the timer
@@ -565,11 +608,13 @@ document.getElementById('hint-button').addEventListener('click', () => {
   hintDisplay.textContent = hintText;
   hintDisplay.style.display = 'block'; // Reveal the hint
 
-  gtag('event', 'reveal_hint', {
-    event_category: 'help',
-    event_label: 'Reveal Hint Button',
-    value: 1
-  });
+  if (typeof gtag === 'function') {
+    gtag('event', 'reveal_hint', {
+      event_category: 'help',
+      event_label: 'Reveal Hint Button',
+      value: 1
+    });
+  }
 });
 
 // Mute button functionality
@@ -577,11 +622,13 @@ document.getElementById('mute-button').addEventListener('click', () => {
   isMuted = !isMuted;
   document.getElementById('mute-button').textContent = isMuted ? '🔊 Unmute' : '🔇 Mute';
 
-  gtag('event', 'mute_toggle', {
-    event_category: 'settings',
-    event_label: 'Mute Button',
-    value: 1
-  });
+  if (typeof gtag === 'function') {
+    gtag('event', 'mute_toggle', {
+      event_category: 'settings',
+      event_label: 'Mute Button',
+      value: 1
+    });
+  }
 });
 
 // Share button functionality
@@ -592,11 +639,13 @@ document.getElementById('shareButton').addEventListener('click', () => {
   const twitterUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(message)}`;
   window.open(twitterUrl, '_blank');
 
-  gtag('event', 'share_to_twitter', {
-    event_category: 'social',
-    event_label: 'Twitter Share Button',
-    value: 1
-  });
+  if (typeof gtag === 'function') {
+    gtag('event', 'share_to_twitter', {
+      event_category: 'social',
+      event_label: 'Twitter Share Button',
+      value: 1
+    });
+  }
 });
 
 // Theme Button functionality
@@ -604,22 +653,26 @@ document.getElementById('theme-button').addEventListener('click', () => {
   themeDisplay.textContent = themeText;
   themeDisplay.style.display = 'block'; // Reveal the theme
 
-  gtag('event', 'reveal_theme', {
-    event_category: 'help',
-    event_label: 'Reveal Theme Button',
-    value: 1
-  });
+  if (typeof gtag === 'function') {
+    gtag('event', 'reveal_theme', {
+      event_category: 'help',
+      event_label: 'Reveal Theme Button',
+      value: 1
+    });
+  }
 });
 
 // Reset Button for StartOver
 document.getElementById('reset-button').addEventListener('click', () => {
   location.reload(); // Reloads the page, effectively resetting everything
 
-  gtag('event', 'start_over', {
-    event_category: 'game_control',
-    event_label: 'Start Over Button',
-    value: 1
-  });
+  if (typeof gtag === 'function') {
+    gtag('event', 'start_over', {
+      event_category: 'game_control',
+      event_label: 'Start Over Button',
+      value: 1
+    });
+  }
 });
 
 // Add copy button functionality
@@ -628,11 +681,13 @@ document.getElementById('copyButton').addEventListener('click', () => {
   document.execCommand('copy');
   alert('Copied to clipboard!');
 
-  gtag('event', 'copy_result', {
-    event_category: 'engagement',
-    event_label: 'Copy Result Button',
-    value: 1
-  });
+  if (typeof gtag === 'function') {
+    gtag('event', 'copy_result', {
+      event_category: 'engagement',
+      event_label: 'Copy Result Button',
+      value: 1
+    });
+  }
 });
 
 function showCompletionMessage() {
@@ -651,11 +706,13 @@ document.getElementById('grid-reset-button').addEventListener('click', () => {
   // Don't reset bonus words when resetting the grid
   // This allows players to continue finding bonus words
   
-  gtag('event', 'grid_reset', {
-    event_category: 'game_control',
-    event_label: 'Grid Reset Button',
-    value: 1
-  });
+  if (typeof gtag === 'function') {
+    gtag('event', 'grid_reset', {
+      event_category: 'game_control',
+      event_label: 'Grid Reset Button',
+      value: 1
+    });
+  }
   
   wordsContainer.innerHTML = '';
   grid.innerHTML = '';
