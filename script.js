@@ -370,7 +370,7 @@ function updateWordGroups() {
         }
 
         const playerTimeInSeconds = timeLeft; 
-        const averageTimeInSeconds =  99;     
+        const averageTimeInSeconds =  135;     
         const blocklength = averageTimeInSeconds/8
         
         // Build the share message
@@ -408,11 +408,11 @@ function updateWordGroups() {
         
         // Add bonus words found to the message
         if (bonusWordsFound.size > 0) {
-          message += `\n🌟 - Found ${bonusWordsFound.size} bonus word${bonusWordsFound.size > 1 ? 's' : ''}: ${[...bonusWordsFound].join(', ')}`;
+          message += `\n🦆 Duck Hunter - Found ${bonusWordsFound.size} bonus word${bonusWordsFound.size > 1 ? 's' : ''}: ${[...bonusWordsFound].join(', ')}`;
         }
         
         //check player speed   
-        const averageTime = 241;
+        const averageTime = 135;
 
         if (timeLeft < averageTime * 0.2) {
           message += `\n👑 - Top 20% of players today!`;
@@ -459,6 +459,11 @@ function updateWordGroups() {
           dictionary.has(word) && 
           word.length >= 3 && // Only consider words of at least 3 letters
           !bonusWordsFound.has(word)) { // Only show alert for new bonus words
+
+        //Play a sound
+        if (!isMuted){
+          matchSound.play();
+        }
         
         // Add to found bonus words
         bonusWordsFound.add(word);
