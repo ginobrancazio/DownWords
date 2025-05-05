@@ -69,7 +69,7 @@ const HintsByDate = {
   '30 April 2025': ['Hint: Quenches thirst in many forms.'],
   '01 May 2025': ['Hint: They come in flocks or solo, soaring above.'],
   '02 May 2025': ['Hint: Geometric figures with defined sides or curves.'],
-  '03 May 2025': ['Hint: You’ll find it on menus in Italian restaurants.'],
+  '03 May 2025': ['Hint: You\'ll find it on menus in Italian restaurants.'],
   '04 May 2025': ['Hint: Something that needs solving, often for fun'],
   '05 May 2025': ['The physical form of a person'],
   '06 May 2025': ['Colour of grass and leaves'],
@@ -299,11 +299,13 @@ function stopTimer() {
   clearInterval(timer);
 }
 
-// Function to clear all selected letters
+// Function to clear all selected letters and reset their appearance
 function clearSelectedLetters() {
   selectedLetters.forEach(obj => {
     obj.element.classList.remove('selected');
     obj.element.style.backgroundColor = '';
+    obj.element.style.opacity = '1'; // Reset opacity
+    obj.element.style.pointerEvents = 'auto'; // Re-enable interaction
   });
   selectedLetters = [];
 }
@@ -458,9 +460,6 @@ function updateWordGroups() {
           word.length >= 3 && // Only consider words of at least 3 letters
           !bonusWordsFound.has(word)) { // Only show alert for new bonus words
         
-        wordDiv.style.backgroundColor = '#f7d358';  // Yellow for bonus word
-        wordDiv.textContent = `⭐ ${word}`;  // Add a star to indicate a bonus word
-        
         // Add to found bonus words
         bonusWordsFound.add(word);
         
@@ -474,6 +473,9 @@ function updateWordGroups() {
           // Clear selected letters to allow finding more words
           clearSelectedLetters();
           
+          // Don't show this word in the main word display
+          // We'll update the display by calling updateWordGroups() again
+          
           // Track the bonus word event
           if (typeof gtag === 'function') {
             gtag('event', 'bonus_word_found', {
@@ -481,8 +483,12 @@ function updateWordGroups() {
               'event_label': word
             });
           }
+          
+          // Update the display to remove the bonus word from the main display
+          updateWordGroups();
         }, 300); // Small delay so the UI updates first
         
+        return; // Exit early to prevent adding this word to wordGroups
       } else {
         wordDiv.style.backgroundColor = colours[i % colours.length];
       }
