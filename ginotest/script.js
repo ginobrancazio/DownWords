@@ -266,8 +266,7 @@ if (selectedLetters.every(letter => letter)) {
       // Optional: flash red or show error
       console.log(`"${word}" is not valid.`);
     }
-  }
-});
+  };
 
       updateWordGroups();
     });
