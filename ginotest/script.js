@@ -203,33 +203,56 @@ gridArray.forEach((row, rowIndex) => {
       const isSelected = div.classList.contains('selected');
 
       if (isSelected) {
-  // Remove from selectedLetters and unselect the letter
-  selectedLetters = selectedLetters.filter(obj => obj.element !== div);
-  div.classList.remove('selected');
-  div.style.backgroundColor = '';
-} else {
-  // Count how many letters are already selected in this row
-  const selectedInRow = selectedLetters.filter(obj => obj.rowIndex === rowIndex).length;
-  const allowedPerRow = matchedWords.length + 1;
+  if (isSelected) {
+        // Remove from selectedLetters and unselect the letter
+        selectedLetters = selectedLetters.filter(obj => obj.element !== div);
+        div.classList.remove('selected');
+      } else {
+        // Select the letter and track it
+        div.classList.add('selected');
+        selectedLetters.push({ letter: div.textContent, element: div });
+      }
 
-  if (selectedInRow >= allowedPerRow) {
-    // Optionally give user feedback
-    div.classList.add('shake');
-    setTimeout(() => div.classList.remove('shake'), 300);
-    return;
-  }
+      const selectedWord = selectedLetters.map(obj => obj.letter).join('').toUpperCase();
 
-  // Add to selectedLetters
-  selectedLetters.push({ letter, element: div, rowIndex, colIndex });
-  div.classList.add('selected');
-}
+      // Check if the selected word is in today's word list
+      if (words.includes(selectedWord) && !matchedWords.includes(selectedWord)) {
+        matchedWords.push(selectedWord);
 
-      updateWordGroups();
-    });
+        if (!isMuted) matchSound.play();
 
-    grid.appendChild(div);
-  });
-});
+        const wordDiv = document.createElement('div');
+        wordDiv.className = 'matched-word';
+        wordDiv.textContent = selectedWord;
+        wordsContainer.appendChild(wordDiv);
+
+        selectedLetters.forEach(obj => obj.element.classList.add('matched'));
+        selectedLetters = [];
+
+        if (matchedWords.length === words.length) {
+          successMessage.style.display = 'block';
+          if (!isMuted) successSound.play();
+        }
+      }
+
+      // Option 1: Check for bonus word (in dictionary, not in today's list)
+      else if (
+        englishWords.includes(selectedWord) &&
+        !words.includes(selectedWord) &&
+        !matchedWords.includes(selectedWord)
+      ) {
+        matchedWords.push(selectedWord);
+
+        if (!isMuted) matchSound.play();
+
+        const bonusDiv = document.createElement('div');
+        bonusDiv.className = 'bonus-word';
+        bonusDiv.textContent = `${selectedWord} (Bonus)`;
+        wordsContainer.appendChild(bonusDiv);
+
+        selectedLetters.forEach(obj => obj.element.classList.add('matched'));
+        selectedLetters = [];
+      }
 
 // Timer functionality
 let timer;
