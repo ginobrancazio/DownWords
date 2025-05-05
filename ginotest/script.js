@@ -87,6 +87,38 @@ const HintsByDate = {
   'default': ['Hint: The Final Frontier']
 };
 
+// Add this near the top of your script for debugging
+let debugMode = true;
+
+// Modified window.onload function with better error handling and logging
+window.onload = async () => {
+  try {
+    console.log("Loading dictionary...");
+    const response = await fetch('dictionary.txt');
+    
+    if (!response.ok) {
+      throw new Error(`Failed to load dictionary: ${response.status} ${response.statusText}`);
+    }
+    
+    const text = await response.text();
+    dictionaryWords = text.split('\n')
+      .map(word => word.trim().toUpperCase())
+      .filter(word => word.length > 0); // Remove empty lines
+    
+    console.log(`Successfully loaded ${dictionaryWords.length} words from dictionary`);
+    
+    // Log a few words to verify content
+    if (debugMode) {
+      console.log("Sample dictionary words:", dictionaryWords.slice(0, 5));
+    }
+  } catch (error) {
+    console.error('Error loading dictionary:', error);
+    // Create a fallback mini-dictionary for testing
+    dictionaryWords = ["CAT", "DOG", "BIRD", "FISH", "LION", "TIGER", "BEAR", "WOLF", "FOX"];
+    console.log("Using fallback dictionary:", dictionaryWords);
+  }
+
+
 // Global variables for game state
 let selectedLetters = [];
 let matchedWords = [];
@@ -262,37 +294,6 @@ gridArray.forEach((row, rowIndex) => {
 // Timer functionality
 let timer;
 let timeLeft = 0;
-
-// Add this near the top of your script for debugging
-let debugMode = true;
-
-// Modified window.onload function with better error handling and logging
-window.onload = async () => {
-  try {
-    console.log("Loading dictionary...");
-    const response = await fetch('dictionary.txt');
-    
-    if (!response.ok) {
-      throw new Error(`Failed to load dictionary: ${response.status} ${response.statusText}`);
-    }
-    
-    const text = await response.text();
-    dictionaryWords = text.split('\n')
-      .map(word => word.trim().toUpperCase())
-      .filter(word => word.length > 0); // Remove empty lines
-    
-    console.log(`Successfully loaded ${dictionaryWords.length} words from dictionary`);
-    
-    // Log a few words to verify content
-    if (debugMode) {
-      console.log("Sample dictionary words:", dictionaryWords.slice(0, 5));
-    }
-  } catch (error) {
-    console.error('Error loading dictionary:', error);
-    // Create a fallback mini-dictionary for testing
-    dictionaryWords = ["CAT", "DOG", "BIRD", "FISH", "LION", "TIGER", "BEAR", "WOLF", "FOX"];
-    console.log("Using fallback dictionary:", dictionaryWords);
-  }
 
 function startTimer() {
   timer = setInterval(() => {
