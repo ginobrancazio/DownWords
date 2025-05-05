@@ -397,12 +397,7 @@ document.getElementById('copyButton').style.display = 'block';
 
 
       }
-    } else if (bonusWords.includes(word)) {
-  alert(`Bonus word found: ${word}!`);
-  // Optional: play a different sound or give a small reward
-}
-    
-    
+    } else 
     {
       wordDiv.style.backgroundColor = colours[i % colours.length];
     }
