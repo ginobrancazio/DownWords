@@ -10,20 +10,6 @@ const letterClickSound = new Audio('click-sound.mp3');
 const matchSound = new Audio('match-sound.mp3');
 const successSound = new Audio('finish-sound.mp3');
 
-//create a space for bonus words
-let bonusWords = [];
-
-// fetch all the words from the word list
-fetch('dictionary.txt')
-  .then(response => response.text())
-  .then(data => {
-    bonusWords = data.split(/\r?\n/).map(w => w.trim().toUpperCase());
-  })
-  .catch(error => {
-    console.error('Error loading bonus words:', error);
-  });
-
-
 // --- GAME DATA ---
 // Word lists by date
 const wordListsByDate = {
@@ -200,14 +186,7 @@ gridArray.forEach((row, rowIndex) => {
     div.dataset.row = rowIndex;
     div.dataset.col = colIndex;
 
-// when a letter is clicked
-div.addEventListener('click', () => {
-
-//set row variable
-const row = parseInt(div.dataset.row);
-
-
-
+    div.addEventListener('click', () => {
       // Play click sound
       if (!isMuted){
       letterClickSound.play();
@@ -235,38 +214,6 @@ const row = parseInt(div.dataset.row);
   selectedLetters.push({ letter, element: div, rowIndex, colIndex });
   div.classList.add('selected');
 }
-
-if (selectedLetters.every(letter => letter)) {
-    const word = selectedLetters.join('').toUpperCase();
-
-    // Clear selection for next word
-    selectedLetters = [];
-
-    const selectedEls = grid.querySelectorAll('.letter.selected');
-    selectedEls.forEach(el => el.classList.remove('selected'));
-
-    // Check if word is in today's word list
-    if (words.includes(word)) {
-      if (!matchedWords.includes(word)) {
-        matchedWords.push(word);
-        matchSound.play();
-        addWordToDisplay(word); // You can define this to show matched words
-      }
-    } 
-    // Otherwise check dictionary for bonus words
-    else if (bonusWords.includes(word)) {
-      if (!matchedWords.includes(word)) {
-        matchedWords.push(word);
-        matchSound.play();
-        addWordToDisplay(word, true); // Mark as bonus word
-      }
-    } 
-    // Not a valid word
-    else {
-      // Optional: flash red or show error
-      console.log(`"${word}" is not valid.`);
-    }
-  };
 
       updateWordGroups();
     });
@@ -435,9 +382,7 @@ document.getElementById('copyButton').style.display = 'block';
 
 
       }
-    } else 
-      
-    {
+    } else {
       wordDiv.style.backgroundColor = colours[i % colours.length];
     }
 
