@@ -200,7 +200,8 @@ gridArray.forEach((row, rowIndex) => {
     div.dataset.row = rowIndex;
     div.dataset.col = colIndex;
 
-    div.addEventListener('click', () => {
+// when a letter is clicked
+div.addEventListener('click', () => {
       
       // Play click sound
       if (!isMuted){
@@ -398,6 +399,21 @@ document.getElementById('copyButton').style.display = 'block';
 
       }
     } else 
+
+const selectedWord = selectedLetters.join('').toUpperCase();
+
+if (words.includes(selectedWord)) {
+  // Already found?
+  if (!matchedWords.includes(selectedWord)) {
+    matchedWords.push(selectedWord);
+    alert(`You found a word: ${selectedWord}`);
+    // play matchSound, update UI etc.
+  }
+} else if (bonusWords.includes(selectedWord)) {
+  alert(`Bonus word found: ${selectedWord}!`);
+  // Optional: play a different sound or give a small reward
+}
+      
     {
       wordDiv.style.backgroundColor = colours[i % colours.length];
     }
