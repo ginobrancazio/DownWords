@@ -69,7 +69,7 @@ const HintsByDate = {
   '30 April 2025': ['Hint: Quenches thirst in many forms.'],
   '01 May 2025': ['Hint: They come in flocks or solo, soaring above.'],
   '02 May 2025': ['Hint: Geometric figures with defined sides or curves.'],
-  '03 May 2025': ['Hint: You'll find it on menus in Italian restaurants.'],
+  '03 May 2025': ['Hint: You’ll find it on menus in Italian restaurants.'],
   '04 May 2025': ['Hint: Something that needs solving, often for fun'],
   '05 May 2025': ['The physical form of a person'],
   '06 May 2025': ['Colour of grass and leaves'],
