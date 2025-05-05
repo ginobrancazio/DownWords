@@ -10,6 +10,16 @@ const letterClickSound = new Audio('click-sound.mp3');
 const matchSound = new Audio('match-sound.mp3');
 const successSound = new Audio('finish-sound.mp3');
 
+//load word dictionary
+let englishWords = [];
+
+fetch('dictionary.txt')
+  .then(response => response.text())
+  .then(text => {
+    englishWords = text.split('\n').map(word => word.trim().toUpperCase());
+  });
+
+
 // --- GAME DATA ---
 // Word lists by date
 const wordListsByDate = {
@@ -148,7 +158,6 @@ const themeText = getThemeForToday();
 let selectedLetters = [];
 let matchedWords = [];
 let isMuted = false;
-
 
 const colours = ['#a0d2eb', '#ffc6a0', '#c8e6a0', '#f7a0eb', '#d0a0ff'];
 
