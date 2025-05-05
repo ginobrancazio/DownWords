@@ -10,17 +10,6 @@ const letterClickSound = new Audio('click-sound.mp3');
 const matchSound = new Audio('match-sound.mp3');
 const successSound = new Audio('finish-sound.mp3');
 
-//load all the words in the dictionary.txt file
-let englishWords = [];
-
-fetch('dictionary.txt')
-  .then(response => response.text())
-  .then(text => {
-    englishWords = text.split('\n').map(word => word.trim().toUpperCase());
-  });
-
-
-
 // --- GAME DATA ---
 // Word lists by date
 const wordListsByDate = {
@@ -301,7 +290,7 @@ function updateWordGroups() {
         matchSound.play();
         }
       }
-    
+
       
       
       
@@ -393,13 +382,7 @@ document.getElementById('copyButton').style.display = 'block';
 
 
       }
-    } else if (englishWords.includes(word)) {
-    if (!matchedBonusWords.includes(word)) {
-      matchedBonusWords.push(word);
-      return 'bonus'; // Valid bonus word
-    }
-    }
-    {
+    } else {
       wordDiv.style.backgroundColor = colours[i % colours.length];
     }
 
