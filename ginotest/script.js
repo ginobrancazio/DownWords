@@ -88,6 +88,20 @@ const HintsByDate = {
 let dictionary = new Set(); // Using a Set for fast lookups
 let bonusWordsFound = new Set(); // Track found bonus words
 
+// Create a container for bonus words
+const bonusWordsContainer = document.createElement('div');
+bonusWordsContainer.id = 'bonus-words-container';
+bonusWordsContainer.style.marginTop = '20px';
+bonusWordsContainer.style.display = 'none';
+document.body.insertBefore(bonusWordsContainer, wordsContainer.nextSibling);
+
+// Add a heading for bonus words
+const bonusWordsHeading = document.createElement('h3');
+bonusWordsHeading.textContent = 'Bonus Words:';
+bonusWordsHeading.style.textAlign = 'center';
+bonusWordsHeading.style.marginBottom = '10px';
+bonusWordsContainer.appendChild(bonusWordsHeading);
+
 // Load the dictionary file
 fetch('dictionary.txt')
   .then(response => response.text())
@@ -150,6 +164,41 @@ function getHintForToday() {
   }
   
   return selectedhint;
+}
+
+// Function to update the bonus words display
+function updateBonusWordsDisplay() {
+  // Clear existing content except the heading
+  while (bonusWordsContainer.childNodes.length > 1) {
+    bonusWordsContainer.removeChild(bonusWordsContainer.lastChild);
+  }
+  
+  // Show the container if we have bonus words
+  if (bonusWordsFound.size > 0) {
+    bonusWordsContainer.style.display = 'block';
+    
+    // Create a flex container for the bonus words
+    const flexContainer = document.createElement('div');
+    flexContainer.style.display = 'flex';
+    flexContainer.style.flexWrap = 'wrap';
+    flexContainer.style.justifyContent = 'center';
+    flexContainer.style.gap = '10px';
+    
+    // Add each bonus word
+    [...bonusWordsFound].forEach(word => {
+      const wordDiv = document.createElement('div');
+      wordDiv.textContent = `⭐ ${word}`;
+      wordDiv.style.backgroundColor = '#f7d358';
+      wordDiv.style.padding = '0.5em';
+      wordDiv.style.borderRadius = '5px';
+      wordDiv.style.margin = '5px';
+      flexContainer.appendChild(wordDiv);
+    });
+    
+    bonusWordsContainer.appendChild(flexContainer);
+  } else {
+    bonusWordsContainer.style.display = 'none';
+  }
 }
 
 //get word list
@@ -250,6 +299,15 @@ function stopTimer() {
   clearInterval(timer);
 }
 
+// Function to clear all selected letters
+function clearSelectedLetters() {
+  selectedLetters.forEach(obj => {
+    obj.element.classList.remove('selected');
+    obj.element.style.backgroundColor = '';
+  });
+  selectedLetters = [];
+}
+
 // Update word groups and check for matches
 function updateWordGroups() {
   // Clear all previous colours
@@ -348,7 +406,7 @@ function updateWordGroups() {
         
         // Add bonus words found to the message
         if (bonusWordsFound.size > 0) {
-          message += `\n🌟 - Found ${bonusWordsFound.size} bonus word${bonusWordsFound.size > 1 ? 's' : ''}`;
+          message += `\n🌟 - Found ${bonusWordsFound.size} bonus word${bonusWordsFound.size > 1 ? 's' : ''}: ${[...bonusWordsFound].join(', ')}`;
         }
         
         //check player speed   
@@ -382,6 +440,7 @@ function updateWordGroups() {
         document.getElementById('theme-button').style.display = 'none';
         document.getElementById('mute-button').style.display = 'none';
         document.getElementById('grid-reset-button').style.display = 'none';
+        bonusWordsContainer.style.display = 'none'; // Hide bonus words container
 
         if (typeof gtag === 'function') {
           gtag('event', 'game_completed', {
@@ -405,9 +464,15 @@ function updateWordGroups() {
         // Add to found bonus words
         bonusWordsFound.add(word);
         
+        // Update the bonus words display
+        updateBonusWordsDisplay();
+        
         // Show congratulation alert
         setTimeout(() => {
           alert(`Bonus word found: ${word}! Great job finding an extra word!`);
+          
+          // Clear selected letters to allow finding more words
+          clearSelectedLetters();
           
           // Track the bonus word event
           if (typeof gtag === 'function') {
