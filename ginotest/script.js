@@ -299,15 +299,15 @@ function stopTimer() {
   clearInterval(timer);
 }
 
-// Function to clear all selected letters and reset their appearance
-function clearSelectedLetters() {
-  selectedLetters.forEach(obj => {
+// Function to unselect specific letters (for bonus words)
+function unselectLetters(lettersToUnselect) {
+  lettersToUnselect.forEach(obj => {
     obj.element.classList.remove('selected');
     obj.element.style.backgroundColor = '';
-    obj.element.style.opacity = '1'; // Reset opacity
-    obj.element.style.pointerEvents = 'auto'; // Re-enable interaction
   });
-  selectedLetters = [];
+  
+  // Remove these letters from the selectedLetters array
+  selectedLetters = selectedLetters.filter(obj => !lettersToUnselect.includes(obj));
 }
 
 // Update word groups and check for matches
@@ -466,15 +466,15 @@ function updateWordGroups() {
         // Update the bonus words display
         updateBonusWordsDisplay();
         
+        // Store the current group to unselect later
+        const bonusWordLetters = [...group]; // Create a copy of the group
+        
         // Show congratulation alert
         setTimeout(() => {
           alert(`Bonus word found: ${word}! Great job finding an extra word!`);
           
-          // Clear selected letters to allow finding more words
-          clearSelectedLetters();
-          
-          // Don't show this word in the main word display
-          // We'll update the display by calling updateWordGroups() again
+          // Unselect only the letters that formed the bonus word
+          unselectLetters(bonusWordLetters);
           
           // Track the bonus word event
           if (typeof gtag === 'function') {
