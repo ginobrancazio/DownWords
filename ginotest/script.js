@@ -201,6 +201,21 @@ gridArray.forEach((row, rowIndex) => {
     div.dataset.col = colIndex;
 
     div.addEventListener('click', () => {
+      
+      const selectedWord = selectedLetters.join('').toUpperCase();
+
+if (words.includes(selectedWord)) {
+  // Already found?
+  if (!matchedWords.includes(selectedWord)) {
+    matchedWords.push(selectedWord);
+    alert(`You found a word: ${selectedWord}`);
+    // play matchSound, update UI etc.
+  }
+} else if (bonusWords.includes(selectedWord)) {
+  alert(`Bonus word found: ${selectedWord}!`);
+  // Optional: play a different sound or give a small reward
+}
+      
       // Play click sound
       if (!isMuted){
       letterClickSound.play();
