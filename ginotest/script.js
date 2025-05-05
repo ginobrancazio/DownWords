@@ -10,6 +10,20 @@ const letterClickSound = new Audio('click-sound.mp3');
 const matchSound = new Audio('match-sound.mp3');
 const successSound = new Audio('finish-sound.mp3');
 
+//create a space for bonus words
+let bonusWords = [];
+
+// fetch all the words from the word list
+fetch('dictionary.txt')
+  .then(response => response.text())
+  .then(data => {
+    bonusWords = data.split(/\r?\n/).map(w => w.trim().toUpperCase());
+  })
+  .catch(error => {
+    console.error('Error loading bonus words:', error);
+  });
+
+
 // --- GAME DATA ---
 // Word lists by date
 const wordListsByDate = {
