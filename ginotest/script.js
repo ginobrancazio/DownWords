@@ -69,7 +69,7 @@ const HintsByDate = {
   '30 April 2025': ['Hint: Quenches thirst in many forms.'],
   '01 May 2025': ['Hint: They come in flocks or solo, soaring above.'],
   '02 May 2025': ['Hint: Geometric figures with defined sides or curves.'],
-  '03 May 2025': ['Hint: You’ll find it on menus in Italian restaurants.'],
+  '03 May 2025': ['Hint: You'll find it on menus in Italian restaurants.'],
   '04 May 2025': ['Hint: Something that needs solving, often for fun'],
   '05 May 2025': ['The physical form of a person'],
   '06 May 2025': ['Colour of grass and leaves'],
@@ -83,6 +83,21 @@ const HintsByDate = {
   '14 May 2025': ['Hint: A non-serious person who tries to make you laugh'],
   'default': ['Hint: The Final Frontier']
 };
+
+// Dictionary for bonus words
+let dictionary = new Set(); // Using a Set for fast lookups
+let bonusWordsFound = new Set(); // Track found bonus words
+
+// Load the dictionary file
+fetch('dictionary.txt')
+  .then(response => response.text())
+  .then(text => {
+    // Split the text file by newlines and add each word to the Set
+    const words = text.split('\n').map(word => word.trim().toUpperCase());
+    dictionary = new Set(words);
+    console.log('Dictionary loaded with', dictionary.size, 'words');
+  })
+  .catch(error => console.error('Error loading dictionary:', error));
 
 //hide timer as default
 timerDisplay.style.display = 'none';
@@ -137,7 +152,6 @@ function getHintForToday() {
   return selectedhint;
 }
 
-
 //get word list
 const words = getWordsForToday();
 
@@ -148,7 +162,6 @@ const themeText = getThemeForToday();
 let selectedLetters = [];
 let matchedWords = [];
 let isMuted = false;
-
 
 const colours = ['#a0d2eb', '#ffc6a0', '#c8e6a0', '#f7a0eb', '#d0a0ff'];
 
@@ -189,31 +202,31 @@ gridArray.forEach((row, rowIndex) => {
     div.addEventListener('click', () => {
       // Play click sound
       if (!isMuted){
-      letterClickSound.play();
+        letterClickSound.play();
       }
       const isSelected = div.classList.contains('selected');
 
       if (isSelected) {
-  // Remove from selectedLetters and unselect the letter
-  selectedLetters = selectedLetters.filter(obj => obj.element !== div);
-  div.classList.remove('selected');
-  div.style.backgroundColor = '';
-} else {
-  // Count how many letters are already selected in this row
-  const selectedInRow = selectedLetters.filter(obj => obj.rowIndex === rowIndex).length;
-  const allowedPerRow = matchedWords.length + 1;
+        // Remove from selectedLetters and unselect the letter
+        selectedLetters = selectedLetters.filter(obj => obj.element !== div);
+        div.classList.remove('selected');
+        div.style.backgroundColor = '';
+      } else {
+        // Count how many letters are already selected in this row
+        const selectedInRow = selectedLetters.filter(obj => obj.rowIndex === rowIndex).length;
+        const allowedPerRow = matchedWords.length + 1;
 
-  if (selectedInRow >= allowedPerRow) {
-    // Optionally give user feedback
-    div.classList.add('shake');
-    setTimeout(() => div.classList.remove('shake'), 300);
-    return;
-  }
+        if (selectedInRow >= allowedPerRow) {
+          // Optionally give user feedback
+          div.classList.add('shake');
+          setTimeout(() => div.classList.remove('shake'), 300);
+          return;
+        }
 
-  // Add to selectedLetters
-  selectedLetters.push({ letter, element: div, rowIndex, colIndex });
-  div.classList.add('selected');
-}
+        // Add to selectedLetters
+        selectedLetters.push({ letter, element: div, rowIndex, colIndex });
+        div.classList.add('selected');
+      }
 
       updateWordGroups();
     });
@@ -279,94 +292,92 @@ function updateWordGroups() {
       group.forEach(obj => {
         obj.element.style.opacity = '0.3';  // Hide the letter but keep the space
         obj.element.style.pointerEvents = 'none';  // Disable any interaction (clicking)
-
       });
 
       // Add the word to matchedWords and check if all words are matched
       if (!matchedWords.includes(word)) {
         matchedWords.push(word);
-      // Play match sound
+        // Play match sound
         if (!isMuted){
-        matchSound.play();
+          matchSound.play();
         }
       }
-
-      
-      
       
       if (matchedWords.length === words.length) {
         stopTimer();
         if (!isMuted){
-        successSound.play(); // Play success sound
+          successSound.play(); // Play success sound
         }
 
-const playerTimeInSeconds = timeLeft; 
-const averageTimeInSeconds =  99;     
-const blocklength = averageTimeInSeconds/8
+        const playerTimeInSeconds = timeLeft; 
+        const averageTimeInSeconds =  99;     
+        const blocklength = averageTimeInSeconds/8
         
-// Build the share message
-let message = `I completed today's DownWords in ${formatTime(timeLeft)} compared to the average of ${formatTime(averageTimeInSeconds)}\n`;
+        // Build the share message
+        let message = `I completed today's DownWords in ${formatTime(timeLeft)} compared to the average of ${formatTime(averageTimeInSeconds)}\n`;
 
-// Convert times to blocks (each block represents one 8th of the average time)
-const playerBlocks = Math.floor(playerTimeInSeconds / blocklength);
-const averageBlocks = Math.floor(averageTimeInSeconds / blocklength);
+        // Convert times to blocks (each block represents one 8th of the average time)
+        const playerBlocks = Math.floor(playerTimeInSeconds / blocklength);
+        const averageBlocks = Math.floor(averageTimeInSeconds / blocklength);
 
-// Build the block strings
-let playerBlocksString = '';
-let averageBlocksString = '';
+        // Build the block strings
+        let playerBlocksString = '';
+        let averageBlocksString = '';
 
-// If player is slower than average
-if (playerTimeInSeconds > averageTimeInSeconds) {
-  const extraTime = Math.min(playerTimeInSeconds - averageTimeInSeconds, blocklength * 3);
-  const extraBlocks = Math.ceil(extraTime / blocklength);
-  playerBlocksString = '🟩'.repeat(averageBlocks) + '🟥'.repeat(extraBlocks);
-} else {
-  const minimumPlayerBlocks = Math.max(1, playerBlocks); // Make sure at least 1 block
-  playerBlocksString = '🟩'.repeat(minimumPlayerBlocks);
-}
+        // If player is slower than average
+        if (playerTimeInSeconds > averageTimeInSeconds) {
+          const extraTime = Math.min(playerTimeInSeconds - averageTimeInSeconds, blocklength * 3);
+          const extraBlocks = Math.ceil(extraTime / blocklength);
+          playerBlocksString = '🟩'.repeat(averageBlocks) + '🟥'.repeat(extraBlocks);
+        } else {
+          const minimumPlayerBlocks = Math.max(1, playerBlocks); // Make sure at least 1 block
+          playerBlocksString = '🟩'.repeat(minimumPlayerBlocks);
+        }
 
+        // Average is always green blocks (no red needed)
+        averageBlocksString = '🟩'.repeat(averageBlocks);
 
-// Average is always green blocks (no red needed)
-averageBlocksString = '🟩'.repeat(averageBlocks);
-
-  // Format the final message
-  message += `\n${playerBlocksString} - Me (${formatTime(timeLeft)})`;
-  message += `\n${averageBlocksString} - Average (${formatTime(averageTimeInSeconds)}) \n`;
+        // Format the final message
+        message += `\n${playerBlocksString} - Me (${formatTime(timeLeft)})`;
+        message += `\n${averageBlocksString} - Average (${formatTime(averageTimeInSeconds)}) \n`;
         
- // Both hint and theme are hidden, do something here
-if (getComputedStyle(hintDisplay).display === 'none' && getComputedStyle(themeDisplay).display === 'none') {
-  message += `\n🏆 - No hints`;
-}
+        // Both hint and theme are hidden, do something here
+        if (getComputedStyle(hintDisplay).display === 'none' && getComputedStyle(themeDisplay).display === 'none') {
+          message += `\n🏆 - No hints`;
+        }
         
- //check player speed   
-const averageTime = 241;
-
-if (timeLeft < averageTime * 0.2) {
-  message += `\n👑 - Top 20% of players today!`;
-} else if (timeLeft < averageTime) {
-  message += `\n🏅 - Top 50% of players today`;
-}
+        // Add bonus words found to the message
+        if (bonusWordsFound.size > 0) {
+          message += `\n🌟 - Found ${bonusWordsFound.size} bonus word${bonusWordsFound.size > 1 ? 's' : ''}`;
+        }
         
-message += `\n`;
-message += `\nwww.DownWordsGame.com`;
-message += `\n#DownWordsGame`;
+        //check player speed   
+        const averageTime = 241;
+
+        if (timeLeft < averageTime * 0.2) {
+          message += `\n👑 - Top 20% of players today!`;
+        } else if (timeLeft < averageTime) {
+          message += `\n🏅 - Top 50% of players today`;
+        }
         
-// Show the text box with the completion message
-//document.getElementById('gameCompletionMessage').style.display = 'block';
- showCompletionMessage();
+        message += `\n`;
+        message += `\nwww.DownWordsGame.com`;
+        message += `\n#DownWordsGame`;
+        
+        // Show the text box with the completion message
+        showCompletionMessage();
 
-// Populate the text box with the completion message
-document.getElementById('gameCompletionMessage').value = message
+        // Populate the text box with the completion message
+        document.getElementById('gameCompletionMessage').value = message;
 
-//show the copy and share buttons
-document.getElementById('shareButton').style.display = 'block';
-document.getElementById('copyButton').style.display = 'block';
-
+        //show the copy and share buttons
+        document.getElementById('shareButton').style.display = 'block';
+        document.getElementById('copyButton').style.display = 'block';
         
         // Remove the grid once all words are matched
         grid.style.display = 'none';  // Hide the grid
-         hintDisplay.style.display = 'none'; //Hide the Hint text
-          themeDisplay.style.display = 'none'; //hide the theme text
+        hintDisplay.style.display = 'none'; //Hide the Hint text
+        themeDisplay.style.display = 'none'; //hide the theme text
         document.getElementById('hint-button').style.display = 'none'; //hide all the buttons
         document.getElementById('theme-button').style.display = 'none';
         document.getElementById('mute-button').style.display = 'none';
@@ -377,13 +388,39 @@ document.getElementById('copyButton').style.display = 'block';
             'event_category': 'gameplay',
             'event_label': 'DownWords Game Completed',
             'value': timeLeft  // You could even track how long it took!
-            });
-          }
-
-
+          });
+        }
       }
     } else {
-      wordDiv.style.backgroundColor = colours[i % colours.length];
+      // Check if it's a bonus word (in dictionary but not in target words)
+      if (group.length === words[0].length && // Only check if the group has the right number of letters
+          !words.includes(word) && 
+          dictionary.has(word) && 
+          word.length >= 3 && // Only consider words of at least 3 letters
+          !bonusWordsFound.has(word)) { // Only show alert for new bonus words
+        
+        wordDiv.style.backgroundColor = '#f7d358';  // Yellow for bonus word
+        wordDiv.textContent = `⭐ ${word}`;  // Add a star to indicate a bonus word
+        
+        // Add to found bonus words
+        bonusWordsFound.add(word);
+        
+        // Show congratulation alert
+        setTimeout(() => {
+          alert(`Bonus word found: ${word}! Great job finding an extra word!`);
+          
+          // Track the bonus word event
+          if (typeof gtag === 'function') {
+            gtag('event', 'bonus_word_found', {
+              'event_category': 'gameplay',
+              'event_label': word
+            });
+          }
+        }, 300); // Small delay so the UI updates first
+        
+      } else {
+        wordDiv.style.backgroundColor = colours[i % colours.length];
+      }
     }
 
     wordGroups.push(wordDiv);
@@ -417,12 +454,13 @@ document.getElementById('hint-button').addEventListener('click', () => {
   hintDisplay.textContent = hintText;
   hintDisplay.style.display = 'block'; // Reveal the hint
 
-  gtag('event', 'reveal_hint', {
-    event_category: 'help',
-    event_label: 'Reveal Hint Button',
-    value: 1
-  });
-  
+  if (typeof gtag === 'function') {
+    gtag('event', 'reveal_hint', {
+      event_category: 'help',
+      event_label: 'Reveal Hint Button',
+      value: 1
+    });
+  }
 });
 
 // Mute button functionality
@@ -430,12 +468,13 @@ document.getElementById('mute-button').addEventListener('click', () => {
   isMuted = !isMuted;
   document.getElementById('mute-button').textContent = isMuted ? '🔊 Unmute' : '🔇 Mute';
 
-gtag('event', 'mute_toggle', {
-    event_category: 'settings',
-    event_label: 'Mute Button',
-    value: 1
-  });
-  
+  if (typeof gtag === 'function') {
+    gtag('event', 'mute_toggle', {
+      event_category: 'settings',
+      event_label: 'Mute Button',
+      value: 1
+    });
+  }
 });
 
 // Share button functionality
@@ -446,12 +485,13 @@ document.getElementById('shareButton').addEventListener('click', () => {
   const twitterUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(message)}`;
   window.open(twitterUrl, '_blank');
 
-   gtag('event', 'share_to_twitter', {
-    event_category: 'social',
-    event_label: 'Twitter Share Button',
-    value: 1
-  });
-  
+  if (typeof gtag === 'function') {
+    gtag('event', 'share_to_twitter', {
+      event_category: 'social',
+      event_label: 'Twitter Share Button',
+      value: 1
+    });
+  }
 });
 
 // Theme Button functionality//
@@ -459,38 +499,27 @@ document.getElementById('theme-button').addEventListener('click', () => {
   themeDisplay.textContent = themeText;
   themeDisplay.style.display = 'block'; // Reveal the theme
 
-  gtag('event', 'reveal_theme', {
-    event_category: 'help',
-    event_label: 'Reveal Theme Button',
-    value: 1
-  });
-  
+  if (typeof gtag === 'function') {
+    gtag('event', 'reveal_theme', {
+      event_category: 'help',
+      event_label: 'Reveal Theme Button',
+      value: 1
+    });
+  }
 });
 
 //Reset Button for StartOver
 document.getElementById('reset-button').addEventListener('click', () => {
-    location.reload(); // Reloads the page, effectively resetting everything
+  location.reload(); // Reloads the page, effectively resetting everything
 
-gtag('event', 'start_over', {
-    event_category: 'game_control',
-    event_label: 'Start Over Button',
-    value: 1
-  });
-  
+  if (typeof gtag === 'function') {
+    gtag('event', 'start_over', {
+      event_category: 'game_control',
+      event_label: 'Start Over Button',
+      value: 1
+    });
+  }
 });
-//
-//Hide Timer Button
-// document.getElementById('hide-timer-button').addEventListener('click', () => {
-// const hideTimerBtn = document.getElementById('hide-timer-button');
-//
-//  if (timerDisplay.style.display === 'none') {
-//  timerDisplay.style.display = 'block';
-//  hideTimerBtn.textContent = 'Hide Timer';
-//  } else {
-//  timerDisplay.style.display = 'none';
-//  hideTimerBtn.textContent = 'Show Timer';
-//  }
-//  });
 
 // Add copy button functionality
 document.getElementById('copyButton').addEventListener('click', () => {
@@ -498,12 +527,13 @@ document.getElementById('copyButton').addEventListener('click', () => {
   document.execCommand('copy');
   alert('Copied to clipboard!');
 
+  if (typeof gtag === 'function') {
     gtag('event', 'copy_result', {
-    event_category: 'engagement',
-    event_label: 'Copy Result Button',
-    value: 1
-  });
-  
+      event_category: 'engagement',
+      event_label: 'Copy Result Button',
+      value: 1
+    });
+  }
 });
 
 function showCompletionMessage() {
@@ -516,71 +546,68 @@ function showCompletionMessage() {
 
 //Reset Grid Button 
 document.getElementById('grid-reset-button').addEventListener('click', () => {
-selectedLetters = []
-matchedWords = [];
+  selectedLetters = [];
+  matchedWords = [];
 
-gtag('event', 'grid_reset', {
-    event_category: 'game_control',
-    event_label: 'Grid Reset Button',
-    value: 1
-  });
-  
-wordsContainer.innerHTML = '';
-grid.innerHTML = '';
-  
-  
-  
-// Create the grid based on the words list
-const gridArray = Array.from({ length: numRows }, () => Array(numCols).fill(null));
-
-words.forEach((word, colIndex) => {
-  [...word].forEach((letter, rowIndex) => {
-    gridArray[rowIndex][colIndex] = letter;
-  });
-});
-
-// Shuffle each row randomly
-gridArray.forEach(row => {
-  row.sort(() => Math.random() - 0.5);  // Shuffle letters within the row
-});
-
-// Create the grid elements
-grid.style.gridTemplateColumns = `repeat(${numCols}, 60px)`;
-grid.style.gridTemplateRows = `repeat(${numRows}, 60px)`;
-
-gridArray.forEach((row, rowIndex) => {
-  row.forEach((letter, colIndex) => {
-    const div = document.createElement('div');
-    div.classList.add('letter');
-    div.textContent = letter || '';  // Fill empty cells with nothing
-    div.dataset.row = rowIndex;
-    div.dataset.col = colIndex;
-
-    div.addEventListener('click', () => {
-      // Play click sound
-      if (!isMuted){
-      letterClickSound.play();
-      }
-      const isSelected = div.classList.contains('selected');
-
-      if (isSelected) {
-        // Remove from selectedLetters and unselect the letter
-        selectedLetters = selectedLetters.filter(obj => obj.element !== div);
-        div.classList.remove('selected');
-        div.style.backgroundColor = '';
-      } else {
-        // Add to selectedLetters
-        selectedLetters.push({ letter, element: div, rowIndex, colIndex });
-        div.classList.add('selected');
-      }
-
-      updateWordGroups();
+  if (typeof gtag === 'function') {
+    gtag('event', 'grid_reset', {
+      event_category: 'game_control',
+      event_label: 'Grid Reset Button',
+      value: 1
     });
+  }
+  
+  wordsContainer.innerHTML = '';
+  grid.innerHTML = '';
+  
+  // Create the grid based on the words list
+  const gridArray = Array.from({ length: numRows }, () => Array(numCols).fill(null));
 
-    grid.appendChild(div);
+  words.forEach((word, colIndex) => {
+    [...word].forEach((letter, rowIndex) => {
+      gridArray[rowIndex][colIndex] = letter;
+    });
   });
-});
 
-  
-  
+  // Shuffle each row randomly
+  gridArray.forEach(row => {
+    row.sort(() => Math.random() - 0.5);  // Shuffle letters within the row
+  });
+
+  // Create the grid elements
+  grid.style.gridTemplateColumns = `repeat(${numCols}, 60px)`;
+  grid.style.gridTemplateRows = `repeat(${numRows}, 60px)`;
+
+  gridArray.forEach((row, rowIndex) => {
+    row.forEach((letter, colIndex) => {
+      const div = document.createElement('div');
+      div.classList.add('letter');
+      div.textContent = letter || '';  // Fill empty cells with nothing
+      div.dataset.row = rowIndex;
+      div.dataset.col = colIndex;
+
+      div.addEventListener('click', () => {
+        // Play click sound
+        if (!isMuted){
+          letterClickSound.play();
+        }
+        const isSelected = div.classList.contains('selected');
+
+        if (isSelected) {
+          // Remove from selectedLetters and unselect the letter
+          selectedLetters = selectedLetters.filter(obj => obj.element !== div);
+          div.classList.remove('selected');
+          div.style.backgroundColor = '';
+        } else {
+          // Add to selectedLetters
+          selectedLetters.push({ letter, element: div, rowIndex, colIndex });
+          div.classList.add('selected');
+        }
+
+        updateWordGroups();
+      });
+
+      grid.appendChild(div);
+    });
+  });
 });
