@@ -372,7 +372,7 @@ function updateWordGroups() {
         }
 
         const playerTimeInSeconds = timeLeft; 
-        const averageTimeInSeconds =  135;     
+        const averageTimeInSeconds =  341;     
         const blocklength = averageTimeInSeconds/8
         
         // Build the share message
