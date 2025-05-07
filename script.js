@@ -27,8 +27,8 @@ const wordListsByDate = {
   '05 May 2025': ['BODY', 'BUTT', 'NOSE', 'FOOT', 'NECK', 'KNEE'],
   '06 May 2025': ['GREEN', 'GRAPE', 'GRASS', 'ALGAE', 'FROGS', 'APPLE'],
   '07 May 2025': ['CAREER', 'DOCTOR', 'LAWYER', 'WAITER', 'BARBER', 'DANCER'],
-  '08 May 2025': ['ANIMALS', 'LEOPARD', 'RACCOON', 'HAMSTER', 'GIRAFFE', 'MEERKAT'],
-  '09 May 2025': ['NOISE', 'CRASH', 'WHOOPS', 'SHOUT', 'TRILL', 'CLICK'],
+  '08 May 2025': ['NOISE', 'CRASH', 'WHOOPS', 'SHOUT', 'TRILL', 'CLICK'],
+  '09 May 2025': ['ANIMALS', 'LEOPARD', 'RACCOON', 'HAMSTER', 'GIRAFFE', 'MEERKAT'],
   '10 May 2025': ['BOARD', 'GAMES', 'CARDS', 'TOKEN', 'SCORE', 'CHESS'],
   '11 May 2025': ['POKER', 'CARDS', 'FLUSH', 'TABLE', 'RAISE', 'CHIPS'],
   '12 May 2025': ['FICTION', 'TRAGEDY', 'MYSTERY', 'ROMANCE', 'FANTASY', 'HISTORY'],
@@ -52,8 +52,8 @@ const ThemesByDate = {
   '05 May 2025':  ['Theme: BODY'],
   '06 May 2025':  ['Theme: GREEN'],
   '07 May 2025':  ['Theme: CAREER'],
-  '08 May 2025':  ['Theme: ANIMALS'],
-  '09 May 2025':  ['Theme: NOISE'],
+  '08 May 2025':  ['Theme: NOISE'],
+  '09 May 2025':  ['Theme: ANIMALS'],
   '10 May 2025':  ['Theme: GAMES'],
   '11 May 2025':  ['Theme: POKER'],
   '12 May 2025':  ['Theme: FICTION'],
@@ -76,8 +76,8 @@ const HintsByDate = {
   '05 May 2025': ['The physical form of a person'],
   '06 May 2025': ['Colour of grass and leaves'],
   '07 May 2025': ['Job path or profession'],
-  '08 May 2025': ['Found at the zoo'],
-  '09 May 2025': ['Things you can hear'],
+  '08 May 2025': ['Things you can hear'],
+  '09 May 2025': ['Found at the zoo'],
   '10 May 2025': ['Hint: Rules based activities played with friends and family at tables.'],
   '11 May 2025': ['Hint: Card game typically played in Casinos'],
   '12 May 2025': ['Hint: Different types of made-up books'],
@@ -372,9 +372,9 @@ function updateWordGroups() {
         }
 
         const playerTimeInSeconds = timeLeft; 
-        const averageTimeInSeconds =  171;     
+        const averageTimeInSeconds =  107;     
         const blocklength = averageTimeInSeconds/8
-        
+  
         // Build the share message
         let message = `I completed today's DownWords in ${formatTime(timeLeft)} compared to the average of ${formatTime(averageTimeInSeconds)}\n`;
 
