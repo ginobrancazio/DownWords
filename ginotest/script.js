@@ -288,7 +288,7 @@ gridArray.forEach((row, rowIndex) => {
 });
 
 //hide the grid before the start button is pressed
-grid.style.visibility = 'hidden';
+grid.style.display = 'none';
 
 
 // Timer functionality
@@ -594,7 +594,7 @@ document.getElementById('theme-button').addEventListener('click', () => {
 
 // Start Button functionality//
 document.getElementById('start-button').addEventListener('click', () => {
-grid.style.visibility = 'visible';
+grid.style.display = 'grid';
 startTimer();
 });
 
