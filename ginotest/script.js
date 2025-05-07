@@ -9,6 +9,54 @@ const themeDisplay = document.getElementById('theme-display');
 const letterClickSound = new Audio('click-sound.mp3');
 const matchSound = new Audio('match-sound.mp3');
 const successSound = new Audio('finish-sound.mp3');
+const bonusSound = new Audio('bonus.mp3');
+
+// Create start game container
+const startGameContainer = document.createElement('div');
+startGameContainer.id = 'start-game-container';
+startGameContainer.style.textAlign = 'center';
+startGameContainer.style.margin = '50px auto';
+startGameContainer.style.padding = '20px';
+startGameContainer.style.maxWidth = '600px';
+
+const gameTitle = document.createElement('h1');
+gameTitle.textContent = 'DownWords';
+gameTitle.style.fontSize = '2.5rem';
+gameTitle.style.marginBottom = '20px';
+gameTitle.style.color = '#333';
+startGameContainer.appendChild(gameTitle);
+
+const gameDescription = document.createElement('p');
+gameDescription.textContent = 'Find all the words by selecting one letter from each row to form words from top to bottom.';
+gameDescription.style.fontSize = '1.2rem';
+gameDescription.style.marginBottom = '30px';
+gameDescription.style.lineHeight = '1.5';
+startGameContainer.appendChild(gameDescription);
+
+const startButton = document.createElement('button');
+startButton.id = 'start-game-button';
+startButton.textContent = 'Start Game';
+startButton.style.padding = '12px 30px';
+startButton.style.fontSize = '1.2rem';
+startButton.style.backgroundColor = '#4CAF50';
+startButton.style.color = 'white';
+startButton.style.border = 'none';
+startButton.style.borderRadius = '5px';
+startButton.style.cursor = 'pointer';
+startButton.style.boxShadow = '0 4px 6px rgba(0,0,0,0.1)';
+startButton.style.transition = 'all 0.3s ease';
+startButton.addEventListener('mouseover', () => {
+  startButton.style.backgroundColor = '#45a049';
+  startButton.style.transform = 'translateY(-2px)';
+});
+startButton.addEventListener('mouseout', () => {
+  startButton.style.backgroundColor = '#4CAF50';
+  startButton.style.transform = 'translateY(0)';
+});
+startGameContainer.appendChild(startButton);
+
+// Insert the start game container at the beginning of the body
+document.body.insertBefore(startGameContainer, document.body.firstChild);
 
 // --- GAME DATA ---
 // Word lists by date
@@ -24,8 +72,8 @@ const wordListsByDate = {
   '04 May 2025': ['RIDDLE', 'CIPHER', 'ENIGMA', 'PUZZLE', 'JIGSAW', 'SUDOKU'],
   '05 May 2025': ['BODY', 'BUTT', 'NOSE', 'FOOT', 'NECK', 'KNEE'],
   '06 May 2025': ['GREEN', 'GRAPE', 'GRASS', 'ALGAE', 'FROGS', 'APPLE'],
-  '07 May 2025': ['ANIMALS', 'LEOPARD', 'RACCOON', 'HAMSTER', 'GIRAFFE', 'MEERKAT'],
-  '08 May 2025': ['CAREER', 'DOCTOR', 'LAWYER', 'WAITER', 'BARBER', 'DANCER'],
+  '07 May 2025': ['CAREER', 'DOCTOR', 'LAWYER', 'WAITER', 'BARBER', 'DANCER'],
+  '08 May 2025': ['ANIMALS', 'LEOPARD', 'RACCOON', 'HAMSTER', 'GIRAFFE', 'MEERKAT'],
   '09 May 2025': ['NOISE', 'CRASH', 'WHOOPS', 'SHOUT', 'TRILL', 'CLICK'],
   '10 May 2025': ['BOARD', 'GAMES', 'CARDS', 'TOKEN', 'SCORE', 'CHESS'],
   '11 May 2025': ['POKER', 'CARDS', 'FLUSH', 'TABLE', 'RAISE', 'CHIPS'],
@@ -49,8 +97,8 @@ const ThemesByDate = {
   '04 May 2025':  ['Theme: PUZZLE'],
   '05 May 2025':  ['Theme: BODY'],
   '06 May 2025':  ['Theme: GREEN'],
-  '07 May 2025':  ['Theme: ANIMALS'],
-  '08 May 2025':  ['Theme: CAREER'],
+  '07 May 2025':  ['Theme: CAREER'],
+  '08 May 2025':  ['Theme: ANIMALS'],
   '09 May 2025':  ['Theme: NOISE'],
   '10 May 2025':  ['Theme: GAMES'],
   '11 May 2025':  ['Theme: POKER'],
@@ -69,12 +117,12 @@ const HintsByDate = {
   '30 April 2025': ['Hint: Quenches thirst in many forms.'],
   '01 May 2025': ['Hint: They come in flocks or solo, soaring above.'],
   '02 May 2025': ['Hint: Geometric figures with defined sides or curves.'],
-  '03 May 2025': ['Hint: You\'ll find it on menus in Italian restaurants.'],
+  '03 May 2025': ['Hint: You'll find it on menus in Italian restaurants.'],
   '04 May 2025': ['Hint: Something that needs solving, often for fun'],
   '05 May 2025': ['The physical form of a person'],
   '06 May 2025': ['Colour of grass and leaves'],
-  '07 May 2025': ['Found at the zoo'],
-  '08 May 2025': ['Job path or profession'],
+  '07 May 2025': ['Job path or profession'],
+  '08 May 2025': ['Found at the zoo'],
   '09 May 2025': ['Things you can hear'],
   '10 May 2025': ['Hint: Rules based activities played with friends and family at tables.'],
   '11 May 2025': ['Hint: Card game typically played in Casinos'],
@@ -284,6 +332,14 @@ gridArray.forEach((row, rowIndex) => {
   });
 });
 
+// Hide game elements initially
+grid.style.display = 'none';
+wordsContainer.style.display = 'none';
+document.getElementById('hint-button').style.display = 'none';
+document.getElementById('theme-button').style.display = 'none';
+document.getElementById('mute-button').style.display = 'none';
+document.getElementById('grid-reset-button').style.display = 'none';
+
 // Timer functionality
 let timer;
 let timeLeft = 0;
@@ -370,7 +426,7 @@ function updateWordGroups() {
         }
 
         const playerTimeInSeconds = timeLeft; 
-        const averageTimeInSeconds =  99;     
+        const averageTimeInSeconds =  171;     
         const blocklength = averageTimeInSeconds/8
         
         // Build the share message
@@ -400,23 +456,24 @@ function updateWordGroups() {
         // Format the final message
         message += `\n${playerBlocksString} - Me (${formatTime(timeLeft)})`;
         message += `\n${averageBlocksString} - Average (${formatTime(averageTimeInSeconds)}) \n`;
+
+        // Add bonus words found to the message (as duck emojis)
+        if (bonusWordsFound.size > 0) {
+          const duckEmojis = '🦆'.repeat(bonusWordsFound.size);
+          message += `\n${duckEmojis} - Found ${bonusWordsFound.size} bonus word${bonusWordsFound.size > 1 ? 's' : ''} \n`;
+        }
         
         // Both hint and theme are hidden, do something here
         if (getComputedStyle(hintDisplay).display === 'none' && getComputedStyle(themeDisplay).display === 'none') {
           message += `\n🏆 - No hints`;
         }
         
-        // Add bonus words found to the message
-        if (bonusWordsFound.size > 0) {
-          message += `\n🌟 - Found ${bonusWordsFound.size} bonus word${bonusWordsFound.size > 1 ? 's' : ''}: ${[...bonusWordsFound].join(', ')}`;
-        }
-        
         //check player speed   
-        const averageTime = 241;
+        const averageTime = 135;
 
-        if (timeLeft < averageTime * 0.2) {
+        if (timeLeft < averageTimeInSeconds * 0.2) {
           message += `\n👑 - Top 20% of players today!`;
-        } else if (timeLeft < averageTime) {
+        } else if (timeLeft < averageTimeInSeconds) {
           message += `\n🏅 - Top 50% of players today`;
         }
         
@@ -459,6 +516,11 @@ function updateWordGroups() {
           dictionary.has(word) && 
           word.length >= 3 && // Only consider words of at least 3 letters
           !bonusWordsFound.has(word)) { // Only show alert for new bonus words
+
+        //Play a sound
+        if (!isMuted){
+          bonusSound.play();
+        }
         
         // Add to found bonus words
         bonusWordsFound.add(word);
@@ -515,10 +577,30 @@ function updateWordGroups() {
   secondColumn.forEach(wordDiv => wordsContainer.appendChild(wordDiv));
 }
 
-// Start the timer when the page loads
-window.onload = () => {
+// Add click event to the start button
+startButton.addEventListener('click', () => {
+  // Hide the start game container
+  startGameContainer.style.display = 'none';
+  
+  // Show game elements
+  grid.style.display = 'grid';
+  wordsContainer.style.display = 'block';
+  document.getElementById('hint-button').style.display = 'inline-block';
+  document.getElementById('theme-button').style.display = 'inline-block';
+  document.getElementById('mute-button').style.display = 'inline-block';
+  document.getElementById('grid-reset-button').style.display = 'inline-block';
+  
+  // Start the timer
   startTimer();
-};
+  
+  // Track game start event
+  if (typeof gtag === 'function') {
+    gtag('event', 'game_started', {
+      'event_category': 'gameplay',
+      'event_label': 'Game Started'
+    });
+  }
+});
 
 // Hint Button functionality
 document.getElementById('hint-button').addEventListener('click', () => {
