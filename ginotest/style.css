@@ -1,67 +1,231 @@
 body {
-  font-family: 'Helvetica Neue', Arial, sans-serif;
+  font-family: sans-serif;
   text-align: center;
   padding: 1em;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
-  min-height: 100vh;
-  margin: 0;
-  background-color: #f9f9f9;
-  color: #333;
-}
-
-#game-container {
-  max-width: 800px;
-  width: 100%;
-  margin: 0 auto;
-}
-
-h1 {
-  font-size: 2.5rem;
-  margin-bottom: 20px;
-  color: #333;
+  height: 100vh;
 }
 
 #timer {
   font-size: 16px;
   font-weight: bold;
-  margin-bottom: 15px;
-  padding: 5px 10px;
-  background-color: #f0f0f0;
-  border-radius: 5px;
-  display: inline-block;
+  margin-bottom: 3px;
 }
 
-/* Letter grid styling */
+@keyframes shake {
+  0% { transform: translateX(0); }
+  25% { transform: translateX(-3px); }
+  50% { transform: translateX(3px); }
+  75% { transform: translateX(-2px); }
+  100% { transform: translateX(0); }
+}
+
+.letter.shake {
+  animation: shake 0.3s ease;
+}
+
+#gameCompletionMessage {
+  display: none;
+  width: 90%;           /* Flexible width, not fixed */
+  max-width: 400px;     /* Never larger than 400px */
+  height: 0;
+  overflow: hidden;
+  background: #ffffff;  /* Clean white background */
+  color: #333;          /* Darker, easy-to-read text */
+  padding: 0 20px;
+  border-radius: 10px;  /* Rounded corners */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2); /* Nice shadow */
+  font-family: 'Poppins', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+
+  font-size: 16px;      /* Comfortable size */
+  text-align: left;   /* Centered text */
+  opacity: 0;
+  transition: height 1.5s ease, opacity 1.5s ease, padding 1.5s ease;
+  margin: 20px auto;    /* Center it horizontally */
+  z-index: 10;
+}
+
+#gameCompletionMessage.active {
+  display: block;
+  min-height: 270px; /* Final height */
+  opacity: 1;
+  padding: 10px;
+  position: relative;
+  z-index: 2;
+  background: #f8f8f8;
+}
+
+#hint-display {
+  margin-top: 5px;
+  margin-bottom: 1px;
+}
+
+#theme-display {
+  margin-top: 5px;
+  margin-bottom: 1px;
+}
+
 #letter-grid {
   display: grid;
-  grid-template-columns: repeat(5, 60px);
-  gap: 5px;
+  grid-template-columns: repeat(5, 50px);
+  gap: 1px;
   justify-content: center;
-  margin-bottom: 20px;
+  margin-bottom: 5px;
 }
 
 .letter {
-  width: 60px;
-  height: 60px;
-  background: #f0f0f0;
+  width: 50px;
+  height: 50px;
+  background: #eee;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 22px;
-  font-weight: bold;
-  border: 2px solid #ddd;
-  border-radius: 5px;
+  font-size: 20px;
+  border: 2px solid #ccc;
   cursor: pointer;
-  transition: all 0.2s ease;
-}
-
-.letter:hover {
-  background: #e0e0e0;
-  transform: translateY(-2px);
+  transition: 0.2s;
 }
 
 .letter.selected {
-  background: #a0d2eb
+  background: #a0d2eb;
+  border-color: #007acc;
+}
+
+#selected-words-container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);  /* Three columns layout */
+  gap: 10px;
+  width: 50%;  /* Adjust to fit three columns nicely */
+  margin-top: 10px;
+  justify-items: start; /* Align content to the left of each cell */
+  word-break: break-word;
+}
+
+#selected-words-container div:hover {
+  background-color: #f1f1f1;
+}
+
+#selected-words-container div:empty {
+  background: none;
+}
+
+.selected-word {
+  font-weight: bold;
+  display: flex;         /* Keep word and ✅ on the same line */
+  align-items: center;
+  gap: 0.5em;
+  font-size: 16px;/* Space between word and the check mark */
+}
+
+.selected-word-match {
+  background-color: #76e77d;
+}
+
+.selected-word-mismatch {
+  background-color: #f7a0eb;
+}
+
+#instructions {
+  margin-top: 1px;
+  max-width: 600px;
+  text-align: left;
+}
+
+#instructions ul {
+  padding-left: 1.2em;
+}
+
+.instructions-gif {
+  margin-top: 1px;
+  max-width: 600px;
+  object-fit: cover; /* Ensures the GIF scales properly */
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Start button styling */
+#start-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 20px auto;
+  max-width: 600px;
+}
+
+#start-button {
+  background-color: #4CAF50;
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 20px 0;
+  cursor: pointer;
+  border-radius: 8px;
+  transition: background-color 0.3s;
+  font-weight: bold;
+}
+
+#start-button:hover {
+  background-color: #45a049;
+  transform: scale(1.05);
+}
+
+/* Initially hide game elements */
+#letter-grid, 
+.button-container,
+#selected-words-container {
+  display: none;
+}
+
+@media (max-width: 600px) {
+  #letter-grid {
+    grid-template-columns: repeat(5, 65px); /* Keep the smaller square size for mobile */
+    gap: 0px; /* Reduce the gap between letters */
+  }
+
+  .letter {
+    width: 50px;
+    height: 50px;
+    font-size: 18px;  /* Adjust font size for smaller screens */
+  }
+
+  #selected-words-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);  /* Three columns layout */
+    gap: 1px;
+    width: 90%;  /* Adjust to fit three columns nicely */
+    margin-top: 5px;
+    justify-items: start; /* Align content to the left of each cell */
+    word-break: break-word;
+  }
+  
+  #instructions {
+    margin-top: 2px;
+    max-width: 600px;
+    text-align: left;
+  }
+
+  #instructions ul {
+    padding-left: 1.2em;
+  }
+
+  .instructions-gif {
+    margin-top: 2px;
+    width: 90%;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
