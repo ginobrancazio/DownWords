@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -9,45 +8,40 @@
   <link rel="stylesheet" href="style.css">
   
   <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-6R3CEQKVLF"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-6R3CEQKVLF');
-</script>
-
-
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-6R3CEQKVLF"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-6R3CEQKVLF');
+  </script>
 </head>
 
 <body>
-<audio id="click-sound" src="click-sound.mp3"></audio>
-<audio id="match-sound" src="match-sound.mp3"></audio>
-<audio id="finish-sound" src="finish-sound.mp3"></audio>
+  <audio id="click-sound" src="click-sound.mp3"></audio>
+  <audio id="match-sound" src="match-sound.mp3"></audio>
+  <audio id="finish-sound" src="finish-sound.mp3"></audio>
 
-<div id="game">
-  <!-- Game content here -->
-
+  <div id="game">
+    <!-- Game content here -->
+    <h1>DownWords</h1>
+    <div id="timer">Time: 0</div>
+    <div class="button-container">
+      <button id="start-button">Start Game</button>
+    </div>
+    <!--<div id="current-date"></div> -->
+    <div id="letter-grid"></div>
+    <!-- Timer and Success Message -->
+  </div>
   
-
-  
-  <!-- Word Grid -->
-  <h1>DownWords</h1>
-  <div id="timer">Time: 0</div>
-  <!--<div id="current-date"></div> -->
-  <div id="letter-grid"></div>
-  <!-- Timer and Success Message -->
-</div>
   <!-- Hint and Theme Buttons -->
   <div class="button-container">
     <button id="hint-button">Reveal Hint</button>
     <button id="theme-button">Reveal Theme</button>
     <button id="grid-reset-button">Reset Grid</button>
     <button id="reset-button">Start Over</button>
-   <!--  <button id="hide-timer-button">Hide Timer</button> -->
+    <!--  <button id="hide-timer-button">Hide Timer</button> -->
     <button id="mute-button">🔇 Mute</button>
-
   </div>
 
   <!-- Hint and Theme Display -->
@@ -57,35 +51,33 @@
   <!-- Selected Words Container -->
   <div id="selected-words-container"></div>
 
-<!-- Textbox to display the message, initially hidden -->
+  <!-- Textbox to display the message, initially hidden -->
   <textarea id="gameCompletionMessage" style="display:none;"></textarea>
 
-   <!-- copy button -->
+  <!-- copy button -->
   <button id="copyButton" style="display:none;">Copy</button>
-</div>
   <button id="shareButton" style="display:none;">Share to Twitter</button>
 
-  
   <script src="script.js"></script>
+  
   <div id="instructions">
-  <h3>Instructions:</h3>
-  <ul>
-    <li>There are 6 hidden words in the grid</li>
-    <li>Each word runs vertically, one letter in each of the rows (top to bottom), but the letters are not necessarily connected.</li>
-    <li>Each letter is only used once.</li>
-    <li>Five of the words are connected by a theme</li>
-    <li>The remaining word is the theme that connects the other words</li>
-  </ul>
-    
-</div>
- <p>Example:</p>
-    <img src="Down Words.gif" alt="Example Gameplay" class="instructions-gif" />
+    <h3>Instructions:</h3>
+    <ul>
+      <li>There are 6 hidden words in the grid</li>
+      <li>Each word runs vertically, one letter in each of the rows (top to bottom), but the letters are not necessarily connected.</li>
+      <li>Each letter is only used once.</li>
+      <li>Five of the words are connected by a theme</li>
+      <li>The remaining word is the theme that connects the other words</li>
+    </ul>
+  </div>
+  
+  <p>Example:</p>
+  <img src="Down Words.gif" alt="Example Gameplay" class="instructions-gif" />
+  
   <div id="linkedin-connect" style="text-align: center; margin-top: 20px;">
     <p>Contact me on <a href="https://www.linkedin.com/in/ginobrancazio/" target="_blank">LinkedIn</a></p>
-    <p>V1.6.2</p>
+    <p>V1.7.3</p>
     <p>© 2025 Gino Brancazio. All rights reserved.</p>
-</div>
-
+  </div>
 </body>
-
 </html>
