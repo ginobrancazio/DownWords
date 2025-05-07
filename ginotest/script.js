@@ -595,6 +595,8 @@ document.getElementById('theme-button').addEventListener('click', () => {
 // Start Button functionality//
 document.getElementById('start-button').addEventListener('click', () => {
 grid.style.display = 'grid';
+document.getElementById('start-button').style.display = 'none';
+
 startTimer();
 });
 
