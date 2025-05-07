@@ -1,33 +1,3 @@
-document.addEventListener('DOMContentLoaded', function() {
-  // Initially hide the game elements
-  document.getElementById('letter-grid').style.display = 'none';
-  document.querySelector('.button-container').style.display = 'none';
-  document.getElementById('timer').style.display = 'none';
-  
-  // Add event listener to the start button
-  document.getElementById('start-button').addEventListener('click', function() {
-    // Hide the start container
-    document.getElementById('start-container').style.display = 'none';
-    
-    // Show the game elements
-    document.getElementById('letter-grid').style.display = 'grid';
-    document.querySelector('.button-container').style.display = 'block';
-    document.getElementById('timer').style.display = 'block';
-    document.getElementById('selected-words-container').style.display = 'grid';
-    
-    // Start the timer
-    startTimer();
-    
-    // Track game start in analytics if available
-    if (typeof gtag === 'function') {
-      gtag('event', 'game_started', {
-        'event_category': 'gameplay',
-        'event_label': 'Game Started'
-      });
-    }
-  });
-});
-
 const grid = document.getElementById('letter-grid');
 const wordsContainer = document.getElementById('selected-words-container');
 const timerDisplay = document.getElementById('timer');
@@ -57,8 +27,8 @@ const wordListsByDate = {
   '05 May 2025': ['BODY', 'BUTT', 'NOSE', 'FOOT', 'NECK', 'KNEE'],
   '06 May 2025': ['GREEN', 'GRAPE', 'GRASS', 'ALGAE', 'FROGS', 'APPLE'],
   '07 May 2025': ['CAREER', 'DOCTOR', 'LAWYER', 'WAITER', 'BARBER', 'DANCER'],
-  '08 May 2025': ['ANIMALS', 'LEOPARD', 'RACCOON', 'HAMSTER', 'GIRAFFE', 'MEERKAT'],
-  '09 May 2025': ['NOISE', 'CRASH', 'WHOOPS', 'SHOUT', 'TRILL', 'CLICK'],
+  '08 May 2025': ['NOISE', 'CRASH', 'WHOOPS', 'SHOUT', 'TRILL', 'CLICK'],
+  '09 May 2025': ['ANIMALS', 'LEOPARD', 'RACCOON', 'HAMSTER', 'GIRAFFE', 'MEERKAT'],
   '10 May 2025': ['BOARD', 'GAMES', 'CARDS', 'TOKEN', 'SCORE', 'CHESS'],
   '11 May 2025': ['POKER', 'CARDS', 'FLUSH', 'TABLE', 'RAISE', 'CHIPS'],
   '12 May 2025': ['FICTION', 'TRAGEDY', 'MYSTERY', 'ROMANCE', 'FANTASY', 'HISTORY'],
@@ -82,8 +52,8 @@ const ThemesByDate = {
   '05 May 2025':  ['Theme: BODY'],
   '06 May 2025':  ['Theme: GREEN'],
   '07 May 2025':  ['Theme: CAREER'],
-  '08 May 2025':  ['Theme: ANIMALS'],
-  '09 May 2025':  ['Theme: NOISE'],
+  '08 May 2025':  ['Theme: NOISE'],
+  '09 May 2025':  ['Theme: ANIMALS'],
   '10 May 2025':  ['Theme: GAMES'],
   '11 May 2025':  ['Theme: POKER'],
   '12 May 2025':  ['Theme: FICTION'],
@@ -101,13 +71,13 @@ const HintsByDate = {
   '30 April 2025': ['Hint: Quenches thirst in many forms.'],
   '01 May 2025': ['Hint: They come in flocks or solo, soaring above.'],
   '02 May 2025': ['Hint: Geometric figures with defined sides or curves.'],
-  '03 May 2025': ['Hint: You'll find it on menus in Italian restaurants.'],
+  '03 May 2025': ['Hint: You’ll find it on menus in Italian restaurants.'],
   '04 May 2025': ['Hint: Something that needs solving, often for fun'],
   '05 May 2025': ['The physical form of a person'],
   '06 May 2025': ['Colour of grass and leaves'],
   '07 May 2025': ['Job path or profession'],
-  '08 May 2025': ['Found at the zoo'],
-  '09 May 2025': ['Things you can hear'],
+  '08 May 2025': ['Things you can hear'],
+  '09 May 2025': ['Found at the zoo'],
   '10 May 2025': ['Hint: Rules based activities played with friends and family at tables.'],
   '11 May 2025': ['Hint: Card game typically played in Casinos'],
   '12 May 2025': ['Hint: Different types of made-up books'],
@@ -402,9 +372,9 @@ function updateWordGroups() {
         }
 
         const playerTimeInSeconds = timeLeft; 
-        const averageTimeInSeconds =  171;     
+        const averageTimeInSeconds =  107;     
         const blocklength = averageTimeInSeconds/8
-        
+  
         // Build the share message
         let message = `I completed today's DownWords in ${formatTime(timeLeft)} compared to the average of ${formatTime(averageTimeInSeconds)}\n`;
 
@@ -552,6 +522,11 @@ function updateWordGroups() {
   firstColumn.forEach(wordDiv => wordsContainer.appendChild(wordDiv));
   secondColumn.forEach(wordDiv => wordsContainer.appendChild(wordDiv));
 }
+
+// Start the timer when the page loads
+window.onload = () => {
+  startTimer();
+};
 
 // Hint Button functionality
 document.getElementById('hint-button').addEventListener('click', () => {
