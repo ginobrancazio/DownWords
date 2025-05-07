@@ -27,6 +27,33 @@ body {
   animation: shake 0.3s ease;
 }
 
+/* Add this to your CSS */
+.inline-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+  margin: 15px 0;
+}
+
+.inline-buttons button {
+  margin: 0;
+  flex-shrink: 0;
+}
+
+/* For mobile responsiveness */
+@media (max-width: 600px) {
+  .inline-buttons {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .inline-buttons button {
+    width: 80%;
+    margin-bottom: 5px;
+  }
+}
+
 #gameCompletionMessage {
   display: none;
   width: 90%;           /* Flexible width, not fixed */
