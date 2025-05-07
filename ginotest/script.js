@@ -1,3 +1,33 @@
+document.addEventListener('DOMContentLoaded', function() {
+  // Initially hide the game elements
+  document.getElementById('letter-grid').style.display = 'none';
+  document.querySelector('.button-container').style.display = 'none';
+  document.getElementById('timer').style.display = 'none';
+  
+  // Add event listener to the start button
+  document.getElementById('start-button').addEventListener('click', function() {
+    // Hide the start container
+    document.getElementById('start-container').style.display = 'none';
+    
+    // Show the game elements
+    document.getElementById('letter-grid').style.display = 'grid';
+    document.querySelector('.button-container').style.display = 'block';
+    document.getElementById('timer').style.display = 'block';
+    document.getElementById('selected-words-container').style.display = 'grid';
+    
+    // Start the timer
+    startTimer();
+    
+    // Track game start in analytics if available
+    if (typeof gtag === 'function') {
+      gtag('event', 'game_started', {
+        'event_category': 'gameplay',
+        'event_label': 'Game Started'
+      });
+    }
+  });
+});
+
 const grid = document.getElementById('letter-grid');
 const wordsContainer = document.getElementById('selected-words-container');
 const timerDisplay = document.getElementById('timer');
@@ -11,52 +41,6 @@ const matchSound = new Audio('match-sound.mp3');
 const successSound = new Audio('finish-sound.mp3');
 const bonusSound = new Audio('bonus.mp3');
 
-// Create start game container
-const startGameContainer = document.createElement('div');
-startGameContainer.id = 'start-game-container';
-startGameContainer.style.textAlign = 'center';
-startGameContainer.style.margin = '50px auto';
-startGameContainer.style.padding = '20px';
-startGameContainer.style.maxWidth = '600px';
-
-const gameTitle = document.createElement('h1');
-gameTitle.textContent = 'DownWords';
-gameTitle.style.fontSize = '2.5rem';
-gameTitle.style.marginBottom = '20px';
-gameTitle.style.color = '#333';
-startGameContainer.appendChild(gameTitle);
-
-const gameDescription = document.createElement('p');
-gameDescription.textContent = 'Find all the words by selecting one letter from each row to form words from top to bottom.';
-gameDescription.style.fontSize = '1.2rem';
-gameDescription.style.marginBottom = '30px';
-gameDescription.style.lineHeight = '1.5';
-startGameContainer.appendChild(gameDescription);
-
-const startButton = document.createElement('button');
-startButton.id = 'start-game-button';
-startButton.textContent = 'Start Game';
-startButton.style.padding = '12px 30px';
-startButton.style.fontSize = '1.2rem';
-startButton.style.backgroundColor = '#4CAF50';
-startButton.style.color = 'white';
-startButton.style.border = 'none';
-startButton.style.borderRadius = '5px';
-startButton.style.cursor = 'pointer';
-startButton.style.boxShadow = '0 4px 6px rgba(0,0,0,0.1)';
-startButton.style.transition = 'all 0.3s ease';
-startButton.addEventListener('mouseover', () => {
-  startButton.style.backgroundColor = '#45a049';
-  startButton.style.transform = 'translateY(-2px)';
-});
-startButton.addEventListener('mouseout', () => {
-  startButton.style.backgroundColor = '#4CAF50';
-  startButton.style.transform = 'translateY(0)';
-});
-startGameContainer.appendChild(startButton);
-
-// Insert the start game container at the beginning of the body
-document.body.insertBefore(startGameContainer, document.body.firstChild);
 
 // --- GAME DATA ---
 // Word lists by date
@@ -332,14 +316,6 @@ gridArray.forEach((row, rowIndex) => {
   });
 });
 
-// Hide game elements initially
-grid.style.display = 'none';
-wordsContainer.style.display = 'none';
-document.getElementById('hint-button').style.display = 'none';
-document.getElementById('theme-button').style.display = 'none';
-document.getElementById('mute-button').style.display = 'none';
-document.getElementById('grid-reset-button').style.display = 'none';
-
 // Timer functionality
 let timer;
 let timeLeft = 0;
@@ -457,8 +433,8 @@ function updateWordGroups() {
         message += `\n${playerBlocksString} - Me (${formatTime(timeLeft)})`;
         message += `\n${averageBlocksString} - Average (${formatTime(averageTimeInSeconds)}) \n`;
 
-        // Add bonus words found to the message (as duck emojis)
-        if (bonusWordsFound.size > 0) {
+           // Add bonus words found to the message
+       if (bonusWordsFound.size > 0) {
           const duckEmojis = '🦆'.repeat(bonusWordsFound.size);
           message += `\n${duckEmojis} - Found ${bonusWordsFound.size} bonus word${bonusWordsFound.size > 1 ? 's' : ''} \n`;
         }
@@ -478,7 +454,7 @@ function updateWordGroups() {
         }
         
         message += `\n`;
-        message += `\nwww.DownWordsGame.com`;
+        message += `\nhttp://www.DownWordsGame.com`;
         message += `\n#DownWordsGame`;
         
         // Show the text box with the completion message
@@ -576,31 +552,6 @@ function updateWordGroups() {
   firstColumn.forEach(wordDiv => wordsContainer.appendChild(wordDiv));
   secondColumn.forEach(wordDiv => wordsContainer.appendChild(wordDiv));
 }
-
-// Add click event to the start button
-startButton.addEventListener('click', () => {
-  // Hide the start game container
-  startGameContainer.style.display = 'none';
-  
-  // Show game elements
-  grid.style.display = 'grid';
-  wordsContainer.style.display = 'block';
-  document.getElementById('hint-button').style.display = 'inline-block';
-  document.getElementById('theme-button').style.display = 'inline-block';
-  document.getElementById('mute-button').style.display = 'inline-block';
-  document.getElementById('grid-reset-button').style.display = 'inline-block';
-  
-  // Start the timer
-  startTimer();
-  
-  // Track game start event
-  if (typeof gtag === 'function') {
-    gtag('event', 'game_started', {
-      'event_category': 'gameplay',
-      'event_label': 'Game Started'
-    });
-  }
-});
 
 // Hint Button functionality
 document.getElementById('hint-button').addEventListener('click', () => {
