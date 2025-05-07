@@ -424,7 +424,7 @@ function updateWordGroups() {
         }
         
         message += `\n`;
-        message += `\nwww.DownWordsGame.com`;
+        message += `\nhttp://www.DownWordsGame.com`;
         message += `\n#DownWordsGame`;
         
         // Show the text box with the completion message
