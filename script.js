@@ -404,8 +404,9 @@ function updateWordGroups() {
         message += `\n${averageBlocksString} - Average (${formatTime(averageTimeInSeconds)}) \n`;
 
            // Add bonus words found to the message
-        if (bonusWordsFound.size > 0) {
-          message += `\n🦆 - Found ${bonusWordsFound.size} bonus word${bonusWordsFound.size > 1 ? 's' : ''}: ${[...bonusWordsFound].join(', ')} \n`;
+       if (bonusWordsFound.size > 0) {
+          const duckEmojis = '🦆'.repeat(bonusWordsFound.size);
+          message += `\n${duckEmojis} - Found ${bonusWordsFound.size} bonus word${bonusWordsFound.size > 1 ? 's' : ''} \n`;
         }
         
         // Both hint and theme are hidden, do something here
