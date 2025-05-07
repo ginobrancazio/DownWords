@@ -15,7 +15,7 @@ body {
   margin-bottom: 3px;
 }
 
-@keyframes shake {
+  @keyframes shake {
   0% { transform: translateX(0); }
   25% { transform: translateX(-3px); }
   50% { transform: translateX(3px); }
@@ -54,9 +54,10 @@ body {
   opacity: 1;
   padding: 10px;
   position: relative;
-  z-index: 2;
-  background: #f8f8f8;
+    z-index: 2;
+    background: #f8f8f8;
 }
+    
 
 #hint-display {
   margin-top: 5px;
@@ -130,7 +131,7 @@ body {
 
 #instructions {
   margin-top: 1px;
-  max-width: 600px;
+   max-width: 600px;
   text-align: left;
 }
 
@@ -149,44 +150,6 @@ body {
   margin-right: auto;
 }
 
-/* Start button styling */
-#start-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  margin: 20px auto;
-  max-width: 600px;
-}
-
-#start-button {
-  background-color: #4CAF50;
-  border: none;
-  color: white;
-  padding: 15px 32px;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 16px;
-  margin: 20px 0;
-  cursor: pointer;
-  border-radius: 8px;
-  transition: background-color 0.3s;
-  font-weight: bold;
-}
-
-#start-button:hover {
-  background-color: #45a049;
-  transform: scale(1.05);
-}
-
-/* Initially hide game elements */
-#letter-grid, 
-.button-container,
-#selected-words-container {
-  display: none;
-}
-
 @media (max-width: 600px) {
   #letter-grid {
     grid-template-columns: repeat(5, 65px); /* Keep the smaller square size for mobile */
@@ -199,33 +162,35 @@ body {
     font-size: 18px;  /* Adjust font size for smaller screens */
   }
 
-  #selected-words-container {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);  /* Three columns layout */
-    gap: 1px;
-    width: 90%;  /* Adjust to fit three columns nicely */
-    margin-top: 5px;
-    justify-items: start; /* Align content to the left of each cell */
-    word-break: break-word;
-  }
-  
-  #instructions {
-    margin-top: 2px;
-    max-width: 600px;
-    text-align: left;
-  }
-
-  #instructions ul {
-    padding-left: 1.2em;
-  }
-
-  .instructions-gif {
-    margin-top: 2px;
-    width: 90%;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-  }
+#selected-words-container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);  /* Three columns layout */
+  gap: 1px;
+  width: 90%;  /* Adjust to fit three columns nicely */
+  margin-top: 5px;
+  justify-items: start; /* Align content to the left of each cell */
+  word-break: break-word;
 }
+  
+#instructions {
+  margin-top: 2px;
+   max-width: 600px;
+  text-align: left;
+}
+
+#instructions ul {
+  padding-left: 1.2em;
+}
+
+.instructions-gif {
+  margin-top: 2px;
+  width: 90%;
+ /* max-width: 350px;
+  /*object-fit: cover; /* Ensures the GIF scales properly */
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+  
