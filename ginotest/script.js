@@ -608,7 +608,7 @@ document.getElementById('theme-button').addEventListener('click', () => {
   document.getElementById('hint-button').style.display = 'block'; 
   document.getElementById('theme-button').style.display = 'block';
   document.getElementById('mute-button').style.display = 'block';
-  document.getElementById('game-reset-button').style.display = 'block';
+  document.getElementById('grid-reset-button').style.display = 'block';
   document.getElementById('reset-button').style.display = 'block';
   startTimer();
 });
