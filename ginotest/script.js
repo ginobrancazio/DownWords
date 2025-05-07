@@ -593,7 +593,7 @@ document.getElementById('theme-button').addEventListener('click', () => {
 
 // Start Button functionality//
 document.getElementById('start-button').addEventListener('click', () => {
-grid.style.display = 'block';  // show the grid
+grid.style.visibility = 'visible';
 startTimer();
 });
 
