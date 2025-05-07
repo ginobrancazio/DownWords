@@ -116,7 +116,7 @@ fetch('dictionary.txt')
   .catch(error => console.error('Error loading dictionary:', error));
 
 //hide timer as default
-timerDisplay.style.display = 'none';
+//timerDisplay.style.display = 'none';
 
 function getWordsForToday() {
   const today = new Date();
@@ -220,6 +220,7 @@ const colours = ['#a0d2eb', '#ffc6a0', '#c8e6a0', '#f7a0eb', '#d0a0ff'];
 hintDisplay.style.display = 'none';
 themeDisplay.style.display = 'none';
 
+
 // Determine the height of the grid (based on the longest word)
 const numRows = Math.max(...words.map(word => word.length)); 
 const numCols = words.length;
@@ -285,6 +286,9 @@ gridArray.forEach((row, rowIndex) => {
     grid.appendChild(div);
   });
 });
+
+//hide the grid before the start button is pressed
+grid.style.display = 'none';  // show the grid
 
 // Timer functionality
 let timer;
@@ -524,9 +528,9 @@ function updateWordGroups() {
 }
 
 // Start the timer when the page loads
-window.onload = () => {
-  startTimer();
-};
+//window.onload = () => {
+//  startTimer();
+//};
 
 // Hint Button functionality
 document.getElementById('hint-button').addEventListener('click', () => {
@@ -586,6 +590,13 @@ document.getElementById('theme-button').addEventListener('click', () => {
     });
   }
 });
+
+// Start Button functionality//
+document.getElementById('start-button').addEventListener('click', () => {
+grid.style.display = 'block';  // show the grid
+startTimer();
+});
+
 
 //Reset Button for StartOver
 document.getElementById('reset-button').addEventListener('click', () => {
