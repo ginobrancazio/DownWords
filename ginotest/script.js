@@ -27,7 +27,7 @@ const wordListsByDate = {
   '05 May 2025': ['BODY', 'BUTT', 'NOSE', 'FOOT', 'NECK', 'KNEE'],
   '06 May 2025': ['GREEN', 'GRAPE', 'GRASS', 'ALGAE', 'FROGS', 'APPLE'],
   '07 May 2025': ['CAREER', 'DOCTOR', 'LAWYER', 'WAITER', 'BARBER', 'DANCER'],
-  '08 May 2025': ['NOISE', 'CRASH', 'WHOOPS', 'SHOUT', 'TRILL', 'CLICK'],
+  '08 May 2025': ['NOISE', 'CRASH', 'WHOOP', 'SHOUT', 'TRILL', 'CLICK'],
   '09 May 2025': ['ANIMALS', 'LEOPARD', 'RACCOON', 'HAMSTER', 'GIRAFFE', 'MEERKAT'],
   '10 May 2025': ['BOARD', 'GAMES', 'CARDS', 'TOKEN', 'SCORE', 'CHESS'],
   '11 May 2025': ['POKER', 'CARDS', 'FLUSH', 'TABLE', 'RAISE', 'CHIPS'],
@@ -295,7 +295,7 @@ document.getElementById('hint-button').style.display = 'none';
 document.getElementById('theme-button').style.display = 'none';
 document.getElementById('mute-button').style.display = 'none';
 document.getElementById('game-reset-button').style.display = 'none';
-document.getElementById('grid-reset-button').style.display = 'none';
+document.getElementById('reset-button').style.display = 'none';
 
 
 // Timer functionality
@@ -600,11 +600,17 @@ document.getElementById('theme-button').addEventListener('click', () => {
 });
 
 // Start Button functionality//
-document.getElementById('start-button').addEventListener('click', () => {
-grid.style.display = 'grid';
-document.getElementById('start-button').style.display = 'none';
+  document.getElementById('start-button').addEventListener('click', () => {
+  grid.style.display = 'grid';
+  document.getElementById('start-button').style.display = 'none';
 
-startTimer();
+  //show other buttons
+  document.getElementById('hint-button').style.display = 'block'; 
+  document.getElementById('theme-button').style.display = 'block';
+  document.getElementById('mute-button').style.display = 'block';
+  document.getElementById('game-reset-button').style.display = 'block';
+  document.getElementById('reset-button').style.display = 'block';
+  startTimer();
 });
 
 
