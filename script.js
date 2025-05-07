@@ -27,7 +27,7 @@ const wordListsByDate = {
   '05 May 2025': ['BODY', 'BUTT', 'NOSE', 'FOOT', 'NECK', 'KNEE'],
   '06 May 2025': ['GREEN', 'GRAPE', 'GRASS', 'ALGAE', 'FROGS', 'APPLE'],
   '07 May 2025': ['CAREER', 'DOCTOR', 'LAWYER', 'WAITER', 'BARBER', 'DANCER'],
-  '08 May 2025': ['NOISE', 'CRASH', 'WHOOPS', 'SHOUT', 'TRILL', 'CLICK'],
+  '08 May 2025': ['NOISE', 'CRASH', 'WHOOP', 'SHOUT', 'TRILL', 'CLICK'],
   '09 May 2025': ['ANIMALS', 'LEOPARD', 'RACCOON', 'HAMSTER', 'GIRAFFE', 'MEERKAT'],
   '10 May 2025': ['BOARD', 'GAMES', 'CARDS', 'TOKEN', 'SCORE', 'CHESS'],
   '11 May 2025': ['POKER', 'CARDS', 'FLUSH', 'TABLE', 'RAISE', 'CHIPS'],
