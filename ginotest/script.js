@@ -294,7 +294,7 @@ grid.style.display = 'none';
 document.getElementById('hint-button').style.display = 'none'; 
 document.getElementById('theme-button').style.display = 'none';
 document.getElementById('mute-button').style.display = 'none';
-document.getElementById('game-reset-button').style.display = 'none';
+document.getElementById('grid-reset-button').style.display = 'none';
 document.getElementById('reset-button').style.display = 'none';
 
 
