@@ -26,8 +26,8 @@ const wordListsByDate = {
   '04 May 2025': ['RIDDLE', 'CIPHER', 'ENIGMA', 'PUZZLE', 'JIGSAW', 'SUDOKU'],
   '05 May 2025': ['BODY', 'BUTT', 'NOSE', 'FOOT', 'NECK', 'KNEE'],
   '06 May 2025': ['GREEN', 'GRAPE', 'GRASS', 'ALGAE', 'FROGS', 'APPLE'],
-  '07 May 2025': ['ANIMALS', 'LEOPARD', 'RACCOON', 'HAMSTER', 'GIRAFFE', 'MEERKAT'],
-  '08 May 2025': ['CAREER', 'DOCTOR', 'LAWYER', 'WAITER', 'BARBER', 'DANCER'],
+  '07 May 2025': ['CAREER', 'DOCTOR', 'LAWYER', 'WAITER', 'BARBER', 'DANCER'],
+  '08 May 2025': ['ANIMALS', 'LEOPARD', 'RACCOON', 'HAMSTER', 'GIRAFFE', 'MEERKAT'],
   '09 May 2025': ['NOISE', 'CRASH', 'WHOOPS', 'SHOUT', 'TRILL', 'CLICK'],
   '10 May 2025': ['BOARD', 'GAMES', 'CARDS', 'TOKEN', 'SCORE', 'CHESS'],
   '11 May 2025': ['POKER', 'CARDS', 'FLUSH', 'TABLE', 'RAISE', 'CHIPS'],
@@ -51,8 +51,8 @@ const ThemesByDate = {
   '04 May 2025':  ['Theme: PUZZLE'],
   '05 May 2025':  ['Theme: BODY'],
   '06 May 2025':  ['Theme: GREEN'],
-  '07 May 2025':  ['Theme: ANIMALS'],
-  '08 May 2025':  ['Theme: CAREER'],
+  '07 May 2025':  ['Theme: CAREER'],
+  '08 May 2025':  ['Theme: ANIMALS'],
   '09 May 2025':  ['Theme: NOISE'],
   '10 May 2025':  ['Theme: GAMES'],
   '11 May 2025':  ['Theme: POKER'],
@@ -60,6 +60,30 @@ const ThemesByDate = {
   '13 May 2025':  ['Theme: VIRUS'],
   '14 May 2025':  ['Theme: JOKER'],
   'default': ['Theme: SPACE']
+};
+
+// Hints by date
+const HintsByDate = {
+  '26 April 2025': ['Hint: The Final Frontier'],
+  '27 April 2025': ['Hint: When schools are out and trips begin.'],
+  '28 April 2025': ['Hint: Forests, rivers, and mountains belong here.'],
+  '29 April 2025': ['Hint: Prosecution and defence meet here.'],
+  '30 April 2025': ['Hint: Quenches thirst in many forms.'],
+  '01 May 2025': ['Hint: They come in flocks or solo, soaring above.'],
+  '02 May 2025': ['Hint: Geometric figures with defined sides or curves.'],
+  '03 May 2025': ['Hint: You’ll find it on menus in Italian restaurants.'],
+  '04 May 2025': ['Hint: Something that needs solving, often for fun'],
+  '05 May 2025': ['The physical form of a person'],
+  '06 May 2025': ['Colour of grass and leaves'],
+  '07 May 2025': ['Job path or profession'],
+  '08 May 2025': ['Found at the zoo'],
+  '09 May 2025': ['Things you can hear'],
+  '10 May 2025': ['Hint: Rules based activities played with friends and family at tables.'],
+  '11 May 2025': ['Hint: Card game typically played in Casinos'],
+  '12 May 2025': ['Hint: Different types of made-up books'],
+  '13 May 2025': ['Hint: Tiny things that can make you very sick'],
+  '14 May 2025': ['Hint: A non-serious person who tries to make you laugh'],
+  'default': ['Hint: The Final Frontier']
 };
 
 // Hints by date
@@ -372,7 +396,7 @@ function updateWordGroups() {
         }
 
         const playerTimeInSeconds = timeLeft; 
-        const averageTimeInSeconds =  341;     
+        const averageTimeInSeconds =  1711;     
         const blocklength = averageTimeInSeconds/8
         
         // Build the share message
