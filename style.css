@@ -9,6 +9,18 @@ body {
   height: 100vh;
 }
 
+.button-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+  margin: 15px 0;
+}
+
+.button-container button {
+  margin: 0;
+}
+
 #timer {
   font-size: 16px;
   font-weight: bold;
