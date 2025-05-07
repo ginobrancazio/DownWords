@@ -116,7 +116,7 @@ fetch('dictionary.txt')
   .catch(error => console.error('Error loading dictionary:', error));
 
 //hide timer as default
-timerDisplay.style.display = 'none';
+//timerDisplay.style.display = 'none';
 
 function getWordsForToday() {
   const today = new Date();
@@ -220,6 +220,7 @@ const colours = ['#a0d2eb', '#ffc6a0', '#c8e6a0', '#f7a0eb', '#d0a0ff'];
 hintDisplay.style.display = 'none';
 themeDisplay.style.display = 'none';
 
+
 // Determine the height of the grid (based on the longest word)
 const numRows = Math.max(...words.map(word => word.length)); 
 const numCols = words.length;
@@ -285,6 +286,17 @@ gridArray.forEach((row, rowIndex) => {
     grid.appendChild(div);
   });
 });
+
+//hide the grid before the start button is pressed
+grid.style.display = 'none';
+
+//hide the buttons before the start button is pressed
+document.getElementById('hint-button').style.display = 'none'; 
+document.getElementById('theme-button').style.display = 'none';
+document.getElementById('mute-button').style.display = 'none';
+document.getElementById('grid-reset-button').style.display = 'none';
+document.getElementById('reset-button').style.display = 'none';
+
 
 // Timer functionality
 let timer;
@@ -524,9 +536,9 @@ function updateWordGroups() {
 }
 
 // Start the timer when the page loads
-window.onload = () => {
-  startTimer();
-};
+//window.onload = () => {
+//  startTimer();
+//};
 
 // Hint Button functionality
 document.getElementById('hint-button').addEventListener('click', () => {
@@ -586,6 +598,21 @@ document.getElementById('theme-button').addEventListener('click', () => {
     });
   }
 });
+
+// Start Button functionality//
+  document.getElementById('start-button').addEventListener('click', () => {
+  grid.style.display = 'grid';
+  document.getElementById('start-button').style.display = 'none';
+
+  //show other buttons
+  document.getElementById('hint-button').style.display = 'block'; 
+  document.getElementById('theme-button').style.display = 'block';
+  document.getElementById('mute-button').style.display = 'block';
+  document.getElementById('grid-reset-button').style.display = 'block';
+  document.getElementById('reset-button').style.display = 'block';
+  startTimer();
+});
+
 
 //Reset Button for StartOver
 document.getElementById('reset-button').addEventListener('click', () => {
