@@ -288,7 +288,8 @@ gridArray.forEach((row, rowIndex) => {
 });
 
 //hide the grid before the start button is pressed
-grid.style.display = 'none';  // show the grid
+grid.style.visibility = 'hidden';
+
 
 // Timer functionality
 let timer;
