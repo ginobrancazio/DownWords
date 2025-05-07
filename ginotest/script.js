@@ -290,7 +290,7 @@ gridArray.forEach((row, rowIndex) => {
 //hide the grid before the start button is pressed
 grid.style.display = 'none';
 
-/hide the buttons before the start button is pressed
+//hide the buttons before the start button is pressed
 document.getElementById('hint-button').style.display = 'none'; 
 document.getElementById('theme-button').style.display = 'none';
 document.getElementById('mute-button').style.display = 'none';
