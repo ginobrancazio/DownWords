@@ -117,18 +117,20 @@ button:active {
   background-color: #d35400;
 }
 
-/* Button container styles */
+/* Button container styles - CRITICAL FOR MOBILE */
 .button-container {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: 12px;
-  margin: 20px 0;
+  gap: 8px;
+  margin: 15px 0;
+  width: 100%;
 }
 
 .button-container button {
-  margin: 0;
-  flex-shrink: 0;
+  margin: 4px;
+  flex: 0 1 auto;
+  min-width: 0;
 }
 
 /* Timer and message styles */
@@ -292,8 +294,12 @@ button:active {
   text-decoration: underline;
 }
 
-/* Responsive design for mobile */
+/* IMPROVED MOBILE STYLES */
 @media (max-width: 600px) {
+  body {
+    padding: 10px;
+  }
+  
   .letter {
     width: 40px;
     height: 40px;
@@ -305,16 +311,64 @@ button:active {
   }
   
   button {
-    padding: 8px 14px;
-    font-size: 14px;
-    width: auto;
+    padding: 8px 10px;
+    font-size: 12px;
+    margin: 3px;
+    letter-spacing: 0;
+    text-transform: none;
   }
   
   .button-container {
-    gap: 8px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 5px;
+    margin: 10px 0;
+  }
+  
+  .button-container button {
+    flex: 0 0 auto;
+    font-size: 11px;
+    padding: 8px 10px;
+    white-space: nowrap;
   }
   
   h1 {
-    font-size: 2rem;
+    font-size: 1.8rem;
+    margin-bottom: 10px;
+  }
+  
+  #instructions {
+    padding: 15px;
+  }
+  
+  #instructions h3 {
+    font-size: 1.2rem;
+  }
+  
+  #instructions li {
+    font-size: 14px;
+    margin-bottom: 5px;
+  }
+}
+
+/* For very small screens */
+@media (max-width: 400px) {
+  .button-container {
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+  
+  .button-container button {
+    flex: 0 0 auto;
+    font-size: 10px;
+    padding: 6px 8px;
+    margin: 2px;
+  }
+  
+  .letter {
+    width: 35px;
+    height: 35px;
+    font-size: 16px;
   }
 }
