@@ -296,7 +296,7 @@ document.getElementById('theme-button').style.display = 'none';
 document.getElementById('mute-button').style.display = 'none';
 document.getElementById('grid-reset-button').style.display = 'none';
 document.getElementById('reset-button').style.display = 'none';
-
+document.getElementById('mode-toggle').style.display = 'none';
 
 // Timer functionality
 let timer;
@@ -599,6 +599,59 @@ document.getElementById('theme-button').addEventListener('click', () => {
   }
 });
 
+// Dark Mode Toggle Functionality
+const modeToggle = document.getElementById('mode-toggle');
+let isDarkMode = false;
+
+// Check for saved user preference
+if (localStorage.getItem('darkMode') === 'true') {
+  enableDarkMode();
+}
+
+// Check system preference if no saved preference
+if (!localStorage.getItem('darkMode') && window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+  enableDarkMode();
+}
+
+modeToggle.addEventListener('click', () => {
+  if (isDarkMode) {
+    disableDarkMode();
+  } else {
+    enableDarkMode();
+  }
+});
+
+function enableDarkMode() {
+  document.body.classList.add('dark-mode');
+  modeToggle.textContent = '🌙';
+  isDarkMode = true;
+  localStorage.setItem('darkMode', 'true');
+  
+  if (typeof gtag === 'function') {
+    gtag('event', 'dark_mode_enabled', {
+      event_category: 'settings',
+      event_label: 'Dark Mode Toggle',
+      value: 1
+    });
+  }
+}
+
+function disableDarkMode() {
+  document.body.classList.remove('dark-mode');
+  modeToggle.textContent = '☀️';
+  isDarkMode = false;
+  localStorage.setItem('darkMode', 'false');
+  
+  if (typeof gtag === 'function') {
+    gtag('event', 'light_mode_enabled', {
+      event_category: 'settings',
+      event_label: 'Light Mode Toggle',
+      value: 1
+    });
+  }
+}
+
+
 // Start Button functionality//
   document.getElementById('start-button').addEventListener('click', () => {
   grid.style.display = 'grid';
@@ -610,6 +663,8 @@ document.getElementById('theme-button').addEventListener('click', () => {
   document.getElementById('mute-button').style.display = 'block';
   document.getElementById('grid-reset-button').style.display = 'block';
   document.getElementById('reset-button').style.display = 'block';
+  document.getElementById('mode-toggle').style.display = 'block';
+
   startTimer();
 });
 
