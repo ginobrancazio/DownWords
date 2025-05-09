@@ -603,15 +603,22 @@ document.getElementById('theme-button').addEventListener('click', () => {
 const modeToggle = document.getElementById('mode-toggle');
 let isDarkMode = false;
 
-// Check for saved user preference
+// Initialize in light mode by default
+modeToggle.textContent = '☀️';
+localStorage.setItem('darkMode', 'false');
+
+// Only check for saved user preference if it exists
 if (localStorage.getItem('darkMode') === 'true') {
   enableDarkMode();
 }
 
-// Check system preference if no saved preference
+// Only check system preference if explicitly enabled
+// Comment out this section to always default to light mode regardless of system preference
+/*
 if (!localStorage.getItem('darkMode') && window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
   enableDarkMode();
 }
+*/
 
 modeToggle.addEventListener('click', () => {
   if (isDarkMode) {
