@@ -377,96 +377,77 @@ function updateWordGroups() {
         }
       }
       
-     if (matchedWords.length === words.length) {
-  stopTimer();
-  if (!isMuted){
-    successSound.play(); // Play success sound
-  }
+      if (matchedWords.length === words.length) {
+        stopTimer();
+        if (!isMuted){
+          successSound.play(); // Play success sound
+        }
 
-  const playerTimeInSeconds = timeLeft; 
-  const averageTimeInSeconds = 151;     
-  const blocklength = averageTimeInSeconds/8;
-
-  // Build the share message
-  let message = '';
+        const playerTimeInSeconds = timeLeft; 
+        const averageTimeInSeconds =  151;     
+        const blocklength = averageTimeInSeconds/8
   
-  // Add archive date information if playing from archive
-  if (selectedDate && selectedDate !== 'default') {
-    message += `I completed the DownWords archive puzzle from ${selectedDate} in ${formatTime(timeLeft)}\n`;
-  } else {
-    message += `I completed today's DownWords in ${formatTime(timeLeft)} compared to the average of ${formatTime(averageTimeInSeconds)}\n`;
-  }
+        // Build the share message
+        let message = `I completed today's DownWords in ${formatTime(timeLeft)} compared to the average of ${formatTime(averageTimeInSeconds)}\n`;
 
-  // Convert times to blocks (each block represents one 8th of the average time)
-  const playerBlocks = Math.floor(playerTimeInSeconds / blocklength);
-  const averageBlocks = Math.floor(averageTimeInSeconds / blocklength);
+        // Convert times to blocks (each block represents one 8th of the average time)
+        const playerBlocks = Math.floor(playerTimeInSeconds / blocklength);
+        const averageBlocks = Math.floor(averageTimeInSeconds / blocklength);
 
-  // Build the block strings
-  let playerBlocksString = '';
-  let averageBlocksString = '';
+        // Build the block strings
+        let playerBlocksString = '';
+        let averageBlocksString = '';
 
-  // If player is slower than average
-  if (playerTimeInSeconds > averageTimeInSeconds) {
-    const extraTime = Math.min(playerTimeInSeconds - averageTimeInSeconds, blocklength * 3);
-    const extraBlocks = Math.ceil(extraTime / blocklength);
-    playerBlocksString = '🟩'.repeat(averageBlocks) + '🟥'.repeat(extraBlocks);
-  } else {
-    const minimumPlayerBlocks = Math.max(1, playerBlocks); // Make sure at least 1 block
-    playerBlocksString = '🟩'.repeat(minimumPlayerBlocks);
-  }
+        // If player is slower than average
+        if (playerTimeInSeconds > averageTimeInSeconds) {
+          const extraTime = Math.min(playerTimeInSeconds - averageTimeInSeconds, blocklength * 3);
+          const extraBlocks = Math.ceil(extraTime / blocklength);
+          playerBlocksString = '🟩'.repeat(averageBlocks) + '🟥'.repeat(extraBlocks);
+        } else {
+          const minimumPlayerBlocks = Math.max(1, playerBlocks); // Make sure at least 1 block
+          playerBlocksString = '🟩'.repeat(minimumPlayerBlocks);
+        }
 
-  // Average is always green blocks (no red needed)
-  averageBlocksString = '🟩'.repeat(averageBlocks);
+        // Average is always green blocks (no red needed)
+        averageBlocksString = '🟩'.repeat(averageBlocks);
 
-  // Format the final message
-  message += `\n${playerBlocksString} - Me (${formatTime(timeLeft)})`;
-  
-  // Only include average comparison for current day puzzles
-  if (!selectedDate || selectedDate === 'default') {
-    message += `\n${averageBlocksString} - Average (${formatTime(averageTimeInSeconds)}) \n`;
-  }
+        // Format the final message
+        message += `\n${playerBlocksString} - Me (${formatTime(timeLeft)})`;
+        message += `\n${averageBlocksString} - Average (${formatTime(averageTimeInSeconds)}) \n`;
 
-  // Add bonus words found to the message
-  if (bonusWordsFound.size > 0) {
-    const duckEmojis = '🦆'.repeat(bonusWordsFound.size);
-    message += `\n${duckEmojis} - Found ${bonusWordsFound.size} bonus word${bonusWordsFound.size > 1 ? 's' : ''} \n`;
-  }
-  
-  // Both hint and theme are hidden, do something here
-  if (getComputedStyle(hintDisplay).display === 'none' && getComputedStyle(themeDisplay).display === 'none') {
-    message += `\n🏆 - No hints`;
-  }
-  
-  // Check player speed - only for current day puzzles
-  if (!selectedDate || selectedDate === 'default') {
-    if (timeLeft < averageTimeInSeconds * 0.2) {
-      message += `\n👑 - Top 20% of players today!`;
-    } else if (timeLeft < averageTimeInSeconds) {
-      message += `\n🏅 - Top 50% of players today`;
-    }
-  }
-  
-  message += `\n`;
-  message += `\nhttp://www.DownWordsGame.com`;
-  
-  // Add archive link if playing from archive
-  if (selectedDate && selectedDate !== 'default') {
-    // Create a URL-friendly date format
-    const urlFriendlyDate = selectedDate.replace(/\s+/g, '-').toLowerCase();
-    message += `/archive/${urlFriendlyDate}`;
-  }
-  
-  message += `\n#DownWordsGame`;
-  
-  // Show the text box with the completion message
-  showCompletionMessage();
+           // Add bonus words found to the message
+       if (bonusWordsFound.size > 0) {
+          const duckEmojis = '🦆'.repeat(bonusWordsFound.size);
+          message += `\n${duckEmojis} - Found ${bonusWordsFound.size} bonus word${bonusWordsFound.size > 1 ? 's' : ''} \n`;
+        }
+        
+        // Both hint and theme are hidden, do something here
+        if (getComputedStyle(hintDisplay).display === 'none' && getComputedStyle(themeDisplay).display === 'none') {
+          message += `\n🏆 - No hints`;
+        }
+        
+        //check player speed   
+        const averageTime = 135;
 
-  // Populate the text box with the completion message
-  document.getElementById('gameCompletionMessage').value = message;
+        if (timeLeft < averageTimeInSeconds * 0.2) {
+          message += `\n👑 - Top 20% of players today!`;
+        } else if (timeLeft < averageTimeInSeconds) {
+          message += `\n🏅 - Top 50% of players today`;
+        }
+        
+        message += `\n`;
+        message += `\nhttp://www.DownWordsGame.com`;
+        message += `\n#DownWordsGame`;
+        
+        // Show the text box with the completion message
+        showCompletionMessage();
 
-  // Show the copy and share buttons
-  document.getElementById('shareButton').style.display = 'block';
-  document.getElementById('copyButton').style.display = 'block';
+        // Populate the text box with the completion message
+        document.getElementById('gameCompletionMessage').value = message;
+
+        //show the copy and share buttons
+        document.getElementById('shareButton').style.display = 'block';
+        document.getElementById('copyButton').style.display = 'block';
         
         // Remove the grid once all words are matched
         grid.style.display = 'none';  // Hide the grid
