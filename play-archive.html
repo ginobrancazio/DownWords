@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DownWords Game - Archive Play</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <a href="archive.html" class="back-button">← Back to Archive</a>
+            <h1>DownWords Game</h1>
+            <h2 id="archive-date">Archive Puzzle</h2>
+        </div>
+
+        <div id="timer">Time: 0</div>
+        
+        <div id="letter-grid"></div>
+        
+        <div id="selected-words-container"></div>
+        
+        <div id="hint-display"></div>
+        <div id="theme-display"></div>
+        
+        <div id="success-message" style="display: none;">
+            <h2>Congratulations!</h2>
+            <textarea id="gameCompletionMessage" rows="10" cols="40" readonly></textarea>
+            <button id="copyButton" style="display: none;">Copy</button>
+            <button id="shareButton" style="display: none;">Share to Twitter</button>
+        </div>
+        
+        <div class="button-container">
+            <button id="start-button">Start Game</button>
+            <button id="hint-button" style="display: none;">Show Hint</button>
+            <button id="theme-button" style="display: none;">Show Theme</button>
+            <button id="mute-button" style="display: none;">🔇 Mute</button>
+            <button id="grid-reset-button" style="display: none;">Reset Grid</button>
+            <button id="reset-button" style="display: none;">Start Over</button>
+            <button id="mode-toggle" style="display: none;">☀️</button>
+        </div>
+    </div>
+
+    <!-- Include your word lists data -->
+    <script src="word-lists.js"></script>
+    
+    <!-- Include the game script with modifications for archive play -->
+    <script>
+        // Get the selected date from localStorage
+        const selectedDate = localStorage.getItem('selectedPuzzleDate') || 'default';
+        document.getElementById('archive-date').textContent = `Archive Puzzle: ${selectedDate}`;
+        
+        // Rest of your game code, but modified to use the selectedDate instead of today's date
+        const grid = document.getElementById('letter-grid');
+        const wordsContainer = document.getElementById('selected-words-container');
+        const timerDisplay = document.getElementById('timer');
+        const successMessage = document.getElementById('success-message');
+        const hintDisplay = document.getElementById('hint-display');
+        const themeDisplay = document.getElementById('theme-display');
+
+        // Add the audio elements
+        const letterClickSound = new Audio('click-sound.mp3');
+        const matchSound = new Audio('match-sound.mp3');
+        const successSound = new Audio('finish-sound.mp3');
+        const bonusSound = new Audio('bonus.mp3');
+
+        // Create a container for bonus words
+        const bonusWordsContainer = document.createElement('div');
+        bonusWordsContainer.id = 'bonus-words-container';
+        bonusWordsContainer.style.marginTop = '20px';
+        bonusWordsContainer.style.display = 'none';
+        document.body.insertBefore(bonusWordsContainer, wordsContainer.nextSibling);
+
+        // Add a heading for bonus words
+        const bonusWordsHeading = document.createElement('h3');
+        bonusWordsHeading.textContent = 'Bonus Words:';
+        bonusWordsHeading.style.textAlign = 'center';
+        bonusWordsHeading.style.marginBottom = '10px';
+        bonusWordsContainer.appendChild(bonusWordsHeading);
+
+        // Dictionary for bonus words
+        let dictionary = new Set(); // Using a Set for fast lookups
+        let bonusWordsFound = new Set(); // Track found bonus words
+
+        // Load the dictionary file
+        fetch('dictionary.txt')
+          .then(response => response.text())
+          .then(text => {
+            // Split the text file by newlines and add each word to the Set
+            const words = text.split('\n').map(word => word.trim().toUpperCase());
+            dictionary = new Set(words);
+            console.log('Dictionary loaded with', dictionary.size, 'words');
+          })
+          .catch(error => console.error('Error loading dictionary:', error));
+
+        // Get words for the selected date
+        function getWordsForSelectedDate() {
+          return wordListsByDate[selectedDate] || wordListsByDate['default'];
+        }
+
+        // Get theme for the selected date
+        function getThemeForSelectedDate() {
+          return ThemesByDate[selectedDate] || ThemesByDate['default'];
+        }
+
+        // Get hint for the selected date
+        function getHintForSelectedDate() {
+          return HintsByDate[selectedDate] || HintsByDate['default'];
+        }
+
+        // Format time function
+        function formatTime(totalSeconds) {
+          const minutes = Math.floor(totalSeconds / 60);
+          const seconds = totalSeconds % 60;
+          return `${minutes}m ${seconds < 10 ? '0' : ''}${seconds}s`;
+        }
+
+        // Get the words, hint, and theme for the selected date
+        const words = getWordsForSelectedDate();
+        const hintText = getHintForSelectedDate();
+        const themeText = getThemeForSelectedDate();
+
+        let selectedLetters = [];
+        let matchedWords = [];
+        let isMuted = false;
+        const colours = ['#a0d2eb', '#ffc6a0', '#c8e6a0', '#f7a0eb', '#d0a0ff'];
+
+        // Set the hint and theme as hidden by default
+        hintDisplay.style.display = 'none';
+        themeDisplay.style.display = 'none';
+
+        // Determine the height of the grid (based on the longest word)
+        const numRows = Math.max(...words.map(word => word.length)); 
+        const numCols = words.length;
+
+        // Create the grid based on the words list
+        const gridArray = Array.from({ length: numRows }, () => Array(numCols).fill(null));
+
+        words.forEach((word, colIndex) => {
+          [...word].forEach((letter, rowIndex) => {
+            gridArray[rowIndex][colIndex] = letter;
+          });
+        });
+
+        // Shuffle each row randomly
+        gridArray.forEach(row => {
+          row.sort(() => Math.random() - 0.5);  // Shuffle letters within the row
+        });
+
+        // Create the grid elements
+        grid.style.gridTemplateColumns = `repeat(${numCols}, 60px)`;
+        grid.style.gridTemplateRows = `repeat(${numRows}, 60px)`;
+
+        // Hide the grid before the start button is pressed
+        grid.style.display = 'none';
+
+        // Rest of your game code...
+        // (Include all the functions and event listeners from your original code)
+        
+        // ... (copy the rest of your game code here)
+    </script>
+</body>
+</html>
