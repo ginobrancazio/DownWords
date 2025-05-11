@@ -130,7 +130,7 @@ function getWordsByDate(selectedDate) {
   // Format the date to match your date keys (e.g., "26 April 2025")
   const date = new Date(selectedDate);
   const day = date.getDate();
-  const month = date.toLocaleString('en-US', { month: 'long' });
+  const month = date.toLocaleString('en-UK', { month: 'long' });
   const year = date.getFullYear();
   const formattedDate = `${day} ${month} ${year}`;
   
@@ -148,7 +148,7 @@ function getWordsByDate(selectedDate) {
 function getThemeByDate(selectedDate) {
   const date = new Date(selectedDate);
   const day = date.getDate();
-  const month = date.toLocaleString('en-US', { month: 'long' });
+  const month = date.toLocaleString('en-UK', { month: 'long' });
   const year = date.getFullYear();
   const formattedDate = `${day} ${month} ${year}`;
   
@@ -159,7 +159,7 @@ function getThemeByDate(selectedDate) {
 function getHintByDate(selectedDate) {
   const date = new Date(selectedDate);
   const day = date.getDate();
-  const month = date.toLocaleString('en-US', { month: 'long' });
+  const month = date.toLocaleString('en-UK', { month: 'long' });
   const year = date.getFullYear();
   const formattedDate = `${day} ${month} ${year}`;
   
