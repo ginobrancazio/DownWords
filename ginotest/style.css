@@ -69,6 +69,48 @@ body {
   transition: background-color 0.3s ease, color 0.3s ease;
 }
 
+#date-picker-container {
+  margin: 10px 0 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+#puzzle-date {
+  padding: 8px 12px;
+  border-radius: 8px;
+  border: 1px solid var(--grid-border);
+  background-color: var(--grid-bg);
+  color: var(--text-color);
+  font-family: inherit;
+}
+
+.dark-mode #puzzle-date {
+  background-color: var(--grid-bg);
+  color: var(--text-color);
+  border-color: var(--grid-border);
+}
+
+#load-date-button {
+  background-color: var(--button-bg);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 8px 16px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+#load-date-button:hover {
+  background-color: var(--button-hover);
+  transform: translateY(-2px);
+}
+
+
 /* Standardized Button Styling */
 button {
   background-color: var(--button-bg);
