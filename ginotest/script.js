@@ -296,7 +296,7 @@ document.getElementById('theme-button').style.display = 'none';
 document.getElementById('mute-button').style.display = 'none';
 document.getElementById('grid-reset-button').style.display = 'none';
 document.getElementById('reset-button').style.display = 'none';
-
+document.getElementById('mode-toggle').style.display = 'none';
 
 // Timer functionality
 let timer;
@@ -384,7 +384,7 @@ function updateWordGroups() {
         }
 
         const playerTimeInSeconds = timeLeft; 
-        const averageTimeInSeconds =  107;     
+        const averageTimeInSeconds =  139;     
         const blocklength = averageTimeInSeconds/8
   
         // Build the share message
@@ -599,6 +599,66 @@ document.getElementById('theme-button').addEventListener('click', () => {
   }
 });
 
+// Dark Mode Toggle Functionality
+const modeToggle = document.getElementById('mode-toggle');
+let isDarkMode = false;
+
+// Initialize in light mode by default
+modeToggle.textContent = '☀️';
+localStorage.setItem('darkMode', 'false');
+
+// Only check for saved user preference if it exists
+if (localStorage.getItem('darkMode') === 'true') {
+  enableDarkMode();
+}
+
+// Only check system preference if explicitly enabled
+// Comment out this section to always default to light mode regardless of system preference
+/*
+if (!localStorage.getItem('darkMode') && window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+  enableDarkMode();
+}
+*/
+
+modeToggle.addEventListener('click', () => {
+  if (isDarkMode) {
+    disableDarkMode();
+  } else {
+    enableDarkMode();
+  }
+});
+
+function enableDarkMode() {
+  document.body.classList.add('dark-mode');
+  modeToggle.textContent = '🌙';
+  isDarkMode = true;
+  localStorage.setItem('darkMode', 'true');
+  
+  if (typeof gtag === 'function') {
+    gtag('event', 'dark_mode_enabled', {
+      event_category: 'settings',
+      event_label: 'Dark Mode Toggle',
+      value: 1
+    });
+  }
+}
+
+function disableDarkMode() {
+  document.body.classList.remove('dark-mode');
+  modeToggle.textContent = '☀️';
+  isDarkMode = false;
+  localStorage.setItem('darkMode', 'false');
+  
+  if (typeof gtag === 'function') {
+    gtag('event', 'light_mode_enabled', {
+      event_category: 'settings',
+      event_label: 'Light Mode Toggle',
+      value: 1
+    });
+  }
+}
+
+
 // Start Button functionality//
   document.getElementById('start-button').addEventListener('click', () => {
   grid.style.display = 'grid';
@@ -610,6 +670,8 @@ document.getElementById('theme-button').addEventListener('click', () => {
   document.getElementById('mute-button').style.display = 'block';
   document.getElementById('grid-reset-button').style.display = 'block';
   document.getElementById('reset-button').style.display = 'block';
+  document.getElementById('mode-toggle').style.display = 'block';
+
   startTimer();
 });
 
