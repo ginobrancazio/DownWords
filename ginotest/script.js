@@ -117,6 +117,9 @@ fetch('dictionary.txt')
 
 // Function to initialize the date picker with Flatpickr
 function initializeDatePicker() {
+  // Get today's date
+  const today = new Date();
+  
   // Create an array of available dates from your puzzle data
   const availableDates = Object.keys(wordListsByDate)
     .filter(date => date !== 'default')
@@ -132,13 +135,38 @@ function initializeDatePicker() {
   // Sort dates chronologically
   availableDates.sort((a, b) => a - b);
   
+  // Check if today has a puzzle
+  const todayHasPuzzle = availableDates.some(date => 
+    date.getDate() === today.getDate() &&
+    date.getMonth() === today.getMonth() &&
+    date.getFullYear() === today.getFullYear()
+  );
+  
+  // If today doesn't have a puzzle, find the most recent date that does
+  let defaultDate = today;
+  if (!todayHasPuzzle && availableDates.length > 0) {
+    // Filter dates that are in the past (up to today)
+    const pastDates = availableDates.filter(date => date <= today);
+    if (pastDates.length > 0) {
+      // Get the most recent past date
+      defaultDate = pastDates[pastDates.length - 1];
+    } else {
+      // If no past dates, use the earliest available date
+      defaultDate = availableDates[0];
+    }
+  }
+  
+  // Format the default date as YYYY-MM-DD for the input value
+  const formattedDefaultDate = defaultDate.toISOString().split('T')[0];
+  document.getElementById('puzzle-date').value = formattedDefaultDate;
+  
   // Initialize Flatpickr
   flatpickr("#puzzle-date", {
     inline: false,
     dateFormat: "Y-m-d",
-    defaultDate: new Date(),
+    defaultDate: defaultDate,
     minDate: availableDates[0], // First available date
-    maxDate: new Date(), // Today (or you can set a specific end date)
+    maxDate: today, // Today (or you can set a specific end date)
     enable: availableDates, // Only enable dates with puzzles
     disableMobile: "true", // Disable mobile-native datepicker
     
@@ -164,6 +192,7 @@ function initializeDatePicker() {
   // Show the date picker
   document.getElementById('date-picker-container').style.display = 'flex';
 }
+
 
 // Function to get words based on selected date
 function getWordsByDate(selectedDate) {
@@ -695,6 +724,7 @@ function updateWordGroups() {
 
 // Initialize date picker and load puzzle when page loads
 window.onload = () => {
+  // Initialize the date picker
   initializeDatePicker();
   
   // Hide the start button since we're loading immediately
@@ -702,7 +732,7 @@ window.onload = () => {
     document.getElementById('start-button').style.display = 'none';
   }
   
-  // Load today's puzzle by default
+  // Load puzzle for the default date (today or most recent available date)
   loadPuzzleForDate();
   
   // Show dark mode toggle
