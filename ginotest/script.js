@@ -167,9 +167,9 @@ function initializeDatePicker() {
 
 // Function to get words based on selected date
 function getWordsByDate(selectedDate) {
-  // Format the date to match your date keys (e.g., "26 April 2025")
+  // Convert the YYYY-MM-DD format to "DD Month YYYY"
   const date = new Date(selectedDate);
-  const day = String(date.getDate()).padStart(2, '0'); // Ensure two digits with leading zero if needed
+  const day = date.getDate();
   const month = date.toLocaleString('en-US', { month: 'long' });
   const year = date.getFullYear();
   const formattedDate = `${day} ${month} ${year}`;
@@ -178,8 +178,11 @@ function getWordsByDate(selectedDate) {
   
   // Check each key in wordListsByDate to find a match (case insensitive)
   for (const key in wordListsByDate) {
-    if (key.toLowerCase() === formattedDate.toLowerCase() || 
-        key.toLowerCase() === formattedDate.replace(/^0/, '').toLowerCase()) { // Try without leading zero
+    // Normalize both strings for comparison (remove leading zeros, lowercase)
+    const normalizedKey = key.toLowerCase().replace(/^0(\d)/, '$1');
+    const normalizedDate = formattedDate.toLowerCase().replace(/^0(\d)/, '$1');
+    
+    if (normalizedKey === normalizedDate) {
       console.log("Found puzzle for date:", key);
       return wordListsByDate[key];
     }
@@ -190,6 +193,7 @@ function getWordsByDate(selectedDate) {
   alert('No puzzle available for this date. Using default puzzle instead.');
   return wordListsByDate['default'];
 }
+
 
 // Function to get theme based on selected date
 function getThemeByDate(selectedDate) {
