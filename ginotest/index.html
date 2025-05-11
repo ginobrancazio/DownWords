@@ -22,35 +22,28 @@
   <audio id="match-sound" src="match-sound.mp3"></audio>
   <audio id="finish-sound" src="finish-sound.mp3"></audio>
 
-  <div id="game">
-    <!-- Game content here -->
-    <h1>DownWords</h1>
-    <div id="date-picker-container">
-  <label for="puzzle-date">Select puzzle date: </label>
-  <input type="date" id="puzzle-date" name="puzzle-date">
-  <button id="load-date-button">Load Puzzle</button>
+ <div id="game">
+  <!-- Game content here -->
+  <h1>DownWords</h1>
+  <div id="date-picker-container">
+    <label for="puzzle-date">Select puzzle date: </label>
+    <input type="date" id="puzzle-date" name="puzzle-date">
+    <button id="load-date-button">Load Puzzle</button>
+  </div>
+  <div id="timer">Time: 0</div>
+  <div id="letter-grid"></div>
+  <!-- Timer and Success Message -->
 </div>
-
-    <div id="timer">Time: 0</div>
-    <div class="button-container">
-      <button id="start-button">Start Game</button>
-    </div>
-    <!--<div id="current-date"></div> -->
-    <div id="letter-grid"></div>
-    <!-- Timer and Success Message -->
-  </div>
   
-  <!-- Hint and Theme Buttons -->
-  <div class="button-container">
-    <button id="hint-button">Reveal Hint</button>
-    <button id="theme-button">Reveal Theme</button>
-    <button id="grid-reset-button">Reset Grid</button>
-    <button id="reset-button">Start Over</button>
-    <!--  <button id="hide-timer-button">Hide Timer</button> -->
-    <button id="mute-button">🔇 Mute</button>
-    <button id="mode-toggle" aria-label="Toggle dark/light mode">☀️</button>
-
-  </div>
+<!-- Hint and Theme Buttons -->
+<div class="button-container">
+  <button id="hint-button">Reveal Hint</button>
+  <button id="theme-button">Reveal Theme</button>
+  <button id="grid-reset-button">Reset Grid</button>
+  <button id="reset-button">Start Over</button>
+  <button id="mute-button">🔇 Mute</button>
+  <button id="mode-toggle" aria-label="Toggle dark/light mode">☀️</button>
+</div>
 
   <!-- Hint and Theme Display -->
   <div id="hint-display"></div>
