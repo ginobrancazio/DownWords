@@ -115,11 +115,51 @@ fetch('dictionary.txt')
   })
   .catch(error => console.error('Error loading dictionary:', error));
 
-// Set the date picker to today's date by default
+// Function to initialize the date picker with Flatpickr
 function initializeDatePicker() {
-  const today = new Date();
-  const formattedDate = today.toISOString().split('T')[0]; // Format as YYYY-MM-DD
-  document.getElementById('puzzle-date').value = formattedDate;
+  // Create an array of available dates from your puzzle data
+  const availableDates = Object.keys(wordListsByDate)
+    .filter(date => date !== 'default')
+    .map(dateStr => {
+      // Parse dates like "26 April 2025" to Date objects
+      const parts = dateStr.split(' ');
+      const day = parseInt(parts[0], 10);
+      const month = new Date(Date.parse(`${parts[1]} 1, 2000`)).getMonth(); // Get month index (0-11)
+      const year = parseInt(parts[2], 10);
+      return new Date(year, month, day);
+    });
+  
+  // Sort dates chronologically
+  availableDates.sort((a, b) => a - b);
+  
+  // Initialize Flatpickr
+  flatpickr("#puzzle-date", {
+    inline: false,
+    dateFormat: "Y-m-d",
+    defaultDate: new Date(),
+    minDate: availableDates[0], // First available date
+    maxDate: new Date(), // Today (or you can set a specific end date)
+    enable: availableDates, // Only enable dates with puzzles
+    disableMobile: "true", // Disable mobile-native datepicker
+    
+    // Customize the calendar appearance
+    onDayCreate: function(dObj, dStr, fp, dayElem) {
+      // You can add custom styling or tooltips here if needed
+      if (!availableDates.some(date => 
+        date.getDate() === dayElem.dateObj.getDate() &&
+        date.getMonth() === dayElem.dateObj.getMonth() &&
+        date.getFullYear() === dayElem.dateObj.getFullYear()
+      )) {
+        // Add a class to dates without puzzles
+        dayElem.classList.add('no-puzzle');
+      }
+    },
+    
+    onChange: function(selectedDates, dateStr, instance) {
+      // Optionally auto-load the puzzle when a date is selected
+      // loadPuzzleForDate();
+    }
+  });
   
   // Show the date picker
   document.getElementById('date-picker-container').style.display = 'flex';
