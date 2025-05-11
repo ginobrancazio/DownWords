@@ -129,42 +129,66 @@ function initializeDatePicker() {
 function getWordsByDate(selectedDate) {
   // Format the date to match your date keys (e.g., "26 April 2025")
   const date = new Date(selectedDate);
-  const day = date.getDate();
-  const month = date.toLocaleString('en-UK', { month: 'long' });
+  const day = String(date.getDate()).padStart(2, '0'); // Ensure two digits with leading zero if needed
+  const month = date.toLocaleString('en-US', { month: 'long' });
   const year = date.getFullYear();
   const formattedDate = `${day} ${month} ${year}`;
   
-  // Check if we have words for this date
-  if (wordListsByDate[formattedDate]) {
-    return wordListsByDate[formattedDate];
-  } else {
-    // If no words for this date, use default
-    alert('No puzzle available for this date. Using default puzzle instead.');
-    return wordListsByDate['default'];
+  console.log("Looking for puzzle for date:", formattedDate);
+  
+  // Check each key in wordListsByDate to find a match (case insensitive)
+  for (const key in wordListsByDate) {
+    if (key.toLowerCase() === formattedDate.toLowerCase() || 
+        key.toLowerCase() === formattedDate.replace(/^0/, '').toLowerCase()) { // Try without leading zero
+      console.log("Found puzzle for date:", key);
+      return wordListsByDate[key];
+    }
   }
+  
+  // If no words for this date, use default
+  console.log("No puzzle found for date:", formattedDate, "Using default puzzle.");
+  alert('No puzzle available for this date. Using default puzzle instead.');
+  return wordListsByDate['default'];
 }
 
 // Function to get theme based on selected date
 function getThemeByDate(selectedDate) {
   const date = new Date(selectedDate);
-  const day = date.getDate();
-  const month = date.toLocaleString('en-UK', { month: 'long' });
+  const day = String(date.getDate()).padStart(2, '0'); // Ensure two digits with leading zero if needed
+  const month = date.toLocaleString('en-US', { month: 'long' });
   const year = date.getFullYear();
   const formattedDate = `${day} ${month} ${year}`;
   
-  return ThemesByDate[formattedDate] || ThemesByDate['default'];
+  // Check each key in ThemesByDate to find a match (case insensitive)
+  for (const key in ThemesByDate) {
+    if (key.toLowerCase() === formattedDate.toLowerCase() || 
+        key.toLowerCase() === formattedDate.replace(/^0/, '').toLowerCase()) { // Try without leading zero
+      return ThemesByDate[key];
+    }
+  }
+  
+  return ThemesByDate['default'];
 }
 
 // Function to get hint based on selected date
 function getHintByDate(selectedDate) {
   const date = new Date(selectedDate);
-  const day = date.getDate();
-  const month = date.toLocaleString('en-UK', { month: 'long' });
+  const day = String(date.getDate()).padStart(2, '0'); // Ensure two digits with leading zero if needed
+  const month = date.toLocaleString('en-US', { month: 'long' });
   const year = date.getFullYear();
   const formattedDate = `${day} ${month} ${year}`;
   
-  return HintsByDate[formattedDate] || HintsByDate['default'];
+  // Check each key in HintsByDate to find a match (case insensitive)
+  for (const key in HintsByDate) {
+    if (key.toLowerCase() === formattedDate.toLowerCase() || 
+        key.toLowerCase() === formattedDate.replace(/^0/, '').toLowerCase()) { // Try without leading zero
+      return HintsByDate[key];
+    }
+  }
+  
+  return HintsByDate['default'];
 }
+
 
 // Function to load puzzle for selected date
 function loadPuzzleForDate() {
