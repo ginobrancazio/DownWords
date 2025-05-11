@@ -25,6 +25,7 @@
   --matched-word-text: #000000;
   --button-bg: #4a6fa5;
   --button-hover: #3a5a8c;
+  --text-color-rgb: 51, 51, 51; /* RGB version of #333333 */
 }
 
 .dark-mode {
@@ -53,6 +54,7 @@
   --matched-word-text: #ffffff;
   --button-bg: #4a6fa5;
   --button-hover: #3a5a8c;
+  --text-color-rgb: 224, 224, 224; /* RGB version of #e0e0e0 */
 }
 
 body {
