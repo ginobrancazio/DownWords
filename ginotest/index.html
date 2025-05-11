@@ -15,6 +15,11 @@
     gtag('js', new Date());
     gtag('config', 'G-6R3CEQKVLF');
   </script>
+<!-- Flatpickr CSS and JS -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+
+  
 </head>
 
 <body>
@@ -26,10 +31,11 @@
   <!-- Game content here -->
   <h1>DownWords</h1>
   <div id="date-picker-container">
-    <label for="puzzle-date">Select puzzle date: </label>
-    <input type="date" id="puzzle-date" name="puzzle-date">
-    <button id="load-date-button">Load Puzzle</button>
-  </div>
+  <label for="puzzle-date">Select puzzle date: </label>
+  <input type="text" id="puzzle-date" name="puzzle-date" placeholder="Select date...">
+  <button id="load-date-button">Load Puzzle</button>
+</div>
+
   <div id="timer">Time: 0</div>
   <div id="letter-grid"></div>
   <!-- Timer and Success Message -->
