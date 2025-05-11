@@ -121,8 +121,8 @@ function initializeDatePicker() {
   const formattedDate = today.toISOString().split('T')[0]; // Format as YYYY-MM-DD
   document.getElementById('puzzle-date').value = formattedDate;
   
-  // Hide the date picker initially (will show after clicking start)
-  document.getElementById('date-picker-container').style.display = 'none';
+  // Show the date picker
+  document.getElementById('date-picker-container').style.display = 'flex';
 }
 
 // Function to get words based on selected date
@@ -206,6 +206,17 @@ function loadPuzzleForDate() {
   
   // Hide bonus words container
   bonusWordsContainer.style.display = 'none';
+  
+  // Show the grid
+  grid.style.display = 'grid';
+  
+  // Show game control buttons
+  document.getElementById('hint-button').style.display = 'block'; 
+  document.getElementById('theme-button').style.display = 'block';
+  document.getElementById('mute-button').style.display = 'block';
+  document.getElementById('grid-reset-button').style.display = 'block';
+  document.getElementById('reset-button').style.display = 'block';
+  document.getElementById('mode-toggle').style.display = 'block';
   
   // Track the event
   if (typeof gtag === 'function') {
@@ -336,10 +347,7 @@ const colours = ['#a0d2eb', '#ffc6a0', '#c8e6a0', '#f7a0eb', '#d0a0ff'];
 hintDisplay.style.display = 'none';
 themeDisplay.style.display = 'none';
 
-//hide the grid before the start button is pressed
-grid.style.display = 'none';
-
-//hide the buttons before the start button is pressed
+// Hide the buttons initially
 document.getElementById('hint-button').style.display = 'none'; 
 document.getElementById('theme-button').style.display = 'none';
 document.getElementById('mute-button').style.display = 'none';
@@ -591,9 +599,20 @@ function updateWordGroups() {
   secondColumn.forEach(wordDiv => wordsContainer.appendChild(wordDiv));
 }
 
-// Initialize date picker when page loads
+// Initialize date picker and load puzzle when page loads
 window.onload = () => {
   initializeDatePicker();
+  
+  // Hide the start button since we're loading immediately
+  if (document.getElementById('start-button')) {
+    document.getElementById('start-button').style.display = 'none';
+  }
+  
+  // Load today's puzzle by default
+  loadPuzzleForDate();
+  
+  // Show dark mode toggle
+  document.getElementById('mode-toggle').style.display = 'block';
 };
 
 // Hint Button functionality
@@ -709,28 +728,6 @@ function disableDarkMode() {
     });
   }
 }
-
-// Start Button functionality//
-document.getElementById('start-button').addEventListener('click', () => {
-  grid.style.display = 'grid';
-  document.getElementById('start-button').style.display = 'none';
-
-  // Show date picker
-  document.getElementById('date-picker-container').style.display = 'flex';
-  
-  // Show other buttons
-  document.getElementById('hint-button').style.display = 'block'; 
-  document.getElementById('theme-button').style.display = 'block';
-  document.getElementById('mute-button').style.display = 'block';
-  document.getElementById('grid-reset-button').style.display = 'block';
-  document.getElementById('reset-button').style.display = 'block';
-  document.getElementById('mode-toggle').style.display = 'block';
-  
-  // Load today's puzzle by default
-  const today = new Date().toISOString().split('T')[0];
-  document.getElementById('puzzle-date').value = today;
-  loadPuzzleForDate();
-});
 
 // Load date button functionality
 document.getElementById('load-date-button').addEventListener('click', () => {
