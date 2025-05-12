@@ -385,6 +385,9 @@ function createGrid(words) {
     row.sort(() => Math.random() - 0.5);  // Shuffle letters within the row
   });
   
+  // Clear the grid
+  grid.innerHTML = '';
+  
   // Create the grid elements
   grid.style.gridTemplateColumns = `repeat(${numCols}, 60px)`;
   grid.style.gridTemplateRows = `repeat(${numRows}, 60px)`;
@@ -432,7 +435,51 @@ function createGrid(words) {
       grid.appendChild(div);
     });
   });
+  
+  // Create a container for the grid and overlay if it doesn't exist
+  let gridContainer = document.getElementById('letter-grid-container');
+  if (!gridContainer) {
+    // Create a container for the grid
+    gridContainer = document.createElement('div');
+    gridContainer.id = 'letter-grid-container';
+    
+    // Insert the container before the grid
+    grid.parentNode.insertBefore(gridContainer, grid);
+    
+    // Move the grid into the container
+    gridContainer.appendChild(grid);
+  }
+  
+  // Create the start overlay
+  const startOverlay = document.createElement('div');
+  startOverlay.id = 'start-overlay';
+  
+  const startButton = document.createElement('button');
+  startButton.id = 'start-puzzle-button';
+  startButton.textContent = 'Start Puzzle';
+  
+  startOverlay.appendChild(startButton);
+  gridContainer.appendChild(startOverlay);
+  
+  // Add event listener to the start button
+  startButton.addEventListener('click', () => {
+    // Remove the overlay
+    startOverlay.remove();
+    
+    // Start the timer
+    startTimer();
+    
+    // Track the event
+    if (typeof gtag === 'function') {
+      gtag('event', 'start_puzzle', {
+        'event_category': 'gameplay',
+        'event_label': 'Start Puzzle Button',
+        'value': 1
+      });
+    }
+  });
 }
+
 
 function formatTime(totalSeconds) {
   const minutes = Math.floor(totalSeconds / 60);
