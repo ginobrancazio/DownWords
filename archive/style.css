@@ -2,6 +2,7 @@
 :root {
   --bg-color: #ffffff;
   --text-color: #333333;
+  --text-color-rgb: 51, 51, 51; /* RGB version of #333333 */
   --grid-bg: #f5f5f5;
   --grid-border: #ddd;
   --letter-hover: #eef5ff;
@@ -25,90 +26,12 @@
   --matched-word-text: #000000;
   --button-bg: #4a6fa5;
   --button-hover: #3a5a8c;
-  --text-color-rgb: 51, 51, 51; /* RGB version of #333333 */
 }
-
-/* Start Puzzle Overlay */
-#start-overlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.7);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 10;
-  border-radius: 8px;
-}
-
-#start-puzzle-button {
-  background-color: var(--button-bg);
-  color: white;
-  border: none;
-  border-radius: 8px;
-  padding: 12px 24px;
-  font-size: 18px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-}
-
-#start-puzzle-button:hover {
-  background-color: var(--button-hover);
-  transform: translateY(-3px);
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
-}
-
-#start-puzzle-button:active {
-  transform: translateY(-1px);
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-}
-
-/* Position the grid container relatively so the overlay can be positioned absolutely within it */
-#letter-grid-container {
-  position: relative;
-  margin: 0 auto;
-}
-
-
-/* Archive Toggle Button */
-#archive-toggle {
-  position: fixed;
-  top: 20px;
-  left: 20px;
-  background-color: var(--button-bg);
-  color: white;
-  border: none;
-  font-size: 14px;
-  cursor: pointer;
-  z-index: 100;
-  padding: 8px 12px;
-  border-radius: 8px;
-  box-shadow: 0 2px 5px var(--box-shadow);
-  transition: all 0.2s ease;
-  display: flex;
-  align-items: center;
-  gap: 5px;
-}
-
-#archive-toggle:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 8px var(--box-shadow);
-  background-color: var(--button-hover);
-}
-
-#archive-toggle:active {
-  transform: translateY(0);
-  box-shadow: 0 1px 2px var(--box-shadow);
-}
-
 
 .dark-mode {
   --bg-color: #121212;
   --text-color: #e0e0e0;
+  --text-color-rgb: 224, 224, 224; /* RGB version of #e0e0e0 */
   --grid-bg: #1e1e1e;
   --grid-border: #444;
   --letter-hover: #2c2c2c;
@@ -132,7 +55,6 @@
   --matched-word-text: #ffffff;
   --button-bg: #4a6fa5;
   --button-hover: #3a5a8c;
-  --text-color-rgb: 224, 224, 224; /* RGB version of #e0e0e0 */
 }
 
 body {
@@ -148,104 +70,6 @@ body {
   color: var(--text-color);
   transition: background-color 0.3s ease, color 0.3s ease;
 }
-
-/* Flatpickr customization */
-.flatpickr-day.flatpickr-disabled,
-.flatpickr-day.flatpickr-disabled:hover,
-.flatpickr-day.no-puzzle {
-  color: rgba(var(--text-color-rgb), 0.3);
-  background-color: transparent;
-  cursor: not-allowed;
-}
-
-.flatpickr-day.flatpickr-enabled {
-  font-weight: bold;
-  background-color: var(--theme-bg);
-  color: var(--text-color);
-  border-color: var(--theme-border);
-}
-
-.flatpickr-day.flatpickr-enabled:hover {
-  background-color: var(--selected-bg);
-}
-
-.flatpickr-day.today {
-  border-color: var(--selected-border);
-}
-
-/* Dark mode support for the calendar */
-.dark-mode .flatpickr-calendar {
-  background: var(--grid-bg);
-  color: var(--text-color);
-  box-shadow: 0 3px 13px rgba(0, 0, 0, 0.3);
-  border-color: var(--grid-border);
-}
-
-.dark-mode .flatpickr-months .flatpickr-month,
-.dark-mode .flatpickr-months .flatpickr-prev-month,
-.dark-mode .flatpickr-months .flatpickr-next-month,
-.dark-mode .flatpickr-current-month .flatpickr-monthDropdown-months,
-.dark-mode .flatpickr-current-month input.cur-year {
-  color: var(--text-color);
-  fill: var(--text-color);
-}
-
-.dark-mode .flatpickr-day {
-  color: var(--text-color);
-}
-
-.dark-mode .flatpickr-day.flatpickr-disabled,
-.dark-mode .flatpickr-day.flatpickr-disabled:hover,
-.dark-mode .flatpickr-day.no-puzzle {
-  color: rgba(var(--text-color-rgb), 0.3);
-}
-
-.dark-mode .flatpickr-weekday {
-  color: var(--text-color);
-}
-
-
-#date-picker-container {
-  margin: 10px 0 20px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-  flex-wrap: wrap;
-}
-
-#puzzle-date {
-  padding: 8px 12px;
-  border-radius: 8px;
-  border: 1px solid var(--grid-border);
-  background-color: var(--grid-bg);
-  color: var(--text-color);
-  font-family: inherit;
-}
-
-.dark-mode #puzzle-date {
-  background-color: var(--grid-bg);
-  color: var(--text-color);
-  border-color: var(--grid-border);
-}
-
-#load-date-button {
-  background-color: var(--button-bg);
-  color: white;
-  border: none;
-  border-radius: 8px;
-  padding: 8px 16px;
-  font-size: 14px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.2s ease;
-}
-
-#load-date-button:hover {
-  background-color: var(--button-hover);
-  transform: translateY(-2px);
-}
-
 
 /* Standardized Button Styling */
 button {
@@ -282,7 +106,8 @@ button:active {
 #grid-reset-button,
 #mute-button,
 #shareButton,
-#copyButton {
+#copyButton,
+#load-date-button {
   background-color: var(--button-bg);
 }
 
@@ -293,7 +118,8 @@ button:active {
 #grid-reset-button:hover,
 #mute-button:hover,
 #shareButton:hover,
-#copyButton:hover {
+#copyButton:hover,
+#load-date-button:hover {
   background-color: var(--button-hover);
 }
 
@@ -302,7 +128,6 @@ button:active {
   font-size: 16px;
   padding: 12px 24px;
 }
-
 
 /* Mode Toggle Button */
 #mode-toggle {
@@ -322,6 +147,37 @@ button:active {
 
 #mode-toggle:hover {
   transform: rotate(30deg);
+}
+
+/* Archive Toggle Button */
+#archive-toggle {
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  background-color: var(--button-bg);
+  color: white;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  z-index: 100;
+  padding: 5px 10px;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px var(--box-shadow);
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#archive-toggle:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px var(--box-shadow);
+  background-color: var(--button-hover);
+}
+
+#archive-toggle:active {
+  transform: translateY(0);
+  box-shadow: 0 1px 2px var(--box-shadow);
 }
 
 .button-container {
@@ -404,7 +260,17 @@ button:active {
   font-weight: bold;
 }
 
+/* Position the grid container relatively so the overlay can be positioned absolutely within it */
+#letter-grid-container {
+  position: relative;
+  margin: 0 auto;
+  display: inline-block; /* This ensures the container wraps tightly around the grid */
+}
+
+/* Ensure the grid is visible */
 #letter-grid {
+  position: relative;
+  z-index: 1;
   display: grid;
   grid-template-columns: repeat(5, 50px);
   gap: 1px;
@@ -580,6 +446,125 @@ button:active {
   box-shadow: 0 3px 10px var(--box-shadow);
 }
 
+/* Date Picker Styling */
+#date-picker-container {
+  margin: 10px 0 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+#puzzle-date {
+  padding: 8px 12px;
+  border-radius: 8px;
+  border: 1px solid var(--grid-border);
+  background-color: var(--grid-bg);
+  color: var(--text-color);
+  font-family: inherit;
+}
+
+.dark-mode #puzzle-date {
+  background-color: var(--grid-bg);
+  color: var(--text-color);
+  border-color: var(--grid-border);
+}
+
+/* Flatpickr customization */
+.flatpickr-day.flatpickr-disabled,
+.flatpickr-day.flatpickr-disabled:hover,
+.flatpickr-day.no-puzzle {
+  color: rgba(var(--text-color-rgb), 0.3);
+  background-color: transparent;
+  cursor: not-allowed;
+}
+
+.flatpickr-day.flatpickr-enabled {
+  font-weight: bold;
+  background-color: var(--theme-bg);
+  color: var(--text-color);
+  border-color: var(--theme-border);
+}
+
+.flatpickr-day.flatpickr-enabled:hover {
+  background-color: var(--selected-bg);
+}
+
+.flatpickr-day.today {
+  border-color: var(--selected-border);
+}
+
+/* Dark mode support for the calendar */
+.dark-mode .flatpickr-calendar {
+  background: var(--grid-bg);
+  color: var(--text-color);
+  box-shadow: 0 3px 13px rgba(0, 0, 0, 0.3);
+  border-color: var(--grid-border);
+}
+
+.dark-mode .flatpickr-months .flatpickr-month,
+.dark-mode .flatpickr-months .flatpickr-prev-month,
+.dark-mode .flatpickr-months .flatpickr-next-month,
+.dark-mode .flatpickr-current-month .flatpickr-monthDropdown-months,
+.dark-mode .flatpickr-current-month input.cur-year {
+  color: var(--text-color);
+  fill: var(--text-color);
+}
+
+.dark-mode .flatpickr-day {
+  color: var(--text-color);
+}
+
+.dark-mode .flatpickr-day.flatpickr-disabled,
+.dark-mode .flatpickr-day.flatpickr-disabled:hover,
+.dark-mode .flatpickr-day.no-puzzle {
+  color: rgba(var(--text-color-rgb), 0.3);
+}
+
+.dark-mode .flatpickr-weekday {
+  color: var(--text-color);
+}
+
+/* Start Puzzle Overlay */
+#start-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 10;
+  border-radius: 8px;
+}
+
+#start-puzzle-button {
+  background-color: var(--button-bg);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 12px 24px;
+  font-size: 18px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+#start-puzzle-button:hover {
+  background-color: var(--button-hover);
+  transform: translateY(-3px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
+}
+
+#start-puzzle-button:active {
+  transform: translateY(-1px);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
 @media (max-width: 600px) {
   button {
     padding: 8px 14px;
@@ -635,5 +620,16 @@ button:active {
     top: 10px;
     right: 10px;
     font-size: 20px;
+  }
+  
+  #archive-toggle {
+    top: 10px;
+    left: 10px;
+    font-size: 20px;
+  }
+  
+  #date-picker-container {
+    flex-direction: column;
+    align-items: center;
   }
 }
