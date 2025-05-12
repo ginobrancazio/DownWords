@@ -339,8 +339,7 @@ function loadPuzzleForDate() {
   hintDisplay.textContent = hintText;
   themeDisplay.textContent = themeText;
   
-  // Start the timer
-  startTimer();
+  // Note: We don't start the timer here anymore - it will start when the Start Puzzle button is clicked
   
   // Hide bonus words container
   bonusWordsContainer.style.display = 'none';
