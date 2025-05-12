@@ -853,11 +853,6 @@ function disableDarkMode() {
   }
 }
 
-// Load date button functionality
-document.getElementById('load-date-button').addEventListener('click', () => {
-  loadPuzzleForDate();
-});
-
 //Reset Button for StartOver
 document.getElementById('reset-button').addEventListener('click', () => {
   location.reload(); // Reloads the page, effectively resetting everything
