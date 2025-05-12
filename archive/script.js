@@ -184,8 +184,8 @@ function initializeDatePicker() {
     },
     
     onChange: function(selectedDates, dateStr, instance) {
-      // Optionally auto-load the puzzle when a date is selected
-      // loadPuzzleForDate();
+      // Automatically load the puzzle when a date is selected
+      loadPuzzleForDate();
     }
   });
   
