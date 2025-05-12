@@ -28,6 +28,52 @@
   --text-color-rgb: 51, 51, 51; /* RGB version of #333333 */
 }
 
+/* Start Puzzle Overlay */
+#start-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 10;
+  border-radius: 8px;
+}
+
+#start-puzzle-button {
+  background-color: var(--button-bg);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 12px 24px;
+  font-size: 18px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+#start-puzzle-button:hover {
+  background-color: var(--button-hover);
+  transform: translateY(-3px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
+}
+
+#start-puzzle-button:active {
+  transform: translateY(-1px);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+/* Position the grid container relatively so the overlay can be positioned absolutely within it */
+#letter-grid-container {
+  position: relative;
+  margin: 0 auto;
+}
+
+
 /* Archive Toggle Button */
 #archive-toggle {
   position: fixed;
