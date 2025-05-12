@@ -186,11 +186,16 @@ function initializeDatePicker() {
     onChange: function(selectedDates, dateStr, instance) {
       // Automatically load the puzzle when a date is selected
       loadPuzzleForDate();
+      
+      // Hide the archive after selecting a date
+      isArchiveVisible = false;
+      document.getElementById('date-picker-container').style.display = 'none';
+      document.getElementById('archive-toggle').innerHTML = '📅 Puzzle Archive';
     }
   });
   
-  // Show the date picker
-  document.getElementById('date-picker-container').style.display = 'flex';
+  // Don't show the date picker initially - it will be toggled by the archive button
+  document.getElementById('date-picker-container').style.display = 'none';
 }
 
 // Archive toggle functionality
