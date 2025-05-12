@@ -193,6 +193,40 @@ function initializeDatePicker() {
   document.getElementById('date-picker-container').style.display = 'flex';
 }
 
+// Archive toggle functionality
+let isArchiveVisible = false;
+
+function setupArchiveToggle() {
+  const archiveToggle = document.getElementById('archive-toggle');
+  const datePickerContainer = document.getElementById('date-picker-container');
+  
+  // Initially hide the date picker
+  datePickerContainer.style.display = 'none';
+  
+  archiveToggle.addEventListener('click', () => {
+    isArchiveVisible = !isArchiveVisible;
+    
+    if (isArchiveVisible) {
+      // Show the date picker
+      datePickerContainer.style.display = 'flex';
+      archiveToggle.innerHTML = '❌ Close Archive';
+    } else {
+      // Hide the date picker
+      datePickerContainer.style.display = 'none';
+      archiveToggle.innerHTML = '📅 Puzzle Archive';
+    }
+    
+    // Track the event
+    if (typeof gtag === 'function') {
+      gtag('event', 'toggle_archive', {
+        'event_category': 'navigation',
+        'event_label': isArchiveVisible ? 'Open Archive' : 'Close Archive',
+        'value': 1
+      });
+    }
+  });
+}
+
 
 // Function to get words based on selected date
 function getWordsByDate(selectedDate) {
