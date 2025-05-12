@@ -214,11 +214,13 @@ function setupArchiveToggle() {
     if (isArchiveVisible) {
       // Show the date picker
       datePickerContainer.style.display = 'flex';
-      archiveToggle.innerHTML = '❌ Close Archive';
+      archiveToggle.innerHTML = '❌';
+      archiveToggle.setAttribute('aria-label', 'Close puzzle archive');
     } else {
       // Hide the date picker
       datePickerContainer.style.display = 'none';
-      archiveToggle.innerHTML = '📅 Puzzle Archive';
+      archiveToggle.innerHTML = '📅';
+      archiveToggle.setAttribute('aria-label', 'Open puzzle archive');
     }
     
     // Track the event
