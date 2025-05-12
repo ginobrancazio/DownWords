@@ -766,6 +766,9 @@ window.onload = () => {
   // Initialize the date picker
   initializeDatePicker();
   
+  // Setup the archive toggle button
+  setupArchiveToggle();
+  
   // Hide the start button since we're loading immediately
   if (document.getElementById('start-button')) {
     document.getElementById('start-button').style.display = 'none';
@@ -776,6 +779,9 @@ window.onload = () => {
   
   // Show dark mode toggle
   document.getElementById('mode-toggle').style.display = 'block';
+  
+  // Show archive toggle
+  document.getElementById('archive-toggle').style.display = 'block';
 };
 
 // Hint Button functionality
