@@ -444,6 +444,17 @@ function createGrid(words) {
     
     // Move the grid into the container
     gridContainer.appendChild(grid);
+  } else {
+    // If the container already exists, make sure the grid is inside it
+    if (!gridContainer.contains(grid)) {
+      gridContainer.appendChild(grid);
+    }
+  }
+  
+  // Remove any existing overlay first
+  const existingOverlay = document.getElementById('start-overlay');
+  if (existingOverlay) {
+    existingOverlay.remove();
   }
   
   // Create the start overlay
@@ -475,6 +486,7 @@ function createGrid(words) {
     }
   });
 }
+
 
 
 function formatTime(totalSeconds) {
