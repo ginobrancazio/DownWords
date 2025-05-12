@@ -164,7 +164,7 @@ function initializeDatePicker() {
   flatpickr("#puzzle-date", {
     inline: false,
     dateFormat: "Y-m-d",
-    defaultDate: today,
+    defaultDate: defaultDate,
     minDate: availableDates[0], // First available date
     maxDate: today, // Today (or you can set a specific end date)
     enable: availableDates, // Only enable dates with puzzles
