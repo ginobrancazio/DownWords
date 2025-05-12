@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>DownWords by Gino Brancazio</title>
+  <title>DownWords Archive by Gino Brancazio</title>
   <link rel="stylesheet" href="style.css">
   
   <!-- Google tag (gtag.js) -->
@@ -15,36 +15,46 @@
     gtag('js', new Date());
     gtag('config', 'G-6R3CEQKVLF');
   </script>
+<!-- Flatpickr CSS and JS -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+
+  
 </head>
 
 <body>
   <audio id="click-sound" src="click-sound.mp3"></audio>
   <audio id="match-sound" src="match-sound.mp3"></audio>
   <audio id="finish-sound" src="finish-sound.mp3"></audio>
+<button id="archive-toggle" aria-label="Open puzzle archive">📅</button>
 
-  <div id="game">
-    <!-- Game content here -->
-    <h1>DownWords</h1>
-    <div id="timer">Time: 0</div>
-    <div class="button-container">
-      <button id="start-button">Start Game</button>
-    </div>
-    <!--<div id="current-date"></div> -->
-    <div id="letter-grid"></div>
-    <!-- Timer and Success Message -->
-  </div>
+<div id="start-overlay">
+  <button id="start-puzzle-button">Start Puzzle</button>
+</div>
+
   
-  <!-- Hint and Theme Buttons -->
-  <div class="button-container">
-    <button id="hint-button">Reveal Hint</button>
-    <button id="theme-button">Reveal Theme</button>
-    <button id="grid-reset-button">Reset Grid</button>
-    <button id="reset-button">Start Over</button>
-    <!--  <button id="hide-timer-button">Hide Timer</button> -->
-    <button id="mute-button">🔇 Mute</button>
-    <button id="mode-toggle" aria-label="Toggle dark/light mode">☀️</button>
+ <div id="game">
+  <!-- Game content here -->
+  <h1>DownWords</h1>
+  <div id="date-picker-container">
+  <label for="puzzle-date">Select puzzle date: </label>
+  <input type="text" id="puzzle-date" name="puzzle-date" placeholder="Select date...">
+</div>
 
-  </div>
+  <div id="timer">Time: 0</div>
+  <div id="letter-grid"></div>
+  <!-- Timer and Success Message -->
+</div>
+  
+<!-- Hint and Theme Buttons -->
+<div class="button-container">
+  <button id="hint-button">Reveal Hint</button>
+  <button id="theme-button">Reveal Theme</button>
+  <button id="grid-reset-button">Reset Grid</button>
+  <button id="reset-button">Start Over</button>
+  <button id="mute-button">🔇 Mute</button>
+  <button id="mode-toggle" aria-label="Toggle dark/light mode">☀️</button>
+</div>
 
   <!-- Hint and Theme Display -->
   <div id="hint-display"></div>
@@ -61,6 +71,10 @@
   <button id="shareButton" style="display:none;">Share to Twitter</button>
 
   <script src="script.js"></script>
+
+    
+<div id="homepage" style="text-align: center; margin-top: 20px;">
+</div>
   
   <div id="instructions">
     <h3>Instructions:</h3>
@@ -77,9 +91,8 @@
   <img src="Down Words.gif" alt="Example Gameplay" class="instructions-gif" />
   
   <div id="linkedin-connect" style="text-align: center; margin-top: 20px;">
-    <p>Play previous puzzles in the <a href="https://downwordsgame.com/archive/" target="_blank">Archive Page</a></p>
     <p>Contact me on <a href="https://www.linkedin.com/in/ginobrancazio/" target="_blank">LinkedIn</a></p>
-    <p>V2</p>
+    <p>V1.3</p>
     <p>© 2025 Gino Brancazio. All rights reserved.</p>
   </div>
 </body>
