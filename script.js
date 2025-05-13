@@ -640,7 +640,7 @@ function updateWordGroups() {
   }
 
   const playerTimeInSeconds = timeLeft; 
-  const averageTimeInSeconds = 139;     
+  const averageTimeInSeconds = 107;     
   const blocklength = averageTimeInSeconds/8;
   
   // Get the selected date
