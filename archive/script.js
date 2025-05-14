@@ -1408,6 +1408,6 @@ const HintsByDate = {
 '19 Sep 2025': ['Hint: Polite term for a well-mannered man'],
 '20 Sep 2025': ['Hint: Young female human and female names'],
 '21 Sep 2025': ['Hint: Stories passed down through generations'],
-'22 Sep 2025': ['Hint: Noises made by different animals’],
+'22 Sep 2025': ['Hint: Noises made by different animals'],
   'default': ['Hint: The Final Frontier']
 };
