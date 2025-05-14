@@ -1334,7 +1334,7 @@ const HintsByDate = {
 '7 Jul 2025': ['Hint: Animal flesh consumed as food'],
 '8 Jul 2025': ['Hint: Animals kept in homes for companionship'],
 '9 Jul 2025': ['Hint: Long staff or rod, especially in cold regions'],
-'10 Jul 2025': ['Hint: Hard mineral material forming Earth's crust'],
+'10 Jul 2025': ['Hint: Hard mineral material forming Earth\'s crust'],
 '11 Jul 2025': ['Hint: Using your voice to make musical sounds'],
 '12 Jul 2025': ['Hint: Vegetables preserved in vinegar or brine'],
 '13 Jul 2025': ['Hint: Seafaring robbers who plunder ships'],
