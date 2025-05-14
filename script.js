@@ -84,6 +84,30 @@ function initializeDatePicker() {
   // Format the default date as YYYY-MM-DD for the input value
   const formattedDefaultDate = defaultDate.toISOString().split('T')[0];
   document.getElementById('puzzle-date').value = formattedDefaultDate;
+
+/**
+ * Gets the puzzle setter for a specific date
+ * @param {string} selectedDate - Date in YYYY-MM-DD format
+ * @returns {string} Name of the puzzle setter
+ */
+function getPuzzleSetterByDate(selectedDate) {
+  const date = new Date(selectedDate);
+  const day = String(date.getDate()).padStart(2, '0'); // Ensure two digits with leading zero if needed
+  const month = date.toLocaleString('en-US', { month: 'long' });
+  const year = date.getFullYear();
+  const formattedDate = `${day} ${month} ${year}`;
+  
+  // Check each key in puzzleSetterbyDate to find a match (case insensitive)
+  for (const key in puzzleSetterbyDate) {
+    if (key.toLowerCase() === formattedDate.toLowerCase() || 
+        key.toLowerCase() === formattedDate.replace(/^0/, '').toLowerCase()) { // Try without leading zero
+      return puzzleSetterbyDate[key];
+    }
+  }
+  
+  return puzzleSetterbyDate['default'];
+}
+
   
   // Initialize Flatpickr
   flatpickr("#puzzle-date", {
