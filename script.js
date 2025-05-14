@@ -1410,3 +1410,12 @@ const HintsByDate = {
 '22 Sep 2025': ['Hint: Noises made by different animals'],
   'default': ['Hint: The Final Frontier']
 };
+
+// Puzzle Setter by date
+const puzzleSetterbyDate = {
+
+  '14 May 2025': ['Gino'],
+  'default': ['Kit Cat']
+};
+
+
