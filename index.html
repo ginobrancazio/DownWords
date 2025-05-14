@@ -1,13 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>DownWords by Gino Brancazio</title>
-  <link rel="stylesheet" href="style.css">
   
-  <!-- Google tag (gtag.js) -->
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+  
+  <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+  
+  <!-- Google Analytics -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-6R3CEQKVLF"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
@@ -15,67 +20,67 @@
     gtag('js', new Date());
     gtag('config', 'G-6R3CEQKVLF');
   </script>
-<!-- Flatpickr CSS and JS -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
-<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
-
-  
 </head>
 
 <body>
+  <!-- Audio elements for game sounds -->
   <audio id="click-sound" src="click-sound.mp3"></audio>
   <audio id="match-sound" src="match-sound.mp3"></audio>
   <audio id="finish-sound" src="finish-sound.mp3"></audio>
-<button id="archive-toggle" aria-label="Open puzzle archive">📅</button>
-
-<div id="start-overlay">
-  <button id="start-puzzle-button">Start Puzzle</button>
-</div>
-
   
- <div id="game">
-  <!-- Game content here -->
-  <h1>DownWords</h1>
-  <div id="date-picker-container">
-  <label for="puzzle-date">Select puzzle date: </label>
-  <input type="text" id="puzzle-date" name="puzzle-date" placeholder="Select date...">
-</div>
-
-  <div id="timer">Time: 0</div>
-  <div id="letter-grid"></div>
-  <!-- Timer and Success Message -->
-</div>
+  <!-- Archive toggle button -->
+  <button id="archive-toggle" aria-label="Open puzzle archive">📅</button>
   
-<!-- Hint and Theme Buttons -->
-<div class="button-container">
-  <button id="hint-button">Reveal Hint</button>
-  <button id="theme-button">Reveal Theme</button>
-  <button id="grid-reset-button">Reset Grid</button>
-  <button id="reset-button">Start Over</button>
-  <button id="mute-button">🔇 Mute</button>
-  <button id="mode-toggle" aria-label="Toggle dark/light mode">☀️</button>
-</div>
-
-  <!-- Hint and Theme Display -->
+  <!-- Main game container -->
+  <div id="game">
+    <h1>DownWords</h1>
+    
+    <!-- Date picker for archive puzzles -->
+    <div id="date-picker-container">
+      <label for="puzzle-date">Select puzzle date: </label>
+      <input type="text" id="puzzle-date" name="puzzle-date" placeholder="Select date...">
+    </div>
+    
+    <!-- Game timer display -->
+    <div id="timer">Time: 0</div>
+    
+    <!-- Letter grid where the game is played -->
+    <div id="letter-grid"></div>
+  </div>
+  
+  <!-- Start overlay with button to begin the puzzle -->
+  <div id="start-overlay">
+    <button id="start-puzzle-button">Start Puzzle</button>
+  </div>
+  
+  <!-- Game control buttons -->
+  <div class="button-container">
+    <button id="hint-button">Reveal Hint</button>
+    <button id="theme-button">Reveal Theme</button>
+    <button id="grid-reset-button">Reset Grid</button>
+    <button id="reset-button">Start Over</button>
+    <button id="mute-button">🔇 Mute</button>
+    <button id="mode-toggle" aria-label="Toggle dark/light mode">☀️</button>
+  </div>
+  
+  <!-- Hint and theme display areas -->
   <div id="hint-display"></div>
   <div id="theme-display"></div>
-
-  <!-- Selected Words Container -->
+  
+  <!-- Container for selected words -->
   <div id="selected-words-container"></div>
-
-  <!-- Textbox to display the message, initially hidden -->
+  
+  <!-- Game completion elements -->
   <textarea id="gameCompletionMessage" style="display:none;"></textarea>
-
-  <!-- copy button -->
   <button id="copyButton" style="display:none;">Copy</button>
   <button id="shareButton" style="display:none;">Share to Twitter</button>
-
-  <script src="script.js"></script>
-    
-<div id="homepage" style="text-align: center; margin-top: 20px;">
-  <p>Today's puzzle set by <span id="puzzle-setter">Kit Cat</span>. Submit your own DownWords puzzle <a href="https://forms.gle/swMG478WZwXgjkRS6" target="_blank">here.</a></p>
-</div>
-
+  
+  <!-- Puzzle attribution and submission link -->
+  <div id="homepage" style="text-align: center; margin-top: 20px;">
+    <p>Today's puzzle set by <span id="puzzle-setter">Kit Cat</span>. Submit your own DownWords puzzle <a href="https://forms.gle/swMG478WZwXgjkRS6" target="_blank">here.</a></p>
+  </div>
+  
+  <!-- Game instructions -->
   <div id="instructions">
     <h3>Instructions:</h3>
     <ul>
@@ -87,13 +92,18 @@
     </ul>
   </div>
   
+  <!-- Example gameplay animation -->
   <p>Example:</p>
   <img src="Down Words.gif" alt="Example Gameplay" class="instructions-gif" />
   
+  <!-- Footer with contact and copyright information -->
   <div id="linkedin-connect" style="text-align: center; margin-top: 20px;">
     <p>Contact me on <a href="https://www.linkedin.com/in/ginobrancazio/" target="_blank">LinkedIn</a></p>
-    <p>V3</p>
+    <p>V3.1</p>
     <p>© 2025 Gino Brancazio. All rights reserved.</p>
   </div>
+  
+  <!-- Main game script -->
+  <script src="script.js"></script>
 </body>
 </html>
