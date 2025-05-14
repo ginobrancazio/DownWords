@@ -264,6 +264,10 @@ function loadPuzzleForDate() {
   const words = getWordsByDate(selectedDate);
   const themeText = getThemeByDate(selectedDate);
   const hintText = getHintByDate(selectedDate);
+  const setterName = getPuzzleSetterByDate(selectedDate);
+  
+  // Update the puzzle setter display
+  document.getElementById('puzzle-setter').textContent = setterName;
   
   // Reset timer
   stopTimer();
