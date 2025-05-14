@@ -1,62 +1,86 @@
-/* Dark Mode Styles */
+/* ===== CSS VARIABLES AND THEME SETTINGS ===== */
+/* Light mode (default) variables */
 :root {
+  /* Base colors */
   --bg-color: #ffffff;
   --text-color: #333333;
   --text-color-rgb: 51, 51, 51; /* RGB version of #333333 */
+  
+  /* Grid and letter elements */
   --grid-bg: #f5f5f5;
   --grid-border: #ddd;
   --letter-hover: #eef5ff;
   --selected-bg: #a0d2eb;
   --selected-border: #007acc;
+  
+  /* Hint and theme displays */
   --hint-bg: #fff3e0;
   --hint-border: #ff9800;
   --theme-bg: #e3f2fd;
   --theme-border: #2196F3;
+  
+  /* Content areas */
   --instructions-bg: #f9f9f9;
   --bonus-bg: #fffde7;
   --bonus-text: #333333;
   --bonus-word-bg: #f7d358;
   --bonus-word-text: #000000;
+  
+  /* Word display */
   --selected-word-bg: var(--grid-bg);
   --selected-word-text: #000000;
+  --matched-word-bg: #76e77d;
+  --matched-word-text: #000000;
+  
+  /* UI elements */
   --completion-bg: #ffffff;
   --completion-active-bg: #f8f8f8;
   --box-shadow: rgba(0, 0, 0, 0.1);
-  --matched-word-bg: #76e77d;
-  --matched-word-text: #000000;
   --button-bg: #4a6fa5;
   --button-hover: #3a5a8c;
 }
 
+/* Dark mode variables */
 .dark-mode {
+  /* Base colors */
   --bg-color: #121212;
   --text-color: #e0e0e0;
   --text-color-rgb: 224, 224, 224; /* RGB version of #e0e0e0 */
+  
+  /* Grid and letter elements */
   --grid-bg: #1e1e1e;
   --grid-border: #444;
   --letter-hover: #2c2c2c;
   --selected-bg: #2c5282;
   --selected-border: #4299e1;
+  
+  /* Hint and theme displays */
   --hint-bg: #3d2c0c;
   --hint-border: #f59e0b;
   --theme-bg: #1a365d;
   --theme-border: #3182ce;
+  
+  /* Content areas */
   --instructions-bg: #1a1a1a;
   --bonus-bg: #332b00;
   --bonus-text: #ffffff;
   --bonus-word-bg: #d4af37;
   --bonus-word-text: #000000;
+  
+  /* Word display */
   --selected-word-bg: #3d3d3d;
   --selected-word-text: #ffffff;
+  --matched-word-bg: #388e3c;
+  --matched-word-text: #ffffff;
+  
+  /* UI elements */
   --completion-bg: #1a1a1a;
   --completion-active-bg: #252525;
   --box-shadow: rgba(0, 0, 0, 0.3);
-  --matched-word-bg: #388e3c;
-  --matched-word-text: #ffffff;
-  --button-bg: #4a6fa5;
-  --button-hover: #3a5a8c;
 }
 
+/* ===== BASE STYLES ===== */
+/* Body styling */
 body {
   font-family: sans-serif;
   text-align: center;
@@ -71,7 +95,8 @@ body {
   transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-/* Standardized Button Styling */
+/* ===== BUTTON STYLES ===== */
+/* Common button styling */
 button {
   background-color: var(--button-bg);
   color: white;
@@ -87,6 +112,7 @@ button {
   letter-spacing: 0.5px;
 }
 
+/* Button hover and active states */
 button:hover {
   background-color: var(--button-hover);
   transform: translateY(-2px);
@@ -98,7 +124,7 @@ button:active {
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
 }
 
-/* All buttons now use the same color */
+/* Apply consistent styling to all button types */
 #start-button,
 #reset-button,
 #hint-button,
@@ -123,13 +149,13 @@ button:active {
   background-color: var(--button-hover);
 }
 
-/* Start button slightly larger */
+/* Start button styling */
 #start-button {
   font-size: 16px;
   padding: 12px 24px;
 }
 
-/* Mode Toggle Button */
+/* Mode toggle button */
 #mode-toggle {
   position: fixed;
   top: 20px;
@@ -149,7 +175,7 @@ button:active {
   transform: rotate(30deg);
 }
 
-/* Archive Toggle Button */
+/* Archive toggle button */
 #archive-toggle {
   position: fixed;
   top: 20px;
@@ -180,6 +206,7 @@ button:active {
   box-shadow: 0 1px 2px var(--box-shadow);
 }
 
+/* Button container */
 .button-container {
   display: flex;
   flex-wrap: wrap;
@@ -192,12 +219,15 @@ button:active {
   margin: 0;
 }
 
+/* ===== GAME ELEMENTS ===== */
+/* Timer display */
 #timer {
   font-size: 16px;
   font-weight: bold;
   margin-bottom: 3px;
 }
 
+/* Letter shake animation */
 @keyframes shake {
   0% { transform: translateX(0); }
   25% { transform: translateX(-3px); }
@@ -210,6 +240,7 @@ button:active {
   animation: shake 0.3s ease;
 }
 
+/* Game completion message */
 #gameCompletionMessage {
   display: none;
   width: 90%;
@@ -240,6 +271,7 @@ button:active {
   background: var(--completion-active-bg);
 }
 
+/* Hint and theme displays */
 #hint-display {
   margin-top: 5px;
   margin-bottom: 1px;
@@ -260,14 +292,15 @@ button:active {
   font-weight: bold;
 }
 
-/* Position the grid container relatively so the overlay can be positioned absolutely within it */
+/* ===== GRID AND LETTER STYLING ===== */
+/* Letter grid container */
 #letter-grid-container {
   position: relative;
   margin: 0 auto;
-  display: inline-block; /* This ensures the container wraps tightly around the grid */
+  display: inline-block; /* Ensures the container wraps tightly around the grid */
 }
 
-/* Ensure the grid is visible */
+/* Letter grid */
 #letter-grid {
   position: relative;
   z-index: 1;
@@ -278,6 +311,7 @@ button:active {
   margin-bottom: 5px;
 }
 
+/* Individual letter styling */
 .letter {
   width: 50px;
   height: 50px;
@@ -308,6 +342,8 @@ button:active {
   box-shadow: 0 4px 8px var(--box-shadow);
 }
 
+/* ===== WORD DISPLAY ===== */
+/* Selected words container */
 #selected-words-container {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -318,7 +354,7 @@ button:active {
   word-break: break-word;
 }
 
-/* Enhanced visibility for selected words */
+/* Selected word styling */
 #selected-words-container div {
   background-color: var(--selected-word-bg);
   color: var(--selected-word-text);
@@ -343,7 +379,7 @@ button:active {
   border: none;
 }
 
-/* Improve visibility for matched words */
+/* Matched word styling */
 #selected-words-container div[style*="background-color: #76e77d"] {
   background-color: var(--matched-word-bg) !important;
   color: var(--matched-word-text) !important;
@@ -369,6 +405,8 @@ button:active {
   background-color: #f7a0eb;
 }
 
+/* ===== BONUS WORDS ===== */
+/* Bonus words container */
 #bonus-words-container {
   margin-top: 20px;
   padding: 15px;
@@ -391,7 +429,7 @@ button:active {
   text-shadow: 0 1px 1px rgba(0, 0, 0, 0.5);
 }
 
-/* Greatly improved bonus word visibility */
+/* Individual bonus word styling */
 #bonus-words-container div div {
   background-color: var(--bonus-word-bg);
   color: var(--bonus-word-text);
@@ -410,6 +448,8 @@ button:active {
   text-shadow: none;
 }
 
+/* ===== INSTRUCTIONS ===== */
+/* Instructions container */
 #instructions {
   margin-top: 1px;
   max-width: 600px;
@@ -434,6 +474,7 @@ button:active {
   line-height: 1.5;
 }
 
+/* Instructions GIF */
 .instructions-gif {
   margin-top: 1px;
   max-width: 600px;
@@ -446,7 +487,8 @@ button:active {
   box-shadow: 0 3px 10px var(--box-shadow);
 }
 
-/* Date Picker Styling */
+/* ===== DATE PICKER ===== */
+/* Date picker container */
 #date-picker-container {
   margin: 10px 0 20px;
   display: flex;
@@ -456,6 +498,7 @@ button:active {
   flex-wrap: wrap;
 }
 
+/* Date input field */
 #puzzle-date {
   padding: 8px 12px;
   border-radius: 8px;
@@ -471,7 +514,8 @@ button:active {
   border-color: var(--grid-border);
 }
 
-/* Flatpickr customization */
+/* ===== FLATPICKR CUSTOMIZATION ===== */
+/* Disabled days */
 .flatpickr-day.flatpickr-disabled,
 .flatpickr-day.flatpickr-disabled:hover,
 .flatpickr-day.no-puzzle {
@@ -480,6 +524,7 @@ button:active {
   cursor: not-allowed;
 }
 
+/* Enabled days */
 .flatpickr-day.flatpickr-enabled {
   font-weight: bold;
   background-color: var(--theme-bg);
@@ -491,11 +536,12 @@ button:active {
   background-color: var(--selected-bg);
 }
 
+/* Today's date */
 .flatpickr-day.today {
   border-color: var(--selected-border);
 }
 
-/* Dark mode support for the calendar */
+/* Dark mode calendar styling */
 .dark-mode .flatpickr-calendar {
   background: var(--grid-bg);
   color: var(--text-color);
@@ -526,7 +572,8 @@ button:active {
   color: var(--text-color);
 }
 
-/* Start Puzzle Overlay */
+/* ===== START OVERLAY ===== */
+/* Start overlay container */
 #start-overlay {
   position: absolute;
   top: 0;
@@ -541,6 +588,7 @@ button:active {
   border-radius: 8px;
 }
 
+/* Start puzzle button */
 #start-puzzle-button {
   background-color: var(--button-bg);
   color: white;
@@ -565,7 +613,9 @@ button:active {
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
+/* ===== RESPONSIVE DESIGN ===== */
 @media (max-width: 600px) {
+  /* Smaller buttons on mobile */
   button {
     padding: 8px 14px;
     font-size: 13px;
@@ -575,6 +625,7 @@ button:active {
     gap: 8px;
   }
 
+  /* Adjusted grid for mobile */
   #letter-grid {
     grid-template-columns: repeat(5, 65px);
     gap: 0px;
@@ -586,6 +637,7 @@ button:active {
     font-size: 18px;
   }
 
+  /* Adjusted word container for mobile */
   #selected-words-container {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -596,6 +648,7 @@ button:active {
     word-break: break-word;
   }
   
+  /* Adjusted instructions for mobile */
   #instructions {
     margin-top: 2px;
     max-width: 600px;
@@ -606,6 +659,7 @@ button:active {
     padding-left: 1.2em;
   }
 
+  /* Adjusted GIF for mobile */
   .instructions-gif {
     margin-top: 2px;
     width: 90%;
@@ -616,6 +670,7 @@ button:active {
     margin-right: auto;
   }
   
+  /* Adjusted toggle buttons for mobile */
   #mode-toggle {
     top: 10px;
     right: 10px;
@@ -628,6 +683,7 @@ button:active {
     font-size: 20px;
   }
   
+  /* Stacked date picker on mobile */
   #date-picker-container {
     flex-direction: column;
     align-items: center;
