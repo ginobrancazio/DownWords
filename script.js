@@ -1541,5 +1541,5 @@ const HintsByDate = {
 const puzzleSetterbyDate = {
 
   '14 May 2025': ['Gino'],
-  'default': ['Kit Cat']
+  'default': ['KitCat']
 };
