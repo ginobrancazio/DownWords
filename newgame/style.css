@@ -9,6 +9,8 @@
   --selected-border: #007acc;
   --button-bg: #4a6fa5;
   --button-hover: #3a5a8c;
+  --end-game-bg: #f44336;
+  --end-game-hover: #d32f2f;
   --found-word-bg: #e3f2fd;
   --found-word-border: #2196F3;
   --current-word-bg: #f9f9f9;
@@ -37,6 +39,8 @@
   --selected-border: #4299e1;
   --button-bg: #3a5a8c;
   --button-hover: #4a6fa5;
+  --end-game-bg: #c62828;
+  --end-game-hover: #b71c1c;
   --found-word-bg: #1a365d;
   --found-word-border: #3182ce;
   --current-word-bg: #1a1a1a;
@@ -273,6 +277,15 @@ button:disabled {
   box-shadow: none;
 }
 
+/* End Game button styling */
+#end-game {
+  background-color: var(--end-game-bg);
+}
+
+#end-game:hover:not(:disabled) {
+  background-color: var(--end-game-hover);
+}
+
 .button-container {
   display: flex;
   flex-wrap: wrap;
@@ -355,12 +368,18 @@ button:disabled {
 
 #instructions h3 {
   color: var(--button-bg);
+  margin-top: 0.8em;
+  margin-bottom: 0.5em;
+}
+
+#instructions h3:first-child {
   margin-top: 0;
 }
 
 #instructions ul {
   padding-left: 1.2em;
   line-height: 1.5;
+  margin-top: 0.5em;
 }
 
 /* Footer */
@@ -418,5 +437,9 @@ footer {
   
   #game-results {
     width: 90%;
+  }
+  
+  #instructions {
+    padding: 0.8em;
   }
 }
