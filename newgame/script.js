@@ -17,6 +17,7 @@ const wordsFoundDisplay = document.getElementById('words-found');
 const shareableResultsContent = document.getElementById('shareable-results-content');
 const copyResultsButton = document.getElementById('copy-results');
 const playAgainButton = document.getElementById('play-again');
+const startOverlay = document.getElementById('start-overlay');
 
 // ===== AUDIO ELEMENTS =====
 const letterClickSound = document.getElementById('click-sound');
@@ -101,6 +102,7 @@ function loadDictionary() {
       const words = text.split('\n').map(word => word.trim().toUpperCase());
       dictionary = new Set(words);
       console.log('Dictionary loaded with', dictionary.size, 'words');
+      trackEvent('System', 'Dictionary Loaded', 'Words', dictionary.size);
     })
     .catch(error => {
       console.error('Error loading dictionary:', error);
@@ -119,7 +121,27 @@ function loadDictionary() {
       ];
       dictionary = new Set(fallbackDictionary);
       console.log('Using fallback dictionary with', dictionary.size, 'words');
+      trackEvent('System', 'Fallback Dictionary Loaded', 'Words', dictionary.size);
     });
+}
+
+/**
+ * Tracks events in Google Analytics
+ * @param {string} eventCategory - The event category
+ * @param {string} eventAction - The event action
+ * @param {string} eventLabel - The event label (optional)
+ * @param {number} eventValue - The event value (optional)
+ */
+function trackEvent(eventCategory, eventAction, eventLabel = null, eventValue = null) {
+  if (typeof gtag === 'function') {
+    const eventParams = {
+      event_category: eventCategory,
+      event_label: eventLabel,
+      value: eventValue
+    };
+    
+    gtag('event', eventAction, eventParams);
+  }
 }
 
 // ===== EVENT LISTENERS =====
@@ -134,6 +156,7 @@ function setupEventListeners() {
   endGameButton.addEventListener('click', () => {
     if (confirm('Are you sure you want to end the game early?')) {
       endGame();
+      trackEvent('Game', 'End Early', 'Score', score);
     }
   });
   
@@ -144,6 +167,7 @@ function setupEventListeners() {
   playAgainButton.addEventListener('click', () => {
     gameResults.classList.add('hidden');
     resetGame();
+    trackEvent('Game', 'Play Again');
   });
   
   // Submit word button
@@ -190,11 +214,6 @@ function startGame() {
   usedCells = new Set();
   score = 0;
   timeLeft = GAME_TIME;
-
-  
-
-  // Hide the start overlay when game starts
-  document.getElementById('start-overlay').classList.add('hidden');
   
   // Update displays
   updateScoreDisplay();
@@ -218,6 +237,12 @@ function startGame() {
   
   // Hide game results if visible
   gameResults.classList.add('hidden');
+  
+  // Hide the start overlay
+  startOverlay.classList.add('hidden');
+  
+  // Track game start
+  trackEvent('Game', 'Start');
 }
 
 /**
@@ -397,6 +422,7 @@ function submitWord() {
     showMessage(`Words must be at least ${MIN_WORD_LENGTH} letters long`);
     shakeCellAnimation(currentWordDisplay);
     playSound(errorSound);
+    trackEvent('Word', 'Rejected', 'Too Short', word.length);
     return;
   }
   
@@ -405,6 +431,7 @@ function submitWord() {
     showMessage(`"${word}" is not in the dictionary`);
     shakeCellAnimation(currentWordDisplay);
     playSound(errorSound);
+    trackEvent('Word', 'Rejected', 'Not in Dictionary', word.length);
     return;
   }
   
@@ -413,6 +440,7 @@ function submitWord() {
     showMessage(`You've already found "${word}"`);
     shakeCellAnimation(currentWordDisplay);
     playSound(errorSound);
+    trackEvent('Word', 'Rejected', 'Already Found', word.length);
     return;
   }
   
@@ -445,32 +473,26 @@ function submitWord() {
   
   // Show success message
   showMessage(`+${wordScore} points for "${word}"!`, 'success');
+  
+  // Track word found
+  trackEvent('Word', 'Found', word, wordScore);
 }
 
 /**
- * Calculates the score for a word
+ * Calculates the score for a word with a simplified scoring system
  * @param {string} word - The word to score
  * @returns {number} The score for the word
  */
 function calculateWordScore(word) {
-  // Base score based on word length (scaled down by 10)
-  let baseScore;
-  
+  // Simple scoring based on word length
   switch (word.length) {
-    case 3: baseScore = 10; break;
-    case 4: baseScore = 20; break;
-    case 5: baseScore = 40; break;
-    case 6: baseScore = 80; break;
-    case 7: baseScore = 160; break;
-    default: baseScore = 200 + (word.length - 8) * 50; // 8+ letters
+    case 3: return 10;
+    case 4: return 20;
+    case 5: return 40;
+    case 6: return 80;
+    case 7: return 160;
+    default: return 200; // 8+ letters
   }
-  
-  // Time bonus: earlier finds get more points
-  // Full bonus at start, decreasing to 50% bonus at the end
-  const timeRatio = timeLeft / GAME_TIME;
-  const timeBonus = Math.floor(baseScore * timeRatio);
-  
-  return baseScore + timeBonus;
 }
 
 /**
@@ -617,6 +639,9 @@ function endGame() {
   startButton.disabled = false;
   endGameButton.disabled = true;
   newGameButton.disabled = false;
+  
+  // Track game end with score
+  trackEvent('Game', 'End', 'Score', score);
 }
 
 /**
@@ -703,8 +728,8 @@ function generateShareableResults() {
   });
   
   // Start with header
-  let shareText = `Word Finder - ${dateString}\n`;
-  shareText += `Final Score: ${score}\n\n`;
+  let shareText = `📝 Word Finder - ${dateString} 📝\n`;
+  shareText += `✨ Final Score: ${score} points ✨\n\n`;
   
   if (foundWords.length === 0) {
     shareText += "No words found";
@@ -723,25 +748,23 @@ function generateShareableResults() {
     const sortedLengths = Object.keys(wordsByLength).sort((a, b) => b - a);
     
     // Add each group to the share text
+    shareText += `Words found:\n`;
     sortedLengths.forEach(length => {
       const words = wordsByLength[length];
       const wordCount = words.length;
       
-      // Sort scores in descending order
-      const scores = words.map(w => w.score).sort((a, b) => b - a);
-      
-      // Format: "3 x 5-letter words (40pts, 35pts, 30pts)"
-      shareText += `${wordCount} x ${length}-letter word${wordCount > 1 ? 's' : ''} (`;
-      shareText += scores.map(s => `${s}pts`).join(', ');
-      shareText += ')\n';
+      // Format: "3 x 5-letter words"
+      shareText += `• ${wordCount} × ${length}-letter word${wordCount > 1 ? 's' : ''}\n`;
     });
     
     // Add time information
     const timeUsed = GAME_TIME - timeLeft;
     const minutes = Math.floor(timeUsed / 60);
     const seconds = timeUsed % 60;
-    shareText += `\nTime: ${minutes}:${seconds.toString().padStart(2, '0')}`;
+    shareText += `\n⏱️ Time: ${minutes}:${seconds.toString().padStart(2, '0')}\n`;
   }
+  
+  shareText += `\nPlay at: wordfinder.ginobrancazio.com`;
   
   // Set the shareable text
   shareableResultsContent.textContent = shareText;
@@ -758,6 +781,7 @@ function copyShareableResults() {
     navigator.clipboard.writeText(text)
       .then(() => {
         showMessage('Results copied to clipboard!', 'success');
+        trackEvent('Share', 'Copy Results');
       })
       .catch(err => {
         console.error('Failed to copy: ', err);
@@ -781,6 +805,7 @@ function copyShareableResults() {
       const successful = document.execCommand('copy');
       if (successful) {
         showMessage('Results copied to clipboard!', 'success');
+        trackEvent('Share', 'Copy Results');
       } else {
         showMessage('Failed to copy results', 'error');
       }
@@ -816,9 +841,6 @@ function getColorForWordLength(length) {
 function resetGame() {
   // Stop the timer
   clearInterval(timer);
-
-  // Show the start overlay when game is reset
-  document.getElementById('start-overlay').classList.remove('hidden');
   
   // Reset game state
   selectedLetters = [];
@@ -843,6 +865,12 @@ function resetGame() {
   
   // Clear the grid
   grid.innerHTML = '';
+  
+  // Show the start overlay
+  startOverlay.classList.remove('hidden');
+  
+  // Track reset game
+  trackEvent('Game', 'Reset');
 }
 
 // ===== UTILITY FUNCTIONS =====
@@ -865,6 +893,9 @@ function playSound(sound) {
 function toggleMute() {
   isMuted = !isMuted;
   muteButton.textContent = isMuted ? '🔊 Unmute' : '🔇 Mute';
+  
+  // Track mute change
+  trackEvent('UI', 'Toggle Mute', isMuted ? 'Muted' : 'Unmuted');
 }
 
 /**
@@ -878,6 +909,9 @@ function toggleDarkMode() {
   } else {
     disableDarkMode();
   }
+  
+  // Track mode change
+  trackEvent('UI', 'Toggle Dark Mode', isDarkMode ? 'Dark' : 'Light');
 }
 
 /**
