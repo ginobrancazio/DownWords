@@ -190,6 +190,11 @@ function startGame() {
   usedCells = new Set();
   score = 0;
   timeLeft = GAME_TIME;
+
+  
+
+  // Hide the start overlay when game starts
+  document.getElementById('start-overlay').classList.add('hidden');
   
   // Update displays
   updateScoreDisplay();
@@ -811,6 +816,9 @@ function getColorForWordLength(length) {
 function resetGame() {
   // Stop the timer
   clearInterval(timer);
+
+  // Show the start overlay when game is reset
+  document.getElementById('start-overlay').classList.remove('hidden');
   
   // Reset game state
   selectedLetters = [];
