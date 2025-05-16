@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Word Finder by Gino Brancazio</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- Game header -->
+  <h1>Word Finder</h1>
+  
+  <!-- Game info display -->
+  <div class="game-info">
+    <div id="timer">Time: 2:00</div>
+    <div id="score">Score: 0</div>
+  </div>
+  
+  <!-- Letter grid container -->
+  <div id="grid-container">
+    <div id="letter-grid"></div>
+  </div>
+  
+  <!-- Current word display -->
+  <div id="current-word-container">
+    <div id="current-word"></div>
+    <button id="submit-word">Submit Word</button>
+    <button id="clear-selection">Clear Selection</button>
+  </div>
+  
+  <!-- Found words display -->
+  <div id="found-words-container">
+    <h3>Found Words</h3>
+    <div id="found-words-list"></div>
+  </div>
+  
+  <!-- Game controls -->
+  <div class="button-container">
+    <button id="start-game">Start Game</button>
+    <button id="new-game" disabled>New Game</button>
+    <button id="mute-button">🔇 Mute</button>
+    <button id="mode-toggle" aria-label="Toggle dark/light mode">☀️</button>
+  </div>
+  
+  <!-- Game results (hidden until game ends) -->
+  <div id="game-results" class="hidden">
+    <h2>Game Over!</h2>
+    <div id="final-score"></div>
+    <div id="words-found"></div>
+    <button id="play-again">Play Again</button>
+  </div>
+  
+  <!-- Game instructions -->
+  <div id="instructions">
+    <h3>How to Play:</h3>
+    <ul>
+      <li>Select letters from the grid to form words</li>
+      <li>Words must be at least 3 letters long</li>
+      <li>You can select letters in any direction (adjacent letters only)</li>
+      <li>Once a letter is used in a found word, it cannot be used again</li>
+      <li>Longer words are worth more points</li>
+      <li>Find as many words as possible in 2 minutes</li>
+      <li>Early finds earn bonus points!</li>
+    </ul>
+  </div>
+  
+  <!-- Audio elements -->
+  <audio id="click-sound" src="click-sound.mp3"></audio>
+  <audio id="match-sound" src="match-sound.mp3"></audio>
+  <audio id="finish-sound" src="finish-sound.mp3"></audio>
+  <audio id="error-sound" src="error-sound.mp3"></audio>
+  
+  <!-- Footer -->
+  <footer>
+    <p>© 2025 Gino Brancazio. All rights reserved.</p>
+  </footer>
+  
+  <script src="script.js"></script>
+</body>
+</html>
