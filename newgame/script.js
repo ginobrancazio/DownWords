@@ -26,7 +26,7 @@ let selectedLetters = [];    // Currently selected letters
 let foundWords = [];         // Words successfully found
 let usedCells = new Set();   // Cells that have been used in found words
 let score = 0;               // Current score
-let timeLeft = 120;          // Time left in seconds (2 minutes)
+let timeLeft = 240;          // Time left in seconds (4 minutes)
 let timer;                   // Timer reference
 let dictionary = new Set();  // Dictionary for word validation
 let isMuted = false;         // Audio state
@@ -35,9 +35,9 @@ let isGameActive = false;    // Whether the game is currently active
 let gridLetters = [];        // 2D array of letters in the grid
 
 // ===== CONSTANTS =====
-const GRID_SIZE = 8;
+const GRID_SIZE = 7;         // Changed to 7x7 grid
 const MIN_WORD_LENGTH = 3;
-const GAME_TIME = 120; // 2 minutes in seconds
+const GAME_TIME = 240;       // 4 minutes in seconds
 const VOWELS = ['A', 'E', 'I', 'O', 'U'];
 const COMMON_CONSONANTS = ['B', 'C', 'D', 'F', 'G', 'H', 'J', 'K', 'L', 'M', 'N', 'P', 'R', 'S', 'T', 'V', 'W'];
 const RARE_CONSONANTS = ['Q', 'X', 'Y', 'Z'];
@@ -208,8 +208,8 @@ function createGrid() {
   // Clear the grid
   grid.innerHTML = '';
   
-  // Generate a 2D array of letters
-  gridLetters = generateLetterGrid();
+  // Generate a 2D array of letters based on today's date
+  gridLetters = generateDailyLetterGrid();
   
   // Create the grid elements
   for (let row = 0; row < GRID_SIZE; row++) {
@@ -232,16 +232,24 @@ function createGrid() {
 
 /**
  * Generates a grid of letters with a good distribution of vowels and consonants
+ * Uses the current date as a seed for consistent daily grids
  * @returns {Array} 2D array of letters
  */
-function generateLetterGrid() {
+function generateDailyLetterGrid() {
   const grid = [];
+  
+  // Get today's date and use it as a seed
+  const today = new Date();
+  const seed = today.getFullYear() * 10000 + (today.getMonth() + 1) * 100 + today.getDate();
+  
+  // Create a seeded random number generator
+  const seededRandom = createSeededRandom(seed);
   
   // Create a copy of the letter distribution to draw from
   let letterPool = [...LETTER_DISTRIBUTION];
   
-  // Shuffle the letter pool
-  letterPool = shuffleArray(letterPool);
+  // Shuffle the letter pool using the seeded random function
+  letterPool = shuffleArraySeeded(letterPool, seededRandom);
   
   // Fill the grid with letters from the pool
   for (let row = 0; row < GRID_SIZE; row++) {
@@ -250,7 +258,7 @@ function generateLetterGrid() {
       // If we've used all letters in the pool, refill it
       if (letterPool.length === 0) {
         letterPool = [...LETTER_DISTRIBUTION];
-        letterPool = shuffleArray(letterPool);
+        letterPool = shuffleArraySeeded(letterPool, seededRandom);
       }
       
       // Take a letter from the pool
@@ -264,14 +272,28 @@ function generateLetterGrid() {
 }
 
 /**
- * Shuffles an array using the Fisher-Yates algorithm
+ * Creates a seeded random number generator
+ * @param {number} seed - The seed value
+ * @returns {Function} A function that returns a random number between 0 and 1
+ */
+function createSeededRandom(seed) {
+  return function() {
+    // Simple LCG (Linear Congruential Generator)
+    seed = (seed * 9301 + 49297) % 233280;
+    return seed / 233280;
+  };
+}
+
+/**
+ * Shuffles an array using the Fisher-Yates algorithm with a seeded random function
  * @param {Array} array - The array to shuffle
+ * @param {Function} randomFunc - The seeded random function
  * @returns {Array} The shuffled array
  */
-function shuffleArray(array) {
+function shuffleArraySeeded(array, randomFunc) {
   const newArray = [...array];
   for (let i = newArray.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
+    const j = Math.floor(randomFunc() * (i + 1));
     [newArray[i], newArray[j]] = [newArray[j], newArray[i]];
   }
   return newArray;
@@ -308,19 +330,7 @@ function handleCellClick(cell, row, col) {
     return;
   }
   
-  // Check if the cell is adjacent to the last selected cell
-  if (selectedLetters.length > 0) {
-    const lastCell = selectedLetters[selectedLetters.length - 1];
-    const isAdjacent = isAdjacentCell(lastCell.row, lastCell.col, row, col);
-    
-    if (!isAdjacent) {
-      shakeCellAnimation(cell);
-      playSound(errorSound);
-      return;
-    }
-  }
-  
-  // Add the cell to selected letters
+  // Add the cell to selected letters (no adjacency check needed)
   selectedLetters.push({
     row,
     col,
@@ -332,22 +342,6 @@ function handleCellClick(cell, row, col) {
   updateSelectedCells();
   updateCurrentWord();
   playSound(letterClickSound);
-}
-
-/**
- * Checks if two cells are adjacent
- * @param {number} row1 - Row of first cell
- * @param {number} col1 - Column of first cell
- * @param {number} row2 - Row of second cell
- * @param {number} col2 - Column of second cell
- * @returns {boolean} True if cells are adjacent
- */
-function isAdjacentCell(row1, col1, row2, col2) {
-  const rowDiff = Math.abs(row1 - row2);
-  const colDiff = Math.abs(col1 - col2);
-  
-  // Cells are adjacent if they are at most 1 cell away in any direction
-  return rowDiff <= 1 && colDiff <= 1 && !(rowDiff === 0 && colDiff === 0);
 }
 
 /**
@@ -440,16 +434,16 @@ function submitWord() {
  * @returns {number} The score for the word
  */
 function calculateWordScore(word) {
-  // Base score based on word length
+  // Base score based on word length (scaled down by 10)
   let baseScore;
   
   switch (word.length) {
-    case 3: baseScore = 100; break;
-    case 4: baseScore = 200; break;
-    case 5: baseScore = 400; break;
-    case 6: baseScore = 800; break;
-    case 7: baseScore = 1600; break;
-    default: baseScore = 2000 + (word.length - 8) * 500; // 8+ letters
+    case 3: baseScore = 10; break;
+    case 4: baseScore = 20; break;
+    case 5: baseScore = 40; break;
+    case 6: baseScore = 80; break;
+    case 7: baseScore = 160; break;
+    default: baseScore = 200 + (word.length - 8) * 50; // 8+ letters
   }
   
   // Time bonus: earlier finds get more points
