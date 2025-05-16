@@ -7,6 +7,7 @@ const scoreDisplay = document.getElementById('score');
 const submitButton = document.getElementById('submit-word');
 const clearButton = document.getElementById('clear-selection');
 const startButton = document.getElementById('start-game');
+const endGameButton = document.getElementById('end-game');
 const newGameButton = document.getElementById('new-game');
 const modeToggle = document.getElementById('mode-toggle');
 const muteButton = document.getElementById('mute-button');
@@ -26,7 +27,7 @@ let selectedLetters = [];    // Currently selected letters
 let foundWords = [];         // Words successfully found
 let usedCells = new Set();   // Cells that have been used in found words
 let score = 0;               // Current score
-let timeLeft = 240;          // Time left in seconds (4 minutes)
+let timeLeft = 180;          // Time left in seconds (3 minutes)
 let timer;                   // Timer reference
 let dictionary = new Set();  // Dictionary for word validation
 let isMuted = false;         // Audio state
@@ -35,9 +36,9 @@ let isGameActive = false;    // Whether the game is currently active
 let gridLetters = [];        // 2D array of letters in the grid
 
 // ===== CONSTANTS =====
-const GRID_SIZE = 7;         // Changed to 7x7 grid
+const GRID_SIZE = 7;         // 7x7 grid
 const MIN_WORD_LENGTH = 3;
-const GAME_TIME = 240;       // 4 minutes in seconds
+const GAME_TIME = 180;       // 3 minutes in seconds
 const VOWELS = ['A', 'E', 'I', 'O', 'U'];
 const COMMON_CONSONANTS = ['B', 'C', 'D', 'F', 'G', 'H', 'J', 'K', 'L', 'M', 'N', 'P', 'R', 'S', 'T', 'V', 'W'];
 const RARE_CONSONANTS = ['Q', 'X', 'Y', 'Z'];
@@ -127,6 +128,13 @@ function setupEventListeners() {
   // Start game button
   startButton.addEventListener('click', startGame);
   
+  // End game button
+  endGameButton.addEventListener('click', () => {
+    if (confirm('Are you sure you want to end the game early?')) {
+      endGame();
+    }
+  });
+  
   // New game button
   newGameButton.addEventListener('click', resetGame);
   
@@ -192,6 +200,7 @@ function startGame() {
   
   // Update button states
   startButton.disabled = true;
+  endGameButton.disabled = false;
   newGameButton.disabled = false;
   
   // Set game as active
@@ -596,6 +605,7 @@ function endGame() {
   
   // Update button states
   startButton.disabled = false;
+  endGameButton.disabled = true;
   newGameButton.disabled = false;
 }
 
@@ -705,6 +715,7 @@ function resetGame() {
   
   // Update button states
   startButton.disabled = false;
+  endGameButton.disabled = true;
   newGameButton.disabled = true;
   
   // Set game as inactive
