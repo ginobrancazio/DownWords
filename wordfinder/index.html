@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Word Hunter by Gino Brancazio</title>
+  <link rel="stylesheet" href="style.css">
+
+  <!-- Google Analytics (GA4) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-6R3CEQKVLF"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-6R3CEQKVLF'); // Replace G-XXXXXXXXXX with your actual GA4 measurement ID
+</script>
+
+  
+</head>
+<body>
+  <!-- Game header -->
+  <h1>Word Finder</h1>
+  
+  <!-- Game info display -->
+  <div class="game-info">
+    <div id="timer">Time: 3:00</div>
+    <div id="score">Score: 0</div>
+  </div>
+  
+  <!-- Letter grid container with overlay start button -->
+  <div id="grid-container">
+    <div id="letter-grid"></div>
+    <div id="start-overlay">
+      <button id="start-game">Start Game</button>
+    </div>
+  </div>
+  
+  <!-- Current word display -->
+  <div id="current-word-container">
+    <div id="current-word"></div>
+    <button id="submit-word">Submit Word</button>
+    <button id="clear-selection">Clear Selection</button>
+  </div>
+  
+  <!-- Game controls (moved below grid) -->
+  <div class="button-container bottom-controls">
+    <button id="end-game" disabled>End Game</button>
+    <button id="new-game" disabled>New Game</button>
+    <button id="mute-button">🔇 Mute</button>
+    <button id="mode-toggle" aria-label="Toggle dark/light mode">☀️</button>
+  </div>
+  
+  <!-- Found words display -->
+  <div id="found-words-container">
+    <h3>Found Words</h3>
+    <div id="found-words-list"></div>
+  </div>
+  
+  <!-- Game results (hidden until game ends) -->
+  <div id="game-results" class="hidden">
+    <h2>Game Over!</h2>
+    <div id="final-score"></div>
+    <div id="words-found"></div>
+    
+    <!-- Shareable results -->
+    <div id="shareable-results">
+      <h3>Your Results</h3>
+      <div id="shareable-results-content"></div>
+      <button id="copy-results">Copy Results</button>
+    </div>
+    
+    <button id="play-again">Play Again</button>
+  </div>
+  
+  <!-- Game instructions -->
+  <div id="instructions">
+    <h3>How to Play:</h3>
+    <ul>
+      <li>Select letters from the grid to form words</li>
+      <li>Words must be at least 3 letters long</li>
+      <li>Letters can be selected in any order (they don't need to be adjacent)</li>
+      <li>Once a letter is used in a found word, it cannot be used again</li>
+      <li>Find as many words as possible in 3 minutes</li>
+    </ul>
+    
+    <h3>Scoring System:</h3>
+    <ul>
+      <li>3-letter words: 10 points</li>
+      <li>4-letter words: 20 points</li>
+      <li>5-letter words: 40 points</li>
+      <li>6-letter words: 80 points</li>
+      <li>7-letter words: 160 points</li>
+      <li>8+ letter words: 200 points</li>
+    </ul>
+  </div>
+  
+  <!-- Audio elements -->
+  <audio id="click-sound" src="click-sound.mp3"></audio>
+  <audio id="match-sound" src="match-sound.mp3"></audio>
+  <audio id="finish-sound" src="finish-sound.mp3"></audio>
+  <audio id="error-sound" src="error-sound.mp3"></audio>
+  
+  <!-- Footer -->
+  <footer>
+    <p>© 2025 Gino Brancazio. All rights reserved.</p>
+    <p>V 0.5</p>
+  </footer>
+  
+  <script src="script.js"></script>
+</body>
+</html>
