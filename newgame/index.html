@@ -10,24 +10,18 @@
   <!-- Game header -->
   <h1>Word Finder</h1>
   
-  <!-- Game controls (moved to top) -->
-  <div class="button-container top-controls">
-    <button id="start-game">Start Game</button>
-    <button id="end-game" disabled>End Game</button>
-    <button id="new-game" disabled>New Game</button>
-    <button id="mute-button">🔇 Mute</button>
-    <button id="mode-toggle" aria-label="Toggle dark/light mode">☀️</button>
-  </div>
-  
   <!-- Game info display -->
   <div class="game-info">
     <div id="timer">Time: 3:00</div>
     <div id="score">Score: 0</div>
   </div>
   
-  <!-- Letter grid container -->
+  <!-- Letter grid container with overlay start button -->
   <div id="grid-container">
     <div id="letter-grid"></div>
+    <div id="start-overlay">
+      <button id="start-game">Start Game</button>
+    </div>
   </div>
   
   <!-- Current word display -->
@@ -35,6 +29,14 @@
     <div id="current-word"></div>
     <button id="submit-word">Submit Word</button>
     <button id="clear-selection">Clear Selection</button>
+  </div>
+  
+  <!-- Game controls (moved below grid) -->
+  <div class="button-container bottom-controls">
+    <button id="end-game" disabled>End Game</button>
+    <button id="new-game" disabled>New Game</button>
+    <button id="mute-button">🔇 Mute</button>
+    <button id="mode-toggle" aria-label="Toggle dark/light mode">☀️</button>
   </div>
   
   <!-- Found words display -->
@@ -77,8 +79,7 @@
       <li>5-letter words: 40 points</li>
       <li>6-letter words: 80 points</li>
       <li>7-letter words: 160 points</li>
-      <li>8+ letter words: 200+ points</li>
-      <li>Time bonus: Finding words earlier earns up to 100% bonus points</li>
+      <li>8+ letter words: 200 points</li>
     </ul>
   </div>
   
@@ -91,6 +92,7 @@
   <!-- Footer -->
   <footer>
     <p>© 2025 Gino Brancazio. All rights reserved.</p>
+    <p>V 0.4</p>
   </footer>
   
   <script src="script.js"></script>
