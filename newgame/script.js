@@ -764,7 +764,7 @@ function generateShareableResults() {
     shareText += `\n⏱️ Time: ${minutes}:${seconds.toString().padStart(2, '0')}\n`;
   }
   
-  shareText += `\nPlay at: wordfinder.ginobrancazio.com`;
+  shareText += `\nPlay at: https://downwordsgame.com/wordfinder/`;
   
   // Set the shareable text
   shareableResultsContent.textContent = shareText;
