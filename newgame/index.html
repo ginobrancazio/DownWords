@@ -12,7 +12,7 @@
   
   <!-- Game info display -->
   <div class="game-info">
-    <div id="timer">Time: 4:00</div>
+    <div id="timer">Time: 3:00</div>
     <div id="score">Score: 0</div>
   </div>
   
@@ -37,6 +37,7 @@
   <!-- Game controls -->
   <div class="button-container">
     <button id="start-game">Start Game</button>
+    <button id="end-game" disabled>End Game</button>
     <button id="new-game" disabled>New Game</button>
     <button id="mute-button">🔇 Mute</button>
     <button id="mode-toggle" aria-label="Toggle dark/light mode">☀️</button>
@@ -58,9 +59,18 @@
       <li>Words must be at least 3 letters long</li>
       <li>Letters can be selected in any order (they don't need to be adjacent)</li>
       <li>Once a letter is used in a found word, it cannot be used again</li>
-      <li>Longer words are worth more points</li>
-      <li>Find as many words as possible in 4 minutes</li>
-      <li>Early finds earn bonus points!</li>
+      <li>Find as many words as possible in 3 minutes</li>
+    </ul>
+    
+    <h3>Scoring System:</h3>
+    <ul>
+      <li>3-letter words: 10 points</li>
+      <li>4-letter words: 20 points</li>
+      <li>5-letter words: 40 points</li>
+      <li>6-letter words: 80 points</li>
+      <li>7-letter words: 160 points</li>
+      <li>8+ letter words: 200+ points</li>
+      <li>Time bonus: Finding words earlier earns up to 100% bonus points</li>
     </ul>
   </div>
   
@@ -73,7 +83,6 @@
   <!-- Footer -->
   <footer>
     <p>© 2025 Gino Brancazio. All rights reserved.</p>
-    <p>V 0.2</p>
   </footer>
   
   <script src="script.js"></script>
