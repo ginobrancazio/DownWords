@@ -14,6 +14,8 @@ const muteButton = document.getElementById('mute-button');
 const gameResults = document.getElementById('game-results');
 const finalScoreDisplay = document.getElementById('final-score');
 const wordsFoundDisplay = document.getElementById('words-found');
+const shareableResultsContent = document.getElementById('shareable-results-content');
+const copyResultsButton = document.getElementById('copy-results');
 const playAgainButton = document.getElementById('play-again');
 
 // ===== AUDIO ELEMENTS =====
@@ -155,6 +157,9 @@ function setupEventListeners() {
   
   // Mute button
   muteButton.addEventListener('click', toggleMute);
+  
+  // Copy results button
+  copyResultsButton.addEventListener('click', copyShareableResults);
   
   // Keyboard shortcuts
   document.addEventListener('keydown', handleKeyPress);
@@ -673,8 +678,115 @@ function showGameResults() {
       });
   }
   
+  // Generate shareable results
+  generateShareableResults();
+  
   // Show the results
   gameResults.classList.remove('hidden');
+}
+
+/**
+ * Generates shareable results that obscure the actual words
+ */
+function generateShareableResults() {
+  // Get today's date
+  const today = new Date();
+  const dateString = today.toLocaleDateString('en-US', { 
+    month: 'long', 
+    day: 'numeric', 
+    year: 'numeric' 
+  });
+  
+  // Start with header
+  let shareText = `Word Finder - ${dateString}\n`;
+  shareText += `Final Score: ${score}\n\n`;
+  
+  if (foundWords.length === 0) {
+    shareText += "No words found";
+  } else {
+    // Group words by length
+    const wordsByLength = {};
+    foundWords.forEach(({ word, score }) => {
+      const length = word.length;
+      if (!wordsByLength[length]) {
+        wordsByLength[length] = [];
+      }
+      wordsByLength[length].push({ score });
+    });
+    
+    // Sort by word length (descending)
+    const sortedLengths = Object.keys(wordsByLength).sort((a, b) => b - a);
+    
+    // Add each group to the share text
+    sortedLengths.forEach(length => {
+      const words = wordsByLength[length];
+      const wordCount = words.length;
+      
+      // Sort scores in descending order
+      const scores = words.map(w => w.score).sort((a, b) => b - a);
+      
+      // Format: "3 x 5-letter words (40pts, 35pts, 30pts)"
+      shareText += `${wordCount} x ${length}-letter word${wordCount > 1 ? 's' : ''} (`;
+      shareText += scores.map(s => `${s}pts`).join(', ');
+      shareText += ')\n';
+    });
+    
+    // Add time information
+    const timeUsed = GAME_TIME - timeLeft;
+    const minutes = Math.floor(timeUsed / 60);
+    const seconds = timeUsed % 60;
+    shareText += `\nTime: ${minutes}:${seconds.toString().padStart(2, '0')}`;
+  }
+  
+  // Set the shareable text
+  shareableResultsContent.textContent = shareText;
+}
+
+/**
+ * Copies the shareable results to clipboard
+ */
+function copyShareableResults() {
+  const text = shareableResultsContent.textContent;
+  
+  // Use the Clipboard API if available
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(text)
+      .then(() => {
+        showMessage('Results copied to clipboard!', 'success');
+      })
+      .catch(err => {
+        console.error('Failed to copy: ', err);
+        fallbackCopy();
+      });
+  } else {
+    fallbackCopy();
+  }
+  
+  // Fallback copy method
+  function fallbackCopy() {
+    // Create a temporary textarea
+    const textarea = document.createElement('textarea');
+    textarea.value = text;
+    textarea.style.position = 'fixed';
+    document.body.appendChild(textarea);
+    textarea.select();
+    
+    try {
+      // Execute copy command
+      const successful = document.execCommand('copy');
+      if (successful) {
+        showMessage('Results copied to clipboard!', 'success');
+      } else {
+        showMessage('Failed to copy results', 'error');
+      }
+    } catch (err) {
+      console.error('Failed to copy: ', err);
+      showMessage('Failed to copy results', 'error');
+    }
+    
+    // Remove the temporary textarea
+    document.body.removeChild(textarea);
+  }
 }
 
 /**
