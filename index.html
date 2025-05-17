@@ -215,36 +215,12 @@
   <!-- Footer with contact and copyright information -->
   <div id="linkedin-connect" style="text-align: center; margin-top: 20px;">
     <p>Contact me on <a href="https://www.linkedin.com/in/ginobrancazio/" target="_blank">LinkedIn</a></p>
-    <p>V3</p>
+    <p>V3.1</p>
     <p>© 2025 Gino Brancazio. All rights reserved.</p>
   </div>
   
   <!-- Main game script -->
   <script src="script.js"></script>
   
-  <!-- Script for collapsible sections -->
-  <script>
-    document.addEventListener('DOMContentLoaded', function() {
-      var coll = document.getElementsByClassName("collapsible");
-      
-      for (var i = 0; i < coll.length; i++) {
-        coll[i].addEventListener("click", function() {
-          // Toggle active class on the button
-          this.classList.toggle("active");
-          
-          // Toggle active class on the content
-          var content = this.nextElementSibling;
-          content.classList.toggle("active");
-          
-          // Set max-height based on active state
-          if (content.classList.contains("active")) {
-            content.style.maxHeight = "2000px"; // Large enough to fit content
-          } else {
-            content.style.maxHeight = "0";
-          }
-        });
-      }
-    });
-  </script>
 </body>
 </html>
