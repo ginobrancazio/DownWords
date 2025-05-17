@@ -20,6 +20,89 @@
     gtag('js', new Date());
     gtag('config', 'G-6R3CEQKVLF');
   </script>
+  
+  <!-- Additional styles for collapsible sections -->
+  <style>
+    .collapsible {
+      background-color: var(--button-bg);
+      color: white;
+      cursor: pointer;
+      padding: 12px;
+      width: 100%;
+      max-width: 600px;
+      border: none;
+      text-align: left;
+      outline: none;
+      font-size: 16px;
+      font-weight: 600;
+      border-radius: 8px;
+      margin: 10px 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      transition: background-color 0.3s;
+    }
+    
+    .collapsible:hover {
+      background-color: var(--button-hover);
+    }
+    
+    .collapsible:after {
+      content: '\002B';
+      font-weight: bold;
+      float: right;
+      margin-left: 5px;
+    }
+    
+    .active:after {
+      content: "\2212";
+    }
+    
+    .content {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease-out;
+      width: 100%;
+      max-width: 600px;
+    }
+    
+    .other-games-list {
+      list-style-type: none;
+      padding: 0;
+      margin: 0;
+    }
+    
+    .other-games-list li {
+      margin: 10px 0;
+      padding: 10px;
+      background-color: var(--grid-bg);
+      border-radius: 8px;
+      transition: transform 0.2s;
+    }
+    
+    .other-games-list li:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px var(--box-shadow);
+    }
+    
+    .other-games-list a {
+      color: var(--text-color);
+      text-decoration: none;
+      font-weight: 600;
+      display: block;
+    }
+    
+    .other-games-list a:hover {
+      text-decoration: underline;
+    }
+    
+    .game-description {
+      font-size: 14px;
+      margin-top: 5px;
+      color: var(--text-color);
+      opacity: 0.8;
+    }
+  </style>
 </head>
 
 <body>
@@ -80,30 +163,76 @@
     <p>Today's puzzle set by <span id="puzzle-setter">Kit Cat</span>. Submit your own DownWords puzzle <a href="https://forms.gle/swMG478WZwXgjkRS6" target="_blank">here.</a></p>
   </div>
   
-  <!-- Game instructions -->
-  <div id="instructions">
-    <h3>Instructions:</h3>
-    <ul>
-      <li>There are 6 hidden words in the grid</li>
-      <li>Each word runs vertically, one letter in each of the rows (top to bottom), but the letters are not necessarily connected.</li>
-      <li>Each letter is only used once.</li>
-      <li>Five of the words are connected by a theme</li>
-      <li>The remaining word is the theme that connects the other words</li>
-    </ul>
+  <!-- Collapsible How to Play section -->
+  <button type="button" class="collapsible">How to Play</button>
+  <div class="content">
+    <div id="instructions">
+      <ul>
+        <li>There are 6 hidden words in the grid</li>
+        <li>Each word runs vertically, one letter in each of the rows (top to bottom), but the letters are not necessarily connected.</li>
+        <li>Each letter is only used once.</li>
+        <li>Five of the words are connected by a theme</li>
+        <li>The remaining word is the theme that connects the other words</li>
+      </ul>
+      
+      <p>Example:</p>
+      <img src="Down Words.gif" alt="Example Gameplay" class="instructions-gif" />
+    </div>
   </div>
   
-  <!-- Example gameplay animation -->
-  <p>Example:</p>
-  <img src="Down Words.gif" alt="Example Gameplay" class="instructions-gif" />
+  <!-- Collapsible Other Games section -->
+  <button type="button" class="collapsible">Other Games</button>
+  <div class="content">
+    <ul class="other-games-list">
+      <li>
+        <a href="https://www.nytimes.com/games/wordle" target="_blank">Wordle</a>
+        <div class="game-description">Guess the five-letter word in six tries.</div>
+      </li>
+      <li>
+        <a href="https://www.nytimes.com/puzzles/spelling-bee" target="_blank">Spelling Bee</a>
+        <div class="game-description">Create words using letters from a honeycomb.</div>
+      </li>
+      <li>
+        <a href="https://www.powerlanguage.co.uk/waffle/" target="_blank">Waffle</a>
+        <div class="game-description">Rearrange letters to form words in a grid pattern.</div>
+      </li>
+      <li>
+        <a href="https://www.quordle.com" target="_blank">Quordle</a>
+        <div class="game-description">Solve four Wordle-style puzzles simultaneously.</div>
+      </li>
+      <li>
+        <a href="https://www.nytimes.com/puzzles/connections" target="_blank">Connections</a>
+        <div class="game-description">Group words into four categories.</div>
+      </li>
+    </ul>
+  </div>
   
   <!-- Footer with contact and copyright information -->
   <div id="linkedin-connect" style="text-align: center; margin-top: 20px;">
     <p>Contact me on <a href="https://www.linkedin.com/in/ginobrancazio/" target="_blank">LinkedIn</a></p>
-    <p>V3</p>
+    <p>V3.1</p>
     <p>© 2025 Gino Brancazio. All rights reserved.</p>
   </div>
   
   <!-- Main game script -->
   <script src="script.js"></script>
+  
+  <!-- Script for collapsible sections -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      var coll = document.getElementsByClassName("collapsible");
+      for (var i = 0; i < coll.length; i++) {
+        coll[i].addEventListener("click", function() {
+          this.classList.toggle("active");
+          var content = this.nextElementSibling;
+          if (content.style.maxHeight) {
+            content.style.maxHeight = null;
+          } else {
+            content.style.maxHeight = content.scrollHeight + "px";
+          }
+        });
+      }
+    });
+  </script>
 </body>
 </html>
