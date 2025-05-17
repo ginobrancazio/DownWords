@@ -20,96 +20,6 @@
     gtag('js', new Date());
     gtag('config', 'G-6R3CEQKVLF');
   </script>
-  
-  <!-- Additional styles for collapsible sections -->
-  <style>
-    .collapsible {
-      background-color: var(--button-bg, #4a6fa5);
-      color: white;
-      cursor: pointer;
-      padding: 12px;
-      width: 100%;
-      max-width: 600px;
-      border: none;
-      text-align: left;
-      outline: none;
-      font-size: 16px;
-      font-weight: 600;
-      border-radius: 8px;
-      margin: 10px 0;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      transition: background-color 0.3s;
-    }
-    
-    .collapsible:hover {
-      background-color: var(--button-hover, #3a5a8c);
-    }
-    
-    .collapsible:after {
-      content: '+';
-      font-weight: bold;
-      margin-left: 5px;
-      font-size: 18px;
-    }
-    
-    .collapsible.active:after {
-      content: "-";
-    }
-    
-    .collapsible-content {
-      padding: 0 18px;
-      background-color: var(--bg-color, white);
-      max-height: 0;
-      overflow: hidden;
-      transition: max-height 0.4s ease-out;
-      width: 100%;
-      max-width: 600px;
-      box-sizing: border-box;
-    }
-    
-    .collapsible-content.active {
-      max-height: 2000px; /* Large enough to contain content */
-    }
-    
-    .other-games-list {
-      list-style-type: none;
-      padding: 0;
-      margin: 15px 0;
-    }
-    
-    .other-games-list li {
-      margin: 10px 0;
-      padding: 10px;
-      background-color: var(--grid-bg, #f5f5f5);
-      border-radius: 8px;
-      transition: transform 0.2s;
-    }
-    
-    .other-games-list li:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 4px 8px var(--box-shadow, rgba(0, 0, 0, 0.1));
-    }
-    
-    .other-games-list a {
-      color: var(--text-color, #333333);
-      text-decoration: none;
-      font-weight: 600;
-      display: block;
-    }
-    
-    .other-games-list a:hover {
-      text-decoration: underline;
-    }
-    
-    .game-description {
-      font-size: 14px;
-      margin-top: 5px;
-      color: var(--text-color, #333333);
-      opacity: 0.8;
-    }
-  </style>
 </head>
 
 <body>
@@ -120,9 +30,6 @@
   
   <!-- Archive toggle button -->
   <button id="archive-toggle" aria-label="Open puzzle archive">📅</button>
-  
-  <!-- Dark mode toggle button -->
-  <button id="mode-toggle" aria-label="Toggle dark/light mode">☀️</button>
   
   <!-- Main game container -->
   <div id="game">
@@ -141,12 +48,10 @@
     <div id="letter-grid"></div>
   </div>
   
-  <!-- Hint and theme display areas -->
-  <div id="hint-display"></div>
-  <div id="theme-display"></div>
-  
-  <!-- Container for selected words -->
-  <div id="selected-words-container"></div>
+  <!-- Start overlay with button to begin the puzzle -->
+  <div id="start-overlay">
+    <button id="start-puzzle-button">Start Puzzle</button>
+  </div>
   
   <!-- Game control buttons -->
   <div class="button-container">
@@ -155,7 +60,15 @@
     <button id="grid-reset-button">Reset Grid</button>
     <button id="reset-button">Start Over</button>
     <button id="mute-button">🔇 Mute</button>
+    <button id="mode-toggle" aria-label="Toggle dark/light mode">☀️</button>
   </div>
+  
+  <!-- Hint and theme display areas -->
+  <div id="hint-display"></div>
+  <div id="theme-display"></div>
+  
+  <!-- Container for selected words -->
+  <div id="selected-words-container"></div>
   
   <!-- Game completion elements -->
   <textarea id="gameCompletionMessage" style="display:none;"></textarea>
@@ -167,60 +80,30 @@
     <p>Today's puzzle set by <span id="puzzle-setter">Kit Cat</span>. Submit your own DownWords puzzle <a href="https://forms.gle/swMG478WZwXgjkRS6" target="_blank">here.</a></p>
   </div>
   
-  <!-- Collapsible How to Play section -->
-  <button type="button" class="collapsible">How to Play</button>
-  <div class="collapsible-content">
-    <div id="instructions">
-      <h3>Instructions:</h3>
-      <ul>
-        <li>There are 6 hidden words in the grid</li>
-        <li>Each word runs vertically, one letter in each of the rows (top to bottom), but the letters are not necessarily connected.</li>
-        <li>Each letter is only used once.</li>
-        <li>Five of the words are connected by a theme</li>
-        <li>The remaining word is the theme that connects the other words</li>
-      </ul>
-      
-      <p>Example:</p>
-      <img src="Down Words.gif" alt="Example Gameplay" class="instructions-gif" />
-    </div>
-  </div>
-  
-  <!-- Collapsible Other Games section -->
-  <button type="button" class="collapsible">Other Games</button>
-  <div class="collapsible-content">
-    <ul class="other-games-list">
-      <li>
-        <a href="https://www.nytimes.com/games/wordle" target="_blank">Wordle</a>
-        <div class="game-description">Guess the five-letter word in six tries.</div>
-      </li>
-      <li>
-        <a href="https://www.nytimes.com/puzzles/spelling-bee" target="_blank">Spelling Bee</a>
-        <div class="game-description">Create words using letters from a honeycomb.</div>
-      </li>
-      <li>
-        <a href="https://wafflegame.net/" target="_blank">Waffle</a>
-        <div class="game-description">Rearrange letters to form words in a grid pattern.</div>
-      </li>
-      <li>
-        <a href="https://www.quordle.com" target="_blank">Quordle</a>
-        <div class="game-description">Solve four Wordle-style puzzles simultaneously.</div>
-      </li>
-      <li>
-        <a href="https://www.nytimes.com/puzzles/connections" target="_blank">Connections</a>
-        <div class="game-description">Group words into four categories.</div>
-      </li>
+  <!-- Game instructions -->
+  <div id="instructions">
+    <h3>Instructions:</h3>
+    <ul>
+      <li>There are 6 hidden words in the grid</li>
+      <li>Each word runs vertically, one letter in each of the rows (top to bottom), but the letters are not necessarily connected.</li>
+      <li>Each letter is only used once.</li>
+      <li>Five of the words are connected by a theme</li>
+      <li>The remaining word is the theme that connects the other words</li>
     </ul>
   </div>
+  
+  <!-- Example gameplay animation -->
+  <p>Example:</p>
+  <img src="Down Words.gif" alt="Example Gameplay" class="instructions-gif" />
   
   <!-- Footer with contact and copyright information -->
   <div id="linkedin-connect" style="text-align: center; margin-top: 20px;">
     <p>Contact me on <a href="https://www.linkedin.com/in/ginobrancazio/" target="_blank">LinkedIn</a></p>
-    <p>V3.1</p>
+    <p>V3</p>
     <p>© 2025 Gino Brancazio. All rights reserved.</p>
   </div>
   
   <!-- Main game script -->
   <script src="script.js"></script>
-  
 </body>
 </html>
