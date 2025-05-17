@@ -1067,27 +1067,6 @@ window.onload = () => {
   document.getElementById('archive-toggle').style.display = 'block';
 };
 
-document.addEventListener('DOMContentLoaded', function() {
-    var coll = document.getElementsByClassName("collapsible");
-    
-    for (var i = 0; i < coll.length; i++) {
-      coll[i].addEventListener("click", function() {
-        // Toggle active class on the button
-        this.classList.toggle("active");
-        
-        // Toggle active class on the content
-        var content = this.nextElementSibling;
-        content.classList.toggle("active");
-        
-        // Set max-height based on active state
-        if (content.classList.contains("active")) {
-          content.style.maxHeight = "2000px"; // Large enough to fit content
-        } else {
-          content.style.maxHeight = "0";
-        }
-      });
-    }
-  });
 
 // --- GAME DATA ---
 // Word lists by date
