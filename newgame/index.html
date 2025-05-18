@@ -1,111 +1,161 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Word Hunter by Gino Brancazio</title>
-  <link rel="stylesheet" href="style.css">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>DownWords by Gino Brancazio</title>
 
-  <!-- Google Analytics (GA4) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-6R3CEQKVLF"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-  gtag('config', 'G-6R3CEQKVLF'); // Replace G-XXXXXXXXXX with your actual GA4 measurement ID
-</script>
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="style.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css"
+    />
 
-  
-</head>
-<body>
-  <!-- Game header -->
-  <h1>Word Finder</h1>
-  
-  <!-- Game info display -->
-  <div class="game-info">
-    <div id="timer">Time: 3:00</div>
-    <div id="score">Score: 0</div>
-  </div>
-  
-  <!-- Letter grid container with overlay start button -->
-  <div id="grid-container">
-    <div id="letter-grid"></div>
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-6R3CEQKVLF"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag('js', new Date());
+      gtag('config', 'G-6R3CEQKVLF');
+    </script>
+  </head>
+
+  <body>
+    <!-- Audio elements for game sounds -->
+    <audio id="click-sound" src="click-sound.mp3"></audio>
+    <audio id="match-sound" src="match-sound.mp3"></audio>
+    <audio id="finish-sound" src="finish-sound.mp3"></audio>
+
+    <!-- Archive toggle button -->
+    <button id="archive-toggle" aria-label="Open puzzle archive">📅</button>
+
+    <!-- Main game container -->
+    <div id="game">
+      <h1>DownWords</h1>
+
+      <!-- Date picker for archive puzzles -->
+      <div id="date-picker-container">
+        <label for="puzzle-date">Select puzzle date: </label>
+        <input
+          type="text"
+          id="puzzle-date"
+          name="puzzle-date"
+          placeholder="Select date..."
+        />
+      </div>
+
+      <!-- Game timer display -->
+      <div id="timer">Time: 0</div>
+
+      <!-- Letter grid where the game is played -->
+      <div id="letter-grid"></div>
+    </div>
+
+    <!-- Start overlay with button to begin the puzzle -->
     <div id="start-overlay">
-      <button id="start-game">Start Game</button>
+      <button id="start-puzzle-button">Start Puzzle</button>
     </div>
-  </div>
-  
-  <!-- Current word display -->
-  <div id="current-word-container">
-    <div id="current-word"></div>
-    <button id="submit-word">Submit Word</button>
-    <button id="clear-selection">Clear Selection</button>
-  </div>
-  
-  <!-- Game controls (moved below grid) -->
-  <div class="button-container bottom-controls">
-    <button id="end-game" disabled>End Game</button>
-    <button id="new-game" disabled>New Game</button>
-    <button id="mute-button">🔇 Mute</button>
-    <button id="mode-toggle" aria-label="Toggle dark/light mode">☀️</button>
-  </div>
-  
-  <!-- Found words display -->
-  <div id="found-words-container">
-    <h3>Found Words</h3>
-    <div id="found-words-list"></div>
-  </div>
-  
-  <!-- Game results (hidden until game ends) -->
-  <div id="game-results" class="hidden">
-    <h2>Game Over!</h2>
-    <div id="final-score"></div>
-    <div id="words-found"></div>
-    
-    <!-- Shareable results -->
-    <div id="shareable-results">
-      <h3>Your Results</h3>
-      <div id="shareable-results-content"></div>
-      <button id="copy-results">Copy Results</button>
+
+    <!-- Game control buttons -->
+    <div class="button-container">
+      <button id="hint-button">Reveal Hint</button>
+      <button id="theme-button">Reveal Theme</button>
+      <button id="grid-reset-button">Reset Grid</button>
+      <button id="reset-button">Start Over</button>
+      <button id="mute-button">🔇 Mute</button>
+      <button id="mode-toggle" aria-label="Toggle dark/light mode">☀️</button>
     </div>
-    
-    <button id="play-again">Play Again</button>
-  </div>
-  
-  <!-- Game instructions -->
-  <div id="instructions">
-    <h3>How to Play:</h3>
-    <ul>
-      <li>Select letters from the grid to form words</li>
-      <li>Words must be at least 3 letters long</li>
-      <li>Letters can be selected in any order (they don't need to be adjacent)</li>
-      <li>Once a letter is used in a found word, it cannot be used again</li>
-      <li>Find as many words as possible in 3 minutes</li>
-    </ul>
-    
-    <h3>Scoring System:</h3>
-    <ul>
-      <li>3-letter words: 10 points</li>
-      <li>4-letter words: 20 points</li>
-      <li>5-letter words: 40 points</li>
-      <li>6-letter words: 80 points</li>
-      <li>7-letter words: 160 points</li>
-      <li>8+ letter words: 200 points</li>
-    </ul>
-  </div>
-  
-  <!-- Audio elements -->
-  <audio id="click-sound" src="click-sound.mp3"></audio>
-  <audio id="match-sound" src="match-sound.mp3"></audio>
-  <audio id="finish-sound" src="finish-sound.mp3"></audio>
-  <audio id="error-sound" src="error-sound.mp3"></audio>
-  
-  <!-- Footer -->
-  <footer>
-    <p>© 2025 Gino Brancazio. All rights reserved.</p>
-    <p>V 0.5</p>
-  </footer>
-  
-  <script src="script.js"></script>
-</body>
+
+    <!-- Hint and theme display areas -->
+    <div id="hint-display"></div>
+    <div id="theme-display"></div>
+
+    <!-- Container for selected words -->
+    <div id="selected-words-container"></div>
+
+    <!-- Game completion elements -->
+    <textarea id="gameCompletionMessage" style="display: none;"></textarea>
+    <button id="copyButton" style="display: none;">Copy</button>
+    <button id="shareButton" style="display: none;">Share to Twitter</button>
+
+    <!-- Puzzle attribution and submission link -->
+    <div id="homepage">
+      <p>
+        Today's puzzle set by <span id="puzzle-setter">Kit Cat</span>
+      </p>
+      <p>
+        Submit your own DownWords puzzle
+        <a
+          href="https://forms.gle/swMG478WZwXgjkRS6"
+          target="_blank"
+          >here</a
+        >
+      </p>
+    </div>
+
+    <!-- Other puzzles section -->
+    <div id="puzzles">
+      <h3>Other Puzzles:</h3>
+      <ul>
+        <li>
+          <span style="font-weight: bold; color: var(--accent-color);"
+            >NEW:</span
+          >
+          <a
+            href="https://downwordsgame.com/wordfinder/"
+            target="_blank"
+            >Word Finder</a
+          >
+        </li>
+      </ul>
+    </div>
+
+    <!-- Game instructions with toggle functionality -->
+    <div id="instructions-container">
+      <button id="instructions-toggle">Show Instructions</button>
+      <div id="instructions" style="display: none;">
+        <h3>Instructions:</h3>
+        <ul>
+          <li>There are 6 hidden words in the grid</li>
+          <li>
+            Each word runs vertically, one letter in each of the rows (top to
+            bottom), but the letters are not necessarily connected.
+          </li>
+          <li>Each letter is only used once.</li>
+          <li>Five of the words are connected by a theme</li>
+          <li>The remaining word is the theme that connects the other words</li>
+        </ul>
+
+        <!-- Example gameplay animation -->
+        <p>Example:</p>
+        <img
+          src="Down Words.gif"
+          alt="Example Gameplay"
+          class="instructions-gif"
+        />
+      </div>
+    </div>
+
+    <!-- Footer with contact and copyright information -->
+    <div id="linkedin-connect" style="text-align: center; margin-top: 20px;">
+      <p>
+        V3.5 © 2025 Gino Brancazio. All rights reserved. Contact me on
+        <a
+          href="https://www.linkedin.com/in/ginobrancazio/"
+          target="_blank"
+          >LinkedIn</a
+        >
+      </p>
+    </div>
+
+    <!-- Main game script -->
+    <script src="script.js"></script>
+  </body>
 </html>
