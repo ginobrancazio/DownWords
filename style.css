@@ -5,47 +5,39 @@
   --bg-color: #ffffff;
   --text-color: #333333;
   --text-color-rgb: 51, 51, 51; /* RGB version of #333333 */
-
+  
   /* Grid and letter elements */
   --grid-bg: #f5f5f5;
   --grid-border: #ddd;
   --letter-hover: #eef5ff;
   --selected-bg: #a0d2eb;
   --selected-border: #007acc;
-
+  
   /* Hint and theme displays */
   --hint-bg: #fff3e0;
   --hint-border: #ff9800;
   --theme-bg: #e3f2fd;
   --theme-border: #2196F3;
-
+  
   /* Content areas */
   --instructions-bg: #f9f9f9;
   --bonus-bg: #fffde7;
   --bonus-text: #333333;
   --bonus-word-bg: #f7d358;
   --bonus-word-text: #000000;
-
+  
   /* Word display */
   --selected-word-bg: var(--grid-bg);
   --selected-word-text: #000000;
   --matched-word-bg: #76e77d;
   --matched-word-text: #000000;
-
+  
   /* UI elements */
   --completion-bg: #ffffff;
   --completion-active-bg: #f8f8f8;
   --box-shadow: rgba(0, 0, 0, 0.1);
   --button-bg: #4a6fa5;
   --button-hover: #3a5a8c;
-
-  /* Puzzle card colors */
-  --puzzle-card-bg: #f8fafc;
-  --puzzle-card-shadow: 0 2px 12px rgba(0,0,0,0.06);
-  --puzzle-card-radius: 14px;
-  --puzzle-card-padding: 1.5em 2em;
-  --puzzle-card-width: 420px;
-  --accent-color: #0077cc;
 }
 
 /* Dark mode variables */
@@ -54,258 +46,162 @@
   --bg-color: #121212;
   --text-color: #e0e0e0;
   --text-color-rgb: 224, 224, 224; /* RGB version of #e0e0e0 */
-
+  
   /* Grid and letter elements */
   --grid-bg: #1e1e1e;
   --grid-border: #444;
   --letter-hover: #2c2c2c;
   --selected-bg: #2c5282;
   --selected-border: #4299e1;
-
+  
   /* Hint and theme displays */
   --hint-bg: #3d2c0c;
   --hint-border: #f59e0b;
   --theme-bg: #1a365d;
   --theme-border: #3182ce;
-
+  
   /* Content areas */
   --instructions-bg: #1a1a1a;
   --bonus-bg: #332b00;
   --bonus-text: #ffffff;
   --bonus-word-bg: #d4af37;
   --bonus-word-text: #000000;
-
+  
   /* Word display */
   --selected-word-bg: #3d3d3d;
   --selected-word-text: #ffffff;
   --matched-word-bg: #388e3c;
   --matched-word-text: #ffffff;
-
+  
   /* UI elements */
   --completion-bg: #1a1a1a;
   --completion-active-bg: #252525;
   --box-shadow: rgba(0, 0, 0, 0.3);
-
-  /* Puzzle card colors */
-  --puzzle-card-bg: #181d23;
-  --puzzle-card-shadow: 0 2px 12px rgba(0,0,0,0.18);
-  --puzzle-card-radius: 14px;
-  --puzzle-card-padding: 1.5em 2em;
-  --puzzle-card-width: 420px;
-  --accent-color: #7eb6ff;
 }
 
-/* ===== PUZZLE INFO & OTHER PUZZLES CARDS ===== */
-#homepage {
-  background: var(--puzzle-card-bg);
-  border-radius: var(--puzzle-card-radius);
-  box-shadow: var(--puzzle-card-shadow);
-  padding: var(--puzzle-card-padding);
-  margin: 2em auto 1em auto;
-  max-width: var(--puzzle-card-width);
-  text-align: center;
-  font-size: 1.13em;
-  color: var(--text-color);
-  line-height: 1.6;
-  letter-spacing: 0.01em;
-}
-
-#homepage span#puzzle-setter {
-  font-weight: bold;
-  color: var(--accent-color);
-}
-
-#homepage a {
-  color: var(--accent-color);
-  text-decoration: underline;
-  font-weight: 500;
-  transition: color 0.2s;
-}
-
-#homepage a:hover {
-  color: var(--button-bg);
-}
-
-#Puzzles {
-  background: var(--puzzle-card-bg);
-  border-radius: var(--puzzle-card-radius);
-  box-shadow: var(--puzzle-card-shadow);
-  padding: 1.1em 1.5em;
-  margin: 1em auto 2em auto;
-  max-width: var(--puzzle-card-width);
-  font-size: 1em;
-  text-align: left;
-}
-
-#Puzzles h3 {
-  margin-top: 0;
-  color: var(--text-color);
-  font-size: 1.1em;
-  letter-spacing: 0.5px;
-  font-weight: 700;
-}
-
-#Puzzles ul {
-  list-style: none;
-  padding: 0;
-  margin: 0.5em 0 0 0;
-}
-
-#Puzzles li {
-  margin: 0.5em 0;
-  font-size: 1em;
-}
-
-#Puzzles a {
-  color: var(--accent-color);
-  text-decoration: none;
-  font-weight: 500;
-  transition: color 0.2s;
-}
-
-#Puzzles a:hover {
-  color: var(--button-bg);
-  text-decoration: underline;
-}
-
-#Puzzles span {
-  font-weight: bold;
-  color: var(--accent-color);
-}
-
-/* ===== BUTTON STYLES (IMPROVED) ===== */
-button,
-.button-container button,
-#start-puzzle-button,
-#archive-toggle,
-#instructions-toggle,
-#copyButton,
-#shareButton {
-  background: var(--button-bg);
-  color: #fff;
+/* Instructions toggle button */
+#instructions-toggle {
+  margin: 20px auto 10px;
+  background-color: var(--button-bg);
+  color: white;
   border: none;
   border-radius: 8px;
-  padding: 0.6em 1.2em;
-  margin: 0.3em;
-  font-size: 1em;
+  padding: 10px 16px;
+  font-size: 14px;
+  font-weight: 600;
   cursor: pointer;
-  box-shadow: 0 1px 4px var(--box-shadow);
-  transition: background 0.2s, transform 0.1s;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  display: block;
+}
+
+#instructions-toggle:hover {
+  background-color: var(--button-hover);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+#instructions-toggle:active {
+  transform: translateY(0);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+/* Instructions container */
+#instructions-container {
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+/* Instructions content */
+#instructions {
+  margin-top: 10px;
+  text-align: left;
+  background-color: var(--instructions-bg);
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px var(--box-shadow);
+  transition: all 0.3s ease;
+}
+
+
+/* ===== BASE STYLES ===== */
+/* Body styling */
+body {
+  font-family: sans-serif;
+  text-align: center;
+  padding: 1em;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  height: 100vh;
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* ===== BUTTON STYLES ===== */
+/* Common button styling */
+button {
+  background-color: var(--button-bg);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 16px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   font-family: 'Poppins', 'Helvetica Neue', sans-serif;
   letter-spacing: 0.5px;
 }
 
-button:hover,
-.button-container button:hover,
-#start-puzzle-button:hover,
-#archive-toggle:hover,
-#instructions-toggle:hover,
-#copyButton:hover,
-#shareButton:hover {
-  background: var(--button-hover);
-  transform: translateY(-2px) scale(1.03);
-}
-
-button:active,
-.button-container button:active,
-#start-puzzle-button:active,
-#archive-toggle:active,
-#instructions-toggle:active,
-#copyButton:active,
-#shareButton:active {
-  transform: translateY(0);
-}
-
-/* ===== HINT AND THEME DISPLAY ===== */
-#hint-display,
-#theme-display {
-  background: var(--hint-bg);
-  border-left: 4px solid var(--hint-border);
-  border-radius: 6px;
-  padding: 0.7em 1em;
-  margin: 1em auto;
-  max-width: var(--puzzle-card-width);
-  font-size: 1.05em;
-  color: var(--text-color);
-  min-height: 1.5em;
-  text-align: left;
-  box-shadow: 0 1px 4px var(--box-shadow);
-}
-
-#theme-display {
-  background: var(--theme-bg);
-  border-left: 4px solid var(--theme-border);
-  font-weight: bold;
-}
-
-/* ===== SELECTED WORDS ===== */
-#selected-words-container {
-  background: #e0f2fe;
-  border-radius: 8px;
-  padding: 0.7em 1em;
-  margin: 1em auto;
-  max-width: var(--puzzle-card-width);
-  font-size: 1.05em;
-  color: var(--text-color);
-  min-height: 1.5em;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  justify-content: center;
-  box-shadow: 0 1px 4px var(--box-shadow);
-}
-
-#selected-words-container div {
-  background-color: var(--selected-word-bg);
-  color: var(--selected-word-text);
-  padding: 8px 12px;
-  border-radius: 6px;
-  transition: all 0.2s ease;
-  font-weight: 700;
-  letter-spacing: 0.5px;
-  border: 1px solid var(--grid-border);
-  box-shadow: 0 2px 4px var(--box-shadow);
-}
-
-#selected-words-container div:hover {
-  background-color: var(--letter-hover);
+/* Button hover and active states */
+button:hover {
+  background-color: var(--button-hover);
   transform: translateY(-2px);
-  box-shadow: 0 2px 5px var(--box-shadow);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
 }
 
-#selected-words-container div:empty {
-  background: none;
-  box-shadow: none;
-  border: none;
+button:active {
+  transform: translateY(0);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
 }
 
-/* Matched word styling */
-#selected-words-container div[style*="background-color: #76e77d"] {
-  background-color: var(--matched-word-bg) !important;
-  color: var(--matched-word-text) !important;
-  border: 2px solid var(--matched-word-text);
-  font-weight: 700;
-  text-shadow: 0 0 1px rgba(0, 0, 0, 0.2);
+/* Apply consistent styling to all button types */
+#start-button,
+#reset-button,
+#hint-button,
+#theme-button,
+#grid-reset-button,
+#mute-button,
+#shareButton,
+#copyButton,
+#load-date-button {
+  background-color: var(--button-bg);
 }
 
-.selected-word {
-  font-weight: bold;
-  display: flex;
-  align-items: center;
-  gap: 0.5em;
+#start-button:hover,
+#reset-button:hover,
+#hint-button:hover,
+#theme-button:hover,
+#grid-reset-button:hover,
+#mute-button:hover,
+#shareButton:hover,
+#copyButton:hover,
+#load-date-button:hover {
+  background-color: var(--button-hover);
+}
+
+/* Start button styling */
+#start-button {
   font-size: 16px;
+  padding: 12px 24px;
 }
 
-.selected-word-match {
-  background-color: var(--matched-word-bg);
-  color: var(--matched-word-text);
-}
-
-.selected-word-mismatch {
-  background-color: #f7a0eb;
-}
-
-/* ===== ARCHIVE & MODE TOGGLE BUTTONS ===== */
+/* Mode toggle button */
 #mode-toggle {
   position: fixed;
   top: 20px;
@@ -325,6 +221,7 @@ button:active,
   transform: rotate(30deg);
 }
 
+/* Archive toggle button */
 #archive-toggle {
   position: fixed;
   top: 20px;
@@ -355,176 +252,6 @@ button:active,
   box-shadow: 0 1px 2px var(--box-shadow);
 }
 
-/* ===== INSTRUCTIONS ===== */
-#instructions-toggle {
-  margin: 20px auto 10px;
-  background-color: var(--button-bg);
-  color: white;
-  border: none;
-  border-radius: 8px;
-  padding: 10px 16px;
-  font-size: 14px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  box-shadow: 0 2px 4px var(--box-shadow);
-  display: block;
-}
-
-#instructions-toggle:hover {
-  background-color: var(--button-hover);
-  transform: translateY(-2px);
-  box-shadow: 0 4px 8px var(--box-shadow);
-}
-
-#instructions-toggle:active {
-  transform: translateY(0);
-  box-shadow: 0 1px 2px var(--box-shadow);
-}
-
-#instructions-container {
-  width: 100%;
-  max-width: 600px;
-  margin: 0 auto;
-}
-
-#instructions {
-  margin-top: 10px;
-  text-align: left;
-  background-color: var(--instructions-bg);
-  padding: 15px;
-  border-radius: 8px;
-  box-shadow: 0 2px 5px var(--box-shadow);
-  transition: all 0.3s ease;
-}
-
-#instructions h3 {
-  color: var(--button-bg);
-  margin-top: 0;
-}
-
-.dark-mode #instructions h3 {
-  color: var(--accent-color);
-}
-
-#instructions ul {
-  padding-left: 1.2em;
-  line-height: 1.5;
-}
-
-.instructions-gif {
-  margin-top: 1px;
-  max-width: 600px;
-  object-fit: cover;
-  border: 1px solid var(--grid-border);
-  border-radius: 8px;
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-  box-shadow: 0 3px 10px var(--box-shadow);
-}
-
-/* ===== FOOTER ===== */
-#linkedin-connect {
-  text-align: center;
-  margin-top: 20px;
-  color: var(--text-color);
-  font-size: 0.98em;
-  opacity: 0.8;
-}
-
-#linkedin-connect a {
-  color: var(--accent-color);
-  text-decoration: underline;
-  font-weight: 500;
-}
-
-#linkedin-connect a:hover {
-  color: var(--button-bg);
-}
-
-/* ===== RESPONSIVE DESIGN ===== */
-@media (max-width: 600px) {
-  #homepage,
-  #Puzzles,
-  #hint-display,
-  #theme-display,
-  #selected-words-container {
-    max-width: 98vw;
-    padding: 1em 0.5em;
-  }
-  .button-container {
-    flex-direction: column;
-    align-items: stretch;
-  }
-  #instructions-container {
-    max-width: 98vw;
-  }
-  .instructions-gif {
-    width: 90vw;
-    max-width: 98vw;
-  }
-  #mode-toggle {
-    top: 10px;
-    right: 10px;
-    font-size: 20px;
-  }
-  #archive-toggle {
-    top: 10px;
-    left: 10px;
-    font-size: 20px;
-  }
-  #date-picker-container {
-    flex-direction: column;
-    align-items: center;
-  }
-}
-
-/* ===== BASE STYLES ===== */
-body {
-  font-family: sans-serif;
-  text-align: center;
-  padding: 1em;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: flex-start;
-  min-height: 100vh;
-  background-color: var(--bg-color);
-  color: var(--text-color);
-  transition: background-color 0.3s ease, color 0.3s ease;
-}
-
-/* ===== BUTTON STYLES ===== */
-#start-button,
-#reset-button,
-#hint-button,
-#theme-button,
-#grid-reset-button,
-#mute-button,
-#shareButton,
-#copyButton,
-#load-date-button {
-  background-color: var(--button-bg);
-}
-
-#start-button:hover,
-#reset-button:hover,
-#hint-button:hover,
-#theme-button:hover,
-#grid-reset-button:hover,
-#mute-button:hover,
-#shareButton:hover,
-#copyButton:hover,
-#load-date-button:hover {
-  background-color: var(--button-hover);
-}
-
-#start-button {
-  font-size: 16px;
-  padding: 12px 24px;
-}
-
 /* Button container */
 .button-container {
   display: flex;
@@ -539,6 +266,7 @@ body {
 }
 
 /* ===== GAME ELEMENTS ===== */
+/* Timer display */
 #timer {
   font-size: 16px;
   font-weight: bold;
@@ -589,15 +317,36 @@ body {
   background: var(--completion-active-bg);
 }
 
-/* Hint and theme displays (already improved above) */
+/* Hint and theme displays */
+#hint-display {
+  margin-top: 5px;
+  margin-bottom: 1px;
+  padding: 8px 12px;
+  background-color: var(--hint-bg);
+  border-left: 4px solid var(--hint-border);
+  border-radius: 4px;
+  font-style: italic;
+}
+
+#theme-display {
+  margin-top: 5px;
+  margin-bottom: 1px;
+  padding: 8px 12px;
+  background-color: var(--theme-bg);
+  border-left: 4px solid var(--theme-border);
+  border-radius: 4px;
+  font-weight: bold;
+}
 
 /* ===== GRID AND LETTER STYLING ===== */
+/* Letter grid container */
 #letter-grid-container {
   position: relative;
   margin: 0 auto;
   display: inline-block; /* Ensures the container wraps tightly around the grid */
 }
 
+/* Letter grid */
 #letter-grid {
   position: relative;
   z-index: 1;
@@ -608,6 +357,7 @@ body {
   margin-bottom: 5px;
 }
 
+/* Individual letter styling */
 .letter {
   width: 50px;
   height: 50px;
@@ -639,11 +389,70 @@ body {
 }
 
 /* ===== WORD DISPLAY ===== */
-/* Selected words container (already improved above) */
+/* Selected words container */
+#selected-words-container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  width: 50%;
+  margin-top: 10px;
+  justify-items: start;
+  word-break: break-word;
+}
 
-/* Matched word styling (already improved above) */
+/* Selected word styling */
+#selected-words-container div {
+  background-color: var(--selected-word-bg);
+  color: var(--selected-word-text);
+  padding: 8px 12px;
+  border-radius: 6px;
+  transition: all 0.2s ease;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  border: 1px solid var(--grid-border);
+  box-shadow: 0 2px 4px var(--box-shadow);
+}
+
+#selected-words-container div:hover {
+  background-color: var(--letter-hover);
+  transform: translateY(-2px);
+  box-shadow: 0 2px 5px var(--box-shadow);
+}
+
+#selected-words-container div:empty {
+  background: none;
+  box-shadow: none;
+  border: none;
+}
+
+/* Matched word styling */
+#selected-words-container div[style*="background-color: #76e77d"] {
+  background-color: var(--matched-word-bg) !important;
+  color: var(--matched-word-text) !important;
+  border: 2px solid var(--matched-word-text);
+  font-weight: 700;
+  text-shadow: 0 0 1px rgba(0, 0, 0, 0.2);
+}
+
+.selected-word {
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  gap: 0.5em;
+  font-size: 16px;
+}
+
+.selected-word-match {
+  background-color: var(--matched-word-bg);
+  color: var(--matched-word-text);
+}
+
+.selected-word-mismatch {
+  background-color: #f7a0eb;
+}
 
 /* ===== BONUS WORDS ===== */
+/* Bonus words container */
 #bonus-words-container {
   margin-top: 20px;
   padding: 15px;
@@ -666,6 +475,7 @@ body {
   text-shadow: 0 1px 1px rgba(0, 0, 0, 0.5);
 }
 
+/* Individual bonus word styling */
 #bonus-words-container div div {
   background-color: var(--bonus-word-bg);
   color: var(--bonus-word-text);
@@ -685,9 +495,46 @@ body {
 }
 
 /* ===== INSTRUCTIONS ===== */
-/* Already improved above */
+/* Instructions container */
+#instructions {
+  margin-top: 1px;
+  max-width: 600px;
+  text-align: left;
+  background-color: var(--instructions-bg);
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px var(--box-shadow);
+}
+
+#instructions h2 {
+  color: #4a6fa5;
+  margin-top: 0;
+}
+
+.dark-mode #instructions h2 {
+  color: #7eb6ff;
+}
+
+#instructions ul {
+  padding-left: 1.2em;
+  line-height: 1.5;
+}
+
+/* Instructions GIF */
+.instructions-gif {
+  margin-top: 1px;
+  max-width: 600px;
+  object-fit: cover;
+  border: 1px solid var(--grid-border);
+  border-radius: 8px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  box-shadow: 0 3px 10px var(--box-shadow);
+}
 
 /* ===== DATE PICKER ===== */
+/* Date picker container */
 #date-picker-container {
   margin: 10px 0 20px;
   display: flex;
@@ -697,6 +544,7 @@ body {
   flex-wrap: wrap;
 }
 
+/* Date input field */
 #puzzle-date {
   padding: 8px 12px;
   border-radius: 8px;
@@ -713,6 +561,7 @@ body {
 }
 
 /* ===== FLATPICKR CUSTOMIZATION ===== */
+/* Disabled days */
 .flatpickr-day.flatpickr-disabled,
 .flatpickr-day.flatpickr-disabled:hover,
 .flatpickr-day.no-puzzle {
@@ -721,6 +570,7 @@ body {
   cursor: not-allowed;
 }
 
+/* Enabled days */
 .flatpickr-day.flatpickr-enabled {
   font-weight: bold;
   background-color: var(--theme-bg);
@@ -732,10 +582,12 @@ body {
   background-color: var(--selected-bg);
 }
 
+/* Today's date */
 .flatpickr-day.today {
   border-color: var(--selected-border);
 }
 
+/* Dark mode calendar styling */
 .dark-mode .flatpickr-calendar {
   background: var(--grid-bg);
   color: var(--text-color);
@@ -767,6 +619,7 @@ body {
 }
 
 /* ===== START OVERLAY ===== */
+/* Start overlay container */
 #start-overlay {
   position: absolute;
   top: 0;
@@ -781,6 +634,7 @@ body {
   border-radius: 8px;
 }
 
+/* Start puzzle button */
 #start-puzzle-button {
   background-color: var(--button-bg);
   color: white;
@@ -805,17 +659,19 @@ body {
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
-/* ===== RESPONSIVE DESIGN (EXTRA) ===== */
+/* ===== RESPONSIVE DESIGN ===== */
 @media (max-width: 600px) {
+  /* Smaller buttons on mobile */
   button {
     padding: 8px 14px;
     font-size: 13px;
   }
-
+  
   .button-container {
     gap: 8px;
   }
 
+  /* Adjusted grid for mobile */
   #letter-grid {
     grid-template-columns: repeat(5, 65px);
     gap: 0px;
@@ -827,6 +683,7 @@ body {
     font-size: 18px;
   }
 
+  /* Adjusted word container for mobile */
   #selected-words-container {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -836,7 +693,8 @@ body {
     justify-items: start;
     word-break: break-word;
   }
-
+  
+  /* Adjusted instructions for mobile */
   #instructions {
     margin-top: 2px;
     max-width: 600px;
@@ -847,6 +705,7 @@ body {
     padding-left: 1.2em;
   }
 
+  /* Adjusted GIF for mobile */
   .instructions-gif {
     margin-top: 2px;
     width: 90%;
@@ -855,5 +714,24 @@ body {
     display: block;
     margin-left: auto;
     margin-right: auto;
+  }
+  
+  /* Adjusted toggle buttons for mobile */
+  #mode-toggle {
+    top: 10px;
+    right: 10px;
+    font-size: 20px;
+  }
+  
+  #archive-toggle {
+    top: 10px;
+    left: 10px;
+    font-size: 20px;
+  }
+  
+  /* Stacked date picker on mobile */
+  #date-picker-container {
+    flex-direction: column;
+    align-items: center;
   }
 }
