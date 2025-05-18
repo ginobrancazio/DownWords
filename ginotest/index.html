@@ -6,7 +6,7 @@
   <title>DownWords by Gino Brancazio</title>
   
   <!-- Stylesheets -->
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap">
+  <link rel="stylesheet" href="style.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
   
   <!-- Scripts -->
@@ -20,620 +20,6 @@
     gtag('js', new Date());
     gtag('config', 'G-6R3CEQKVLF');
   </script>
-  
-  <style>
-    /* ===== CSS VARIABLES AND THEME SETTINGS ===== */
-    :root {
-      /* Base colors */
-      --primary-color: #4361ee;
-      --primary-dark: #3a0ca3;
-      --accent-color: #f72585;
-      --success-color: #4cc9f0;
-      --bg-color: #ffffff;
-      --text-color: #2b2d42;
-      --text-light: #8d99ae;
-      --border-color: #edf2f4;
-      
-      /* Grid and letter elements */
-      --grid-bg: #f8f9fa;
-      --letter-bg: #ffffff;
-      --letter-hover: #e9ecef;
-      --selected-bg: #4cc9f0;
-      --selected-text: #ffffff;
-      --grid-border: #d1d5db;
-      --selected-border: #3a0ca3;
-      --box-shadow: rgba(0, 0, 0, 0.1);
-      
-      /* UI elements */
-      --button-bg: #4361ee;
-      --button-hover: #3a0ca3;
-      --button-text: #ffffff;
-      --card-bg: #ffffff;
-      --card-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-      
-      /* Hint and theme displays */
-      --hint-bg: #fff0f3;
-      --hint-border: #ffb3c1;
-      --theme-bg: #e0f7fa;
-      --theme-border: #80deea;
-      
-      /* Word display */
-      --matched-word-bg: #4cc9f0;
-      --matched-word-text: #ffffff;
-      
-      /* Transitions */
-      --transition-fast: 0.2s ease;
-      --transition-medium: 0.3s ease;
-    }
-    
-    /* Dark mode variables */
-    .dark-mode {
-      --primary-color: #4cc9f0;
-      --primary-dark: #3a86ff;
-      --accent-color: #f72585;
-      --success-color: #4cc9f0;
-      --bg-color: #121212;
-      --text-color: #edf2f4;
-      --text-light: #8d99ae;
-      --border-color: #2b2d42;
-      
-      --grid-bg: #1e1e1e;
-      --letter-bg: #2b2d42;
-      --letter-hover: #3a0ca3;
-      --selected-bg: #4cc9f0;
-      --selected-text: #ffffff;
-      --grid-border: #4cc9f0;
-      --selected-border: #f72585;
-      --box-shadow: rgba(0, 0, 0, 0.3);
-      
-      --button-bg: #4cc9f0;
-      --button-hover: #3a86ff;
-      --button-text: #ffffff;
-      --card-bg: #2b2d42;
-      --card-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
-      
-      --hint-bg: #3a0ca3;
-      --hint-border: #f72585;
-      --theme-bg: #3a0ca3;
-      --theme-border: #4cc9f0;
-      
-      --matched-word-bg: #4cc9f0;
-      --matched-word-text: #ffffff;
-    }
-    
-    /* ===== BASE STYLES ===== */
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-    
-    body {
-      font-family: 'Poppins', sans-serif;
-      background-color: var(--bg-color);
-      color: var(--text-color);
-      line-height: 1.6;
-      padding: 20px;
-      max-width: 1200px;
-      margin: 0 auto;
-      transition: background-color var(--transition-medium), color var(--transition-medium);
-    }
-    
-    h1, h2, h3, h4, h5, h6 {
-      font-weight: 600;
-      margin-bottom: 1rem;
-      color: var(--primary-color);
-    }
-    
-    h1 {
-      font-size: 2.5rem;
-      text-align: center;
-      margin: 1.5rem 0;
-      background: linear-gradient(45deg, var(--primary-color), var(--accent-color));
-      -webkit-background-clip: text;
-      background-clip: text;
-      color: transparent;
-      letter-spacing: -0.5px;
-    }
-    
-    a {
-      color: var(--primary-color);
-      text-decoration: none;
-      transition: color var(--transition-fast);
-    }
-    
-    a:hover {
-      color: var(--accent-color);
-      text-decoration: underline;
-    }
-    
-    /* ===== GAME CONTAINER ===== */
-    #game {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      margin-bottom: 2rem;
-    }
-    
-    /* ===== BUTTON STYLES ===== */
-    button {
-      background-color: var(--button-bg);
-      color: var(--button-text);
-      border: none;
-      border-radius: 8px;
-      padding: 10px 16px;
-      font-size: 14px;
-      font-weight: 600;
-      cursor: pointer;
-      transition: all var(--transition-fast);
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-      font-family: 'Poppins', sans-serif;
-    }
-    
-    button:hover {
-      background-color: var(--button-hover);
-      transform: translateY(-2px);
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
-    }
-    
-    button:active {
-      transform: translateY(0);
-      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
-    }
-    
-    .button-container {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 12px;
-      margin: 20px 0;
-    }
-    
-    /* ===== TOGGLE BUTTONS ===== */
-    #mode-toggle {
-      position: fixed;
-      top: 20px;
-      right: 20px;
-      background-color: transparent;
-      border: none;
-      font-size: 24px;
-      cursor: pointer;
-      z-index: 100;
-      padding: 5px;
-      border-radius: 50%;
-      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-      transition: transform var(--transition-medium);
-    }
-    
-    #mode-toggle:hover {
-      transform: rotate(30deg);
-    }
-    
-    #archive-toggle {
-      position: fixed;
-      top: 20px;
-      left: 20px;
-      background-color: var(--button-bg);
-      color: var(--button-text);
-      border: none;
-      font-size: 24px;
-      cursor: pointer;
-      z-index: 100;
-      padding: 5px 10px;
-      border-radius: 8px;
-      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-      transition: all var(--transition-fast);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-    
-    #archive-toggle:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
-      background-color: var(--button-hover);
-    }
-    
-    /* ===== TIMER DISPLAY ===== */
-    #timer {
-      font-size: 1.2rem;
-      font-weight: 600;
-      margin: 1rem 0;
-      padding: 8px 16px;
-      background-color: var(--card-bg);
-      border-radius: 8px;
-      box-shadow: var(--card-shadow);
-      color: var(--primary-color);
-    }
-    
-    /* ===== LETTER GRID ===== */
-    #letter-grid-container {
-      position: relative;
-      margin: 0 auto;
-      display: inline-block;
-    }
-    
-/* Replace the current letter grid styling with this */
-#letter-grid {
-  position: relative;
-  z-index: 1;
-  display: grid;
-  grid-template-columns: repeat(5, 50px);
-  gap: 1px;
-  justify-content: center;
-  margin-bottom: 5px;
-}
-
-/* Individual letter styling */
-.letter {
-  width: 50px;
-  height: 50px;
-  background: var(--grid-bg);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 20px;
-  font-weight: bold;
-  border: 2px solid var(--grid-border);
-  border-radius: 8px;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  box-shadow: 0 2px 4px var(--box-shadow);
-  color: var(--text-color);
-}
-
-.letter:hover {
-  background: var(--letter-hover);
-  transform: translateY(-2px);
-  box-shadow: 0 4px 8px var(--box-shadow);
-}
-
-.letter.selected {
-  background: var(--selected-bg);
-  border-color: var(--selected-border);
-  transform: scale(1.05);
-  box-shadow: 0 4px 8px var(--box-shadow);
-}
-    
-    /* Letter shake animation */
-    @keyframes shake {
-      0% { transform: translateX(0); }
-      25% { transform: translateX(-3px); }
-      50% { transform: translateX(3px); }
-      75% { transform: translateX(-2px); }
-      100% { transform: translateX(0); }
-    }
-    
-    .letter.shake {
-      animation: shake 0.3s ease;
-    }
-    
-    /* ===== START OVERLAY ===== */
-    #start-overlay {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background-color: rgba(0, 0, 0, 0.7);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      z-index: 10;
-      border-radius: 16px;
-    }
-    
-    #start-puzzle-button {
-      background-color: var(--accent-color);
-      color: white;
-      border: none;
-      border-radius: 12px;
-      padding: 16px 32px;
-      font-size: 1.2rem;
-      font-weight: 600;
-      cursor: pointer;
-      transition: all var(--transition-fast);
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-    }
-    
-    #start-puzzle-button:hover {
-      background-color: var(--primary-color);
-      transform: translateY(-3px);
-      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
-    }
-    
-    /* ===== HINT AND THEME DISPLAYS ===== */
-    #hint-display, #theme-display {
-      margin: 0.5rem 0;
-      padding: 12px 16px;
-      border-radius: 8px;
-      max-width: 600px;
-      width: 100%;
-      text-align: center;
-      font-weight: 500;
-      box-shadow: var(--card-shadow);
-      transition: all var(--transition-medium);
-    }
-    
-    #hint-display {
-      background-color: var(--hint-bg);
-      border-left: 4px solid var(--hint-border);
-    }
-    
-    #theme-display {
-      background-color: var(--theme-bg);
-      border-left: 4px solid var(--theme-border);
-      font-weight: 600;
-    }
-    
-    /* ===== SELECTED WORDS CONTAINER ===== */
-    #selected-words-container {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 12px;
-      width: 100%;
-      max-width: 600px;
-      margin: 1.5rem 0;
-      padding: 20px;
-      background-color: var(--grid-bg);
-      border-radius: 16px;
-      box-shadow: var(--card-shadow);
-    }
-    
-    #selected-words-container div {
-      background-color: var(--letter-bg);
-      color: var(--text-color);
-      padding: 10px 16px;
-      border-radius: 8px;
-      transition: all var(--transition-fast);
-      font-weight: 600;
-      text-align: center;
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-      border: 1px solid var(--border-color);
-    }
-    
-    #selected-words-container div:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
-    }
-    
-    #selected-words-container div[style*="background-color: #76e77d"] {
-      background-color: var(--matched-word-bg) !important;
-      color: var(--matched-word-text) !important;
-      border: none;
-    }
-    
-    /* ===== BONUS WORDS CONTAINER ===== */
-    #bonus-words-container {
-      margin: 1.5rem 0;
-      padding: 20px;
-      background-color: var(--card-bg);
-      border-radius: 16px;
-      box-shadow: var(--card-shadow);
-      max-width: 600px;
-      width: 100%;
-    }
-    
-    #bonus-words-container h3 {
-      color: var(--accent-color);
-      margin-bottom: 1rem;
-      text-align: center;
-    }
-    
-    #bonus-words-container div {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 10px;
-    }
-    
-    #bonus-words-container div div {
-      background-color: var(--accent-color);
-      color: white;
-      padding: 8px 16px;
-      border-radius: 8px;
-      font-weight: 600;
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    }
-    
-    /* ===== GAME COMPLETION MESSAGE ===== */
-    #gameCompletionMessage {
-      width: 100%;
-      max-width: 600px;
-      height: 0;
-      overflow: hidden;
-      background: var(--card-bg);
-      color: var(--text-color);
-      padding: 0 20px;
-      border-radius: 16px;
-      box-shadow: var(--card-shadow);
-      font-family: 'Poppins', sans-serif;
-      font-size: 16px;
-      text-align: left;
-      opacity: 0;
-      transition: height 1.5s ease, opacity 1.5s ease, padding 1.5s ease;
-      margin: 20px auto;
-      border: 1px solid var(--border-color);
-    }
-    
-    #gameCompletionMessage.active {
-      display: block;
-      min-height: 270px;
-      opacity: 1;
-      padding: 20px;
-    }
-    
-    /* ===== DATE PICKER ===== */
-    #date-picker-container {
-      margin: 1rem 0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 12px;
-      flex-wrap: wrap;
-      padding: 16px;
-      background-color: var(--card-bg);
-      border-radius: 12px;
-      box-shadow: var(--card-shadow);
-    }
-    
-    #puzzle-date {
-      padding: 10px 16px;
-      border-radius: 8px;
-      border: 1px solid var(--border-color);
-      background-color: var(--letter-bg);
-      color: var(--text-color);
-      font-family: 'Poppins', sans-serif;
-      font-size: 14px;
-    }
-    
-    /* ===== INSTRUCTIONS ===== */
-    #instructions-container {
-      width: 100%;
-      max-width: 600px;
-      margin: 2rem auto;
-    }
-    
-    #instructions-toggle {
-      margin: 0 auto 1rem;
-      display: block;
-    }
-    
-    #instructions {
-      background-color: var(--card-bg);
-      padding: 20px;
-      border-radius: 16px;
-      box-shadow: var(--card-shadow);
-      margin-bottom: 2rem;
-    }
-    
-    #instructions h3 {
-      color: var(--primary-color);
-      margin-bottom: 1rem;
-    }
-    
-    #instructions ul {
-      padding-left: 1.5rem;
-      margin-bottom: 1rem;
-    }
-    
-    #instructions li {
-      margin-bottom: 0.5rem;
-    }
-    
-    .instructions-gif {
-      width: 100%;
-      border-radius: 12px;
-      box-shadow: var(--card-shadow);
-      margin-top: 1rem;
-    }
-    
-    /* ===== OTHER SECTIONS ===== */
-    #homepage, #linkedin-connect, #Puzzles {
-      text-align: center;
-      margin: 2rem 0;
-      padding: 16px;
-      background-color: var(--card-bg);
-      border-radius: 12px;
-      box-shadow: var(--card-shadow);
-      max-width: 600px;
-      width: 100%;
-      margin-left: auto;
-      margin-right: auto;
-    }
-    
-    #Puzzles ul {
-      list-style: none;
-      padding: 0;
-    }
-    
-    #Puzzles li {
-      margin: 0.5rem 0;
-    }
-    
-    /* ===== RESPONSIVE DESIGN ===== */
-@media (max-width: 768px) {
-  body {
-    padding: 10px;
-  }
-  
-  h1 {
-    font-size: 2rem;
-  }
-  
-  #letter-grid {
-    grid-template-columns: repeat(5, 45px); /* Reduced from 50px */
-    gap: 2px; /* Reduced from 6px */
-    padding: 10px; /* Reduced from 15px */
-  }
-  
-  .letter {
-    width: 45px; /* Reduced from 50px */
-    height: 45px; /* Reduced from 50px */
-    font-size: 1.2rem;
-  }
-  
-  .button-container {
-    gap: 8px;
-  }
-  
-  button {
-    padding: 8px 12px;
-    font-size: 13px;
-  }
-  
-  #selected-words-container {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-
-@media (max-width: 480px) {
-  h1 {
-    font-size: 1.8rem;
-  }
-  
-  #letter-grid {
-    grid-template-columns: repeat(5, 38px); /* Reduced from 40px and fixed column count to 5 */
-    gap: 1px; /* Reduced from 4px */
-    padding: 5px; /* Reduced from 10px */
-  }
-  
-  .letter {
-    width: 38px; /* Reduced from 40px */
-    height: 38px; /* Reduced from 40px */
-    font-size: 1rem;
-    border-radius: 6px; /* Reduced from 8px */
-    border-width: 1px; /* Reduced from 2px */
-  }
-  
-  #selected-words-container {
-    grid-template-columns: 1fr;
-  }
-  
-  #mode-toggle, #archive-toggle {
-    font-size: 20px;
-  }
-  
-  #date-picker-container {
-    flex-direction: column;
-  }
-}
-
-/* Add an even smaller breakpoint for very small screens */
-@media (max-width: 360px) {
-  #letter-grid {
-    grid-template-columns: repeat(5, 32px);
-    gap: 1px;
-  }
-  
-  .letter {
-    width: 32px;
-    height: 32px;
-    font-size: 0.9rem;
-    border-radius: 4px;
-  }
-}
-  </style>
 </head>
 
 <body>
@@ -645,39 +31,26 @@
   <!-- Archive toggle button -->
   <button id="archive-toggle" aria-label="Open puzzle archive">📅</button>
   
-  <!-- Dark mode toggle -->
-  <button id="mode-toggle" aria-label="Toggle dark/light mode">☀️</button>
-  
   <!-- Main game container -->
   <div id="game">
     <h1>DownWords</h1>
     
     <!-- Date picker for archive puzzles -->
     <div id="date-picker-container">
-      <label for="puzzle-date">Select puzzle date:</label>
+      <label for="puzzle-date">Select puzzle date: </label>
       <input type="text" id="puzzle-date" name="puzzle-date" placeholder="Select date...">
     </div>
     
     <!-- Game timer display -->
     <div id="timer">Time: 0</div>
     
-   <!-- Letter grid container -->
-<div id="letter-grid-container">
-  <!-- Letter grid where the game is played -->
-  <div id="letter-grid"></div>
+    <!-- Letter grid where the game is played -->
+    <div id="letter-grid"></div>
+  </div>
   
   <!-- Start overlay with button to begin the puzzle -->
   <div id="start-overlay">
     <button id="start-puzzle-button">Start Puzzle</button>
-  </div>
-</div>
-    
-    <!-- Hint and theme display areas -->
-    <div id="hint-display"></div>
-    <div id="theme-display"></div>
-    
-    <!-- Container for selected words -->
-    <div id="selected-words-container"></div>
   </div>
   
   <!-- Game control buttons -->
@@ -687,14 +60,20 @@
     <button id="grid-reset-button">Reset Grid</button>
     <button id="reset-button">Start Over</button>
     <button id="mute-button">🔇 Mute</button>
+    <button id="mode-toggle" aria-label="Toggle dark/light mode">☀️</button>
   </div>
+  
+  <!-- Hint and theme display areas -->
+  <div id="hint-display"></div>
+  <div id="theme-display"></div>
+  
+  <!-- Container for selected words -->
+  <div id="selected-words-container"></div>
   
   <!-- Game completion elements -->
   <textarea id="gameCompletionMessage" style="display:none;"></textarea>
-  <div class="button-container">
-    <button id="copyButton" style="display:none;">Copy</button>
-    <button id="shareButton" style="display:none;">Share to Twitter</button>
-  </div>
+  <button id="copyButton" style="display:none;">Copy</button>
+  <button id="shareButton" style="display:none;">Share to Twitter</button>
   
   <!-- Puzzle attribution and submission link -->
   <div id="homepage">
@@ -710,29 +89,28 @@
     </ul>
   </div>
     
-  <!-- Game instructions with toggle functionality -->
-  <div id="instructions-container">
-    <button id="instructions-toggle">Show Instructions</button>
-    <div id="instructions" style="display: none;">
-      <h3>Instructions:</h3>
-      <ul>
-        <li>There are 6 hidden words in the grid</li>
-        <li>Each word runs vertically, one letter in each of the rows (top to bottom), but the letters are not necessarily connected.</li>
-        <li>Each letter is only used once.</li>
-        <li>Five of the words are connected by a theme</li>
-        <li>The remaining word is the theme that connects the other words</li>
-      </ul>
-      
-      <!-- Example gameplay animation -->
-      <p>Example:</p>
-      <img src="Down Words.gif" alt="Example Gameplay" class="instructions-gif" />
-    </div>
+<!-- Game instructions with toggle functionality -->
+<div id="instructions-container">
+  <button id="instructions-toggle">Show Instructions</button>
+  <div id="instructions" style="display: none;">
+    <h3>Instructions:</h3>
+    <ul>
+      <li>There are 6 hidden words in the grid</li>
+      <li>Each word runs vertically, one letter in each of the rows (top to bottom), but the letters are not necessarily connected.</li>
+      <li>Each letter is only used once.</li>
+      <li>Five of the words are connected by a theme</li>
+      <li>The remaining word is the theme that connects the other words</li>
+    </ul>
+    
+    <!-- Example gameplay animation -->
+    <p>Example:</p>
+    <img src="Down Words.gif" alt="Example Gameplay" class="instructions-gif" />
   </div>
+</div>
   
   <!-- Footer with contact and copyright information -->
-  <div id="linkedin-connect">
-    <p>V3.3 © 2025 Gino Brancazio. All rights reserved.</p>
-    <p>Contact me on <a href="https://www.linkedin.com/in/ginobrancazio/" target="_blank">LinkedIn</a></p>
+  <div id="linkedin-connect" style="text-align: center; margin-top: 20px;">
+    <p>V3 © 2025 Gino Brancazio. All rights reserved. Contact me on <a href="https://www.linkedin.com/in/ginobrancazio/" target="_blank">LinkedIn</a></p>
   </div>
   
   <!-- Main game script -->
