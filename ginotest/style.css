@@ -673,8 +673,8 @@ button:active {
 #puzzles {
   width: 90%; /* Adjust width as needed */
   max-width: 600px; /* Maximum width to prevent over-expansion */
-  margin: 20px auto; /* Center the boxes horizontally */
-  padding: 15px;
+  margin: 10px auto; /* Reduced top and bottom margin */
+  padding: 10px; /* Reduced top and bottom padding */
   background-color: var(--instructions-bg); /* Consistent background */
   border-radius: 10px;
   box-shadow: 0 4px 8px var(--box-shadow); /* Soft shadow for depth */
@@ -684,7 +684,7 @@ button:active {
 
 #homepage p,
 #puzzles ul {
-  margin-bottom: 10px; /* Space out paragraphs and lists */
+  margin-bottom: 8px; /* Further reduce spacing */
   line-height: 1.6; /* Improve readability */
 }
 
@@ -703,7 +703,7 @@ button:active {
 
 #puzzles h3 {
   color: var(--theme-border); /* Stand out, consistent with the theme */
-  margin-bottom: 15px; /* Space between title and the list */
+  margin-bottom: 10px; /* Reduce spacing here too */
   font-size: 1.5em; /* Slightly larger for emphasis */
 }
 
@@ -713,7 +713,7 @@ button:active {
 }
 
 #puzzles li {
-  margin-bottom: 5px; /* Space between list items */
+  margin-bottom: 3px; /* Even tighter spacing */
 }
 
 /* ===== RESPONSIVE DESIGN ===== */
