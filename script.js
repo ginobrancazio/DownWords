@@ -133,6 +133,37 @@ function getHintByDate(selectedDate) {
   return HintsByDate['default'];
 }
 
+// ===== INSTRUCTIONS TOGGLE =====
+document.addEventListener('DOMContentLoaded', function() {
+  const instructionsToggle = document.getElementById('instructions-toggle');
+  const instructions = document.getElementById('instructions');
+  
+  // Set up toggle functionality
+  instructionsToggle.addEventListener('click', function() {
+    const isVisible = instructions.style.display !== 'none';
+    
+    if (isVisible) {
+      // Hide instructions
+      instructions.style.display = 'none';
+      instructionsToggle.textContent = 'Show Instructions';
+    } else {
+      // Show instructions
+      instructions.style.display = 'block';
+      instructionsToggle.textContent = 'Hide Instructions';
+    }
+    
+    // Track the event
+    if (typeof gtag === 'function') {
+      gtag('event', 'toggle_instructions', {
+        'event_category': 'navigation',
+        'event_label': isVisible ? 'Hide Instructions' : 'Show Instructions',
+        'value': 1
+      });
+    }
+  });
+});
+
+
 /**
  * Gets the puzzle setter for a specific date
  * @param {string} selectedDate - Date in YYYY-MM-DD format
