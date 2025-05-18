@@ -95,24 +95,38 @@
   --accent-color: #7eb6ff;
 }
 
-/* ===== PUZZLE INFO & OTHER PUZZLES CARDS ===== */
+/* ===== PUZZLE INFO & OTHER PUZZLES CARDS (IMPROVED) ===== */
 #homepage {
   background: var(--puzzle-card-bg);
-  border-radius: var(--puzzle-card-radius);
-  box-shadow: var(--puzzle-card-shadow);
-  padding: var(--puzzle-card-padding);
-  margin: 2em auto 1em auto;
-  max-width: var(--puzzle-card-width);
-  text-align: center;
-  font-size: 1.13em;
+  border-radius: 18px;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.07);
+  padding: 2em 2em 1.5em 2em;
+  margin: 2.5em auto 1.5em auto;
+  max-width: 430px;
+  text-align: left;
   color: var(--text-color);
-  line-height: 1.6;
-  letter-spacing: 0.01em;
+  position: relative;
+  overflow: hidden;
+  border-left: 7px solid var(--accent-color);
+  display: flex;
+  flex-direction: column;
+  gap: 0.7em;
+}
+
+#homepage::before {
+  content: "🧩";
+  position: absolute;
+  top: 1.1em;
+  right: 1.2em;
+  font-size: 2.1em;
+  opacity: 0.13;
+  pointer-events: none;
 }
 
 #homepage span#puzzle-setter {
-  font-weight: bold;
+  font-weight: 700;
   color: var(--accent-color);
+  font-size: 1.08em;
 }
 
 #homepage a {
@@ -120,29 +134,39 @@
   text-decoration: underline;
   font-weight: 500;
   transition: color 0.2s;
+  word-break: break-all;
 }
 
 #homepage a:hover {
   color: var(--button-bg);
 }
 
+#homepage p {
+  margin: 0.2em 0;
+  font-size: 1.08em;
+  line-height: 1.6;
+}
+
 #Puzzles {
   background: var(--puzzle-card-bg);
-  border-radius: var(--puzzle-card-radius);
-  box-shadow: var(--puzzle-card-shadow);
-  padding: 1.1em 1.5em;
-  margin: 1em auto 2em auto;
-  max-width: var(--puzzle-card-width);
-  font-size: 1em;
+  border-radius: 15px;
+  box-shadow: 0 2px 14px rgba(0,0,0,0.06);
+  padding: 1.2em 1.5em 1.2em 1.5em;
+  margin: 1.5em auto 2.5em auto;
+  max-width: 430px;
   text-align: left;
+  border-left: 5px solid var(--accent-color);
+  position: relative;
+  overflow: hidden;
 }
 
 #Puzzles h3 {
   margin-top: 0;
-  color: var(--text-color);
-  font-size: 1.1em;
+  color: var(--accent-color);
+  font-size: 1.13em;
   letter-spacing: 0.5px;
   font-weight: 700;
+  margin-bottom: 0.5em;
 }
 
 #Puzzles ul {
@@ -154,6 +178,9 @@
 #Puzzles li {
   margin: 0.5em 0;
   font-size: 1em;
+  display: flex;
+  align-items: center;
+  gap: 0.5em;
 }
 
 #Puzzles a {
@@ -171,6 +198,20 @@
 #Puzzles span {
   font-weight: bold;
   color: var(--accent-color);
+  font-size: 1em;
+}
+
+@media (max-width: 600px) {
+  #homepage, #Puzzles {
+    max-width: 98vw;
+    padding: 1.1em 0.7em;
+    border-radius: 12px;
+  }
+  #homepage::before {
+    font-size: 1.5em;
+    top: 0.7em;
+    right: 0.7em;
+  }
 }
 
 /* ===== BUTTON STYLES (IMPROVED) ===== */
@@ -588,8 +629,6 @@ body {
   z-index: 2;
   background: var(--completion-active-bg);
 }
-
-/* Hint and theme displays (already improved above) */
 
 /* ===== GRID AND LETTER STYLING ===== */
 #letter-grid-container {
