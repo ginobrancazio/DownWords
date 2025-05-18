@@ -1,119 +1,161 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>DownWords by Gino Brancazio</title>
-  
-  <!-- Stylesheets -->
-  <link rel="stylesheet" href="style.css">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
-  
-  <!-- Scripts -->
-  <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
-  
-  <!-- Google Analytics -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-6R3CEQKVLF"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config', 'G-6R3CEQKVLF');
-  </script>
-</head>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>DownWords by Gino Brancazio</title>
 
-<body>
-  <!-- Audio elements for game sounds -->
-  <audio id="click-sound" src="click-sound.mp3"></audio>
-  <audio id="match-sound" src="match-sound.mp3"></audio>
-  <audio id="finish-sound" src="finish-sound.mp3"></audio>
-  
-  <!-- Archive toggle button -->
-  <button id="archive-toggle" aria-label="Open puzzle archive">📅</button>
-  
-  <!-- Main game container -->
-  <div id="game">
-    <h1>DownWords</h1>
-    
-    <!-- Date picker for archive puzzles -->
-    <div id="date-picker-container">
-      <label for="puzzle-date">Select puzzle date: </label>
-      <input type="text" id="puzzle-date" name="puzzle-date" placeholder="Select date...">
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="style.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css"
+    />
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-6R3CEQKVLF"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag('js', new Date());
+      gtag('config', 'G-6R3CEQKVLF');
+    </script>
+  </head>
+
+  <body>
+    <!-- Audio elements for game sounds -->
+    <audio id="click-sound" src="click-sound.mp3"></audio>
+    <audio id="match-sound" src="match-sound.mp3"></audio>
+    <audio id="finish-sound" src="finish-sound.mp3"></audio>
+
+    <!-- Archive toggle button -->
+    <button id="archive-toggle" aria-label="Open puzzle archive">📅</button>
+
+    <!-- Main game container -->
+    <div id="game">
+      <h1>DownWords</h1>
+
+      <!-- Date picker for archive puzzles -->
+      <div id="date-picker-container">
+        <label for="puzzle-date">Select puzzle date: </label>
+        <input
+          type="text"
+          id="puzzle-date"
+          name="puzzle-date"
+          placeholder="Select date..."
+        />
+      </div>
+
+      <!-- Game timer display -->
+      <div id="timer">Time: 0</div>
+
+      <!-- Letter grid where the game is played -->
+      <div id="letter-grid"></div>
     </div>
-    
-    <!-- Game timer display -->
-    <div id="timer">Time: 0</div>
-    
-    <!-- Letter grid where the game is played -->
-    <div id="letter-grid"></div>
-  </div>
-  
-  <!-- Start overlay with button to begin the puzzle -->
-  <div id="start-overlay">
-    <button id="start-puzzle-button">Start Puzzle</button>
-  </div>
-  
-  <!-- Game control buttons -->
-  <div class="button-container">
-    <button id="hint-button">Reveal Hint</button>
-    <button id="theme-button">Reveal Theme</button>
-    <button id="grid-reset-button">Reset Grid</button>
-    <button id="reset-button">Start Over</button>
-    <button id="mute-button">🔇 Mute</button>
-    <button id="mode-toggle" aria-label="Toggle dark/light mode">☀️</button>
-  </div>
-  
-  <!-- Hint and theme display areas -->
-  <div id="hint-display"></div>
-  <div id="theme-display"></div>
-  
-  <!-- Container for selected words -->
-  <div id="selected-words-container"></div>
-  
-  <!-- Game completion elements -->
-  <textarea id="gameCompletionMessage" style="display:none;"></textarea>
-  <button id="copyButton" style="display:none;">Copy</button>
-  <button id="shareButton" style="display:none;">Share to Twitter</button>
-  
-  <!-- Puzzle attribution and submission link -->
-  <div id="homepage">
-    <p>Today's puzzle set by <span id="puzzle-setter">Kit Cat</span></p>
-    <p>Submit your own DownWords puzzle <a href="https://forms.gle/swMG478WZwXgjkRS6" target="_blank">here</a></p>
-  </div>
-  
-  <!-- Other puzzles section -->
-  <div id="Puzzles">
-    <h3>Other Puzzles:</h3>
-    <ul>
-      <li><span style="font-weight: bold; color: var(--accent-color);">NEW:</span> <a href="https://downwordsgame.com/wordfinder/" target="_blank">Word Finder</a></li>
-    </ul>
-  </div>
-    
-<!-- Game instructions with toggle functionality -->
-<div id="instructions-container">
-  <button id="instructions-toggle">Show Instructions</button>
-  <div id="instructions" style="display: none;">
-    <h3>Instructions:</h3>
-    <ul>
-      <li>There are 6 hidden words in the grid</li>
-      <li>Each word runs vertically, one letter in each of the rows (top to bottom), but the letters are not necessarily connected.</li>
-      <li>Each letter is only used once.</li>
-      <li>Five of the words are connected by a theme</li>
-      <li>The remaining word is the theme that connects the other words</li>
-    </ul>
-    
-    <!-- Example gameplay animation -->
-    <p>Example:</p>
-    <img src="Down Words.gif" alt="Example Gameplay" class="instructions-gif" />
-  </div>
-</div>
-  
-  <!-- Footer with contact and copyright information -->
-  <div id="linkedin-connect" style="text-align: center; margin-top: 20px;">
-    <p>V4.1 © 2025 Gino Brancazio. All rights reserved. Contact me on <a href="https://www.linkedin.com/in/ginobrancazio/" target="_blank">LinkedIn</a></p>
-  </div>
-  
-  <!-- Main game script -->
-  <script src="script.js"></script>
-</body>
+
+    <!-- Start overlay with button to begin the puzzle -->
+    <div id="start-overlay">
+      <button id="start-puzzle-button">Start Puzzle</button>
+    </div>
+
+    <!-- Game control buttons -->
+    <div class="button-container">
+      <button id="hint-button">Reveal Hint</button>
+      <button id="theme-button">Reveal Theme</button>
+      <button id="grid-reset-button">Reset Grid</button>
+      <button id="reset-button">Start Over</button>
+      <button id="mute-button">🔇 Mute</button>
+      <button id="mode-toggle" aria-label="Toggle dark/light mode">☀️</button>
+    </div>
+
+    <!-- Hint and theme display areas -->
+    <div id="hint-display"></div>
+    <div id="theme-display"></div>
+
+    <!-- Container for selected words -->
+    <div id="selected-words-container"></div>
+
+    <!-- Game completion elements -->
+    <textarea id="gameCompletionMessage" style="display: none;"></textarea>
+    <button id="copyButton" style="display: none;">Copy</button>
+    <button id="shareButton" style="display: none;">Share to Twitter</button>
+
+    <!-- Puzzle attribution and submission link -->
+    <div id="homepage">
+      <p>
+        Today's puzzle set by <span id="puzzle-setter">Kit Cat</span>
+      </p>
+      <p>
+        Submit your own DownWords puzzle
+        <a
+          href="https://forms.gle/swMG478WZwXgjkRS6"
+          target="_blank"
+          >here</a
+        >
+      </p>
+    </div>
+
+    <!-- Other puzzles section -->
+    <div id="puzzles">
+      <h3>Other Puzzles:</h3>
+      <ul>
+        <li>
+          <span style="font-weight: bold; color: var(--accent-color);"
+            >NEW:</span
+          >
+          <a
+            href="https://downwordsgame.com/wordfinder/"
+            target="_blank"
+            >Word Finder</a
+          >
+        </li>
+      </ul>
+    </div>
+
+    <!-- Game instructions with toggle functionality -->
+    <div id="instructions-container">
+      <button id="instructions-toggle">Show Instructions</button>
+      <div id="instructions" style="display: none;">
+        <h3>Instructions:</h3>
+        <ul>
+          <li>There are 6 hidden words in the grid</li>
+          <li>
+            Each word runs vertically, one letter in each of the rows (top to
+            bottom), but the letters are not necessarily connected.
+          </li>
+          <li>Each letter is only used once.</li>
+          <li>Five of the words are connected by a theme</li>
+          <li>The remaining word is the theme that connects the other words</li>
+        </ul>
+
+        <!-- Example gameplay animation -->
+        <p>Example:</p>
+        <img
+          src="Down Words.gif"
+          alt="Example Gameplay"
+          class="instructions-gif"
+        />
+      </div>
+    </div>
+
+    <!-- Footer with contact and copyright information -->
+    <div id="linkedin-connect" style="text-align: center; margin-top: 20px;">
+      <p>
+        V3.5 © 2025 Gino Brancazio. All rights reserved. Contact me on
+        <a
+          href="https://www.linkedin.com/in/ginobrancazio/"
+          target="_blank"
+          >LinkedIn</a
+        >
+      </p>
+    </div>
+
+    <!-- Main game script -->
+    <script src="script.js"></script>
+  </body>
 </html>
