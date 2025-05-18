@@ -703,8 +703,9 @@ button:active {
 
 #puzzles h3 {
   color: var(--theme-border);
-  margin-bottom: 5px;    /* Reduced spacing */
+  margin-bottom: 5px;    /* Space between title and the list */
   font-size: 1.2em;    /* Smaller title text */
+  padding-top: 0; /* ADD THIS LINE: Remove padding above the text */
 }
 
 #puzzles ul {
