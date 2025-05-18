@@ -32,16 +32,7 @@ const bonusWordsContainer = document.createElement('div');
 bonusWordsContainer.id = 'bonus-words-container';
 bonusWordsContainer.style.marginTop = '20px';
 bonusWordsContainer.style.display = 'none';
-
-// Find the parent of wordsContainer and insert bonusWordsContainer after wordsContainer
-if (wordsContainer && wordsContainer.parentNode) {
-  wordsContainer.parentNode.insertBefore(bonusWordsContainer, wordsContainer.nextSibling);
-} else {
-  // Handle the case where wordsContainer is not found or has no parent
-  console.error('wordsContainer not found or does not have a parent node.');
-  // You might want to append to body or handle this case differently
-  document.body.appendChild(bonusWordsContainer);
-}
+document.body.insertBefore(bonusWordsContainer, wordsContainer.nextSibling);
 
 // Add a heading for bonus words
 const bonusWordsHeading = document.createElement('h3');
@@ -55,7 +46,7 @@ hintDisplay.style.display = 'none';  // Hide hint by default
 themeDisplay.style.display = 'none'; // Hide theme by default
 
 // Hide the buttons initially
-document.getElementById('hint-button').style.display = 'none';
+document.getElementById('hint-button').style.display = 'none'; 
 document.getElementById('theme-button').style.display = 'none';
 document.getElementById('mute-button').style.display = 'none';
 document.getElementById('grid-reset-button').style.display = 'none';
