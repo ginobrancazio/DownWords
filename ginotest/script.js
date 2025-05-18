@@ -145,7 +145,7 @@ document.addEventListener('DOMContentLoaded', function() {
     if (isVisible) {
       // Hide instructions
       instructions.style.display = 'none';
-      instructionsToggle.textContent = 'Show Instructions';
+      instructionsToggle.textContent = 'How to Play';
     } else {
       // Show instructions
       instructions.style.display = 'block';
@@ -161,7 +161,26 @@ document.addEventListener('DOMContentLoaded', function() {
       });
     }
   });
+  
+  // Fix for share buttons display
+  const shareButtons = document.querySelector('.share-buttons');
+  const copyButton = document.getElementById('copyButton');
+  const shareButton = document.getElementById('shareButton');
+  
+  // When the completion message is shown, also show the share buttons
+  const observer = new MutationObserver(function(mutations) {
+    mutations.forEach(function(mutation) {
+      if (mutation.target.style.display !== 'none') {
+        shareButtons.style.display = 'flex';
+      }
+    });
+  });
+  
+  // Start observing the completion message
+  const completionMessage = document.getElementById('gameCompletionMessage');
+  observer.observe(completionMessage, { attributes: true, attributeFilter: ['style'] });
 });
+
 
 
 /**
