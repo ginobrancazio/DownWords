@@ -533,14 +533,14 @@ button:active {
   }
   
   #letter-grid {
-    grid-template-columns: repeat(6, 50px);
-    gap: 6px;
-    padding: 15px;
+    grid-template-columns: repeat(5, 45px); /* Reduced from 50px */
+    gap: 2px; /* Reduced from 6px */
+    padding: 10px; /* Reduced from 15px */
   }
   
   .letter {
-    width: 50px;
-    height: 50px;
+    width: 45px; /* Reduced from 50px */
+    height: 45px; /* Reduced from 50px */
     font-size: 1.2rem;
   }
   
@@ -564,16 +564,17 @@ button:active {
   }
   
   #letter-grid {
-    grid-template-columns: repeat(6, 40px);
-    gap: 4px;
-    padding: 10px;
+    grid-template-columns: repeat(5, 38px); /* Reduced from 40px and fixed column count to 5 */
+    gap: 1px; /* Reduced from 4px */
+    padding: 5px; /* Reduced from 10px */
   }
   
   .letter {
-    width: 40px;
-    height: 40px;
+    width: 38px; /* Reduced from 40px */
+    height: 38px; /* Reduced from 40px */
     font-size: 1rem;
-    border-radius: 8px;
+    border-radius: 6px; /* Reduced from 8px */
+    border-width: 1px; /* Reduced from 2px */
   }
   
   #selected-words-container {
@@ -586,6 +587,21 @@ button:active {
   
   #date-picker-container {
     flex-direction: column;
+  }
+}
+
+/* Add an even smaller breakpoint for very small screens */
+@media (max-width: 360px) {
+  #letter-grid {
+    grid-template-columns: repeat(5, 32px);
+    gap: 1px;
+  }
+  
+  .letter {
+    width: 32px;
+    height: 32px;
+    font-size: 0.9rem;
+    border-radius: 4px;
   }
 }
 
