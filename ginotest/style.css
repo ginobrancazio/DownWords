@@ -17,7 +17,7 @@
   --hint-bg: #fff3e0;
   --hint-border: #ff9800;
   --theme-bg: #e3f2fd;
-  --theme-border: #2196F3;
+  --theme-border: #2196f3;
 
   /* Content areas */
   --instructions-bg: #f9f9f9;
@@ -38,14 +38,6 @@
   --box-shadow: rgba(0, 0, 0, 0.1);
   --button-bg: #4a6fa5;
   --button-hover: #3a5a8c;
-
-  /* Puzzle card colors */
-  --puzzle-card-bg: #f8fafc;
-  --puzzle-card-shadow: 0 2px 12px rgba(0,0,0,0.06);
-  --puzzle-card-radius: 14px;
-  --puzzle-card-padding: 1.5em 2em;
-  --puzzle-card-width: 420px;
-  --accent-color: #0077cc;
 }
 
 /* Dark mode variables */
@@ -85,176 +77,339 @@
   --completion-bg: #1a1a1a;
   --completion-active-bg: #252525;
   --box-shadow: rgba(0, 0, 0, 0.3);
-
-  /* Puzzle card colors */
-  --puzzle-card-bg: #181d23;
-  --puzzle-card-shadow: 0 2px 12px rgba(0,0,0,0.18);
-  --puzzle-card-radius: 14px;
-  --puzzle-card-padding: 1.5em 2em;
-  --puzzle-card-width: 420px;
-  --accent-color: #7eb6ff;
 }
 
-/* ===== PUZZLE INFO & OTHER PUZZLES CARDS ===== */
-#homepage {
-  background: var(--puzzle-card-bg);
-  border-radius: var(--puzzle-card-radius);
-  box-shadow: var(--puzzle-card-shadow);
-  padding: var(--puzzle-card-padding);
-  margin: 2em auto 1em auto;
-  max-width: var(--puzzle-card-width);
-  text-align: center;
-  font-size: 1.13em;
-  color: var(--text-color);
-  line-height: 1.6;
-  letter-spacing: 0.01em;
-}
-
-#homepage span#puzzle-setter {
-  font-weight: bold;
-  color: var(--accent-color);
-}
-
-#homepage a {
-  color: var(--accent-color);
-  text-decoration: underline;
-  font-weight: 500;
-  transition: color 0.2s;
-}
-
-#homepage a:hover {
-  color: var(--button-bg);
-}
-
-#Puzzles {
-  background: var(--puzzle-card-bg);
-  border-radius: var(--puzzle-card-radius);
-  box-shadow: var(--puzzle-card-shadow);
-  padding: 1.1em 1.5em;
-  margin: 1em auto 2em auto;
-  max-width: var(--puzzle-card-width);
-  font-size: 1em;
-  text-align: left;
-}
-
-#Puzzles h3 {
-  margin-top: 0;
-  color: var(--text-color);
-  font-size: 1.1em;
-  letter-spacing: 0.5px;
-  font-weight: 700;
-}
-
-#Puzzles ul {
-  list-style: none;
-  padding: 0;
-  margin: 0.5em 0 0 0;
-}
-
-#Puzzles li {
-  margin: 0.5em 0;
-  font-size: 1em;
-}
-
-#Puzzles a {
-  color: var(--accent-color);
-  text-decoration: none;
-  font-weight: 500;
-  transition: color 0.2s;
-}
-
-#Puzzles a:hover {
-  color: var(--button-bg);
-  text-decoration: underline;
-}
-
-#Puzzles span {
-  font-weight: bold;
-  color: var(--accent-color);
-}
-
-/* ===== BUTTON STYLES (IMPROVED) ===== */
-button,
-.button-container button,
-#start-puzzle-button,
-#archive-toggle,
-#instructions-toggle,
-#copyButton,
-#shareButton {
-  background: var(--button-bg);
-  color: #fff;
+/* Instructions toggle button */
+#instructions-toggle {
+  margin: 20px auto 10px;
+  background-color: var(--button-bg);
+  color: white;
   border: none;
   border-radius: 8px;
-  padding: 0.6em 1.2em;
-  margin: 0.3em;
-  font-size: 1em;
+  padding: 10px 16px;
+  font-size: 14px;
+  font-weight: 600;
   cursor: pointer;
-  box-shadow: 0 1px 4px var(--box-shadow);
-  transition: background 0.2s, transform 0.1s;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  display: block;
+}
+
+#instructions-toggle:hover {
+  background-color: var(--button-hover);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+#instructions-toggle:active {
+  transform: translateY(0);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+/* Instructions container */
+#instructions-container {
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+/* Instructions content */
+#instructions {
+  margin-top: 10px;
+  text-align: left;
+  background-color: var(--instructions-bg);
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px var(--box-shadow);
+  transition: all 0.3s ease;
+}
+
+/* ===== BASE STYLES ===== */
+/* Body styling */
+body {
+  font-family: sans-serif;
+  text-align: center;
+  padding: 1em;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  height: 100vh;
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* ===== BUTTON STYLES ===== */
+/* Common button styling */
+button {
+  background-color: var(--button-bg);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 16px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   font-family: 'Poppins', 'Helvetica Neue', sans-serif;
   letter-spacing: 0.5px;
 }
 
-button:hover,
-.button-container button:hover,
-#start-puzzle-button:hover,
-#archive-toggle:hover,
-#instructions-toggle:hover,
-#copyButton:hover,
-#shareButton:hover {
-  background: var(--button-hover);
-  transform: translateY(-2px) scale(1.03);
+/* Button hover and active states */
+button:hover {
+  background-color: var(--button-hover);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
 }
 
-button:active,
-.button-container button:active,
-#start-puzzle-button:active,
-#archive-toggle:active,
-#instructions-toggle:active,
-#copyButton:active,
-#shareButton:active {
+button:active {
   transform: translateY(0);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
 }
 
-/* ===== HINT AND THEME DISPLAY ===== */
-#hint-display,
-#theme-display {
-  background: var(--hint-bg);
-  border-left: 4px solid var(--hint-border);
-  border-radius: 6px;
-  padding: 0.7em 1em;
-  margin: 1em auto;
-  max-width: var(--puzzle-card-width);
-  font-size: 1.05em;
+/* Apply consistent styling to all button types */
+#start-button,
+#reset-button,
+#hint-button,
+#theme-button,
+#grid-reset-button,
+#mute-button,
+#shareButton,
+#copyButton,
+#load-date-button {
+  background-color: var(--button-bg);
+}
+
+#start-button:hover,
+#reset-button:hover,
+#hint-button:hover,
+#theme-button:hover,
+#grid-reset-button:hover,
+#mute-button:hover,
+#shareButton:hover,
+#copyButton:hover,
+#load-date-button:hover {
+  background-color: var(--button-hover);
+}
+
+/* Start button styling */
+#start-button {
+  font-size: 16px;
+  padding: 12px 24px;
+}
+
+/* Mode toggle button */
+#mode-toggle {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background-color: transparent;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  z-index: 100;
+  padding: 5px;
+  border-radius: 50%;
+  box-shadow: 0 2px 5px var(--box-shadow);
+  transition: transform 0.3s ease;
+}
+
+#mode-toggle:hover {
+  transform: rotate(30deg);
+}
+
+/* Archive toggle button */
+#archive-toggle {
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  background-color: var(--button-bg);
+  color: white;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  z-index: 100;
+  padding: 5px 10px;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px var(--box-shadow);
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#archive-toggle:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px var(--box-shadow);
+  background-color: var(--button-hover);
+}
+
+#archive-toggle:active {
+  transform: translateY(0);
+  box-shadow: 0 1px 2px var(--box-shadow);
+}
+
+/* Button container */
+.button-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px;
+  margin: 20px 0;
+}
+
+.button-container button {
+  margin: 0;
+}
+
+/* ===== GAME ELEMENTS ===== */
+/* Timer display */
+#timer {
+  font-size: 16px;
+  font-weight: bold;
+  margin-bottom: 3px;
+}
+
+/* Letter shake animation */
+@keyframes shake {
+  0% {
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateX(-3px);
+  }
+  50% {
+    transform: translateX(3px);
+  }
+  75% {
+    transform: translateX(-2px);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+.letter.shake {
+  animation: shake 0.3s ease;
+}
+
+/* Game completion message */
+#gameCompletionMessage {
+  display: none;
+  width: 90%;
+  max-width: 400px;
+  height: 0;
+  overflow: hidden;
+  background: var(--completion-bg);
   color: var(--text-color);
-  min-height: 1.5em;
+  padding: 0 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  font-family: 'Poppins', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-size: 16px;
   text-align: left;
-  box-shadow: 0 1px 4px var(--box-shadow);
+  opacity: 0;
+  transition: height 1.5s ease, opacity 1.5s ease, padding 1.5s ease;
+  margin: 20px auto;
+  z-index: 10;
+}
+
+#gameCompletionMessage.active {
+  display: block;
+  min-height: 270px;
+  opacity: 1;
+  padding: 10px;
+  position: relative;
+  z-index: 2;
+  background: var(--completion-active-bg);
+}
+
+/* Hint and theme displays */
+#hint-display {
+  margin-top: 5px;
+  margin-bottom: 1px;
+  padding: 8px 12px;
+  background-color: var(--hint-bg);
+  border-left: 4px solid var(--hint-border);
+  border-radius: 4px;
+  font-style: italic;
 }
 
 #theme-display {
-  background: var(--theme-bg);
+  margin-top: 5px;
+  margin-bottom: 1px;
+  padding: 8px 12px;
+  background-color: var(--theme-bg);
   border-left: 4px solid var(--theme-border);
+  border-radius: 4px;
   font-weight: bold;
 }
 
-/* ===== SELECTED WORDS ===== */
-#selected-words-container {
-  background: #e0f2fe;
-  border-radius: 8px;
-  padding: 0.7em 1em;
-  margin: 1em auto;
-  max-width: var(--puzzle-card-width);
-  font-size: 1.05em;
-  color: var(--text-color);
-  min-height: 1.5em;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  justify-content: center;
-  box-shadow: 0 1px 4px var(--box-shadow);
+/* ===== GRID AND LETTER STYLING ===== */
+/* Letter grid container */
+#letter-grid-container {
+  position: relative;
+  margin: 0 auto;
+  display: inline-block; /* Ensures the container wraps tightly around the grid */
 }
 
+/* Letter grid */
+#letter-grid {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: repeat(5, 50px);
+  gap: 1px;
+  justify-content: center;
+  margin-bottom: 5px;
+}
+
+/* Individual letter styling */
+.letter {
+  width: 50px;
+  height: 50px;
+  background: var(--grid-bg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  font-weight: bold;
+  border: 2px solid var(--grid-border);
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 4px var(--box-shadow);
+  color: var(--text-color);
+}
+
+.letter:hover {
+  background: var(--letter-hover);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px var(--box-shadow);
+}
+
+.letter.selected {
+  background: var(--selected-bg);
+  border-color: var(--selected-border);
+  transform: scale(1.05);
+  box-shadow: 0 4px 8px var(--box-shadow);
+}
+
+/* ===== WORD DISPLAY ===== */
+/* Selected words container */
+#selected-words-container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  width: 50%;
+  margin-top: 10px;
+  justify-items: start;
+  word-break: break-word;
+}
+
+/* Selected word styling */
 #selected-words-container div {
   background-color: var(--selected-word-bg);
   color: var(--selected-word-text);
@@ -305,345 +460,8 @@ button:active,
   background-color: #f7a0eb;
 }
 
-/* ===== ARCHIVE & MODE TOGGLE BUTTONS ===== */
-#mode-toggle {
-  position: fixed;
-  top: 20px;
-  right: 20px;
-  background-color: transparent;
-  border: none;
-  font-size: 24px;
-  cursor: pointer;
-  z-index: 100;
-  padding: 5px;
-  border-radius: 50%;
-  box-shadow: 0 2px 5px var(--box-shadow);
-  transition: transform 0.3s ease;
-}
-
-#mode-toggle:hover {
-  transform: rotate(30deg);
-}
-
-#archive-toggle {
-  position: fixed;
-  top: 20px;
-  left: 20px;
-  background-color: var(--button-bg);
-  color: white;
-  border: none;
-  font-size: 24px;
-  cursor: pointer;
-  z-index: 100;
-  padding: 5px 10px;
-  border-radius: 8px;
-  box-shadow: 0 2px 5px var(--box-shadow);
-  transition: all 0.2s ease;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-#archive-toggle:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 8px var(--box-shadow);
-  background-color: var(--button-hover);
-}
-
-#archive-toggle:active {
-  transform: translateY(0);
-  box-shadow: 0 1px 2px var(--box-shadow);
-}
-
-/* ===== INSTRUCTIONS ===== */
-#instructions-toggle {
-  margin: 20px auto 10px;
-  background-color: var(--button-bg);
-  color: white;
-  border: none;
-  border-radius: 8px;
-  padding: 10px 16px;
-  font-size: 14px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  box-shadow: 0 2px 4px var(--box-shadow);
-  display: block;
-}
-
-#instructions-toggle:hover {
-  background-color: var(--button-hover);
-  transform: translateY(-2px);
-  box-shadow: 0 4px 8px var(--box-shadow);
-}
-
-#instructions-toggle:active {
-  transform: translateY(0);
-  box-shadow: 0 1px 2px var(--box-shadow);
-}
-
-#instructions-container {
-  width: 100%;
-  max-width: 600px;
-  margin: 0 auto;
-}
-
-#instructions {
-  margin-top: 10px;
-  text-align: left;
-  background-color: var(--instructions-bg);
-  padding: 15px;
-  border-radius: 8px;
-  box-shadow: 0 2px 5px var(--box-shadow);
-  transition: all 0.3s ease;
-}
-
-#instructions h3 {
-  color: var(--button-bg);
-  margin-top: 0;
-}
-
-.dark-mode #instructions h3 {
-  color: var(--accent-color);
-}
-
-#instructions ul {
-  padding-left: 1.2em;
-  line-height: 1.5;
-}
-
-.instructions-gif {
-  margin-top: 1px;
-  max-width: 600px;
-  object-fit: cover;
-  border: 1px solid var(--grid-border);
-  border-radius: 8px;
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-  box-shadow: 0 3px 10px var(--box-shadow);
-}
-
-/* ===== FOOTER ===== */
-#linkedin-connect {
-  text-align: center;
-  margin-top: 20px;
-  color: var(--text-color);
-  font-size: 0.98em;
-  opacity: 0.8;
-}
-
-#linkedin-connect a {
-  color: var(--accent-color);
-  text-decoration: underline;
-  font-weight: 500;
-}
-
-#linkedin-connect a:hover {
-  color: var(--button-bg);
-}
-
-/* ===== RESPONSIVE DESIGN ===== */
-@media (max-width: 600px) {
-  #homepage,
-  #Puzzles,
-  #hint-display,
-  #theme-display,
-  #selected-words-container {
-    max-width: 98vw;
-    padding: 1em 0.5em;
-  }
-  .button-container {
-    flex-direction: column;
-    align-items: stretch;
-  }
-  #instructions-container {
-    max-width: 98vw;
-  }
-  .instructions-gif {
-    width: 90vw;
-    max-width: 98vw;
-  }
-  #mode-toggle {
-    top: 10px;
-    right: 10px;
-    font-size: 20px;
-  }
-  #archive-toggle {
-    top: 10px;
-    left: 10px;
-    font-size: 20px;
-  }
-  #date-picker-container {
-    flex-direction: column;
-    align-items: center;
-  }
-}
-
-/* ===== BASE STYLES ===== */
-body {
-  font-family: sans-serif;
-  text-align: center;
-  padding: 1em;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: flex-start;
-  min-height: 100vh;
-  background-color: var(--bg-color);
-  color: var(--text-color);
-  transition: background-color 0.3s ease, color 0.3s ease;
-}
-
-/* ===== BUTTON STYLES ===== */
-#start-button,
-#reset-button,
-#hint-button,
-#theme-button,
-#grid-reset-button,
-#mute-button,
-#shareButton,
-#copyButton,
-#load-date-button {
-  background-color: var(--button-bg);
-}
-
-#start-button:hover,
-#reset-button:hover,
-#hint-button:hover,
-#theme-button:hover,
-#grid-reset-button:hover,
-#mute-button:hover,
-#shareButton:hover,
-#copyButton:hover,
-#load-date-button:hover {
-  background-color: var(--button-hover);
-}
-
-#start-button {
-  font-size: 16px;
-  padding: 12px 24px;
-}
-
-/* Button container */
-.button-container {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 12px;
-  margin: 20px 0;
-}
-
-.button-container button {
-  margin: 0;
-}
-
-/* ===== GAME ELEMENTS ===== */
-#timer {
-  font-size: 16px;
-  font-weight: bold;
-  margin-bottom: 3px;
-}
-
-/* Letter shake animation */
-@keyframes shake {
-  0% { transform: translateX(0); }
-  25% { transform: translateX(-3px); }
-  50% { transform: translateX(3px); }
-  75% { transform: translateX(-2px); }
-  100% { transform: translateX(0); }
-}
-
-.letter.shake {
-  animation: shake 0.3s ease;
-}
-
-/* Game completion message */
-#gameCompletionMessage {
-  display: none;
-  width: 90%;
-  max-width: 400px;
-  height: 0;
-  overflow: hidden;
-  background: var(--completion-bg);
-  color: var(--text-color);
-  padding: 0 20px;
-  border-radius: 10px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-  font-family: 'Poppins', 'Helvetica Neue', Helvetica, Arial, sans-serif;
-  font-size: 16px;
-  text-align: left;
-  opacity: 0;
-  transition: height 1.5s ease, opacity 1.5s ease, padding 1.5s ease;
-  margin: 20px auto;
-  z-index: 10;
-}
-
-#gameCompletionMessage.active {
-  display: block;
-  min-height: 270px;
-  opacity: 1;
-  padding: 10px;
-  position: relative;
-  z-index: 2;
-  background: var(--completion-active-bg);
-}
-
-/* Hint and theme displays (already improved above) */
-
-/* ===== GRID AND LETTER STYLING ===== */
-#letter-grid-container {
-  position: relative;
-  margin: 0 auto;
-  display: inline-block; /* Ensures the container wraps tightly around the grid */
-}
-
-#letter-grid {
-  position: relative;
-  z-index: 1;
-  display: grid;
-  grid-template-columns: repeat(5, 50px);
-  gap: 1px;
-  justify-content: center;
-  margin-bottom: 5px;
-}
-
-.letter {
-  width: 50px;
-  height: 50px;
-  background: var(--grid-bg);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 20px;
-  font-weight: bold;
-  border: 2px solid var(--grid-border);
-  border-radius: 8px;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  box-shadow: 0 2px 4px var(--box-shadow);
-  color: var(--text-color);
-}
-
-.letter:hover {
-  background: var(--letter-hover);
-  transform: translateY(-2px);
-  box-shadow: 0 4px 8px var(--box-shadow);
-}
-
-.letter.selected {
-  background: var(--selected-bg);
-  border-color: var(--selected-border);
-  transform: scale(1.05);
-  box-shadow: 0 4px 8px var(--box-shadow);
-}
-
-/* ===== WORD DISPLAY ===== */
-/* Selected words container (already improved above) */
-
-/* Matched word styling (already improved above) */
-
 /* ===== BONUS WORDS ===== */
+/* Bonus words container */
 #bonus-words-container {
   margin-top: 20px;
   padding: 15px;
@@ -666,6 +484,7 @@ body {
   text-shadow: 0 1px 1px rgba(0, 0, 0, 0.5);
 }
 
+/* Individual bonus word styling */
 #bonus-words-container div div {
   background-color: var(--bonus-word-bg);
   color: var(--bonus-word-text);
@@ -685,9 +504,46 @@ body {
 }
 
 /* ===== INSTRUCTIONS ===== */
-/* Already improved above */
+/* Instructions container */
+#instructions {
+  margin-top: 1px;
+  max-width: 600px;
+  text-align: left;
+  background-color: var(--instructions-bg);
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px var(--box-shadow);
+}
+
+#instructions h2 {
+  color: #4a6fa5;
+  margin-top: 0;
+}
+
+.dark-mode #instructions h2 {
+  color: #7eb6ff;
+}
+
+#instructions ul {
+  padding-left: 1.2em;
+  line-height: 1.5;
+}
+
+/* Instructions GIF */
+.instructions-gif {
+  margin-top: 1px;
+  max-width: 600px;
+  object-fit: cover;
+  border: 1px solid var(--grid-border);
+  border-radius: 8px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  box-shadow: 0 3px 10px var(--box-shadow);
+}
 
 /* ===== DATE PICKER ===== */
+/* Date picker container */
 #date-picker-container {
   margin: 10px 0 20px;
   display: flex;
@@ -697,6 +553,7 @@ body {
   flex-wrap: wrap;
 }
 
+/* Date input field */
 #puzzle-date {
   padding: 8px 12px;
   border-radius: 8px;
@@ -713,6 +570,7 @@ body {
 }
 
 /* ===== FLATPICKR CUSTOMIZATION ===== */
+/* Disabled days */
 .flatpickr-day.flatpickr-disabled,
 .flatpickr-day.flatpickr-disabled:hover,
 .flatpickr-day.no-puzzle {
@@ -721,6 +579,7 @@ body {
   cursor: not-allowed;
 }
 
+/* Enabled days */
 .flatpickr-day.flatpickr-enabled {
   font-weight: bold;
   background-color: var(--theme-bg);
@@ -732,10 +591,12 @@ body {
   background-color: var(--selected-bg);
 }
 
+/* Today's date */
 .flatpickr-day.today {
   border-color: var(--selected-border);
 }
 
+/* Dark mode calendar styling */
 .dark-mode .flatpickr-calendar {
   background: var(--grid-bg);
   color: var(--text-color);
@@ -767,6 +628,7 @@ body {
 }
 
 /* ===== START OVERLAY ===== */
+/* Start overlay container */
 #start-overlay {
   position: absolute;
   top: 0;
@@ -781,6 +643,7 @@ body {
   border-radius: 8px;
 }
 
+/* Start puzzle button */
 #start-puzzle-button {
   background-color: var(--button-bg);
   color: white;
@@ -805,8 +668,57 @@ body {
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
-/* ===== RESPONSIVE DESIGN (EXTRA) ===== */
+/* ===== HOMEPAGE & PUZZLES SECTION ===== */
+#homepage,
+#puzzles {
+  width: 90%; /* Adjust width as needed */
+  max-width: 600px; /* Maximum width to prevent over-expansion */
+  margin: 20px auto; /* Center the boxes horizontally */
+  padding: 15px;
+  background-color: var(--instructions-bg); /* Consistent background */
+  border-radius: 10px;
+  box-shadow: 0 4px 8px var(--box-shadow); /* Soft shadow for depth */
+  text-align: left; /* Align text to the left within the box */
+  transition: all 0.3s ease;
+}
+
+#homepage p,
+#puzzles ul {
+  margin-bottom: 10px; /* Space out paragraphs and lists */
+  line-height: 1.6; /* Improve readability */
+}
+
+#homepage a,
+#puzzles a {
+  color: var(--selected-border); /* Theme-consistent link color */
+  text-decoration: none; /* Remove underline for a cleaner look */
+  font-weight: 600; /* Make links stand out */
+}
+
+#homepage a:hover,
+#puzzles a:hover {
+  text-decoration: underline; /* Add underline on hover for accessibility */
+  color: var(--button-hover); /* Theme-consistent link hover color */
+}
+
+#puzzles h3 {
+  color: var(--theme-border); /* Stand out, consistent with the theme */
+  margin-bottom: 15px; /* Space between title and the list */
+  font-size: 1.5em; /* Slightly larger for emphasis */
+}
+
+#puzzles ul {
+  list-style-type: none; /* Remove bullet points */
+  padding: 0; /* Remove default padding */
+}
+
+#puzzles li {
+  margin-bottom: 5px; /* Space between list items */
+}
+
+/* ===== RESPONSIVE DESIGN ===== */
 @media (max-width: 600px) {
+  /* Smaller buttons on mobile */
   button {
     padding: 8px 14px;
     font-size: 13px;
@@ -816,6 +728,7 @@ body {
     gap: 8px;
   }
 
+  /* Adjusted grid for mobile */
   #letter-grid {
     grid-template-columns: repeat(5, 65px);
     gap: 0px;
@@ -827,6 +740,7 @@ body {
     font-size: 18px;
   }
 
+  /* Adjusted word container for mobile */
   #selected-words-container {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -837,6 +751,7 @@ body {
     word-break: break-word;
   }
 
+  /* Adjusted instructions for mobile */
   #instructions {
     margin-top: 2px;
     max-width: 600px;
@@ -847,6 +762,7 @@ body {
     padding-left: 1.2em;
   }
 
+  /* Adjusted GIF for mobile */
   .instructions-gif {
     margin-top: 2px;
     width: 90%;
@@ -855,5 +771,24 @@ body {
     display: block;
     margin-left: auto;
     margin-right: auto;
+  }
+
+  /* Adjusted toggle buttons for mobile */
+  #mode-toggle {
+    top: 10px;
+    right: 10px;
+    font-size: 20px;
+  }
+
+  #archive-toggle {
+    top: 10px;
+    left: 10px;
+    font-size: 20px;
+  }
+
+  /* Stacked date picker on mobile */
+  #date-picker-container {
+    flex-direction: column;
+    align-items: center;
   }
 }
