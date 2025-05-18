@@ -1,151 +1,380 @@
+/* ===== CSS VARIABLES AND THEME SETTINGS ===== */
+/* Light mode (default) variables */
 :root {
-  /* Light mode (default) variables */
+  /* Base colors */
   --bg-color: #ffffff;
   --text-color: #333333;
+  --text-color-rgb: 51, 51, 51; /* RGB version of #333333 */
+
+  /* Grid and letter elements */
   --grid-bg: #f5f5f5;
   --grid-border: #ddd;
   --letter-hover: #eef5ff;
   --selected-bg: #a0d2eb;
   --selected-border: #007acc;
+
+  /* Hint and theme displays */
+  --hint-bg: #fff3e0;
+  --hint-border: #ff9800;
+  --theme-bg: #e3f2fd;
+  --theme-border: #2196f3;
+
+  /* Content areas */
+  --instructions-bg: #f9f9f9;
+  --bonus-bg: #fffde7;
+  --bonus-text: #333333;
+  --bonus-word-bg: #f7d358;
+  --bonus-word-text: #000000;
+
+  /* Word display */
+  --selected-word-bg: var(--grid-bg);
+  --selected-word-text: #000000;
+  --matched-word-bg: #76e77d;
+  --matched-word-text: #000000;
+
+  /* UI elements */
+  --completion-bg: #ffffff;
+  --completion-active-bg: #f8f8f8;
+  --box-shadow: rgba(0, 0, 0, 0.1);
   --button-bg: #4a6fa5;
   --button-hover: #3a5a8c;
-  --end-game-bg: #f44336;
-  --end-game-hover: #d32f2f;
-  --found-word-bg: #e3f2fd;
-  --found-word-border: #2196F3;
-  --current-word-bg: #f9f9f9;
-  --instructions-bg: #f9f9f9;
-  --box-shadow: rgba(0, 0, 0, 0.1);
-  --disabled-bg: #cccccc;
-  --disabled-text: #666666;
-  --score-color: #4caf50;
-  --timer-color: #f44336;
-  --word-3-color: #8bc34a;
-  --word-4-color: #4caf50;
-  --word-5-color: #009688;
-  --word-6-color: #3f51b5;
-  --word-7-color: #673ab7;
-  --word-8plus-color: #9c27b0;
-  --shareable-bg: #f0f0f0;
-  --shareable-border: #ccc;
 }
 
 /* Dark mode variables */
 .dark-mode {
+  /* Base colors */
   --bg-color: #121212;
   --text-color: #e0e0e0;
+  --text-color-rgb: 224, 224, 224; /* RGB version of #e0e0e0 */
+
+  /* Grid and letter elements */
   --grid-bg: #1e1e1e;
   --grid-border: #444;
   --letter-hover: #2c2c2c;
   --selected-bg: #2c5282;
   --selected-border: #4299e1;
-  --button-bg: #3a5a8c;
-  --button-hover: #4a6fa5;
-  --end-game-bg: #c62828;
-  --end-game-hover: #b71c1c;
-  --found-word-bg: #1a365d;
-  --found-word-border: #3182ce;
-  --current-word-bg: #1a1a1a;
+
+  /* Hint and theme displays */
+  --hint-bg: #3d2c0c;
+  --hint-border: #f59e0b;
+  --theme-bg: #1a365d;
+  --theme-border: #3182ce;
+
+  /* Content areas */
   --instructions-bg: #1a1a1a;
+  --bonus-bg: #332b00;
+  --bonus-text: #ffffff;
+  --bonus-word-bg: #d4af37;
+  --bonus-word-text: #000000;
+
+  /* Word display */
+  --selected-word-bg: #3d3d3d;
+  --selected-word-text: #ffffff;
+  --matched-word-bg: #388e3c;
+  --matched-word-text: #ffffff;
+
+  /* UI elements */
+  --completion-bg: #1a1a1a;
+  --completion-active-bg: #252525;
   --box-shadow: rgba(0, 0, 0, 0.3);
-  --disabled-bg: #333333;
-  --disabled-text: #999999;
-  --score-color: #81c784;
-  --timer-color: #e57373;
-  --word-3-color: #aed581;
-  --word-4-color: #81c784;
-  --word-5-color: #4db6ac;
-  --word-6-color: #7986cb;
-  --word-7-color: #9575cd;
-  --word-8plus-color: #ba68c8;
-  --shareable-bg: #2a2a2a;
-  --shareable-border: #444;
 }
 
-/* Base styles */
+/* Instructions toggle button */
+#instructions-toggle {
+  margin: 20px auto 10px;
+  background-color: var(--button-bg);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 16px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  display: block;
+}
+
+#instructions-toggle:hover {
+  background-color: var(--button-hover);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+#instructions-toggle:active {
+  transform: translateY(0);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+/* Instructions container */
+#instructions-container {
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+/* Instructions content */
+#instructions {
+  margin-top: 10px;
+  text-align: left;
+  background-color: var(--instructions-bg);
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px var(--box-shadow);
+  transition: all 0.3s ease;
+}
+
+/* ===== BASE STYLES ===== */
+/* Body styling */
 body {
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-family: sans-serif;
   text-align: center;
   padding: 1em;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
-  min-height: 100vh;
+  height: 100vh;
   background-color: var(--bg-color);
   color: var(--text-color);
   transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* ===== BUTTON STYLES ===== */
+/* Common button styling */
+button {
+  background-color: var(--button-bg);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 16px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  font-family: 'Poppins', 'Helvetica Neue', sans-serif;
+  letter-spacing: 0.5px;
+}
+
+/* Button hover and active states */
+button:hover {
+  background-color: var(--button-hover);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+button:active {
+  transform: translateY(0);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+/* Apply consistent styling to all button types */
+#start-button,
+#reset-button,
+#hint-button,
+#theme-button,
+#grid-reset-button,
+#mute-button,
+#shareButton,
+#copyButton,
+#load-date-button {
+  background-color: var(--button-bg);
+}
+
+#start-button:hover,
+#reset-button:hover,
+#hint-button:hover,
+#theme-button:hover,
+#grid-reset-button:hover,
+#mute-button:hover,
+#shareButton:hover,
+#copyButton:hover,
+#load-date-button:hover {
+  background-color: var(--button-hover);
+}
+
+/* Start button styling */
+#start-button {
+  font-size: 16px;
+  padding: 12px 24px;
+}
+
+/* Mode toggle button */
+#mode-toggle {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background-color: transparent;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  z-index: 100;
+  padding: 5px;
+  border-radius: 50%;
+  box-shadow: 0 2px 5px var(--box-shadow);
+  transition: transform 0.3s ease;
+}
+
+#mode-toggle:hover {
+  transform: rotate(30deg);
+}
+
+/* Archive toggle button */
+#archive-toggle {
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  background-color: var(--button-bg);
+  color: white;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  z-index: 100;
+  padding: 5px 10px;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px var(--box-shadow);
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#archive-toggle:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px var(--box-shadow);
+  background-color: var(--button-hover);
+}
+
+#archive-toggle:active {
+  transform: translateY(0);
+  box-shadow: 0 1px 2px var(--box-shadow);
+}
+
+/* Button container */
+.button-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px;
+  margin: 20px 0;
+}
+
+.button-container button {
   margin: 0;
 }
 
-h1 {
-  margin-bottom: 0.5em;
-  color: var(--button-bg);
-  font-size: 2.5rem;
+/* ===== GAME ELEMENTS ===== */
+/* Timer display */
+#timer {
+  font-size: 16px;
+  font-weight: bold;
+  margin-bottom: 3px;
 }
 
-.dark-mode h1 {
-  color: var(--button-hover);
+/* Letter shake animation */
+@keyframes shake {
+  0% {
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateX(-3px);
+  }
+  50% {
+    transform: translateX(3px);
+  }
+  75% {
+    transform: translateX(-2px);
+  }
+  100% {
+    transform: translateX(0);
+  }
 }
 
-/* Top controls */
-.top-controls {
-  margin-top: 0;
-  margin-bottom: 1.5em;
-  position: relative;
+.letter.shake {
+  animation: shake 0.3s ease;
+}
+
+/* Game completion message */
+#gameCompletionMessage {
+  display: none;
+  width: 90%;
+  max-width: 400px;
+  height: 0;
+  overflow: hidden;
+  background: var(--completion-bg);
+  color: var(--text-color);
+  padding: 0 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  font-family: 'Poppins', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-size: 16px;
+  text-align: left;
+  opacity: 0;
+  transition: height 1.5s ease, opacity 1.5s ease, padding 1.5s ease;
+  margin: 20px auto;
   z-index: 10;
 }
 
-/* Game info display */
-.game-info {
-  display: flex;
-  justify-content: space-between;
-  width: 100%;
-  max-width: 500px;
-  margin-bottom: 1em;
+#gameCompletionMessage.active {
+  display: block;
+  min-height: 270px;
+  opacity: 1;
+  padding: 10px;
+  position: relative;
+  z-index: 2;
+  background: var(--completion-active-bg);
 }
 
-#timer, #score {
-  font-size: 1.2rem;
+/* Hint and theme displays */
+#hint-display {
+  margin-top: 5px;
+  margin-bottom: 1px;
+  padding: 8px 12px;
+  background-color: var(--hint-bg);
+  border-left: 4px solid var(--hint-border);
+  border-radius: 4px;
+  font-style: italic;
+}
+
+#theme-display {
+  margin-top: 5px;
+  margin-bottom: 1px;
+  padding: 8px 12px;
+  background-color: var(--theme-bg);
+  border-left: 4px solid var(--theme-border);
+  border-radius: 4px;
   font-weight: bold;
-  padding: 0.5em 1em;
-  border-radius: 8px;
-  background-color: var(--grid-bg);
-  box-shadow: 0 2px 4px var(--box-shadow);
 }
 
-#timer {
-  color: var(--timer-color);
-}
-
-#score {
-  color: var(--score-color);
+/* ===== GRID AND LETTER STYLING ===== */
+/* Letter grid container */
+#letter-grid-container {
+  position: relative;
+  margin: 0 auto;
+  display: inline-block; /* Ensures the container wraps tightly around the grid */
 }
 
 /* Letter grid */
-#grid-container {
-  position: relative;
-  margin: 0 auto 1em;
-  display: inline-block;
-}
-
 #letter-grid {
+  position: relative;
+  z-index: 1;
   display: grid;
-  grid-template-columns: repeat(7, 55px);
-  grid-template-rows: repeat(7, 55px);
-  gap: 4px;
+  grid-template-columns: repeat(5, 50px);
+  gap: 1px;
   justify-content: center;
-  margin-bottom: 1em;
+  margin-bottom: 5px;
 }
 
+/* Individual letter styling */
 .letter {
-  width: 55px;
-  height: 55px;
+  width: 50px;
+  height: 50px;
   background: var(--grid-bg);
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 22px;
+  font-size: 20px;
   font-weight: bold;
   border: 2px solid var(--grid-border);
   border-radius: 8px;
@@ -153,10 +382,9 @@ h1 {
   transition: all 0.2s ease;
   box-shadow: 0 2px 4px var(--box-shadow);
   color: var(--text-color);
-  user-select: none;
 }
 
-.letter:hover:not(.used) {
+.letter:hover {
   background: var(--letter-hover);
   transform: translateY(-2px);
   box-shadow: 0 4px 8px var(--box-shadow);
@@ -169,382 +397,398 @@ h1 {
   box-shadow: 0 4px 8px var(--box-shadow);
 }
 
-.letter.used {
-  opacity: 0.3;
+/* ===== WORD DISPLAY ===== */
+/* Selected words container */
+#selected-words-container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  width: 50%;
+  margin-top: 10px;
+  justify-items: start;
+  word-break: break-word;
+}
+
+/* Selected word styling */
+#selected-words-container div {
+  background-color: var(--selected-word-bg);
+  color: var(--selected-word-text);
+  padding: 8px 12px;
+  border-radius: 6px;
+  transition: all 0.2s ease;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  border: 1px solid var(--grid-border);
+  box-shadow: 0 2px 4px var(--box-shadow);
+}
+
+#selected-words-container div:hover {
+  background-color: var(--letter-hover);
+  transform: translateY(-2px);
+  box-shadow: 0 2px 5px var(--box-shadow);
+}
+
+#selected-words-container div:empty {
+  background: none;
+  box-shadow: none;
+  border: none;
+}
+
+/* Matched word styling */
+#selected-words-container div[style*="background-color: #76e77d"] {
+  background-color: var(--matched-word-bg) !important;
+  color: var(--matched-word-text) !important;
+  border: 2px solid var(--matched-word-text);
+  font-weight: 700;
+  text-shadow: 0 0 1px rgba(0, 0, 0, 0.2);
+}
+
+.selected-word {
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  gap: 0.5em;
+  font-size: 16px;
+}
+
+.selected-word-match {
+  background-color: var(--matched-word-bg);
+  color: var(--matched-word-text);
+}
+
+.selected-word-mismatch {
+  background-color: #f7a0eb;
+}
+
+/* ===== BONUS WORDS ===== */
+/* Bonus words container */
+#bonus-words-container {
+  margin-top: 20px;
+  padding: 15px;
+  background-color: var(--bonus-bg);
+  border-radius: 8px;
+  box-shadow: 0 2px 5px var(--box-shadow);
+  color: var(--bonus-text);
+  border: 1px solid var(--grid-border);
+}
+
+#bonus-words-container h3 {
+  color: #ff9800;
+  margin-bottom: 15px;
+  font-size: 18px;
+  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+}
+
+.dark-mode #bonus-words-container h3 {
+  color: #ffb74d;
+  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.5);
+}
+
+/* Individual bonus word styling */
+#bonus-words-container div div {
+  background-color: var(--bonus-word-bg);
+  color: var(--bonus-word-text);
+  padding: 8px 12px;
+  border-radius: 5px;
+  margin: 5px;
+  font-weight: 700;
+  box-shadow: 0 2px 4px var(--box-shadow);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  letter-spacing: 0.5px;
+  text-shadow: 0 0 1px rgba(255, 255, 255, 0.3);
+}
+
+.dark-mode #bonus-words-container div div {
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  text-shadow: none;
+}
+
+/* ===== INSTRUCTIONS ===== */
+/* Instructions container */
+#instructions {
+  margin-top: 1px;
+  max-width: 600px;
+  text-align: left;
+  background-color: var(--instructions-bg);
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px var(--box-shadow);
+}
+
+#instructions h2 {
+  color: #4a6fa5;
+  margin-top: 0;
+}
+
+.dark-mode #instructions h2 {
+  color: #7eb6ff;
+}
+
+#instructions ul {
+  padding-left: 1.2em;
+  line-height: 1.5;
+}
+
+/* Instructions GIF */
+.instructions-gif {
+  margin-top: 1px;
+  max-width: 600px;
+  object-fit: cover;
+  border: 1px solid var(--grid-border);
+  border-radius: 8px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  box-shadow: 0 3px 10px var(--box-shadow);
+}
+
+/* ===== DATE PICKER ===== */
+/* Date picker container */
+#date-picker-container {
+  margin: 10px 0 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+/* Date input field */
+#puzzle-date {
+  padding: 8px 12px;
+  border-radius: 8px;
+  border: 1px solid var(--grid-border);
+  background-color: var(--grid-bg);
+  color: var(--text-color);
+  font-family: inherit;
+}
+
+.dark-mode #puzzle-date {
+  background-color: var(--grid-bg);
+  color: var(--text-color);
+  border-color: var(--grid-border);
+}
+
+/* ===== FLATPICKR CUSTOMIZATION ===== */
+/* Disabled days */
+.flatpickr-day.flatpickr-disabled,
+.flatpickr-day.flatpickr-disabled:hover,
+.flatpickr-day.no-puzzle {
+  color: rgba(var(--text-color-rgb), 0.3);
+  background-color: transparent;
   cursor: not-allowed;
 }
 
-/* Start game overlay */
+/* Enabled days */
+.flatpickr-day.flatpickr-enabled {
+  font-weight: bold;
+  background-color: var(--theme-bg);
+  color: var(--text-color);
+  border-color: var(--theme-border);
+}
+
+.flatpickr-day.flatpickr-enabled:hover {
+  background-color: var(--selected-bg);
+}
+
+/* Today's date */
+.flatpickr-day.today {
+  border-color: var(--selected-border);
+}
+
+/* Dark mode calendar styling */
+.dark-mode .flatpickr-calendar {
+  background: var(--grid-bg);
+  color: var(--text-color);
+  box-shadow: 0 3px 13px rgba(0, 0, 0, 0.3);
+  border-color: var(--grid-border);
+}
+
+.dark-mode .flatpickr-months .flatpickr-month,
+.dark-mode .flatpickr-months .flatpickr-prev-month,
+.dark-mode .flatpickr-months .flatpickr-next-month,
+.dark-mode .flatpickr-current-month .flatpickr-monthDropdown-months,
+.dark-mode .flatpickr-current-month input.cur-year {
+  color: var(--text-color);
+  fill: var(--text-color);
+}
+
+.dark-mode .flatpickr-day {
+  color: var(--text-color);
+}
+
+.dark-mode .flatpickr-day.flatpickr-disabled,
+.dark-mode .flatpickr-day.flatpickr-disabled:hover,
+.dark-mode .flatpickr-day.no-puzzle {
+  color: rgba(var(--text-color-rgb), 0.3);
+}
+
+.dark-mode .flatpickr-weekday {
+  color: var(--text-color);
+}
+
+/* ===== START OVERLAY ===== */
+/* Start overlay container */
 #start-overlay {
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
   display: flex;
-  align-items: center;
   justify-content: center;
-  background-color: rgba(0, 0, 0, 0.5);
-  border-radius: 8px;
+  align-items: center;
   z-index: 10;
-}
-
-#start-overlay.hidden {
-  display: none;
-}
-
-/* Make the start button larger on the overlay */
-#start-overlay #start-game {
-  font-size: 1.5rem;
-  padding: 15px 30px;
-  background-color: var(--button-bg);
-  transform: scale(1.2);
-  transition: transform 0.3s ease, background-color 0.3s ease;
-}
-
-#start-overlay #start-game:hover {
-  transform: scale(1.3);
-  background-color: var(--button-hover);
-}
-
-/* Current word display */
-#current-word-container {
-  margin-bottom: 1em;
-  width: 100%;
-  max-width: 500px;
-}
-
-#current-word {
-  font-size: 1.5rem;
-  font-weight: bold;
-  min-height: 2.5rem;
-  padding: 0.5em;
-  margin-bottom: 0.5em;
-  background-color: var(--current-word-bg);
   border-radius: 8px;
-  box-shadow: 0 2px 4px var(--box-shadow);
 }
 
-/* Bottom controls */
-.bottom-controls {
-  margin-top: 1em;
-  margin-bottom: 1.5em;
-}
-
-/* Found words display */
-#found-words-container {
-  width: 100%;
-  max-width: 500px;
-  margin-bottom: 1em;
-  padding: 1em;
-  background-color: var(--found-word-bg);
-  border-radius: 8px;
-  box-shadow: 0 2px 4px var(--box-shadow);
-}
-
-#found-words-container h3 {
-  margin-top: 0;
-  color: var(--found-word-border);
-}
-
-#found-words-list {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 0.5em;
-}
-
-.found-word {
-  padding: 0.5em 1em;
-  border-radius: 20px;
-  font-weight: bold;
-  box-shadow: 0 2px 4px var(--box-shadow);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.word-length-3 {
-  background-color: var(--word-3-color);
-  color: white;
-}
-
-.word-length-4 {
-  background-color: var(--word-4-color);
-  color: white;
-}
-
-.word-length-5 {
-  background-color: var(--word-5-color);
-  color: white;
-}
-
-.word-length-6 {
-  background-color: var(--word-6-color);
-  color: white;
-}
-
-.word-length-7 {
-  background-color: var(--word-7-color);
-  color: white;
-}
-
-.word-length-8plus {
-  background-color: var(--word-8plus-color);
-  color: white;
-}
-
-/* Button styles */
-button {
+/* Start puzzle button */
+#start-puzzle-button {
   background-color: var(--button-bg);
   color: white;
   border: none;
   border-radius: 8px;
-  padding: 10px 16px;
-  font-size: 14px;
+  padding: 12px 24px;
+  font-size: 18px;
   font-weight: 600;
   cursor: pointer;
   transition: all 0.2s ease;
-  box-shadow: 0 2px 4px var(--box-shadow);
-  margin: 0 0.5em;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
 }
 
-button:hover:not(:disabled) {
+#start-puzzle-button:hover {
   background-color: var(--button-hover);
-  transform: translateY(-2px);
-  box-shadow: 0 4px 8px var(--box-shadow);
+  transform: translateY(-3px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
 }
 
-button:active:not(:disabled) {
-  transform: translateY(0);
-  box-shadow: 0 1px 2px var(--box-shadow);
+#start-puzzle-button:active {
+  transform: translateY(-1px);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
-button:disabled {
-  background-color: var(--disabled-bg);
-  color: var(--disabled-text);
-  cursor: not-allowed;
-  transform: none;
-  box-shadow: none;
+/* ===== HOMEPAGE & PUZZLES SECTION ===== */
+#homepage,
+#puzzles {
+  width: 90%; /* Adjust width as needed */
+  max-width: 600px; /* Maximum width to prevent over-expansion */
+  margin: 20px auto; /* Center the boxes horizontally */
+  padding: 15px;
+  background-color: var(--instructions-bg); /* Consistent background */
+  border-radius: 10px;
+  box-shadow: 0 4px 8px var(--box-shadow); /* Soft shadow for depth */
+  text-align: left; /* Align text to the left within the box */
+  transition: all 0.3s ease;
 }
 
-/* End Game button styling */
-#end-game {
-  background-color: var(--end-game-bg);
+#homepage p,
+#puzzles ul {
+  margin-bottom: 10px; /* Space out paragraphs and lists */
+  line-height: 1.6; /* Improve readability */
 }
 
-#end-game:hover:not(:disabled) {
-  background-color: var(--end-game-hover);
+#homepage a,
+#puzzles a {
+  color: var(--selected-border); /* Theme-consistent link color */
+  text-decoration: none; /* Remove underline for a cleaner look */
+  font-weight: 600; /* Make links stand out */
 }
 
-.button-container {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 12px;
-  margin: 20px 0;
+#homepage a:hover,
+#puzzles a:hover {
+  text-decoration: underline; /* Add underline on hover for accessibility */
+  color: var(--button-hover); /* Theme-consistent link hover color */
 }
 
-/* Mode toggle button */
-#mode-toggle {
-  background-color: transparent;
-  border: none;
-  font-size: 24px;
-  cursor: pointer;
-  padding: 5px;
-  border-radius: 50%;
-  box-shadow: 0 2px 5px var(--box-shadow);
-  transition: transform 0.3s ease;
+#puzzles h3 {
+  color: var(--theme-border); /* Stand out, consistent with the theme */
+  margin-bottom: 15px; /* Space between title and the list */
+  font-size: 1.5em; /* Slightly larger for emphasis */
 }
 
-#mode-toggle:hover {
-  transform: rotate(30deg);
+#puzzles ul {
+  list-style-type: none; /* Remove bullet points */
+  padding: 0; /* Remove default padding */
 }
 
-/* Game results */
-#game-results {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background-color: var(--bg-color);
-  padding: 2em;
-  border-radius: 12px;
-  box-shadow: 0 4px 20px var(--box-shadow);
-  z-index: 1000;
-  max-width: 80%;
-  width: 400px;
-  max-height: 90vh;
-  overflow-y: auto;
+#puzzles li {
+  margin-bottom: 5px; /* Space between list items */
 }
 
-#game-results h2 {
-  margin-top: 0;
-  color: var(--button-bg);
-}
-
-#final-score {
-  font-size: 1.5rem;
-  font-weight: bold;
-  margin: 1em 0;
-  color: var(--score-color);
-}
-
-#words-found {
-  margin-bottom: 1.5em;
-  max-height: 200px;
-  overflow-y: auto;
-  padding: 0.5em;
-  background-color: var(--grid-bg);
-  border-radius: 8px;
-}
-
-/* Improved styling for shareable results */
-#shareable-results {
-  margin: 1.5em 0;
-  padding: 1.5em;
-  background-color: var(--shareable-bg);
-  border: 1px solid var(--shareable-border);
-  border-radius: 12px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-}
-
-#shareable-results h3 {
-  margin-top: 0;
-  color: var(--button-bg);
-  font-size: 1.3rem;
-  margin-bottom: 0.8em;
-}
-
-#shareable-results-content {
-  font-family: 'Courier New', monospace;
-  white-space: pre-wrap;
-  text-align: left;
-  padding: 1.2em;
-  background-color: var(--bg-color);
-  border-radius: 8px;
-  margin-bottom: 1.2em;
-  overflow-x: auto;
-  line-height: 1.5;
-  font-size: 1.1rem;
-  color: var(--text-color);
-  border: 1px solid var(--grid-border);
-  letter-spacing: 0.03em;
-}
-
-.dark-mode #shareable-results-content {
-  border-color: var(--grid-border);
-}
-
-#copy-results {
-  margin-bottom: 1em;
-  font-size: 1.05rem;
-  padding: 10px 20px;
-}
-
-#play-again {
-  font-size: 1.2rem;
-  padding: 0.8em 1.5em;
-}
-
-/* Instructions */
-#instructions {
-  margin-top: 1em;
-  max-width: 600px;
-  text-align: left;
-  background-color: var(--instructions-bg);
-  padding: 1em;
-  border-radius: 8px;
-  box-shadow: 0 2px 5px var(--box-shadow);
-}
-
-#instructions h3 {
-  color: var(--button-bg);
-  margin-top: 0.8em;
-  margin-bottom: 0.5em;
-}
-
-#instructions h3:first-child {
-  margin-top: 0;
-}
-
-#instructions ul {
-  padding-left: 1.2em;
-  line-height: 1.5;
-  margin-top: 0.5em;
-}
-
-/* Footer */
-footer {
-  margin-top: 2em;
-  font-size: 0.9rem;
-  color: var(--text-color);
-  opacity: 0.7;
-}
-
-/* Utility classes */
-.hidden {
-  display: none;
-}
-
-/* Shake animation for invalid selections */
-@keyframes shake {
-  0% { transform: translateX(0); }
-  25% { transform: translateX(-5px); }
-  50% { transform: translateX(5px); }
-  75% { transform: translateX(-3px); }
-  100% { transform: translateX(0); }
-}
-
-.shake {
-  animation: shake 0.3s ease;
-}
-
-/* Responsive design */
+/* ===== RESPONSIVE DESIGN ===== */
 @media (max-width: 600px) {
-  #letter-grid {
-    grid-template-columns: repeat(7, 42px);
-    grid-template-rows: repeat(7, 42px);
-    gap: 2px;
-  }
-  
-  .letter {
-    width: 42px;
-    height: 42px;
-    font-size: 16px;
-  }
-  
-  .game-info {
-    max-width: 100%;
-  }
-  
-  #current-word-container, #found-words-container {
-    max-width: 100%;
-  }
-  
+  /* Smaller buttons on mobile */
   button {
-    padding: 8px 12px;
+    padding: 8px 14px;
     font-size: 13px;
   }
-  
-  #game-results {
+
+  .button-container {
+    gap: 8px;
+  }
+
+  /* Adjusted grid for mobile */
+  #letter-grid {
+    grid-template-columns: repeat(5, 65px);
+    gap: 0px;
+  }
+
+  .letter {
+    width: 50px;
+    height: 50px;
+    font-size: 18px;
+  }
+
+  /* Adjusted word container for mobile */
+  #selected-words-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
     width: 90%;
+    margin-top: 5px;
+    justify-items: start;
+    word-break: break-word;
   }
-  
+
+  /* Adjusted instructions for mobile */
   #instructions {
-    padding: 0.8em;
+    margin-top: 2px;
+    max-width: 600px;
+    text-align: left;
   }
-  
-  .top-controls {
-    margin-bottom: 1em;
+
+  #instructions ul {
+    padding-left: 1.2em;
   }
-  
-  .top-controls button {
-    margin-bottom: 0.5em;
+
+  /* Adjusted GIF for mobile */
+  .instructions-gif {
+    margin-top: 2px;
+    width: 90%;
+    border: 1px solid var(--grid-border);
+    border-radius: 8px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
   }
-  
-  #start-overlay #start-game {
-    font-size: 1.2rem;
-    padding: 12px 24px;
+
+  /* Adjusted toggle buttons for mobile */
+  #mode-toggle {
+    top: 10px;
+    right: 10px;
+    font-size: 20px;
+  }
+
+  #archive-toggle {
+    top: 10px;
+    left: 10px;
+    font-size: 20px;
+  }
+
+  /* Stacked date picker on mobile */
+  #date-picker-container {
+    flex-direction: column;
+    align-items: center;
   }
 }
