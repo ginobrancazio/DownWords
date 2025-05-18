@@ -79,52 +79,66 @@
   --box-shadow: rgba(0, 0, 0, 0.3);
 }
 
-/* ===== GENERAL LAYOUT IMPROVEMENTS ===== */
+/* Instructions toggle button */
+#instructions-toggle {
+  margin: 20px auto 10px;
+  background-color: var(--button-bg);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 16px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  display: block;
+}
+
+#instructions-toggle:hover {
+  background-color: var(--button-hover);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+#instructions-toggle:active {
+  transform: translateY(0);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+/* Instructions container */
+#instructions-container {
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+/* Instructions content */
+#instructions {
+  margin-top: 10px;
+  text-align: left;
+  background-color: var(--instructions-bg);
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px var(--box-shadow);
+  transition: all 0.3s ease;
+}
+
+
+/* ===== BASE STYLES ===== */
+/* Body styling */
 body {
-  font-family: 'Poppins', sans-serif;
+  font-family: sans-serif;
   text-align: center;
   padding: 1em;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
-  min-height: 100vh;
+  height: 100vh;
   background-color: var(--bg-color);
   color: var(--text-color);
   transition: background-color 0.3s ease, color 0.3s ease;
-  line-height: 1.6;
-  max-width: 1200px;
-  margin: 0 auto;
-}
-
-/* ===== HEADER STYLING ===== */
-header {
-  width: 100%;
-  padding: 15px 0;
-  position: relative;
-}
-
-.header-container {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 15px;
-}
-
-h1 {
-  font-size: 2.5rem;
-  margin: 0;
-  background: linear-gradient(45deg, #4a6fa5, #6a8caf);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-  text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
-}
-
-.dark-mode h1 {
-  background: linear-gradient(45deg, #7eb6ff, #a0d2eb);
-  -webkit-background-clip: text;
-  background-clip: text;
 }
 
 /* ===== BUTTON STYLES ===== */
@@ -140,7 +154,7 @@ button {
   cursor: pointer;
   transition: all 0.2s ease;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  font-family: 'Poppins', sans-serif;
+  font-family: 'Poppins', 'Helvetica Neue', sans-serif;
   letter-spacing: 0.5px;
 }
 
@@ -189,6 +203,9 @@ button:active {
 
 /* Mode toggle button */
 #mode-toggle {
+  position: fixed;
+  top: 20px;
+  right: 20px;
   background-color: transparent;
   border: none;
   font-size: 24px;
@@ -206,6 +223,9 @@ button:active {
 
 /* Archive toggle button */
 #archive-toggle {
+  position: fixed;
+  top: 20px;
+  left: 20px;
   background-color: var(--button-bg);
   color: white;
   border: none;
@@ -239,25 +259,10 @@ button:active {
   justify-content: center;
   gap: 12px;
   margin: 20px 0;
-  max-width: 600px;
 }
 
 .button-container button {
   margin: 0;
-}
-
-/* ===== MAIN GAME AREA ===== */
-main {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 100%;
-  margin-bottom: 30px;
-}
-
-.game-area {
-  position: relative;
-  margin: 15px 0;
 }
 
 /* ===== GAME ELEMENTS ===== */
@@ -293,7 +298,7 @@ main {
   padding: 0 20px;
   border-radius: 10px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-  font-family: 'Poppins', sans-serif;
+  font-family: 'Poppins', 'Helvetica Neue', Helvetica, Arial, sans-serif;
   font-size: 16px;
   text-align: left;
   opacity: 0;
@@ -321,8 +326,6 @@ main {
   border-left: 4px solid var(--hint-border);
   border-radius: 4px;
   font-style: italic;
-  max-width: 600px;
-  width: 100%;
 }
 
 #theme-display {
@@ -333,8 +336,6 @@ main {
   border-left: 4px solid var(--theme-border);
   border-radius: 4px;
   font-weight: bold;
-  max-width: 600px;
-  width: 100%;
 }
 
 /* ===== GRID AND LETTER STYLING ===== */
@@ -393,10 +394,9 @@ main {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 10px;
-  width: 100%;
-  max-width: 600px;
+  width: 50%;
   margin-top: 10px;
-  justify-items: center;
+  justify-items: start;
   word-break: break-word;
 }
 
@@ -411,8 +411,6 @@ main {
   letter-spacing: 0.5px;
   border: 1px solid var(--grid-border);
   box-shadow: 0 2px 4px var(--box-shadow);
-  width: 100%;
-  text-align: center;
 }
 
 #selected-words-container div:hover {
@@ -463,8 +461,6 @@ main {
   box-shadow: 0 2px 5px var(--box-shadow);
   color: var(--bonus-text);
   border: 1px solid var(--grid-border);
-  max-width: 600px;
-  width: 100%;
 }
 
 #bonus-words-container h3 {
@@ -498,115 +494,36 @@ main {
   text-shadow: none;
 }
 
-/* ===== COMPLETION CONTAINER ===== */
-.completion-container {
-  width: 100%;
-  max-width: 500px;
-  margin: 20px 0;
-}
-
-.share-buttons {
-  display: flex;
-  justify-content: center;
-  gap: 15px;
-  margin-top: 15px;
-}
-
-/* ===== ADDITIONAL CONTENT SECTION ===== */
-.additional-content {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 20px;
-  margin: 30px 0;
-  width: 100%;
-}
-
-.content-card {
-  background-color: var(--instructions-bg);
-  border-radius: 10px;
-  padding: 20px;
-  box-shadow: 0 3px 10px var(--box-shadow);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.content-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 5px 15px var(--box-shadow);
-}
-
-.content-card h3 {
-  color: var(--button-bg);
-  margin-top: 0;
-  border-bottom: 2px solid var(--grid-border);
-  padding-bottom: 10px;
-  margin-bottom: 15px;
-}
-
-.dark-mode .content-card h3 {
-  color: #7eb6ff;
-}
-
-/* New badge styling */
-.new-badge {
-  background-color: #ff5252;
-  color: white;
-  font-size: 0.7rem;
-  padding: 2px 6px;
-  border-radius: 10px;
-  margin-right: 5px;
-  font-weight: bold;
-}
-
-/* Submit button styling */
-.submit-button {
-  display: inline-block;
-  background-color: var(--button-bg);
-  color: white;
-  text-decoration: none;
-  padding: 10px 16px;
-  border-radius: 8px;
-  font-weight: 600;
-  transition: all 0.2s ease;
-  margin-top: 10px;
-}
-
-.submit-button:hover {
-  background-color: var(--button-hover);
-  transform: translateY(-2px);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
-}
-
-/* ===== INSTRUCTIONS TOGGLE IMPROVEMENTS ===== */
-#instructions-toggle {
-  width: 100%;
-  background-color: var(--button-bg);
-  color: white;
-  border: none;
-  border-radius: 8px;
-  padding: 10px 16px;
-  font-size: 14px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  margin-bottom: 15px;
-}
-
+/* ===== INSTRUCTIONS ===== */
+/* Instructions container */
 #instructions {
+  margin-top: 1px;
+  max-width: 600px;
+  text-align: left;
+  background-color: var(--instructions-bg);
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px var(--box-shadow);
+}
+
+#instructions h2 {
+  color: #4a6fa5;
   margin-top: 0;
-  padding: 0;
-  box-shadow: none;
+}
+
+.dark-mode #instructions h2 {
+  color: #7eb6ff;
 }
 
 #instructions ul {
   padding-left: 1.2em;
   line-height: 1.5;
-  text-align: left;
 }
 
 /* Instructions GIF */
 .instructions-gif {
-  margin-top: 10px;
-  max-width: 100%;
+  margin-top: 1px;
+  max-width: 600px;
   object-fit: cover;
   border: 1px solid var(--grid-border);
   border-radius: 8px;
@@ -614,14 +531,6 @@ main {
   margin-left: auto;
   margin-right: auto;
   box-shadow: 0 3px 10px var(--box-shadow);
-}
-
-/* ===== PUZZLE ATTRIBUTION ===== */
-.puzzle-attribution {
-  margin: 20px 0;
-  font-style: italic;
-  color: var(--text-color);
-  opacity: 0.8;
 }
 
 /* ===== DATE PICKER ===== */
@@ -750,58 +659,7 @@ main {
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
-/* ===== FOOTER STYLING ===== */
-footer {
-  margin-top: 40px;
-  padding: 20px 0;
-  border-top: 1px solid var(--grid-border);
-  text-align: center;
-  font-size: 0.9rem;
-  color: var(--text-color);
-  opacity: 0.8;
-  width: 100%;
-}
-
-.footer-content {
-  display: flex;
-  flex-direction: column;
-  gap: 5px;
-}
-
-footer a {
-  color: var(--button-bg);
-  text-decoration: none;
-  transition: color 0.2s ease;
-}
-
-footer a:hover {
-  color: var(--button-hover);
-  text-decoration: underline;
-}
-
-.dark-mode footer a {
-  color: #7eb6ff;
-}
-
 /* ===== RESPONSIVE DESIGN ===== */
-@media (max-width: 768px) {
-  .additional-content {
-    grid-template-columns: 1fr;
-  }
-  
-  h1 {
-    font-size: 2rem;
-  }
-  
-  .header-container {
-    padding: 0 10px;
-  }
-  
-  #selected-words-container {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-
 @media (max-width: 600px) {
   /* Smaller buttons on mobile */
   button {
@@ -827,44 +685,53 @@ footer a:hover {
 
   /* Adjusted word container for mobile */
   #selected-words-container {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 5px;
-    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    width: 90%;
+    margin-top: 5px;
+    justify-items: start;
+    word-break: break-word;
+  }
+  
+  /* Adjusted instructions for mobile */
+  #instructions {
+    margin-top: 2px;
+    max-width: 600px;
+    text-align: left;
+  }
+
+  #instructions ul {
+    padding-left: 1.2em;
+  }
+
+  /* Adjusted GIF for mobile */
+  .instructions-gif {
+    margin-top: 2px;
+    width: 90%;
+    border: 1px solid var(--grid-border);
+    border-radius: 8px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  
+  /* Adjusted toggle buttons for mobile */
+  #mode-toggle {
+    top: 10px;
+    right: 10px;
+    font-size: 20px;
+  }
+  
+  #archive-toggle {
+    top: 10px;
+    left: 10px;
+    font-size: 20px;
   }
   
   /* Stacked date picker on mobile */
   #date-picker-container {
     flex-direction: column;
     align-items: center;
-  }
-  
-  /* Smaller headings on mobile */
-  h1 {
-    font-size: 1.8rem;
-  }
-  
-  .content-card h3 {
-    font-size: 1.2rem;
-  }
-}
-
-@media (max-width: 400px) {
-  /* Even smaller adjustments for very small screens */
-  #selected-words-container {
-    grid-template-columns: 1fr;
-  }
-  
-  .letter {
-    width: 45px;
-    height: 45px;
-    font-size: 16px;
-  }
-  
-  #letter-grid {
-    grid-template-columns: repeat(5, 45px);
-  }
-  
-  h1 {
-    font-size: 1.5rem;
   }
 }
