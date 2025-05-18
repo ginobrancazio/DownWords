@@ -79,9 +79,11 @@
   <div id="homepage" style="text-align: center; margin-top: 20px;">
     <p>Today's puzzle set by <span id="puzzle-setter">Kit Cat</span>. Submit your own DownWords puzzle <a href="https://forms.gle/swMG478WZwXgjkRS6" target="_blank">here.</a></p>
   </div>
-  
-  <!-- Game instructions -->
-  <div id="instructions">
+
+<!-- Game instructions with toggle functionality -->
+<div id="instructions-container">
+  <button id="instructions-toggle">Show Instructions</button>
+  <div id="instructions" style="display: none;">
     <h3>Instructions:</h3>
     <ul>
       <li>There are 6 hidden words in the grid</li>
@@ -90,16 +92,17 @@
       <li>Five of the words are connected by a theme</li>
       <li>The remaining word is the theme that connects the other words</li>
     </ul>
+    
+    <!-- Example gameplay animation -->
+    <p>Example:</p>
+    <img src="Down Words.gif" alt="Example Gameplay" class="instructions-gif" />
   </div>
-  
-  <!-- Example gameplay animation -->
-  <p>Example:</p>
-  <img src="Down Words.gif" alt="Example Gameplay" class="instructions-gif" />
+</div>
   
   <!-- Footer with contact and copyright information -->
   <div id="linkedin-connect" style="text-align: center; margin-top: 20px;">
     <p>Contact me on <a href="https://www.linkedin.com/in/ginobrancazio/" target="_blank">LinkedIn</a></p>
-    <p>V3</p>
+    <p>V3.1</p>
     <p>© 2025 Gino Brancazio. All rights reserved.</p>
   </div>
   
