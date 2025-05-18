@@ -32,7 +32,21 @@ const bonusWordsContainer = document.createElement('div');
 bonusWordsContainer.id = 'bonus-words-container';
 bonusWordsContainer.style.marginTop = '20px';
 bonusWordsContainer.style.display = 'none';
-document.body.insertBefore(bonusWordsContainer, wordsContainer.nextSibling);
+
+// Check if wordsContainer exists before trying to insert
+const wordsContainer = document.getElementById('selected-words-container');
+if (wordsContainer) {
+  // Insert the bonus words container after the words container
+  if (wordsContainer.parentNode) {
+    wordsContainer.parentNode.insertBefore(bonusWordsContainer, wordsContainer.nextSibling);
+  } else {
+    // Fallback: just append to body if parent doesn't exist
+    document.body.appendChild(bonusWordsContainer);
+  }
+} else {
+  // Fallback: just append to body if words container doesn't exist
+  document.body.appendChild(bonusWordsContainer);
+}
 
 // Add a heading for bonus words
 const bonusWordsHeading = document.createElement('h3');
