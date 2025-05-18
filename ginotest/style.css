@@ -702,9 +702,9 @@ button:active {
 }
 
 #puzzles h3 {
-  color: var(--theme-border); /* Stand out, consistent with the theme */
-  margin-bottom: 10px; /* Reduce spacing here too */
-  font-size: 1.5em; /* Slightly larger for emphasis */
+  color: var(--theme-border);
+  margin-bottom: 5px;    /* Reduced spacing */
+  font-size: 1.2em;    /* Smaller title text */
 }
 
 #puzzles ul {
