@@ -76,43 +76,45 @@
   <button id="copyButton" style="display:none;">Copy</button>
   <button id="shareButton" style="display:none;">Share to Twitter</button>
   
-  <!-- Puzzle attribution and submission link -->
-  <div id="homepage">
-    <p>Today's puzzle set by <span id="puzzle-setter">Kit Cat</span></p>
-    <p>Submit your own DownWords puzzle <a href="https://forms.gle/swMG478WZwXgjkRS6" target="_blank">here</a></p>
-  </div>
-  
-  <!-- Other puzzles section -->
-  <div id="Puzzles">
-    <h3>Other Puzzles:</h3>
-    <ul>
-      <li><span style="font-weight: bold; color: var(--accent-color);">NEW:</span> <a href="https://downwordsgame.com/wordfinder/" target="_blank">Word Finder</a></li>
-    </ul>
-  </div>
-    
 <!-- Game instructions with toggle functionality -->
-<div id="instructions-container">
-  <button id="instructions-toggle">Show Instructions</button>
-  <div id="instructions" style="display: none;">
-    <h3>Instructions:</h3>
-    <ul>
-      <li>There are 6 hidden words in the grid</li>
-      <li>Each word runs vertically, one letter in each of the rows (top to bottom), but the letters are not necessarily connected.</li>
-      <li>Each letter is only used once.</li>
-      <li>Five of the words are connected by a theme</li>
-      <li>The remaining word is the theme that connects the other words</li>
-    </ul>
+    <div id="instructions-container">
+      <button id="instructions-toggle">Show Instructions</button>
+      <div id="instructions" style="display: none;">
+        <h3>How to Play</h3>
+        <ul>
+          <li>There are 6 hidden words in the grid</li>
+          <li>Each word runs vertically, one letter in each of the rows (top to bottom), but the letters are not necessarily connected.</li>
+          <li>Each letter is only used once.</li>
+          <li>Five of the words are connected by a theme</li>
+          <li>The remaining word is the theme that connects the other words</li>
+        </ul>
+        
+        <!-- Example gameplay animation -->
+        <p>Example:</p>
+        <img src="Down Words.gif" alt="Example Gameplay" class="instructions-gif" />
+      </div>
+    </div>
     
-    <!-- Example gameplay animation -->
-    <p>Example:</p>
-    <img src="Down Words.gif" alt="Example Gameplay" class="instructions-gif" />
-  </div>
-</div>
-  
-  <!-- Footer with contact and copyright information -->
-  <div id="linkedin-connect" style="text-align: center; margin-top: 20px;">
-    <p>V3.5 © 2025 Gino Brancazio. All rights reserved. Contact me on <a href="https://www.linkedin.com/in/ginobrancazio/" target="_blank">LinkedIn</a></p>
-  </div>
+    <!-- Puzzle attribution section -->
+    <div class="footer-section">
+      <h3>Today's Puzzle</h3>
+      <p>Set by <span id="puzzle-setter" style="font-weight: 600;">Kit Cat</span></p>
+      <p>Want to create your own puzzle? <a href="https://forms.gle/swMG478WZwXgjkRS6" target="_blank">Submit your DownWords puzzle here</a></p>
+    </div>
+    
+    <!-- Other puzzles section -->
+    <div class="footer-section">
+      <h3>More Puzzles</h3>
+      <ul style="list-style-type: none; padding-left: 0;">
+        <li><span style="font-weight: bold; color: var(--accent-color);">NEW:</span> <a href="https://downwordsgame.com/wordfinder/" target="_blank">Word Finder</a></li>
+      </ul>
+    </div>
+    
+    <!-- Footer with contact and copyright information -->
+    <div class="copyright">
+      <p>V3.8 © 2025 Gino Brancazio. All rights reserved.</p>
+      <p>Connect with me on <a href="https://www.linkedin.com/in/ginobrancazio/" target="_blank">LinkedIn</a></p>
+    </div>
   
   <!-- Main game script -->
   <script src="script.js"></script>
