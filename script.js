@@ -282,6 +282,9 @@ function initializeDatePicker() {
   document.getElementById('date-picker-container').style.display = 'none';
 }
 
+
+
+
 /**
  * Sets up the archive toggle button functionality
  */
@@ -1098,6 +1101,30 @@ window.onload = () => {
   document.getElementById('archive-toggle').style.display = 'block';
 };
 
+// for the puzzle setter text
+document.addEventListener('DOMContentLoaded', function() {
+  // Get the puzzle setter name and extract the first letter for the avatar
+  const puzzleSetter = document.getElementById('puzzle-setter').textContent;
+  const initial = puzzleSetter.charAt(0);
+  document.getElementById('puzzle-setter-initial').textContent = initial;
+  
+  // Update the initial whenever the puzzle setter changes
+  const observer = new MutationObserver(function(mutations) {
+    mutations.forEach(function(mutation) {
+      if (mutation.type === 'characterData' || mutation.type === 'childList') {
+        const puzzleSetter = document.getElementById('puzzle-setter').textContent;
+        const initial = puzzleSetter.charAt(0);
+        document.getElementById('puzzle-setter-initial').textContent = initial;
+      }
+    });
+  });
+  
+  observer.observe(document.getElementById('puzzle-setter'), {
+    characterData: true,
+    childList: true,
+    subtree: true
+  });
+});
 
 // --- GAME DATA ---
 // Word lists by date
