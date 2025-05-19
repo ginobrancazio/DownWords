@@ -496,98 +496,44 @@ button:active {
 }
 
 /* ===== INSTRUCTIONS ===== */
-#instructions-container {
-  margin: 30px 0;
-}
-
-#instructions-toggle {
-  background-color: transparent;
-  color: var(--primary-color);
-  border: 2px solid var(--primary-color);
-  border-radius: 25px;
-  padding: 8px 20px;
-  font-weight: 600;
-  margin-bottom: 15px;
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-}
-
-#instructions-toggle:hover {
-  background-color: var(--primary-color);
-  color: white;
-}
-
+/* Instructions container */
 #instructions {
-  background-color: white;
-  border-radius: 12px;
-  padding: 20px;
-  box-shadow: var(--card-shadow);
-  transition: var(--transition);
+  margin-top: 1px;
+  max-width: 600px;
+  text-align: left;
+  background-color: var(--instructions-bg);
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px var(--box-shadow);
 }
 
-#instructions h3 {
-  color: var(--primary-color);
+#instructions h2 {
+  color: #4a6fa5;
   margin-top: 0;
+}
+
+.dark-mode #instructions h2 {
+  color: #7eb6ff;
 }
 
 #instructions ul {
-  padding-left: 20px;
-  line-height: 1.6;
+  padding-left: 1.2em;
+  line-height: 1.5;
 }
 
-#instructions li {
-  margin-bottom: 8px;
-}
-
+/* Instructions GIF */
 .instructions-gif {
-  max-width: 100%;
+  margin-top: 1px;
+  max-width: 600px;
+  object-fit: cover;
+  border: 1px solid var(--grid-border);
   border-radius: 8px;
-  margin-top: 15px;
-  box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  box-shadow: 0 3px 10px var(--box-shadow);
 }
 
-/* ===== FOOTER SECTIONS ===== */
-.footer-section {
-  background-color: white;
-  border-radius: 12px;
-  padding: 20px;
-  margin-bottom: 20px;
-  box-shadow: var(--card-shadow);
-  transition: var(--transition);
-}
-
-.footer-section h3 {
-  color: var(--primary-color);
-  margin-top: 0;
-  font-size: 1.2rem;
-  border-bottom: 2px solid #eee;
-  padding-bottom: 8px;
-}
-
-/* ===== LINKS ===== */
-a {
-  color: var(--primary-color);
-  text-decoration: none;
-  font-weight: 500;
-  transition: var(--transition);
-}
-
-a:hover {
-  color: var(--primary-dark);
-  text-decoration: underline;
-}
-
-/* ===== COPYRIGHT ===== */
-.copyright {
-  text-align: center;
-  font-size: 0.9rem;
-  color: #777;
-  margin-top: 30px;
-  padding: 15px;
-  border-top: 1px solid #eee;
-  transition: var(--transition);
-}
 /* ===== DATE PICKER ===== */
 /* Date picker container */
 #date-picker-container {
