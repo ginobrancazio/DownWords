@@ -32,16 +32,7 @@ const bonusWordsContainer = document.createElement('div');
 bonusWordsContainer.id = 'bonus-words-container';
 bonusWordsContainer.style.marginTop = '20px';
 bonusWordsContainer.style.display = 'none';
-
-// Find the parent of wordsContainer and insert bonusWordsContainer after wordsContainer
-if (wordsContainer && wordsContainer.parentNode) {
-  wordsContainer.parentNode.insertBefore(bonusWordsContainer, wordsContainer.nextSibling);
-} else {
-  // Handle the case where wordsContainer is not found or has no parent
-  console.error('wordsContainer not found or does not have a parent node.');
-  // You might want to append to body or handle this case differently
-  document.body.appendChild(bonusWordsContainer);
-}
+document.body.insertBefore(bonusWordsContainer, wordsContainer.nextSibling);
 
 // Add a heading for bonus words
 const bonusWordsHeading = document.createElement('h3');
@@ -55,7 +46,7 @@ hintDisplay.style.display = 'none';  // Hide hint by default
 themeDisplay.style.display = 'none'; // Hide theme by default
 
 // Hide the buttons initially
-document.getElementById('hint-button').style.display = 'none';
+document.getElementById('hint-button').style.display = 'none'; 
 document.getElementById('theme-button').style.display = 'none';
 document.getElementById('mute-button').style.display = 'none';
 document.getElementById('grid-reset-button').style.display = 'none';
@@ -732,15 +723,11 @@ function handleGameCompletion(words) {
   // Build the completion message
   let message = buildCompletionMessage(isToday, formattedDate, playerTimeInSeconds, averageTimeInSeconds, blocklength);
   
-  // Show the completion area
-  const completionArea = document.getElementById('completion-area');
-  if (completionArea) {
-    completionArea.style.display = 'block';
-  }
+  // Show the text box with the completion message
+  showCompletionMessage();
 
   // Populate the text box with the completion message
   document.getElementById('gameCompletionMessage').value = message;
-  document.getElementById('gameCompletionMessage').classList.add('active');
 
   // Show the copy and share buttons
   document.getElementById('shareButton').style.display = 'block';
@@ -1111,6 +1098,7 @@ window.onload = () => {
   document.getElementById('archive-toggle').style.display = 'block';
 };
 
+
 // --- GAME DATA ---
 // Word lists by date
 const wordListsByDate = {
@@ -1119,21 +1107,21 @@ const wordListsByDate = {
   '28 April 2025': ['NATURE', 'FOREST', 'LEAVES', 'STREAM', 'JUNGLE', 'FLOWER'],
   '29 April 2025': ['BOARD', 'GAMES', 'CARDS', 'TOKEN', 'SCORE', 'CATAN'],
   '30 April 2025': ['DRINK', 'LATTE', 'WATER', 'JUICE', 'SHAKE', 'GLASS'],
-  '01 May 2025':  ['BIRDS', 'EAGLE', 'ROBIN', 'GOOSE', 'CRANE', 'RAVEN'],
-  '02 May 2025':  ['SHAPES', 'CIRCLE', 'SQUARE', 'SPHERE', 'SPIRAL', 'OBLONG'],
-  '03 May 2025':  ['PASTA', 'SAUCE', 'PLATE', 'ITALY', 'PENNE', 'PESTO'],
-  '04 May 2025':  ['RIDDLE', 'CIPHER', 'ENIGMA', 'PUZZLE', 'JIGSAW', 'SUDOKU'],
-  '05 May 2025':  ['BODY', 'BUTT', 'NOSE', 'FOOT', 'NECK', 'KNEE'],
-  '06 May 2025':  ['GREEN', 'GRAPE', 'GRASS', 'ALGAE', 'FROGS', 'APPLE'],
-  '07 May 2025':  ['CAREER', 'DOCTOR', 'LAWYER', 'WAITER', 'BARBER', 'DANCER'],
-  '08 May 2025':  ['NOISE', 'CRASH', 'WHOOP', 'SHOUT', 'TRILL', 'CLICK'],
-  '09 May 2025':  ['ANIMALS', 'LEOPARD', 'RACCOON', 'HAMSTER', 'GIRAFFE', 'MEERKAT'],
-  '10 May 2025':  ['BOARD', 'GAMES', 'CARDS', 'TOKEN', 'SCORE', 'CHESS'],
-  '11 May 2025':  ['POKER', 'CARDS', 'FLUSH', 'TABLE', 'RAISE', 'CHIPS'],
-  '12 May 2025':  ['FICTION', 'TRAGEDY', 'MYSTERY', 'ROMANCE', 'FANTASY', 'HISTORY'],
-  '13 May 2025':  ['VIRUS', 'GERMS', 'EBOLA', 'HANTA', 'MUMPS', 'FEVER'],
-  '14 May 2025':  ['JOKER', 'PRANK', 'TRICK', 'CLOWN', 'FUNNY', 'LAUGH'],
-  '15 May 2025':  ['OPERA', 'TENOR', 'ARIAS', 'STAGE', 'DEATH', 'TOSCA'],
+  '01 May 2025': ['BIRDS', 'EAGLE', 'ROBIN', 'GOOSE', 'CRANE', 'RAVEN'],
+  '02 May 2025': ['SHAPES', 'CIRCLE', 'SQUARE', 'SPHERE', 'SPIRAL', 'OBLONG'],
+  '03 May 2025': ['PASTA', 'SAUCE', 'PLATE', 'ITALY', 'PENNE', 'PESTO'],
+  '04 May 2025': ['RIDDLE', 'CIPHER', 'ENIGMA', 'PUZZLE', 'JIGSAW', 'SUDOKU'],
+  '05 May 2025': ['BODY', 'BUTT', 'NOSE', 'FOOT', 'NECK', 'KNEE'],
+  '06 May 2025': ['GREEN', 'GRAPE', 'GRASS', 'ALGAE', 'FROGS', 'APPLE'],
+  '07 May 2025': ['CAREER', 'DOCTOR', 'LAWYER', 'WAITER', 'BARBER', 'DANCER'],
+  '08 May 2025': ['NOISE', 'CRASH', 'WHOOP', 'SHOUT', 'TRILL', 'CLICK'],
+  '09 May 2025': ['ANIMALS', 'LEOPARD', 'RACCOON', 'HAMSTER', 'GIRAFFE', 'MEERKAT'],
+  '10 May 2025': ['BOARD', 'GAMES', 'CARDS', 'TOKEN', 'SCORE', 'CHESS'],
+  '11 May 2025': ['POKER', 'CARDS', 'FLUSH', 'TABLE', 'RAISE', 'CHIPS'],
+  '12 May 2025': ['FICTION', 'TRAGEDY', 'MYSTERY', 'ROMANCE', 'FANTASY', 'HISTORY'],
+  '13 May 2025': ['VIRUS', 'GERMS', 'EBOLA', 'HANTA', 'MUMPS', 'FEVER'],
+  '14 May 2025': ['JOKER', 'PRANK', 'TRICK', 'CLOWN', 'FUNNY', 'LAUGH'],
+  '15 May 2025': ['OPERA', 'TENOR', 'ARIAS', 'STAGE', 'DEATH', 'TOSCA'],
 '16 May 2025': ['TOOLS', 'SPADE', 'LATHE', 'DRILL', 'SNIPS', 'POKER'],
 '17 May 2025': ['STATES', 'ALASKA', 'HAWAII', 'KANSAS', 'NEVADA', 'OREGON'],
 '18 May 2025': ['TATTOO', 'NEEDLE', 'DESIGN', 'LETTER', 'SAILOR', 'ANCHOR'],
@@ -1602,6 +1590,7 @@ const HintsByDate = {
 
 // Puzzle Setter by date
 const puzzleSetterbyDate = {
+
 '14 May 2025': ['Gino'],
 '19 May 2025': ['Blunders'],
 '20 May 2025': ['Harvey'],
