@@ -1,15 +1,13 @@
+
 /* ===== CSS VARIABLES AND THEME SETTINGS ===== */
+/* Light mode (default) variables */
 :root {
   /* Base colors */
-  --primary-color: #4a6fa5;
-  --primary-dark: #3a5a8c;
-  --accent-color: #ff9800;
-  --success-color: #76e77d;
-  --text-color: #333;
-  --text-color-rgb: 51, 51, 51;
+  --bg-color: #ffffff;
+  --text-color: #333333;
+  --text-color-rgb: 51, 51, 51; /* RGB version of #333333 */
   
   /* Grid and letter elements */
-  --bg-color: #ffffff;
   --grid-bg: #f5f5f5;
   --grid-border: #ddd;
   --letter-hover: #eef5ff;
@@ -41,8 +39,6 @@
   --box-shadow: rgba(0, 0, 0, 0.1);
   --button-bg: #4a6fa5;
   --button-hover: #3a5a8c;
-  --card-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-  --transition: all 0.3s ease;
 }
 
 /* Dark mode variables */
@@ -50,9 +46,7 @@
   /* Base colors */
   --bg-color: #121212;
   --text-color: #e0e0e0;
-  --text-color-rgb: 224, 224, 224;
-  --primary-color: #7eb6ff;
-  --primary-dark: #5a9aff;
+  --text-color-rgb: 224, 224, 224; /* RGB version of #e0e0e0 */
   
   /* Grid and letter elements */
   --grid-bg: #1e1e1e;
@@ -84,70 +78,182 @@
   --completion-bg: #1a1a1a;
   --completion-active-bg: #252525;
   --box-shadow: rgba(0, 0, 0, 0.3);
-  --card-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
 }
 
+/* Instructions toggle button */
+#instructions-toggle {
+  margin: 20px auto 10px;
+  background-color: var(--button-bg);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 16px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  display: block;
+}
+
+#instructions-toggle:hover {
+  background-color: var(--button-hover);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+#instructions-toggle:active {
+  transform: translateY(0);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+/* Instructions container */
+#instructions-container {
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+/* Instructions content */
+#instructions {
+  margin-top: 10px;
+  text-align: left;
+  background-color: var(--instructions-bg);
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px var(--box-shadow);
+  transition: all 0.3s ease;
+}
+
+
 /* ===== BASE STYLES ===== */
+/* Body styling */
 body {
-  font-family: 'Poppins', sans-serif;
-  line-height: 1.6;
+  font-family: sans-serif;
+  text-align: center;
+  padding: 1em;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  height: 100vh;
+  background-color: var(--bg-color);
   color: var(--text-color);
-  background-color: #f8f9fa;
-  background-image: linear-gradient(to bottom, #ffffff, #f0f4f8);
-  background-attachment: fixed;
-  margin: 0;
-  padding: 0;
   transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-.container {
-  max-width: 800px;
-  margin: 0 auto;
-  padding: 20px;
-}
-
-/* ===== HEADER STYLES ===== */
-.game-header {
-  text-align: center;
-  margin-bottom: 20px;
-  padding-top: 20px;
-}
-
-h1 {
-  font-size: 2.8rem;
-  font-weight: 700;
-  color: var(--primary-color);
-  margin: 0;
-  letter-spacing: -0.5px;
-  text-shadow: 1px 1px 0 rgba(255,255,255,0.8);
-  transition: color 0.3s ease;
-}
-
-/* ===== GAME AREA STYLES ===== */
-.game-area {
-  background-color: white;
-  border-radius: 16px;
-  box-shadow: var(--card-shadow);
-  padding: 25px;
-  margin-bottom: 25px;
-  position: relative;
-  transition: background-color 0.3s ease, box-shadow 0.3s ease;
-}
-
-/* Timer styling */
-#timer {
-  font-size: 1.1rem;
-  font-weight: 600;
-  color: var(--primary-color);
-  margin-bottom: 15px;
-  background-color: rgba(74, 111, 165, 0.1);
-  padding: 8px 16px;
-  border-radius: 20px;
-  display: inline-block;
-  transition: color 0.3s ease, background-color 0.3s ease;
-}
-
 /* ===== BUTTON STYLES ===== */
+/* Common button styling */
+button {
+  background-color: var(--button-bg);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 16px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  font-family: 'Poppins', 'Helvetica Neue', sans-serif;
+  letter-spacing: 0.5px;
+}
+
+/* Button hover and active states */
+button:hover {
+  background-color: var(--button-hover);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+button:active {
+  transform: translateY(0);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+/* Apply consistent styling to all button types */
+#start-button,
+#reset-button,
+#hint-button,
+#theme-button,
+#grid-reset-button,
+#mute-button,
+#shareButton,
+#copyButton,
+#load-date-button {
+  background-color: var(--button-bg);
+}
+
+#start-button:hover,
+#reset-button:hover,
+#hint-button:hover,
+#theme-button:hover,
+#grid-reset-button:hover,
+#mute-button:hover,
+#shareButton:hover,
+#copyButton:hover,
+#load-date-button:hover {
+  background-color: var(--button-hover);
+}
+
+/* Start button styling */
+#start-button {
+  font-size: 16px;
+  padding: 12px 24px;
+}
+
+/* Mode toggle button */
+#mode-toggle {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background-color: transparent;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  z-index: 100;
+  padding: 5px;
+  border-radius: 50%;
+  box-shadow: 0 2px 5px var(--box-shadow);
+  transition: transform 0.3s ease;
+}
+
+#mode-toggle:hover {
+  transform: rotate(30deg);
+}
+
+/* Archive toggle button */
+#archive-toggle {
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  background-color: var(--button-bg);
+  color: white;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  z-index: 100;
+  padding: 5px 10px;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px var(--box-shadow);
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#archive-toggle:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px var(--box-shadow);
+  background-color: var(--button-hover);
+}
+
+#archive-toggle:active {
+  transform: translateY(0);
+  box-shadow: 0 1px 2px var(--box-shadow);
+}
+
+/* Button container */
 .button-container {
   display: flex;
   flex-wrap: wrap;
@@ -156,38 +262,92 @@ h1 {
   margin: 20px 0;
 }
 
-button {
-  background-color: var(--primary-color);
-  color: white;
-  border: none;
-  border-radius: 8px;
-  padding: 10px 18px;
-  font-size: 14px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: var(--transition);
-  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-  font-family: 'Poppins', sans-serif;
+.button-container button {
+  margin: 0;
 }
 
-button:hover {
-  background-color: var(--primary-dark);
-  transform: translateY(-2px);
-  box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+/* ===== GAME ELEMENTS ===== */
+/* Timer display */
+#timer {
+  font-size: 16px;
+  font-weight: bold;
+  margin-bottom: 3px;
 }
 
-button:active {
-  transform: translateY(0);
-  box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+/* Letter shake animation */
+@keyframes shake {
+  0% { transform: translateX(0); }
+  25% { transform: translateX(-3px); }
+  50% { transform: translateX(3px); }
+  75% { transform: translateX(-2px); }
+  100% { transform: translateX(0); }
+}
+
+.letter.shake {
+  animation: shake 0.3s ease;
+}
+
+/* Game completion message */
+#gameCompletionMessage {
+  display: none;
+  width: 90%;
+  max-width: 400px;
+  height: 0;
+  overflow: hidden;
+  background: var(--completion-bg);
+  color: var(--text-color);
+  padding: 0 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  font-family: 'Poppins', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-size: 16px;
+  text-align: left;
+  opacity: 0;
+  transition: height 1.5s ease, opacity 1.5s ease, padding 1.5s ease;
+  margin: 20px auto;
+  z-index: 10;
+}
+
+#gameCompletionMessage.active {
+  display: block;
+  min-height: 270px;
+  opacity: 1;
+  padding: 10px;
+  position: relative;
+  z-index: 2;
+  background: var(--completion-active-bg);
+}
+
+/* Hint and theme displays */
+#hint-display {
+  margin-top: 5px;
+  margin-bottom: 1px;
+  padding: 8px 12px;
+  background-color: var(--hint-bg);
+  border-left: 4px solid var(--hint-border);
+  border-radius: 4px;
+  font-style: italic;
+}
+
+#theme-display {
+  margin-top: 5px;
+  margin-bottom: 1px;
+  padding: 8px 12px;
+  background-color: var(--theme-bg);
+  border-left: 4px solid var(--theme-border);
+  border-radius: 4px;
+  font-weight: bold;
 }
 
 /* ===== GRID AND LETTER STYLING ===== */
+/* Letter grid container */
 #letter-grid-container {
   position: relative;
   margin: 0 auto;
-  display: inline-block;
+  display: inline-block; /* Ensures the container wraps tightly around the grid */
 }
 
+/* Letter grid */
 #letter-grid {
   position: relative;
   z-index: 1;
@@ -198,6 +358,7 @@ button:active {
   margin-bottom: 5px;
 }
 
+/* Individual letter styling */
 .letter {
   width: 50px;
   height: 50px;
@@ -228,62 +389,35 @@ button:active {
   box-shadow: 0 4px 8px var(--box-shadow);
 }
 
-/* Letter shake animation */
-@keyframes shake {
-  0% { transform: translateX(0); }
-  25% { transform: translateX(-3px); }
-  50% { transform: translateX(3px); }
-  75% { transform: translateX(-2px); }
-  100% { transform: translateX(0); }
-}
-
-.letter.shake {
-  animation: shake 0.3s ease;
-}
-
-/* ===== HINT AND THEME DISPLAYS ===== */
-#hint-display, #theme-display {
-  margin: 15px 0;
-  padding: 12px 18px;
-  border-radius: 10px;
-  font-size: 15px;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-  transition: var(--transition);
-}
-
-#hint-display {
-  background-color: var(--hint-bg);
-  border-left: 4px solid var(--hint-border);
-}
-
-#theme-display {
-  background-color: var(--theme-bg);
-  border-left: 4px solid var(--theme-border);
-}
-
 /* ===== WORD DISPLAY ===== */
+/* Selected words container */
 #selected-words-container {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 12px;
-  margin: 20px 0;
+  gap: 10px;
+  width: 50%;
+  margin-top: 10px;
+  justify-items: start;
+  word-break: break-word;
 }
 
+/* Selected word styling */
 #selected-words-container div {
   background-color: var(--selected-word-bg);
   color: var(--selected-word-text);
-  padding: 10px;
-  border-radius: 8px;
-  text-align: center;
-  font-weight: 600;
-  transition: var(--transition);
-  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+  padding: 8px 12px;
+  border-radius: 6px;
+  transition: all 0.2s ease;
+  font-weight: 700;
+  letter-spacing: 0.5px;
   border: 1px solid var(--grid-border);
+  box-shadow: 0 2px 4px var(--box-shadow);
 }
 
 #selected-words-container div:hover {
+  background-color: var(--letter-hover);
   transform: translateY(-2px);
-  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  box-shadow: 0 2px 5px var(--box-shadow);
 }
 
 #selected-words-container div:empty {
@@ -292,6 +426,7 @@ button:active {
   border: none;
 }
 
+/* Matched word styling */
 #selected-words-container div[style*="background-color: #76e77d"] {
   background-color: var(--matched-word-bg) !important;
   color: var(--matched-word-text) !important;
@@ -300,37 +435,25 @@ button:active {
   text-shadow: 0 0 1px rgba(0, 0, 0, 0.2);
 }
 
-/* ===== GAME COMPLETION ===== */
-#completion-area {
-  margin: 20px 0;
+.selected-word {
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  gap: 0.5em;
+  font-size: 16px;
 }
 
-#gameCompletionMessage {
-  width: 100%;
-  min-height: 200px;
-  padding: 15px;
-  border-radius: 10px;
-  border: 1px solid var(--grid-border);
-  font-family: 'Poppins', sans-serif;
-  resize: none;
-  margin-bottom: 15px;
-  box-shadow: inset 0 1px 3px rgba(0,0,0,0.1);
-  background-color: var(--completion-bg);
-  color: var(--text-color);
-  transition: var(--transition);
+.selected-word-match {
+  background-color: var(--matched-word-bg);
+  color: var(--matched-word-text);
 }
 
-#gameCompletionMessage.active {
-  display: block;
-  min-height: 270px;
-  opacity: 1;
-  padding: 15px;
-  position: relative;
-  z-index: 2;
-  background: var(--completion-active-bg);
+.selected-word-mismatch {
+  background-color: #f7a0eb;
 }
 
 /* ===== BONUS WORDS ===== */
+/* Bonus words container */
 #bonus-words-container {
   margin-top: 20px;
   padding: 15px;
@@ -339,16 +462,21 @@ button:active {
   box-shadow: 0 2px 5px var(--box-shadow);
   color: var(--bonus-text);
   border: 1px solid var(--grid-border);
-  transition: var(--transition);
 }
 
 #bonus-words-container h3 {
-  color: var(--accent-color);
+  color: #ff9800;
   margin-bottom: 15px;
   font-size: 18px;
   text-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
 }
 
+.dark-mode #bonus-words-container h3 {
+  color: #ffb74d;
+  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.5);
+}
+
+/* Individual bonus word styling */
 #bonus-words-container div div {
   background-color: var(--bonus-word-bg);
   color: var(--bonus-word-text);
@@ -362,187 +490,79 @@ button:active {
   text-shadow: 0 0 1px rgba(255, 255, 255, 0.3);
 }
 
+.dark-mode #bonus-words-container div div {
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  text-shadow: none;
+}
+
 /* ===== INSTRUCTIONS ===== */
-#instructions-container {
-  margin: 30px 0;
-}
-
-#instructions-toggle {
-  background-color: transparent;
-  color: var(--primary-color);
-  border: 2px solid var(--primary-color);
-  border-radius: 25px;
-  padding: 8px 20px;
-  font-weight: 600;
-  margin-bottom: 15px;
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-}
-
-#instructions-toggle:hover {
-  background-color: var(--primary-color);
-  color: white;
-}
-
+/* Instructions container */
 #instructions {
-  background-color: white;
-  border-radius: 12px;
-  padding: 20px;
-  box-shadow: var(--card-shadow);
-  transition: var(--transition);
+  margin-top: 1px;
+  max-width: 600px;
+  text-align: left;
+  background-color: var(--instructions-bg);
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px var(--box-shadow);
 }
 
-#instructions h3 {
-  color: var(--primary-color);
+#instructions h2 {
+  color: #4a6fa5;
   margin-top: 0;
+}
+
+.dark-mode #instructions h2 {
+  color: #7eb6ff;
 }
 
 #instructions ul {
-  padding-left: 20px;
-  line-height: 1.6;
+  padding-left: 1.2em;
+  line-height: 1.5;
 }
 
-#instructions li {
-  margin-bottom: 8px;
-}
-
+/* Instructions GIF */
 .instructions-gif {
-  max-width: 100%;
+  margin-top: 1px;
+  max-width: 600px;
+  object-fit: cover;
+  border: 1px solid var(--grid-border);
   border-radius: 8px;
-  margin-top: 15px;
-  box-shadow: 0 3px 10px rgba(0,0,0,0.1);
-}
-
-/* ===== FOOTER SECTIONS ===== */
-.footer-section {
-  background-color: white;
-  border-radius: 12px;
-  padding: 20px;
-  margin-bottom: 20px;
-  box-shadow: var(--card-shadow);
-  transition: var(--transition);
-}
-
-.footer-section h3 {
-  color: var(--primary-color);
-  margin-top: 0;
-  font-size: 1.2rem;
-  border-bottom: 2px solid #eee;
-  padding-bottom: 8px;
-}
-
-/* ===== LINKS ===== */
-a {
-  color: var(--primary-color);
-  text-decoration: none;
-  font-weight: 500;
-  transition: var(--transition);
-}
-
-a:hover {
-  color: var(--primary-dark);
-  text-decoration: underline;
-}
-
-/* ===== COPYRIGHT ===== */
-.copyright {
-  text-align: center;
-  font-size: 0.9rem;
-  color: #777;
-  margin-top: 30px;
-  padding: 15px;
-  border-top: 1px solid #eee;
-  transition: var(--transition);
-}
-
-/* ===== TOGGLE BUTTONS ===== */
-#mode-toggle, #archive-toggle {
-  position: fixed;
-  z-index: 100;
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 0 2px 10px rgba(0,0,0,0.15);
-  transition: var(--transition);
-}
-
-#mode-toggle {
-  top: 20px;
-  right: 20px;
-  background-color: white;
-  color: #333;
-}
-
-#archive-toggle {
-  top: 20px;
-  left: 20px;
-  background-color: white;
-  color: var(--primary-color);
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  box-shadow: 0 3px 10px var(--box-shadow);
 }
 
 /* ===== DATE PICKER ===== */
+/* Date picker container */
 #date-picker-container {
-  background-color: white;
-  border-radius: 10px;
-  padding: 15px;
-  box-shadow: var(--card-shadow);
-  margin-bottom: 20px;
+  margin: 10px 0 20px;
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 15px;
-  transition: var(--transition);
+  gap: 10px;
+  flex-wrap: wrap;
 }
 
+/* Date input field */
 #puzzle-date {
-  padding: 10px 15px;
+  padding: 8px 12px;
+  border-radius: 8px;
   border: 1px solid var(--grid-border);
-  border-radius: 8px;
-  font-family: 'Poppins', sans-serif;
-  background-color: var(--bg-color);
+  background-color: var(--grid-bg);
   color: var(--text-color);
-  transition: var(--transition);
+  font-family: inherit;
 }
 
-/* ===== START OVERLAY ===== */
-#start-overlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.7);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 10;
-  border-radius: 8px;
-}
-
-#start-puzzle-button {
-  background-color: var(--primary-color);
-  color: white;
-  border: none;
-  border-radius: 8px;
-  padding: 12px 24px;
-  font-size: 18px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-}
-
-#start-puzzle-button:hover {
-  background-color: var(--primary-dark);
-  transform: translateY(-3px);
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
+.dark-mode #puzzle-date {
+  background-color: var(--grid-bg);
+  color: var(--text-color);
+  border-color: var(--grid-border);
 }
 
 /* ===== FLATPICKR CUSTOMIZATION ===== */
+/* Disabled days */
 .flatpickr-day.flatpickr-disabled,
 .flatpickr-day.flatpickr-disabled:hover,
 .flatpickr-day.no-puzzle {
@@ -551,6 +571,7 @@ a:hover {
   cursor: not-allowed;
 }
 
+/* Enabled days */
 .flatpickr-day.flatpickr-enabled {
   font-weight: bold;
   background-color: var(--theme-bg);
@@ -562,10 +583,12 @@ a:hover {
   background-color: var(--selected-bg);
 }
 
+/* Today's date */
 .flatpickr-day.today {
   border-color: var(--selected-border);
 }
 
+/* Dark mode calendar styling */
 .dark-mode .flatpickr-calendar {
   background: var(--grid-bg);
   color: var(--text-color);
@@ -596,80 +619,120 @@ a:hover {
   color: var(--text-color);
 }
 
+/* ===== START OVERLAY ===== */
+/* Start overlay container */
+#start-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 10;
+  border-radius: 8px;
+}
+
+/* Start puzzle button */
+#start-puzzle-button {
+  background-color: var(--button-bg);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 12px 24px;
+  font-size: 18px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+#start-puzzle-button:hover {
+  background-color: var(--button-hover);
+  transform: translateY(-3px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
+}
+
+#start-puzzle-button:active {
+  transform: translateY(-1px);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
 /* ===== RESPONSIVE DESIGN ===== */
-@media (max-width: 768px) {
-  .container {
-    padding: 15px;
-  }
-  
-  h1 {
-    font-size: 2.2rem;
-  }
-  
-  .game-area {
-    padding: 15px;
-  }
-  
-  .button-container {
-    gap: 8px;
-  }
-  
+@media (max-width: 600px) {
+  /* Smaller buttons on mobile */
   button {
     padding: 8px 14px;
     font-size: 13px;
   }
   
-  #selected-words-container {
-    grid-template-columns: repeat(2, 1fr);
-  }
-  
-  #mode-toggle, #archive-toggle {
-    width: 35px;
-    height: 35px;
-    font-size: 18px;
-  }
-  
-  #date-picker-container {
-    flex-direction: column;
-    padding: 12px;
-  }
-  
-  .footer-section {
-    padding: 15px;
-  }
-}
-
-@media (max-width: 480px) {
-  h1 {
-    font-size: 1.8rem;
-  }
-  
-  #letter-grid {
-    grid-template-columns: repeat(5, 45px);
-  }
-  
-  .letter {
-    width: 45px;
-    height: 45px;
-    font-size: 16px;
-  }
-  
   .button-container {
-    gap: 6px;
-  }
-  
-  button {
-    padding: 6px 12px;
-    font-size: 12px;
-  }
-  
-  #selected-words-container {
-    grid-template-columns: 1fr 1fr;
     gap: 8px;
   }
+
+  /* Adjusted grid for mobile */
+  #letter-grid {
+    grid-template-columns: repeat(5, 65px);
+    gap: 0px;
+  }
+
+  .letter {
+    width: 50px;
+    height: 50px;
+    font-size: 18px;
+  }
+
+  /* Adjusted word container for mobile */
+  #selected-words-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    width: 90%;
+    margin-top: 5px;
+    justify-items: start;
+    word-break: break-word;
+  }
   
-  #selected-words-container div {
-    padding: 8px;
-    font-size: 14px;
+  /* Adjusted instructions for mobile */
+  #instructions {
+    margin-top: 2px;
+    max-width: 600px;
+    text-align: left;
+  }
+
+  #instructions ul {
+    padding-left: 1.2em;
+  }
+
+  /* Adjusted GIF for mobile */
+  .instructions-gif {
+    margin-top: 2px;
+    width: 90%;
+    border: 1px solid var(--grid-border);
+    border-radius: 8px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  
+  /* Adjusted toggle buttons for mobile */
+  #mode-toggle {
+    top: 10px;
+    right: 10px;
+    font-size: 20px;
+  }
+  
+  #archive-toggle {
+    top: 10px;
+    left: 10px;
+    font-size: 20px;
+  }
+  
+  /* Stacked date picker on mobile */
+  #date-picker-container {
+    flex-direction: column;
+    align-items: center;
   }
 }
