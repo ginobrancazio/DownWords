@@ -1154,12 +1154,12 @@ const wordListsByDate = {
 '18 May 2025': ['TATTOO', 'NEEDLE', 'DESIGN', 'LETTER', 'SAILOR', 'ANCHOR'],
 '19 May 2025': ['ROMAN', 'TOGAS', 'FORUM', 'LATIN', 'VILLA', 'BATHS'],
 '20 May 2025': ['JAPAN', 'SUSHI', 'ANIME', 'TRAIN', 'RAMEN', 'NINJA'],
-'21 May 2025': ['TAROT', 'CARDS', 'SIGNS', 'MAGIC', 'DECKS', 'READS'],
+'21 May 2025': ['NORWAY', 'FJORDS', 'WAFFLE', 'HIKING', 'SKIING', 'SALMON'],
 '22 May 2025': ['BLACK', 'MAGIC', 'EBONY', 'BOARD', 'RAVEN', 'RHINO'],
 '23 May 2025': ['SEWING', 'STITCH', 'BUTTON', 'NEEDLE', 'THREAD', 'TAILOR'],
 '24 May 2025': ['SHOWER', 'LOOFAH', 'SPONGE', 'LOTION', 'STEAMY', 'MIRROR'],
 '25 May 2025': ['ELEMENT', 'ARSENIC', 'MERCURY', 'KRYPTON', 'SULPHUR', 'BROMINE'],
-'26 May 2025': ['FRUITS', 'LYCHEE', 'BANANA', 'CHERRY', 'ORANGE', 'PAPAYA'],
+'26 May 2025': ['TAROT', 'CARDS', 'SIGNS', 'MAGIC', 'DECKS', 'READS'],
 '27 May 2025': ['SAUCE', 'GRAVY', 'SYRUP', 'BROWN', 'SALSA', 'AIOLI'],
 '28 May 2025': ['SCOUT', 'TROOP', 'BADGE', 'YOUTH', 'HIKES', 'MERIT'],
 '29 May 2025': ['BABY', 'FOAL', 'LAMB', 'FAWN', 'CALF', 'JOEY'],
@@ -1286,6 +1286,7 @@ const wordListsByDate = {
 '27 Sep 2025': ['CLOTH', 'DENIM', 'LINEN', 'SATIN', 'WEAVE', 'TWEED'],
 '28 Sep 2025': ['UNDEAD', 'WRAITH', 'ZOMBIE', 'GHOULS', 'CORPSE', 'DRAUGR'],
 '29 Sep 2025': ['WEDDED', 'COUPLE', 'SPOUSE', 'LAWFUL', 'SUITOR', 'FIANCÉ'],
+'30 Sep 2025': ['FRUITS', 'LYCHEE', 'BANANA', 'CHERRY', 'ORANGE', 'PAPAYA'],
 
   'default': ['SPACE', 'EARTH', 'ALIEN', 'ORBIT', 'COMET', 'SOLAR']
 };
@@ -1317,12 +1318,12 @@ const ThemesByDate = {
 '18 May 2025': ['Theme: TATTOO'],
 '19 May 2025': ['Theme: ROMAN'],
 '20 May 2025': ['Theme: JAPAN'],
-'21 May 2025': ['Theme: TAROT'],
+'21 May 2025': ['Theme: NORWAY'],
 '22 May 2025': ['Theme: BLACK'],
 '23 May 2025': ['Theme: SEWING'],
 '24 May 2025': ['Theme: SHOWER'],
 '25 May 2025': ['Theme: ELEMENT'],
-'26 May 2025': ['Theme: FRUITS'],
+'26 May 2025': ['Theme: TAROT'],
 '27 May 2025': ['Theme: SAUCE'],
 '28 May 2025': ['Theme: SCOUT'],
 '29 May 2025': ['Theme: BABY'],
@@ -1449,7 +1450,7 @@ const ThemesByDate = {
 '27 Sep 2025': ['Theme: CLOTH'],
 '28 Sep 2025': ['Theme: UNDEAD'],
 '29 Sep 2025': ['Theme: WEDDED'],
-
+'30 Sep 2025': ['Theme: FRUITS'],
   'default': ['Theme: SPACE']
 };
 
@@ -1480,12 +1481,12 @@ const HintsByDate = {
 '18 May 2025': ['Hint: Permanent body art using needles and ink'],
 '19 May 2025': ['Hint: Vini Vidi Vici'],
 '20 May 2025': ['Hint: The Land of the rising sun'],
-'21 May 2025': ['Hint: Playing cards used for fortune telling'],
+'21 May 2025': ['Hint: The land of Fjords and Trolls'],
 '22 May 2025': ['Hint: An absence of light'],
 '23 May 2025': ['Hint: An act of working with materials'],
 '24 May 2025': ['Hint: Where you wash yourself'],
 '25 May 2025': ['Hint: Chemistry teachers may think about this periodically'],
-'26 May 2025': ['Hint: Sweet edible plant parts containing seeds'],
+'26 May 2025': ['Hint: Playing cards used for fortune telling'],
 '27 May 2025': ['Hint: Liquid condiments added to food'],
 '28 May 2025': ['Hint: Youth organisation focused on outdoor skills'],
 '29 May 2025': ['Hint: Very young offspring of various animals'],
@@ -1605,13 +1606,15 @@ const HintsByDate = {
 '20 Sep 2025': ['Hint: Young female human and female names'],
 '21 Sep 2025': ['Hint: Stories passed down through generations'],
 '22 Sep 2025': ['Hint: Noises made by different animals'],
-'23 May 2025': ['Hint: A small feline pet and its characteristics'],
-'24 May 2025': ['Hint: The main subject or idea being explored'],
-'25 May 2025': ['Hint: Seeds and crops used to make flour and bread'],
-'26 May 2025': ['Hint: Adult female humans and female names'],
-'27 May 2025': ['Hint: Materials used to make clothing and textiles'],
-'28 May 2025': ['Hint: Reanimated corpses from horror stories'],
-'29 May 2025': ['Hint: Related to marriage and matrimony'],
+'23 Sep 2025': ['Hint: A small feline pet and its characteristics'],
+'24 Sep 2025': ['Hint: The main subject or idea being explored'],
+'25 Sep 2025': ['Hint: Seeds and crops used to make flour and bread'],
+'26 Sep 2025': ['Hint: Adult female humans and female names'],
+'27 Sep 2025': ['Hint: Materials used to make clothing and textiles'],
+'28 Sep 2025': ['Hint: Reanimated corpses from horror stories'],
+'29 Sep 2025': ['Hint: Related to marriage and matrimony'],
+'30 Sep 2025': ['Hint: Sweet edible plant parts containing seeds'],
+
   'default': ['Hint: The Final Frontier']
 };
 
@@ -1621,10 +1624,11 @@ const puzzleSetterbyDate = {
 '14 May 2025': ['Gino'],
 '19 May 2025': ['Blunders'],
 '20 May 2025': ['Harvey'],
-'21 May 2025': ['Jana'],
+'21 May 2025': ['Mandy'],
 '22 May 2025': ['Blunders'],
 '23 May 2025': ['Cat Camacho'],
 '24 May 2025': ['Blunders'],
 '25 May 2025': ['HankWolfman'],
+'26 May 2025': ['Jana'],
   'default': ['KitCat']
 };
