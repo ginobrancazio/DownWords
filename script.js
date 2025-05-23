@@ -705,7 +705,7 @@ function handleGameCompletion(words) {
   }
 
   const playerTimeInSeconds = timeLeft; 
-  const averageTimeInSeconds = 387;     
+  const averageTimeInSeconds = 264;     
   const blocklength = averageTimeInSeconds/8;
   
   // Get the selected date
