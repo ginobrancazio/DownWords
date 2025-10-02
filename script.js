@@ -1287,6 +1287,19 @@ const wordListsByDate = {
 '28 September 2025': ['UNDEAD', 'WRAITH', 'ZOMBIE', 'GHOULS', 'CORPSE', 'DRAUGR'],
 '29 September 2025': ['WEDDED', 'COUPLE', 'SPOUSE', 'LAWFUL', 'SUITOR', 'FIANCÉ'],
 '30 September 2025': ['FRUITS', 'LYCHEE', 'BANANA', 'CHERRY', 'ORANGE', 'PAPAYA'],
+'02 October 2025': ['FARMING', 'TRACTOR', 'HARVEST', 'POULTRY', 'COWSHED', 'ACREAGE'],
+'03 October 2025': ['CRAFT', 'PAINT', 'MAKER', 'BEADS', 'PAPER', 'QUILT'],
+'04 October 2025': ['ISLANDS', 'JAMAICA', 'BERMUDA', 'BRITAIN', 'IRELAND', 'CORSICA'],
+'05 October 2025': ['INSTRUMENT', 'CLAVICHORD', 'TAMBOURINE', 'VIBRAPHONE', 'KETTLEDRUM', 'DIDGERIDOO'],
+'06 October 2025': ['MARIO', 'YOSHI', 'LUIGI', 'DIDDY', 'DAISY', 'PEACH'],
+'07 October 2025': ['CAPITALS', 'BUDAPEST', 'SANTIAGO', 'CANBERRA', 'HELSINKI', 'BRUSSELS'],
+'08 October 2025': ['OFFICE', 'LAPTOP', 'CAMERA', 'SCREEN', 'REPORT', 'AGENDA'],
+'09 October 2025': ['COLOUR', 'YELLOW', 'PURPLE', 'INDIGO', 'MAROON', 'ORANGE'],
+'10 October 2025': ['DRINK', 'JUICE', 'LAGER', 'VODKA', 'LATTE', 'WATER'],
+'11 October 2025': ['FARMS', 'FIELD', 'SHEEP', 'CROPS', 'CHICK', 'DAIRY'],
+'12 October 2025': ['SLEEP', 'DOZED', 'COMFY', 'TIRED', 'RESTS', 'DREAM'],
+'13 October 2025': ['CITIES', 'LONDON', 'MUMBAI', 'TEHRAN', 'MOSCOW', 'DALLAS'],
+
 
   'default': ['SPACE', 'EARTH', 'ALIEN', 'ORBIT', 'COMET', 'SOLAR']
 };
@@ -1614,6 +1627,7 @@ const HintsByDate = {
 '28 September 2025': ['Hint: Reanimated corpses from horror stories'],
 '29 September 2025': ['Hint: Related to marriage and matrimony'],
 '30 September 2025': ['Hint: Sweet edible plant parts containing seeds'],
+
 
   'default': ['Hint: The Final Frontier']
 };
