@@ -1464,6 +1464,19 @@ const ThemesByDate = {
 '28 September 2025': ['Theme: UNDEAD'],
 '29 September 2025': ['Theme: WEDDED'],
 '30 September 2025': ['Theme: FRUITS'],
+'02 October 2025': ['Theme: FARMING'],
+'03 October 2025': ['Theme: CRAFT'],
+'04 October 2025': ['Theme: ISLANDS'],
+'05 October 2025': ['Theme: INSTRUMENT'],
+'06 October 2025': ['Theme: MARIO'],
+'07 October 2025': ['Theme: CAPITALS'],
+'08 October 2025': ['Theme: OFFICE'],
+'09 October 2025': ['Theme: COLOUR'],
+'10 October 2025': ['Theme: DRINK'],
+'11 October 2025': ['Theme: FARMS'],
+'12 October 2025': ['Theme: SLEEP'],
+'13 October 2025': ['Theme: CITIES'],
+
   'default': ['Theme: SPACE']
 };
 
@@ -1627,6 +1640,18 @@ const HintsByDate = {
 '28 September 2025': ['Hint: Reanimated corpses from horror stories'],
 '29 September 2025': ['Hint: Related to marriage and matrimony'],
 '30 September 2025': ['Hint: Sweet edible plant parts containing seeds'],
+'02 October 2025': ['Hint: Where soil is turned and cockerels crow'],
+'03 October 2025': ['Hint: Creating by hand'],
+'04 October 2025': ['Hint: Surrounded by water'],
+'05 October 2025': ['Hint: Things used to create music'],
+'06 October 2025': ['Hint: Characters from a classic Nintendo game'],
+'07 October 2025': ['Hint: The Big City in a country'],
+'08 October 2025': ['Hint: Things you would find at work'],
+'09 October 2025': ['Hint: Many shades and hues'],
+'10 October 2025': ['Hint: For quenching your thirst'],
+'11 October 2025': ['Hint: A place where things grow'],
+'12 October 2025': ['Hint: Your body needs this after a long day'],
+'13 October 2025': ['Hint: Where lots of people live'],
 
 
   'default': ['Hint: The Final Frontier']
@@ -1644,5 +1669,17 @@ const puzzleSetterbyDate = {
 '24 May 2025': ['Blunders'],
 '25 May 2025': ['HankWolfman'],
 '26 May 2025': ['Jana'],
+'02 October 2025': ['Clare'],
+'03 October 2025': ['Blunders'],
+'04 October 2025': ['Blunders'],
+'05 October 2025': ['HankWolfman'],
+'06 October 2025': ['Rappion'],
+'07 October 2025': ['HankWolfman'],
+'08 October 2025': ['Blunders'],
+'09 October 2025': ['Blunders'],
+'10 October 2025': ['Blunders'],
+'11 October 2025': ['Clare'],
+'12 October 2025': ['A mum of two'],
+'13 October 2025': ['Tom Coldron'],
   'default': ['KitCat']
 };
