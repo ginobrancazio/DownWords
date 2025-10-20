@@ -1318,7 +1318,6 @@ const wordListsByDate = {
 '30 October 2025': ['TREAT', 'DONUT', 'CAKES', 'BAKED', 'TARTS', 'SWEET'],
 '31 October 2025': ['GHOST', 'SHADE', 'HAUNT', 'SPOOK', 'SCARY', 'DEATH'],
 '01 November 2025': ['CASTLE', 'TURRET', 'BAILEY', 'GENTRY', 'ARMORY', 'MOATED'],
-};
 
   'default': ['SPACE', 'EARTH', 'ALIEN', 'ORBIT', 'COMET', 'SOLAR']
 };
@@ -1514,7 +1513,7 @@ const ThemesByDate = {
 '30 October 2025': ['Theme: TREATS'],
 '31 October 2025': ['Theme: GHOST'],
 '01 November 2025': ['Theme: CASTLE'],
-};
+  
   'default': ['Theme: SPACE']
 };
 
@@ -1710,8 +1709,6 @@ const HintsByDate = {
 '31 October 2025 2025': ['Hint: Spirits of the dead that haunt the living'],
 '01 November 2025': ['Hint: A large fortified building from the past.'],
   
-};
-
   'default': ['Hint: The Final Frontier']
 };
 
