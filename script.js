@@ -1305,7 +1305,7 @@ const wordListsByDate = {
 '17 October 2025': ['INSECT', 'BEETLE', 'APHIDS', 'EARWIG', 'WEEVIL', 'MANTIS'],
 '18 October 2025': ['INSECT', 'BEETLE', 'APHIDS', 'EARWIG', 'WEEVIL', 'MANTIS'],
 '19 October 2025': ['INSECT', 'BEETLE', 'APHIDS', 'EARWIG', 'WEEVIL', 'MANTIS'],
-'20 October 2025': ['TABLE', 'CHAIR', 'BENCH', 'STOOL', 'DESKS', 'LAMPS'],
+'20 October 2025': ['INSECT', 'BEETLE', 'APHIDS', 'EARWIG', 'WEEVIL', 'MANTIS'],
 '21 October 2025': ['ARCHER', 'ARROWS', 'BOWMAN', 'QUIVER', 'TARGET', 'STRING'],
 '22 October 2025': ['OCEAN', 'WATER', 'WAVES', 'TIDES', 'DEPTH', 'CORAL'],
 '23 October 2025': ['BUILDING', 'HOSPITAL', 'BUNGALOW', 'TENEMENT', 'TERMINAL', 'FORTRESS'],
@@ -1318,6 +1318,8 @@ const wordListsByDate = {
 '30 October 2025': ['TREAT', 'DONUT', 'CAKES', 'BAKED', 'TARTS', 'SWEET'],
 '31 October 2025': ['GHOST', 'SHADE', 'HAUNT', 'SPOOK', 'SCARY', 'DEATH'],
 '01 November 2025': ['CASTLE', 'TURRET', 'BAILEY', 'GENTRY', 'ARMORY', 'MOATED'],
+'02 November 2025': ['TABLE', 'CHAIR', 'BENCH', 'STOOL', 'DESKS', 'LAMPS'],
+
 
   'default': ['SPACE', 'EARTH', 'ALIEN', 'ORBIT', 'COMET', 'SOLAR']
 };
@@ -1500,7 +1502,7 @@ const ThemesByDate = {
 '17 October 2025': ['Theme: INSECT'],
 '18 October 2025': ['Theme: INSECT'],
 '19 October 2025': ['Theme: INSECT'],
-'20 October 2025': ['Theme: TABLES'],
+'20 October 2025': ['Theme: INSECT'],
 '21 October 2025': ['Theme: ARCHER'],
 '22 October 2025': ['Theme: OCEAN'],
 '23 October 2025': ['Theme: BUILDING'],
@@ -1513,6 +1515,8 @@ const ThemesByDate = {
 '30 October 2025': ['Theme: TREATS'],
 '31 October 2025': ['Theme: GHOST'],
 '01 November 2025': ['Theme: CASTLE'],
+'02 November 2025': ['Theme: TABLES'],
+
   
   'default': ['Theme: SPACE']
 };
@@ -1695,7 +1699,7 @@ const HintsByDate = {
 '17 October 2025': ['Hint: A small arthropod with six legs.'],
 '18 October 2025': ['Hint: A small arthropod with six legs.'],
 '19 October 2025': ['Hint: A small arthropod with six legs.'],
-'20 October 2025': ['Hint: Items of furniture with a flat top and one or more legs.'],
+'20 October 2025': ['Hint: A small arthropod with six legs.'],
 '21 October 2025': ['Hint: Someone who shoots with a bow.'],
 '22 October 2025': ['Hint: A very large expanse of sea.'],
 '23 October 2025': ['Hint: A structure with a roof and walls.'],
@@ -1708,7 +1712,8 @@ const HintsByDate = {
 '30 October 2025': ['Hint: Sweet things to eat.'],
 '31 October 2025 2025': ['Hint: Spirits of the dead that haunt the living'],
 '01 November 2025': ['Hint: A large fortified building from the past.'],
-  
+'02 November 2025': ['Hint: Items of furniture with a flat top and one or more legs.'],
+
   'default': ['Hint: The Final Frontier']
 };
 
