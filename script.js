@@ -1316,7 +1316,7 @@ const wordListsByDate = {
 '28 October 2025': ['NATION', 'POLAND', 'FRANCE', 'SWEDEN', 'GREECE', 'TURKEY'],
 '29 October 2025': ['SCIENCE', 'PHYSICS', 'BIOLOGY', 'GEOLOGY', 'ANATOMY', 'CHEMIST'],
 '30 October 2025': ['TREAT', 'DONUT', 'CAKES', 'BAKED', 'TARTS', 'SWEET'],
-'31 October 2025': ['GHOST', 'SHADE', 'HAUNT', 'SPOOK', 'SCARY', 'DEATH'],
+'31 October 2025': ['HALLOWEEN', 'SCARECROW', 'GRAVEYARD', 'BLOODMOON', 'MOONLIGHT', 'GARGOYLES'],
 '01 November 2025': ['CASTLE', 'TURRET', 'BAILEY', 'GENTRY', 'ARMORY', 'MOATED'],
 '02 November 2025': ['TABLE', 'CHAIR', 'BENCH', 'STOOL', 'DESKS', 'LAMPS'],
 
@@ -1513,7 +1513,7 @@ const ThemesByDate = {
 '28 October 2025': ['Theme: NATION'],
 '29 October 2025': ['Theme: SCIENCE'],
 '30 October 2025': ['Theme: TREATS'],
-'31 October 2025': ['Theme: GHOST'],
+'31 October 2025': ['Theme: HALLOWEEN'],
 '01 November 2025': ['Theme: CASTLE'],
 '02 November 2025': ['Theme: TABLES'],
 
@@ -1710,7 +1710,7 @@ const HintsByDate = {
 '28 October 2025': ['Hint: A large body of people united by common descent, history, or culture.'],
 '29 October 2025': ['Hint: The intellectual and practical activity encompassing the systematic study of the world.'],
 '30 October 2025': ['Hint: Sweet things to eat.'],
-'31 October 2025 2025': ['Hint: Spirits of the dead that haunt the living'],
+'31 October 2025': ['Hint: Time for trick-or-treating'],
 '01 November 2025': ['Hint: A large fortified building from the past.'],
 '02 November 2025': ['Hint: Items of furniture with a flat top and one or more legs.'],
 
@@ -1741,5 +1741,6 @@ const puzzleSetterbyDate = {
 '11 October 2025': ['Clare'],
 '12 October 2025': ['A mum of two'],
 '13 October 2025': ['Tom Coldron'],
+'31 October 2025': ['Gino'],
   'default': ['KitCat']
 };
