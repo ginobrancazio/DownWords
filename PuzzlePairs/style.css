@@ -630,3 +630,27 @@ button:active {
     font-size: 13px;
   }
 }
+
+/* Guess selection highlight */
+.tile.guess-selected {
+  box-shadow: 0 0 0 3px #ffeb3b,
+    0 0 12px rgba(255, 235, 59, 0.8);
+  transform: scale(1.06);
+}
+
+/* For delayed-flip mode: first tile picked but not yet revealed */
+.tile.pending-guess {
+  box-shadow: 0 0 0 2px #ff9800,
+    0 0 8px rgba(255, 152, 0, 0.9);
+  opacity: 0.9;
+}
+
+.dark-mode .tile.guess-selected {
+  box-shadow: 0 0 0 3px #ffd54f,
+    0 0 14px rgba(255, 213, 79, 0.9);
+}
+
+.dark-mode .tile.pending-guess {
+  box-shadow: 0 0 0 2px #ffb74d,
+    0 0 8px rgba(255, 183, 77, 0.9);
+}
