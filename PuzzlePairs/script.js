@@ -46,10 +46,8 @@ const SHAPES_POOL = [
 ];
 
 // ===== RULEBREAKERS CONFIG =====
-// Included: all suggested rulebreakers EXCEPT 4,13,14,15,16,17,19,20,21
 
 const RULEBREAKERS = {
-  // Original
   BLOCK_SCANNERS_2X2: {
     id: 'BLOCK_SCANNERS_2X2',
     name: 'Block Scanners',
@@ -61,7 +59,6 @@ const RULEBREAKERS = {
     description: 'The grid rotates after every three guesses.'
   },
 
-  // Scanner variants
   DOMINO_SCANNERS: {
     id: 'DOMINO_SCANNERS',
     name: 'Domino Scanners',
@@ -74,7 +71,6 @@ const RULEBREAKERS = {
       'You never gain extra scanners from matches or misses.'
   },
 
-  // Rotation / gravity
   ROTATE_EVERY_MATCH: {
     id: 'ROTATE_EVERY_MATCH',
     name: 'Spin on Every Match',
@@ -96,7 +92,6 @@ const RULEBREAKERS = {
     description: 'Tiles fall to the left instead of down.'
   },
 
-  // Time / visibility
   CHILL_SCANNERS: {
     id: 'CHILL_SCANNERS',
     name: 'Chill Scanners',
@@ -178,11 +173,16 @@ let elapsedSeconds = 0;
 let isDarkMode = false;
 let isMuted = false;
 
-// Audio
+// Audio elements
 let clickSound;
+let revealSound;
+let scanSound;
+let scanRevealSound;
+let dropSound;
+let rotateSound;
 let matchSound;
+let winSound;
 let failSound;
-let finishSound;
 
 // Dragging scanners
 let draggingShape = null; // { index, ghost, offsetX, offsetY, lastValid }
@@ -336,7 +336,7 @@ document.addEventListener('DOMContentLoaded', () => {
   setupButtons();
   setupRulebreakerDisplay();
   setupCompletionOverlay();
-  newGame();
+  newGame(); // initial board (will be replaced after mode choice)
 });
 
 function cacheDom() {
@@ -358,9 +358,16 @@ function cacheDom() {
   shareButton = document.getElementById('shareButton');
 
   clickSound = document.getElementById('click-sound');
+  revealSound = document.getElementById('reveal-sound');
+  scanSound = document.getElementById('scan-sound');
+  scanRevealSound = document.getElementById(
+    'scanreveal-sound'
+  );
+  dropSound = document.getElementById('drop-sound');
+  rotateSound = document.getElementById('rotate-sound');
   matchSound = document.getElementById('match-sound');
+  winSound = document.getElementById('win-sound');
   failSound = document.getElementById('fail-sound');
-  finishSound = document.getElementById('finish-sound');
 }
 
 // ===== RULEBREAKER DISPLAY =====
@@ -412,9 +419,9 @@ function setupCompletionOverlay() {
     return;
   }
 
+  // Only closes overlay; does not start a new game
   btn.addEventListener('click', () => {
     overlay.classList.remove('visible');
-    newGame();
   });
 
   completionOverlay = { overlay, summary };
@@ -502,6 +509,24 @@ function setupButtons() {
   if (startBtn) {
     startBtn.addEventListener('click', () => {
       if (gameStarted) return;
+
+      // Ask player which mode to use
+      const useRb = window.confirm(
+        "Play with today's rulebreakers?\n\nOK = Today's rulebreakers\nCancel = Classic rules"
+      );
+
+      if (useRb) {
+        // Use today's rulebreakers
+        configureRuleStateFromActive();
+      } else {
+        // Classic mode: no rulebreakers
+        activeRulebreakers.clear();
+        initDefaultRuleState();
+      }
+
+      setupRulebreakerDisplay();
+      newGame(); // rebuild with chosen rules
+
       gameStarted = true;
       if (startOverlay) {
         startOverlay.style.display = 'none';
@@ -828,10 +853,7 @@ function handleTileClick(tile) {
   if (!gameStarted || gameFinished || isBusy) return;
   if (!tile || tile.matched) return;
 
-  if (!isMuted && clickSound) {
-    clickSound.currentTime = 0;
-    clickSound.play().catch(() => {});
-  }
+  playSound(clickSound);
 
   if (!ruleState.scannersEnabled && !isGuessing) {
     setStatus(
@@ -862,8 +884,11 @@ function handleTileClick(tile) {
 function handleGuessClick(tile) {
   if (tile.revealed) return;
 
+  // Normal behaviour (reveal as you select)
   if (!ruleState.delayedFlip) {
     revealTile(tile);
+    tile.element.classList.add('guess-selected');
+    playSound(revealSound);
     guessSelection.push(tile);
 
     if (guessSelection.length === 1) {
@@ -876,6 +901,7 @@ function handleGuessClick(tile) {
       const [t1, t2] = guessSelection;
 
       if (t1.id === t2.id) {
+        t2.element.classList.remove('guess-selected');
         guessSelection = [t1];
         isBusy = false;
         return;
@@ -888,32 +914,39 @@ function handleGuessClick(tile) {
         handleFailure(t1, t2);
       }
     }
-  } else {
-    // DELAYED_FLIP: first tile not revealed until second chosen
-    if (guessSelection.length === 0) {
-      guessSelection.push(tile);
-      tile.element.classList.add('pending-guess');
-      setStatus('Now select a second tile.');
-      return;
-    }
+    return;
+  }
 
-    if (guessSelection.length === 1) {
-      const t1 = guessSelection[0];
-      const t2 = tile;
-      if (t1.id === t2.id) return;
+  // DELAYED_FLIP: first tile isn't revealed until second is chosen
+  if (guessSelection.length === 0) {
+    guessSelection.push(tile);
+    tile.element.classList.add('pending-guess');
+    tile.element.classList.add('guess-selected');
+    setStatus('Now select a second tile.');
+    return;
+  }
 
-      isBusy = true;
-      t1.element.classList.remove('pending-guess');
-      revealTile(t1);
-      revealTile(t2);
-      guessSelection.push(t2);
+  if (guessSelection.length === 1) {
+    const t1 = guessSelection[0];
+    const t2 = tile;
+    if (t1.id === t2.id) return;
 
-      const isMatch = t1.iconId === t2.iconId;
-      if (isMatch) {
-        handleMatch(t1, t2);
-      } else {
-        handleFailure(t1, t2);
-      }
+    isBusy = true;
+
+    t1.element.classList.remove('pending-guess');
+    t1.element.classList.add('guess-selected');
+    t2.element.classList.add('guess-selected');
+
+    revealTile(t1);
+    revealTile(t2);
+    playSound(revealSound);
+    guessSelection.push(t2);
+
+    const isMatch = t1.iconId === t2.iconId;
+    if (isMatch) {
+      handleMatch(t1, t2);
+    } else {
+      handleFailure(t1, t2);
     }
   }
 }
@@ -948,6 +981,8 @@ function placeShapeAt(shapeIndex, baseRow, baseCol) {
   isBusy = true;
   scanUses++;
   updateStats();
+
+  playSound(scanRevealSound);
 
   const affectedTiles = [];
   for (const [r, c] of targetCells) {
@@ -988,6 +1023,8 @@ function startShapeDrag(e) {
   )
     return;
   e.preventDefault();
+
+  playSound(scanSound);
 
   const target = e.currentTarget;
   const index = Number(target.dataset.index);
@@ -1129,10 +1166,17 @@ function handleMatch(t1, t2) {
   correctPairs++;
   updateStats();
 
-  if (!isMuted && matchSound) {
-    matchSound.currentTime = 0;
-    matchSound.play().catch(() => {});
-  }
+  playSound(matchSound);
+
+  // Clear selection styling
+  t1.element.classList.remove(
+    'guess-selected',
+    'pending-guess'
+  );
+  t2.element.classList.remove(
+    'guess-selected',
+    'pending-guess'
+  );
 
   t1.matched = true;
   t2.matched = true;
@@ -1173,14 +1217,21 @@ function handleFailure(t1, t2) {
   incorrectGuesses++;
   updateStats();
 
-  if (!isMuted && failSound) {
-    failSound.currentTime = 0;
-    failSound.play().catch(() => {});
-  }
+  playSound(failSound);
 
   setStatus('No match. The tiles will flip back.');
 
   setTimeout(() => {
+    // Clear selection styling
+    t1.element.classList.remove(
+      'guess-selected',
+      'pending-guess'
+    );
+    t2.element.classList.remove(
+      'guess-selected',
+      'pending-guess'
+    );
+
     hideTile(t1);
     hideTile(t2);
     isBusy = false;
@@ -1311,8 +1362,12 @@ function applyGravityVertical() {
 
   tileGrid = newGrid;
 
+  if (movingTiles.length > 0) {
+    playSound(dropSound);
+  }
+
   movingTiles.forEach(({ tile, fromRow, toRow, col }) => {
-    const deltaRows = fromRow - toRow; // >0 when falling down
+    const deltaRows = fromRow - toRow;
     const offset = deltaRows * distancePerRow; // start above
 
     const el = tile.element;
@@ -1395,6 +1450,10 @@ function applyGravitySideways() {
 
   tileGrid = newGrid;
 
+  if (movingTiles.length > 0) {
+    playSound(dropSound);
+  }
+
   movingTiles.forEach(({ tile, fromCol, toCol, row }) => {
     const deltaCols = fromCol - toCol; // >0 when moving left
     const offset = deltaCols * distancePerCol; // start right
@@ -1437,6 +1496,7 @@ function rotateGrid(direction) {
   const className =
     direction === 'cw' ? 'rotate-cw' : 'rotate-ccw';
 
+  playSound(rotateSound);
   gridElement.classList.add(className);
 
   setTimeout(() => {
@@ -1573,10 +1633,7 @@ function handleGameCompletion() {
   gameFinished = true;
   stopTimer();
 
-  if (!isMuted && finishSound) {
-    finishSound.currentTime = 0;
-    finishSound.play().catch(() => {});
-  }
+  playSound(winSound);
 
   const message = buildCompletionMessage();
   if (resultTextArea) {
@@ -1667,6 +1724,18 @@ function showCompletionMessage() {
   setTimeout(() => {
     resultTextArea.classList.add('active');
   }, 10);
+}
+
+// ===== AUDIO HELPER =====
+
+function playSound(audioEl) {
+  if (!audioEl || isMuted) return;
+  try {
+    audioEl.currentTime = 0;
+    audioEl.play().catch(() => {});
+  } catch (e) {
+    // ignore audio errors
+  }
 }
 
 // ===== UTILITIES =====
