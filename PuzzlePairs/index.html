@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0"
+    />
+    <title>Puzzle Pairs</title>
+
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <!-- Audio elements -->
+    <audio id="click-sound" src="click-sound.mp3"></audio>
+    <audio id="match-sound" src="match-sound.mp3"></audio>
+    <audio id="fail-sound" src="fail-sound.mp3"></audio>
+    <audio id="finish-sound" src="finish-sound.mp3"></audio>
+
+    <!-- Dark mode toggle -->
+    <button
+      id="mode-toggle"
+      aria-label="Toggle dark/light mode"
+    >
+      ☀️
+    </button>
+
+    <!-- Mute toggle -->
+    <button id="mute-button" aria-label="Toggle sound">
+      🔇 Mute
+    </button>
+
+    <main id="puzzle-pairs-game">
+      <h1>Puzzle Pairs</h1>
+
+      <!-- Daily rulebreakers banner -->
+      <section id="rulebreakers-banner" aria-label="Today’s rulebreakers">
+        <h3>Today’s Rulebreakers</h3>
+        <ul id="rulebreakers-list"></ul>
+      </section>
+
+      <!-- HUD -->
+      <section id="hud" aria-label="Game stats">
+        <div id="timer">Time: 0s</div>
+        <div class="stat">
+          Pairs Found:
+          <span id="pairs-found">0</span>/12
+        </div>
+        <div class="stat">
+          Guesses:
+          <span id="total-guesses">0</span>
+        </div>
+        <div class="stat">
+          Incorrect:
+          <span id="incorrect-guesses">0</span>
+        </div>
+        <div class="stat">
+          Scans Used:
+          <span id="scan-uses">0</span>
+        </div>
+        <div class="stat">
+          Rotations:
+          <span id="rotations">0</span>
+        </div>
+      </section>
+
+      <!-- Grid container -->
+      <section
+        id="grid-container"
+        aria-label="Puzzle grid"
+      >
+        <div id="tile-grid"></div>
+
+        <!-- Start overlay -->
+        <div id="start-overlay">
+          <button id="start-game-button">
+            Start Game
+          </button>
+        </div>
+      </section>
+
+      <!-- Action buttons -->
+      <div class="button-row" aria-label="Main actions">
+        <button id="guess-button">Make a Guess</button>
+        <button id="new-game-button">New Game</button>
+      </div>
+
+      <!-- Status text -->
+      <div
+        id="status-message"
+        role="status"
+        aria-live="polite"
+      >
+        Select a scanner shape, then click where its
+        top-left square should go.
+      </div>
+
+      <!-- Polyomino shapes -->
+      <section
+        id="shape-container"
+        aria-label="Scanner shapes"
+      >
+        <h3>Scanner Shapes</h3>
+        <p class="shape-help">
+          Select a shape, then click a tile to place its
+          top-left square. Tiles under the shape are
+          revealed for a short time.
+        </p>
+        <div id="shape-list"></div>
+      </section>
+
+      <!-- Result / share area -->
+      <section
+        aria-label="Game result and sharing"
+      >
+        <textarea
+          id="gameCompletionMessage"
+          style="display: none"
+          readonly
+        ></textarea>
+        <div id="results-buttons">
+          <button
+            id="copyButton"
+            style="display: none"
+          >
+            Copy Result
+          </button>
+          <button
+            id="shareButton"
+            style="display: none"
+          >
+            Share to Twitter
+          </button>
+        </div>
+      </section>
+
+      <!-- Instructions -->
+      <section
+        id="instructions-container"
+        aria-label="How to play"
+      >
+        <button id="instructions-toggle">
+          Show Instructions
+        </button>
+        <div id="instructions" style="display: none">
+          <h3>How to play Puzzle Pairs</h3>
+          <ul>
+            <li>
+              The 5×5 grid hides 12 matching pairs of
+              icons, plus 1 unpaired icon.
+            </li>
+            <li>
+              Under the grid are up to 6 polyomino scanner
+              shapes (2–4 squares each).
+            </li>
+            <li>
+              On your turn you can either:
+              <ul>
+                <li>
+                  Place one scanner on the grid to reveal
+                  all tiles under it for a short time, or
+                </li>
+                <li>
+                  Click
+                  <strong>Make a Guess</strong> and choose
+                  2 tiles to flip.
+                </li>
+              </ul>
+            </li>
+            <li>
+              If your guess is a matching pair, those
+              tiles disappear and any tiles above fall
+              down.
+            </li>
+            <li>
+              Rotations and gravity can change depending
+              on today’s rulebreakers.
+            </li>
+            <li>
+              If your guess is wrong, your miss counter
+              increases. Some rulebreakers may change how
+              scanners are awarded.
+            </li>
+            <li>
+              After each successful match you may gain a
+              scanner, as long as you have fewer than 6
+              (unless a rulebreaker says otherwise).
+            </li>
+            <li>
+              The aim is to find all 12 pairs in as few
+              guesses as possible.
+            </li>
+          </ul>
+        </div>
+      </section>
+    </main>
+
+    <!-- Game completion overlay -->
+    <div id="completion-overlay">
+      <div class="completion-dialog">
+        <h2>Puzzle Pairs Completed!</h2>
+        <p id="completion-summary"></p>
+        <button id="completion-new-game">
+          Play Again
+        </button>
+      </div>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>
