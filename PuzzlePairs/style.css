@@ -26,6 +26,9 @@
   --completion-bg: #ffffff;
   --completion-active-bg: #f8f8f8;
   --box-shadow: rgba(0, 0, 0, 0.15);
+
+  /* Approximate per-row vertical step: tile size + gap */
+  --tile-step: 72px;
 }
 
 .dark-mode {
@@ -59,8 +62,7 @@
 /* ===== BASE LAYOUT ===== */
 
 body {
-  font-family: -apple-system, BlinkMacSystemFont, system-ui,
-    sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
   text-align: center;
   padding: 1.5em;
   display: flex;
@@ -68,8 +70,7 @@ body {
   align-items: center;
   background-color: var(--bg-color);
   color: var(--text-color);
-  transition: background-color 0.3s ease,
-    color 0.3s ease;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 #puzzle-pairs-game {
@@ -94,8 +95,7 @@ button {
   font-weight: 600;
   cursor: pointer;
   transition: all 0.2s ease;
-  box-shadow: 0 2px 4px
-    rgba(0, 0, 0, 0.15);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
   font-family: inherit;
   letter-spacing: 0.5px;
 }
@@ -103,14 +103,12 @@ button {
 button:hover {
   background-color: var(--button-hover);
   transform: translateY(-2px);
-  box-shadow: 0 4px 8px
-    rgba(0, 0, 0, 0.2);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 button:active {
   transform: translateY(0);
-  box-shadow: 0 1px 3px
-    rgba(0, 0, 0, 0.12);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
 }
 
 /* Dark mode + mute top buttons */
@@ -176,17 +174,17 @@ button:active {
   grid-template-rows: repeat(5, 64px);
   gap: 8px;
   transform-origin: center center;
+  /* Smooth rotation of the whole grid */
+  transition: transform 0.9s ease-in-out;
 }
 
 /* Rotation animation classes */
 
 #tile-grid.rotate-cw {
-  transition: transform 0.9s ease-in-out;
   transform: rotate(90deg);
 }
 
 #tile-grid.rotate-ccw {
-  transition: transform 0.9s ease-in-out;
   transform: rotate(-90deg);
 }
 
@@ -201,20 +199,16 @@ button:active {
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  box-shadow: 0 2px 4px
-    rgba(0, 0, 0, 0.25);
-  transition: background-color 0.2s ease,
-    transform 0.15s ease,
-    box-shadow 0.15s ease,
-    opacity 0.2s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.25);
+  transition: background-color 0.2s ease, transform 0.15s ease,
+    box-shadow 0.15s ease, opacity 0.3s ease, top 0.15s ease;
   user-select: none;
 }
 
 .tile.hidden:hover {
   background-color: var(--tile-hover);
   transform: translateY(-2px);
-  box-shadow: 0 4px 8px
-    rgba(0, 0, 0, 0.35);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.35);
 }
 
 .tile.revealed {
@@ -242,6 +236,21 @@ button:active {
 .tile.matched {
   opacity: 0;
   pointer-events: none;
+}
+
+/* Empty cells (no tile present) – gives visible gaps for gravity */
+
+.tile.empty {
+  background-color: transparent;
+  border: none;
+  box-shadow: none;
+  cursor: default;
+}
+
+.tile.empty:hover {
+  background-color: transparent;
+  transform: none;
+  box-shadow: none;
 }
 
 /* Tile preview highlight when dragging scanners */
@@ -276,6 +285,23 @@ button:active {
 
 .shake {
   animation: shake 0.3s ease;
+}
+
+/* Smooth falling animation for gravity */
+
+@keyframes tile-fall {
+  from {
+    transform: translateY(
+      calc(-1 * var(--fall-distance, 1) * var(--tile-step))
+    );
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+.tile.falling-down {
+  animation: tile-fall 0.15s ease-in;
 }
 
 /* ===== START OVERLAY ===== */
@@ -352,12 +378,9 @@ button:active {
   background-color: #ffffff;
   border: 2px solid var(--shape-border);
   cursor: pointer;
-  box-shadow: 0 2px 4px
-    rgba(0, 0, 0, 0.2);
-  transition: transform 0.15s ease,
-    box-shadow 0.15s ease,
-    border-color 0.15s ease,
-    background-color 0.15s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  transition: transform 0.15s ease, box-shadow 0.15s ease,
+    border-color 0.15s ease, background-color 0.15s ease;
 }
 
 .dark-mode .polyomino {
@@ -366,18 +389,12 @@ button:active {
 
 .polyomino:hover {
   transform: translateY(-2px);
-  box-shadow: 0 4px 8px
-    rgba(0, 0, 0, 0.35);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.35);
 }
 
 .polyomino.selected {
   border-color: var(--shape-selected);
-  background-color: rgba(
-    255,
-    213,
-    79,
-    0.14
-  );
+  background-color: rgba(255, 213, 79, 0.14);
 }
 
 .polyomino-grid {
@@ -403,8 +420,56 @@ button:active {
 .drag-ghost {
   opacity: 0.9;
   transform: scale(1.05);
-  box-shadow: 0 4px 10px
-    rgba(0, 0, 0, 0.35);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.35);
+}
+
+/* ===== SCANNER PROGRESS INDICATOR ===== */
+
+#scanner-progress {
+  margin-top: 16px;
+  padding-top: 12px;
+  border-top: 1px solid var(--shape-border);
+}
+
+.progress-label {
+  margin: 0 0 8px 0;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-color);
+}
+
+.progress-dots {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  margin-bottom: 6px;
+}
+
+.progress-dot {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background-color: var(--grid-border);
+  border: 2px solid var(--shape-border);
+  transition: all 0.3s ease;
+}
+
+.progress-dot.filled {
+  background-color: var(--button-bg);
+  border-color: var(--button-bg);
+  box-shadow: 0 0 8px rgba(74, 111, 165, 0.5);
+  transform: scale(1.1);
+}
+
+.dark-mode .progress-dot.filled {
+  box-shadow: 0 0 8px rgba(59, 92, 158, 0.7);
+}
+
+.progress-hint {
+  margin: 0;
+  font-size: 11px;
+  opacity: 0.7;
+  font-style: italic;
 }
 
 /* ===== RESULTS MESSAGE ===== */
@@ -423,9 +488,7 @@ button:active {
   font-size: 14px;
   text-align: left;
   opacity: 0;
-  transition: height 1.2s ease, opacity 1.2s
-      ease,
-    padding 1.2s ease;
+  transition: height 1.2s ease, opacity 1.2s ease, padding 1.2s ease;
   margin: 18px auto 10px;
 }
 
@@ -629,28 +692,50 @@ button:active {
   #instructions {
     font-size: 13px;
   }
+
+  /* Smaller vertical step on mobile: 56px tile + 6px gap */
+  :root {
+    --tile-step: 62px;
+  }
 }
 
-/* Guess selection highlight */
+/* ===== SELECTION (NO GROWTH) ===== */
+
+/* Guess selection highlight: only the edge / glow, no scaling */
 .tile.guess-selected {
-  box-shadow: 0 0 0 3px #ffeb3b,
-    0 0 12px rgba(255, 235, 59, 0.8);
-  transform: scale(1.06);
+  background-color: #fffde7; /* very pale yellow */
+  border-color: #ffeb3b;
+  z-index: 2;
+
+  /* No transform scale here so tile size stays the same */
+  box-shadow:
+    0 0 0 4px #ffeb3b,
+    0 0 18px rgba(255, 235, 59, 0.9),
+    0 0 30px rgba(255, 235, 59, 0.9);
 }
 
 /* For delayed-flip mode: first tile picked but not yet revealed */
 .tile.pending-guess {
-  box-shadow: 0 0 0 2px #ff9800,
-    0 0 8px rgba(255, 152, 0, 0.9);
-  opacity: 0.9;
+  box-shadow:
+    0 0 0 3px #ff9800,
+    0 0 14px rgba(255, 152, 0, 0.9);
+  opacity: 0.95;
 }
 
 .dark-mode .tile.guess-selected {
-  box-shadow: 0 0 0 3px #ffd54f,
-    0 0 14px rgba(255, 213, 79, 0.9);
+  background-color: #3b2f00;
+  border-color: #ffd54f;
+
+  /* No transform scale here either */
+  box-shadow:
+    0 0 0 4px #ffd54f,
+    0 0 20px rgba(255, 213, 79, 0.95),
+    0 0 34px rgba(255, 213, 79, 0.95);
 }
 
 .dark-mode .tile.pending-guess {
-  box-shadow: 0 0 0 2px #ffb74d,
-    0 0 8px rgba(255, 183, 77, 0.9);
+  box-shadow:
+    0 0 0 3px #ffb74d,
+    0 0 14px rgba(255, 183, 77, 0.95);
+  opacity: 0.95;
 }
