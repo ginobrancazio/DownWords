@@ -83,6 +83,37 @@ h1 {
   margin-bottom: 0.5em;
 }
 
+/* ===== MODE SELECTOR ===== */
+
+#mode-selector {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+
+.mode-button {
+  background-color: transparent;
+  color: var(--text-color);
+  border: 1px solid var(--status-border);
+  box-shadow: none;
+  padding: 6px 12px;
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.mode-button:hover {
+  background-color: var(--status-bg);
+  transform: none;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+}
+
+.mode-button.active {
+  background-color: var(--button-bg);
+  color: #ffffff;
+  border-color: var(--button-bg);
+}
+
 /* ===== BUTTONS ===== */
 
 button {
