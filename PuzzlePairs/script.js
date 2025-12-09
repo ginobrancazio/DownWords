@@ -1,8 +1,10 @@
 // ===== RULEBREAKERS CONFIG & DAILY SELECTION =====
 
 const RULEBREAKERS = [
+  // Scanner Reveal Behaviour
   {
     id: 'scannerIconsNotPositions',
+    group: 'Scanner Reveal Behaviour',
     name: 'Scanners Reveal Icons, Not Positions',
     description:
       'Scanners list which icons they cover (e.g. “2× ❤️, 1× ⭐”) but do not flip any tiles.',
@@ -11,7 +13,32 @@ const RULEBREAKERS = [
     }
   },
   {
+    id: 'speedyScanners',
+    group: 'Scanner Reveal Behaviour',
+    name: 'Speedy Scanners',
+    description: 'Scanner reveals last only 1 second instead of 2.',
+    effects: {
+      scannerRevealMs: 1000
+    }
+  },
+
+  // Scanner Reveal Behaviour + Scanner Economy
+  {
+    id: 'chillDay',
+    group: 'Scanner Reveal Behaviour + Scanner Economy',
+    name: 'Chill Day',
+    description:
+      'Scanner reveals last 3 seconds instead of 2, but you only start with 3 scanners.',
+    effects: {
+      scannerRevealMs: 3000,
+      startingScanners: 3
+    }
+  },
+
+  // Scanner Economy
+  {
     id: 'sharedScannerCooldown',
+    group: 'Scanner Economy',
     name: 'Shared Scanner Cooldown',
     description:
       'You start with 3 scanners, but can use only 1 every 5 guesses. All scanners share a cooldown.',
@@ -21,52 +48,8 @@ const RULEBREAKERS = [
     }
   },
   {
-    id: 'gravitySideways',
-    name: 'Gravity Pulls Sideways Today',
-    description:
-      'Instead of falling down, tiles slide sideways to fill gaps after matches.',
-    effects: {
-      gravityDirection: 'left' // actual left/right chosen per day
-    }
-  },
-  {
-    id: 'rotateEveryMatch',
-    name: 'Grid Rotates After Every Match',
-    description:
-      'The grid rotates 90° after every successful match instead of every three.',
-    effects: {
-      rotationTrigger: 'every-match'
-    }
-  },
-  {
-    id: 'noRotation',
-    name: 'Grid Never Rotates Today',
-    description:
-      'The grid does not rotate at all today. Pure memory, no spins.',
-    effects: {
-      rotationDisabled: true
-    }
-  },
-  {
-    id: 'spinAfterScan',
-    name: 'Random 90° Spin After Each Scanner Use',
-    description:
-      'Every time you use a scanner, the grid rotates 90° in a random direction afterward.',
-    effects: {
-      spinAfterScan: true
-    }
-  },
-  {
-    id: 'dominoDay',
-    name: 'Domino Day',
-    description:
-      'All scanners are 2-tile dominoes (either 1×2 or 2×1).',
-    effects: {
-      scannerShapeMode: 'domino-only'
-    }
-  },
-  {
     id: 'oneShotScanners',
+    group: 'Scanner Economy',
     name: 'One-Shot Scanners',
     description:
       'You only get 3 scanners for the entire game and never earn more.',
@@ -78,25 +61,8 @@ const RULEBREAKERS = [
     }
   },
   {
-    id: 'speedyScanners',
-    name: 'Speedy Scanners',
-    description:
-      'Scanner reveals last only 1 second instead of 2.',
-    effects: {
-      scannerRevealMs: 1000
-    }
-  },
-  {
-    id: 'mirrorScanners',
-    name: 'Mirror Scanners',
-    description:
-      'Each scanner also affects the symmetrically opposite tiles, mirrored across the grid centre.',
-    effects: {
-      scannerMirror: true
-    }
-  },
-  {
     id: 'noFreeScanners',
+    group: 'Scanner Economy',
     name: 'No Free Scanners',
     description:
       'You start with 6 scanners, but never earn additional ones from guesses.',
@@ -108,7 +74,83 @@ const RULEBREAKERS = [
     }
   },
   {
+    id: 'earnOnStreaksOnly',
+    group: 'Scanner Economy',
+    name: 'Performance Pay',
+    description:
+      'You only earn scanners when you achieve two correct guesses in a row.',
+    effects: {
+      earnOnStreaksOnly: true,
+      scannersEarnedFromMisses: false
+    }
+  },
+
+  // Gravity Rules
+  {
+    id: 'gravitySideways',
+    group: 'Gravity Rules',
+    name: 'Gravity Pulls Sideways Today',
+    description:
+      'Instead of falling down, tiles slide sideways to fill gaps after matches.',
+    effects: {
+      gravityDirection: 'left' // actual left/right chosen per day
+    }
+  },
+  {
+    id: 'gravityUpwards',
+    group: 'Gravity Rules',
+    name: 'Anti-Gravity Day',
+    description:
+      'Tiles float upward to fill gaps after matches. Gravity is reversed.',
+    effects: {
+      gravityDirection: 'up'
+    }
+  },
+  {
+    id: 'noGravity',
+    group: 'Gravity Rules',
+    name: 'Loose Tiles',
+    description:
+      'Tiles do not move after matches. Any empty spaces remain until tiles are refilled.',
+    effects: {
+      gravityDirection: 'none'
+    }
+  },
+
+  // Rotation Rules
+  {
+    id: 'rotateEveryMatch',
+    group: 'Rotation Rules',
+    name: 'Grid Rotates After Every Match',
+    description:
+      'The grid rotates 90° after every successful match instead of every three.',
+    effects: {
+      rotationTrigger: 'every-match'
+    }
+  },
+  {
+    id: 'noRotation',
+    group: 'Rotation Rules',
+    name: 'Grid Never Rotates Today',
+    description:
+      'The grid does not rotate at all today. Pure memory, no spins.',
+    effects: {
+      rotationDisabled: true
+    }
+  },
+  {
+    id: 'spinAfterScan',
+    group: 'Rotation Rules',
+    name: 'Random 90° Spin After Each Scanner Use',
+    description:
+      'Every time you use a scanner, the grid rotates 90° in a random direction afterward.',
+    effects: {
+      spinAfterScan: true
+    }
+  },
+  {
     id: 'spinOnMiss',
+    group: 'Rotation Rules',
     name: 'Spin on Miss',
     description:
       'The grid rotates 90° every time you make an incorrect guess.',
@@ -118,6 +160,7 @@ const RULEBREAKERS = [
   },
   {
     id: 'fixedSpinDirection',
+    group: 'Rotation Rules',
     name: 'Fixed Spin Direction',
     description:
       'The grid always rotates in the same direction, so you can plan around the spins.',
@@ -126,14 +169,58 @@ const RULEBREAKERS = [
       spinDirection: null
     }
   },
+
+  // Scanner Shape Rules
   {
-    id: 'chillDay',
-    name: 'Chill Day',
+    id: 'dominoDay',
+    group: 'Scanner Shape Rules',
+    name: 'Domino Day',
     description:
-      'Scanner reveals last 3 seconds instead of 2, but you only start with 3 scanners.',
+      'All scanners are 2-tile dominoes (either 1×2 or 2×1).',
     effects: {
-      scannerRevealMs: 3000,
-      startingScanners: 3
+      scannerShapeMode: 'domino-only'
+    }
+  },
+  {
+    id: 'xShapeScanners',
+    group: 'Scanner Shape Rules',
+    name: 'X-Ray Scanners',
+    description:
+      'Using a scanner reveals the selected tile plus the four tiles adjacent to it (up, down, left, right).',
+    effects: {
+      scannerShapeMode: 'x-shape'
+    }
+  },
+  {
+    id: 'ringScanners',
+    group: 'Scanner Shape Rules',
+    name: 'Ring of Clarity',
+    description:
+      'Using a scanner reveals all tiles around the selected tile, but not the tile in the middle.',
+    effects: {
+      scannerShapeMode: 'ring'
+    }
+  },
+
+  // Scanner Targeting Rules
+  {
+    id: 'mirrorScanners',
+    group: 'Scanner Targeting Rules',
+    name: 'Mirror Scanners',
+    description:
+      'Each scanner also affects the symmetrically opposite tiles, mirrored across the grid centre.',
+    effects: {
+      scannerMirror: true
+    }
+  },
+  {
+    id: 'randomScatterScan',
+    group: 'Scanner Targeting Rules',
+    name: 'Scattershot',
+    description:
+      'Each scanner reveals three random tiles anywhere on the board, ignoring location or adjacency.',
+    effects: {
+      scannerShapeMode: 'random-scatter'
     }
   }
 ];
@@ -156,7 +243,8 @@ function hashStringToSeed(str) {
   return hash >>> 0;
 }
 
-// Choose N rulebreakers in a deterministic order for a given date
+// Choose 2 rulebreakers in a deterministic order for a given date,
+// never from the same group.
 function getDailyRulebreakers(date = new Date()) {
   const dayStr = date.toISOString().slice(0, 10); // YYYY-MM-DD
   const seed = hashStringToSeed(dayStr);
@@ -168,9 +256,25 @@ function getDailyRulebreakers(date = new Date()) {
     [pool[i], pool[j]] = [pool[j], pool[i]];
   }
 
-  // Example policy: pick 2–3 rulebreakers per day
-  const count = 2 + Math.floor(rng() * 2); // 2 or 3
-  const chosen = pool.slice(0, count);
+  const cloneRb = (rb) => ({
+    ...rb,
+    effects: { ...rb.effects }
+  });
+
+  const chosen = [];
+  const usedGroups = new Set();
+
+  for (const rb of pool) {
+    if (!rb.group) continue;
+    if (chosen.length === 0) {
+      chosen.push(cloneRb(rb));
+      usedGroups.add(rb.group);
+    } else if (!usedGroups.has(rb.group)) {
+      chosen.push(cloneRb(rb));
+      usedGroups.add(rb.group);
+      break;
+    }
+  }
 
   // If fixedSpinDirection is active, decide CW vs CCW per day
   const fixed = chosen.find(
@@ -199,6 +303,9 @@ class PuzzlePairsGame {
   constructor() {
     this.gridSize = 5;
     this.maxPolyominos = 6;
+
+    // Game mode: 'casual' (no rulebreakers) or 'challenge' (daily rulebreakers)
+    this.mode = 'challenge';
 
     // Daily rulebreakers
     this.dailyRulebreakers = getDailyRulebreakers();
@@ -243,7 +350,7 @@ class PuzzlePairsGame {
     this.isDarkMode = false;
 
     this.activeEffects = this.computeActiveEffects(
-      this.dailyRulebreakers
+      this.mode === 'challenge' ? this.dailyRulebreakers : []
     );
 
     this.init();
@@ -268,7 +375,8 @@ class PuzzlePairsGame {
       fixedSpinDirection: false,
       spinDirection: null, // 'clockwise'|'counterclockwise'
       scannerShapeMode: 'normal',
-      scannerMirror: false
+      scannerMirror: false,
+      earnOnStreaksOnly: false
     };
 
     for (const rb of rulebreakers) {
@@ -304,6 +412,9 @@ class PuzzlePairsGame {
     // Scanner cooldown state
     this.scannerCooldownRemaining = 0;
 
+    // For earnOnStreaksOnly
+    this.correctStreak = 0;
+
     this.initGrid();
 
     // Initial scanners per rulebreakers
@@ -328,13 +439,20 @@ class PuzzlePairsGame {
     if (!listEl) return;
     listEl.innerHTML = '';
 
+    if (this.mode === 'casual') {
+      const li = document.createElement('li');
+      li.textContent =
+        'Casual mode: no rulebreakers. Classic rules apply.';
+      listEl.appendChild(li);
+      return;
+    }
+
     if (
       !this.dailyRulebreakers ||
       this.dailyRulebreakers.length === 0
     ) {
       const li = document.createElement('li');
-      li.textContent =
-        'No rulebreakers today. Classic rules apply.';
+      li.textContent = 'No active rulebreakers today.';
       listEl.appendChild(li);
       return;
     }
@@ -379,14 +497,33 @@ class PuzzlePairsGame {
       this.activeEffects.scannersMaxTotal ?? this.maxPolyominos;
     if (this.availablePolyominos.length >= maxTotal) return;
 
+    const mode = this.activeEffects.scannerShapeMode;
     let shape;
 
-    if (this.activeEffects.scannerShapeMode === 'domino-only') {
+    if (mode === 'domino-only') {
       const dominos = [
         [[1, 1]], // horizontal
         [[1], [1]] // vertical
       ];
-      shape = dominos[Math.floor(Math.random() * dominos.length)];
+      shape =
+        dominos[Math.floor(Math.random() * dominos.length)];
+    } else if (mode === 'x-shape') {
+      // Plus pattern for display
+      shape = [
+        [0, 1, 0],
+        [1, 1, 1],
+        [0, 1, 0]
+      ];
+    } else if (mode === 'ring') {
+      // Ring around centre for display
+      shape = [
+        [1, 1, 1],
+        [1, 0, 1],
+        [1, 1, 1]
+      ];
+    } else if (mode === 'random-scatter') {
+      // Three separated cells as a visual hint
+      shape = [[1, 0, 1, 0, 1]];
     } else {
       shape =
         this.polyominoShapes[
@@ -409,12 +546,10 @@ class PuzzlePairsGame {
       .getElementById('new-game-button')
       .addEventListener('click', () => this.newGame());
 
-    // Completion overlay button becomes "Close"
     const completionBtn = document.getElementById(
       'completion-new-game'
     );
     if (completionBtn) {
-      completionBtn.textContent = 'Close';
       completionBtn.addEventListener('click', () =>
         this.closeCompletionOverlay()
       );
@@ -450,6 +585,33 @@ class PuzzlePairsGame {
     gridEl.addEventListener('click', (e) =>
       this.handleGridClick(e)
     );
+
+    // Mode selector buttons
+    document.querySelectorAll('.mode-button').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const mode = btn.dataset.mode;
+        this.setMode(mode);
+      });
+    });
+  }
+
+  setMode(mode) {
+    if (mode !== 'casual' && mode !== 'challenge') return;
+    if (this.mode === mode) return;
+
+    this.mode = mode;
+
+    // Update button appearance
+    document
+      .querySelectorAll('.mode-button')
+      .forEach((btn) => {
+        btn.classList.toggle(
+          'active',
+          btn.dataset.mode === this.mode
+        );
+      });
+
+    this.newGame();
   }
 
   startGame() {
@@ -481,6 +643,17 @@ class PuzzlePairsGame {
       'none';
     document.getElementById('shareButton').style.display =
       'none';
+
+    // Recompute daily rulebreakers / effects based on mode
+    if (this.mode === 'challenge') {
+      this.dailyRulebreakers = getDailyRulebreakers();
+      this.activeEffects = this.computeActiveEffects(
+        this.dailyRulebreakers
+      );
+    } else {
+      this.dailyRulebreakers = [];
+      this.activeEffects = this.computeActiveEffects([]);
+    }
 
     this.init();
   }
@@ -549,6 +722,25 @@ class PuzzlePairsGame {
         }
       });
 
+      return;
+    }
+
+    // Streak-based earning (earnOnStreaksOnly)
+    if (this.activeEffects.earnOnStreaksOnly) {
+      if (labelEl) labelEl.textContent = 'Scanner streak:';
+      if (hintEl) {
+        hintEl.textContent =
+          'Earn a scanner after 2+ correct matches in a row.';
+      }
+
+      const streak = this.correctStreak || 0;
+      dots.forEach((dot, index) => {
+        if (index < Math.min(3, streak)) {
+          dot.classList.add('filled');
+        } else {
+          dot.classList.remove('filled');
+        }
+      });
       return;
     }
 
@@ -621,7 +813,10 @@ class PuzzlePairsGame {
           tileEl.appendChild(iconEl);
 
           // (Optional) falling animation only for downward gravity
-          if (prevPos && this.activeEffects.gravityDirection === 'down') {
+          if (
+            prevPos &&
+            this.activeEffects.gravityDirection === 'down'
+          ) {
             const oldPos = prevPos.get(tileData.uid);
             if (
               oldPos &&
@@ -694,7 +889,7 @@ class PuzzlePairsGame {
 
     if (this.selectedPolyomino !== null) {
       this.updateStatus(
-        "Click where to place the scanner's top-left."
+        "Click where to place the scanner's centre."
       );
       this.playSound('click-sound');
     } else {
@@ -716,15 +911,74 @@ class PuzzlePairsGame {
       return;
     }
 
+    const mode = this.activeEffects.scannerShapeMode;
+    if (mode === 'random-scatter') {
+      // No meaningful preview for random scatter
+      this.clearPreview();
+      return;
+    }
+
     this.showPolyominoPreview(row, col);
   }
 
   showPolyominoPreview(startRow, startCol) {
     this.clearPreview();
+    const tiles = document.querySelectorAll('.tile');
+    const mode = this.activeEffects.scannerShapeMode;
 
+    const inBounds = (r, c) =>
+      r >= 0 && r < this.gridSize && c >= 0 && c < this.gridSize;
+
+    if (mode === 'x-shape') {
+      const coords = [
+        [startRow, startCol],
+        [startRow - 1, startCol],
+        [startRow + 1, startCol],
+        [startRow, startCol - 1],
+        [startRow, startCol + 1]
+      ];
+      tiles.forEach((tileEl) => {
+        const row = parseInt(tileEl.dataset.row);
+        const col = parseInt(tileEl.dataset.col);
+        if (
+          coords.some(
+            ([r, c]) => r === row && c === col && inBounds(r, c)
+          )
+        ) {
+          tileEl.classList.add('preview');
+        }
+      });
+      return;
+    }
+
+    if (mode === 'ring') {
+      const coords = [
+        [startRow - 1, startCol - 1],
+        [startRow - 1, startCol],
+        [startRow - 1, startCol + 1],
+        [startRow, startCol - 1],
+        [startRow, startCol + 1],
+        [startRow + 1, startCol - 1],
+        [startRow + 1, startCol],
+        [startRow + 1, startCol + 1]
+      ];
+      tiles.forEach((tileEl) => {
+        const row = parseInt(tileEl.dataset.row);
+        const col = parseInt(tileEl.dataset.col);
+        if (
+          coords.some(
+            ([r, c]) => r === row && c === col && inBounds(r, c)
+          )
+        ) {
+          tileEl.classList.add('preview');
+        }
+      });
+      return;
+    }
+
+    // Default rectangular preview for normal/domino/poly shapes
     const poly =
       this.availablePolyominos[this.selectedPolyomino];
-    const tiles = document.querySelectorAll('.tile');
 
     tiles.forEach((tileEl) => {
       const row = parseInt(tileEl.dataset.row);
@@ -759,7 +1013,11 @@ class PuzzlePairsGame {
     const { row, col, tileEl } = this.getTileFromEvent(e);
     if (row === null || !tileEl) return;
 
-    if (!this.grid[row][col]) return;
+    if (!this.grid[row][col]) {
+      // Allow scanners to be centred on empty cells for special shapes,
+      // but ignore empty clicks for guessing.
+      if (this.selectedPolyomino === null) return;
+    }
 
     const key = `${row},${col}`;
 
@@ -774,6 +1032,8 @@ class PuzzlePairsGame {
   }
 
   handleTileGuess(row, col, tileEl, key) {
+    if (!this.grid[row][col]) return;
+
     // Check if already selected
     const existingIdx = this.selectedGuesses.findIndex(
       (g) => g.key === key
@@ -817,6 +1077,7 @@ class PuzzlePairsGame {
   }
 
   placePolyomino(startRow, startCol) {
+    const mode = this.activeEffects.scannerShapeMode;
     const poly =
       this.availablePolyominos[this.selectedPolyomino];
 
@@ -832,42 +1093,105 @@ class PuzzlePairsGame {
       return;
     }
 
-    if (
-      !this.canPlacePolyomino(startRow, startCol, poly.shape)
-    ) {
-      this.updateStatus('Cannot place scanner there!');
-      this.shakeGrid();
-      return;
-    }
-
-    // Collect all affected coordinates (including mirror)
     const coords = [];
+    const inBounds = (r, c) =>
+      r >= 0 && r < this.gridSize && c >= 0 && c < this.gridSize;
+
     const addCoord = (r, c) => {
-      if (
-        r < 0 ||
-        r >= this.gridSize ||
-        c < 0 ||
-        c >= this.gridSize
-      )
-        return;
+      if (!inBounds(r, c)) return;
       if (!this.grid[r][c]) return;
       coords.push({ row: r, col: c });
     };
 
-    for (let r = 0; r < poly.shape.length; r++) {
-      for (let c = 0; c < poly.shape[0].length; c++) {
-        if (poly.shape[r][c] === 1) {
-          const gr = startRow + r;
-          const gc = startCol + c;
-          addCoord(gr, gc);
+    // Determine affected tiles based on scanner mode
+    if (mode === 'random-scatter') {
+      const all = [];
+      for (let r = 0; r < this.gridSize; r++) {
+        for (let c = 0; c < this.gridSize; c++) {
+          if (this.grid[r][c]) all.push({ row: r, col: c });
+        }
+      }
+      if (all.length === 0) {
+        this.updateStatus('No tiles to scan.');
+        this.shakeGrid();
+        return;
+      }
 
-          if (this.activeEffects.scannerMirror) {
-            const mr = this.gridSize - 1 - gr;
-            const mc = this.gridSize - 1 - gc;
-            addCoord(mr, mc);
+      // Shuffle and take up to 3 distinct tiles
+      for (let i = all.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [all[i], all[j]] = [all[j], all[i]];
+      }
+      const chosen = all.slice(0, Math.min(3, all.length));
+      chosen.forEach((pos) => coords.push(pos));
+    } else if (mode === 'x-shape') {
+      if (!inBounds(startRow, startCol)) {
+        this.updateStatus('Cannot place scanner there!');
+        this.shakeGrid();
+        return;
+      }
+      const pattern = [
+        [0, 0],
+        [-1, 0],
+        [1, 0],
+        [0, -1],
+        [0, 1]
+      ];
+      pattern.forEach(([dr, dc]) => {
+        addCoord(startRow + dr, startCol + dc);
+      });
+    } else if (mode === 'ring') {
+      if (!inBounds(startRow, startCol)) {
+        this.updateStatus('Cannot place scanner there!');
+        this.shakeGrid();
+        return;
+      }
+      const pattern = [
+        [-1, -1],
+        [-1, 0],
+        [-1, 1],
+        [0, -1],
+        [0, 1],
+        [1, -1],
+        [1, 0],
+        [1, 1]
+      ];
+      pattern.forEach(([dr, dc]) => {
+        addCoord(startRow + dr, startCol + dc);
+      });
+    } else {
+      // Normal / domino / generic polyomino: top-left placement
+      if (
+        !this.canPlacePolyomino(startRow, startCol, poly.shape)
+      ) {
+        this.updateStatus('Cannot place scanner there!');
+        this.shakeGrid();
+        return;
+      }
+
+      for (let r = 0; r < poly.shape.length; r++) {
+        for (let c = 0; c < poly.shape[0].length; c++) {
+          if (poly.shape[r][c] === 1) {
+            const gr = startRow + r;
+            const gc = startCol + c;
+            addCoord(gr, gc);
           }
         }
       }
+    }
+
+    // Mirror effect if active (not used with random-scatter in daily selection,
+    // but kept generic here)
+    if (this.activeEffects.scannerMirror) {
+      const mirrored = [];
+      coords.forEach(({ row, col }) => {
+        const mr = this.gridSize - 1 - row;
+        const mc = this.gridSize - 1 - col;
+        if (inBounds(mr, mc) && this.grid[mr][mc]) {
+          mirrored.push({ row: mr, col: mc });
+        }
+      });
+      coords.push(...mirrored);
     }
 
     // Deduplicate coords
@@ -879,6 +1203,12 @@ class PuzzlePairsGame {
         seen.add(k);
         uniqueCoords.push(pos);
       }
+    }
+
+    if (uniqueCoords.length === 0) {
+      this.updateStatus('Scanner found no tiles.');
+      this.shakeGrid();
+      return;
     }
 
     this.scanUses++;
@@ -1011,6 +1341,8 @@ class PuzzlePairsGame {
         this.grid[guess2.row][guess2.col] = null;
         this.pairsFound++;
 
+        this.correctStreak += 1;
+
         this.gameHistory.push({
           type: 'match',
           correct: true
@@ -1023,6 +1355,25 @@ class PuzzlePairsGame {
         this.flippedTiles.delete(guess2.key);
 
         this.renderGrid();
+
+        // Award scanners for streaks if rulebreaker is active
+        if (this.activeEffects.earnOnStreaksOnly) {
+          if (this.correctStreak >= 2) {
+            const beforeCount = this.availablePolyominos.length;
+            this.addPolyomino();
+            if (
+              this.availablePolyominos.length >
+              beforeCount
+            ) {
+              this.renderPolyominos();
+              this.updateStatus(
+                'Scanner earned from match streak!'
+              );
+            }
+          }
+        }
+
+        this.updateProgressIndicator();
 
         // After a short delay, apply gravity, then maybe rotate, then gravity again
         setTimeout(() => {
@@ -1075,6 +1426,8 @@ class PuzzlePairsGame {
       } else {
         // No match
         this.incorrectGuesses++;
+        this.correctStreak = 0;
+
         this.gameHistory.push({
           type: 'match',
           correct: false
@@ -1092,7 +1445,8 @@ class PuzzlePairsGame {
         // Award polyomino every 3 incorrect guesses, if allowed
         if (
           this.incorrectGuesses % 3 === 0 &&
-          this.activeEffects.scannersEarnedFromMisses !== false
+          this.activeEffects.scannersEarnedFromMisses !==
+            false
         ) {
           this.addPolyomino();
           this.renderPolyominos();
@@ -1136,11 +1490,17 @@ class PuzzlePairsGame {
   }
 
   applyGravity(callback) {
+    const dir = this.activeEffects.gravityDirection || 'down';
+
+    if (dir === 'none') {
+      // Gravity disabled
+      if (callback) callback();
+      return;
+    }
+
     const applyGravityStep = () => {
       const prevGrid = this.cloneGrid();
       let changed = false;
-
-      const dir = this.activeEffects.gravityDirection || 'down';
 
       if (dir === 'down') {
         // Vertical gravity (default)
@@ -1155,6 +1515,20 @@ class PuzzlePairsGame {
               !this.grid[row + 1][col]
             ) {
               this.grid[row + 1][col] = this.grid[row][col];
+              this.grid[row][col] = null;
+              changed = true;
+            }
+          }
+        }
+      } else if (dir === 'up') {
+        // Anti-gravity: tiles float upwards
+        for (let col = 0; col < this.gridSize; col++) {
+          for (let row = 1; row < this.gridSize; row++) {
+            if (
+              this.grid[row][col] &&
+              !this.grid[row - 1][col]
+            ) {
+              this.grid[row - 1][col] = this.grid[row][col];
               this.grid[row][col] = null;
               changed = true;
             }
@@ -1309,80 +1683,91 @@ class PuzzlePairsGame {
     }, 800);
   }
 
-  generateResultsText() {
-    const elapsed = Math.floor(
-      (Date.now() - this.gameStartTime) / 1000
-    );
-    const minutes = Math.floor(elapsed / 60);
-    const seconds = elapsed % 60;
-    const timeStr =
-      minutes > 0 ? `${minutes}m ${seconds}s` : `${seconds}s`;
+ generateResultsText() {
+  const elapsed = Math.floor(
+    (Date.now() - this.gameStartTime) / 1000
+  );
+  const minutes = Math.floor(elapsed / 60);
+  const seconds = elapsed % 60;
+  const timeStr =
+    minutes > 0 ? `${minutes}m ${seconds}s` : `${seconds}s`;
 
-    const accuracy =
-      this.totalGuesses > 0
-        ? Math.round(
-            ((this.totalGuesses -
-              this.incorrectGuesses) /
-              this.totalGuesses) *
-              100
-          )
-        : 0;
+  const accuracy =
+    this.totalGuesses > 0
+      ? Math.round(
+          ((this.totalGuesses - this.incorrectGuesses) /
+            this.totalGuesses) *
+            100
+        )
+      : 0;
 
-    let performance;
-    if (this.incorrectGuesses === 0)
-      performance = '🏆 PERFECT!';
-    else if (this.incorrectGuesses <= 3)
-      performance = '⭐ EXCELLENT!';
-    else if (this.incorrectGuesses <= 6)
-      performance = '👍 GREAT!';
-    else if (this.incorrectGuesses <= 10)
-      performance = '✓ GOOD!';
-    else performance = '✓ COMPLETE!';
+  // Simple 1–6 “attempt” style score (lower is better)
+  const scoreFromIncorrect = (incorrect) => {
+    if (incorrect === 0) return 1;
+    if (incorrect <= 2) return 2;
+    if (incorrect <= 4) return 3;
+    if (incorrect <= 7) return 4;
+    if (incorrect <= 10) return 5;
+    return 6;
+  };
+  const score = scoreFromIncorrect(this.incorrectGuesses);
+  const maxScore = 6;
 
-    let text = `${performance}\n\n`;
-    text += `🧩 PUZZLE PAIRS RESULTS\n`;
-    text += `━━━━━━━━━━━━━━━━━━━━\n\n`;
-    text += `Time: ${timeStr}\n`;
-    text += `Total Guesses: ${this.totalGuesses}\n`;
-    text += `Incorrect: ${this.incorrectGuesses}\n`;
-    text += `Accuracy: ${accuracy}%\n`;
-    text += `Scans Used: ${this.scanUses}\n`;
-    text += `Rotations: ${this.rotations}\n\n`;
-
-    text += `🎯 GAMEPLAY SUMMARY\n`;
-    text += `━━━━━━━━━━━━━━━━━━━━\n`;
-
-    let matchCount = 0;
-    for (const event of this.gameHistory) {
-      if (event.type === 'scan') {
-        text += `🔍 Scanned ${event.revealed} tiles\n`;
-      } else if (event.type === 'match') {
-        if (event.correct) {
-          matchCount++;
-          text += `✓ Match ${matchCount}/12 found!\n`;
-        } else {
-          text += `✗ Incorrect guess\n`;
-        }
-      } else if (event.type === 'rotation') {
-        text += `🔄 Grid rotated ${event.direction}\n`;
-      }
-    }
-
-    text += `\n━━━━━━━━━━━━━━━━━━━━\n`;
-    text += `Share your score: ${this.incorrectGuesses} incorrect in ${timeStr}!`;
-
-    const textarea = document.getElementById(
-      'gameCompletionMessage'
-    );
-    textarea.value = text;
-    textarea.style.display = 'block';
-    textarea.classList.add('active');
-
-    document.getElementById('copyButton').style.display =
-      'inline-block';
-    document.getElementById('shareButton').style.display =
-      'inline-block';
+  // Visual score bar: more green squares = better
+  const filled = maxScore - score + 1; // 1→6, 6→1
+  let bar = '';
+  for (let i = 0; i < maxScore; i++) {
+    bar += i < filled ? '🟩' : '⬛';
   }
+
+  const playDate = this.gameStartTime
+    ? new Date(this.gameStartTime)
+    : new Date();
+  const dayStr = playDate.toISOString().slice(0, 10);
+
+  const modeLabel =
+    this.mode === 'challenge' ? 'Daily Challenge' : 'Casual';
+
+  const rbNames =
+    this.mode === 'challenge' && this.dailyRulebreakers.length
+      ? this.dailyRulebreakers.map((rb) => rb.name).join(' + ')
+      : 'None';
+
+  // --- Compact, copy‑friendly summary (3–4 lines) ---
+  const lines = [];
+
+  // Line 1: header
+  lines.push(`🧩 Puzzle Pairs — ${modeLabel}`);
+
+  // Line 2: date + core stats (Wordle-style count)
+  lines.push(
+    `${dayStr} • ${score}/${maxScore} • ⏱ ${timeStr} • ❌ ${this.incorrectGuesses} • 🔍 ${this.scanUses}`
+  );
+
+  // Line 3: visual bar
+  lines.push(bar + `  (${accuracy}% accuracy)`);
+
+  // Line 4: rulebreakers (only if challenge mode)
+  if (this.mode === 'challenge') {
+    lines.push(`RB: ${rbNames}`);
+  }
+
+  const text = lines.join('\n');
+
+  const textarea = document.getElementById(
+    'gameCompletionMessage'
+  );
+  textarea.value = text;
+  textarea.style.display = 'block';
+
+  // Auto-grow animation
+  textarea.classList.add('active');
+
+  document.getElementById('copyButton').style.display =
+    'inline-block';
+  document.getElementById('shareButton').style.display =
+    'inline-block';
+}
 
   copyResults() {
     const textarea = document.getElementById(
