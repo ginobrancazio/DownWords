@@ -94,6 +94,23 @@
         <button id="new-game-button">New Game</button>
       </div>
 
+       <!-- Result / share area -->
+      <section aria-label="Game result and sharing">
+        <textarea
+          id="gameCompletionMessage"
+          style="display: none"
+          readonly
+        ></textarea>
+        <div id="results-buttons">
+          <button id="copyButton" style="display: none">
+            Copy Result
+          </button>
+          <button id="shareButton" style="display: none">
+            Share to Twitter
+          </button>
+        </div>
+      </section>
+
       <!-- Status text -->
       <div
         id="status-message"
@@ -125,22 +142,6 @@
         </div>
       </section>
 
-      <!-- Result / share area -->
-      <section aria-label="Game result and sharing">
-        <textarea
-          id="gameCompletionMessage"
-          style="display: none"
-          readonly
-        ></textarea>
-        <div id="results-buttons">
-          <button id="copyButton" style="display: none">
-            Copy Result
-          </button>
-          <button id="shareButton" style="display: none">
-            Share to Twitter
-          </button>
-        </div>
-      </section>
 
       <!-- Instructions -->
       <section id="instructions-container" aria-label="How to play">
