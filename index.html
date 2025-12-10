@@ -76,59 +76,73 @@
   <button id="copyButton" style="display:none;">Copy</button>
   <button id="shareButton" style="display:none;">Share to Twitter</button>
     
-<!-- Game instructions with toggle functionality -->
-<div id="instructions-container">
-  <button id="instructions-toggle">Show Instructions</button>
-  <div id="instructions" style="display: none;">
-    <h3>Instructions:</h3>
-    <ul>
-      <li>There are 6 hidden words in the grid</li>
-      <li>Each word runs vertically, one letter in each of the rows (top to bottom), but the letters are not necessarily connected.</li>
-      <li>Each letter is only used once.</li>
-      <li>Five of the words are connected by a theme</li>
-      <li>The remaining word is the theme that connects the other words</li>
-    </ul>
-    
-    <!-- Example gameplay animation -->
-    <p>Example:</p>
-    <img src="Down Words.gif" alt="Example Gameplay" class="instructions-gif" />
+  <!-- Game instructions with toggle functionality -->
+  <div id="instructions-container">
+    <button id="instructions-toggle">Show Instructions</button>
+    <div id="instructions" style="display: none;">
+      <h3>Instructions:</h3>
+      <ul>
+        <li>There are 6 hidden words in the grid</li>
+        <li>Each word runs vertically, one letter in each of the rows (top to bottom), but the letters are not necessarily connected.</li>
+        <li>Each letter is only used once.</li>
+        <li>Five of the words are connected by a theme</li>
+        <li>The remaining word is the theme that connects the other words</li>
+      </ul>
+      
+      <!-- Example gameplay animation -->
+      <p>Example:</p>
+      <img src="Down Words.gif" alt="Example Gameplay" class="instructions-gif" />
+    </div>
   </div>
-</div>
 
-<!-- Puzzle attribution and submission link -->
-<div id="homepage">
-  <div class="puzzle-info-card">
-    <div class="puzzle-creator">
-      <div class="avatar-container">
-        <div class="avatar">
-          <span id="puzzle-setter-initial">K</span>
+  <!-- Puzzle attribution and submission link -->
+  <div id="homepage">
+    <div class="puzzle-info-card">
+      <div class="puzzle-creator">
+        <div class="avatar-container">
+          <div class="avatar">
+            <span id="puzzle-setter-initial">K</span>
+          </div>
+        </div>
+        <div class="creator-details">
+          <h3>Today's puzzle</h3>
+          <p>Created by <span id="puzzle-setter" class="creator-name">Kit Cat</span></p>
         </div>
       </div>
-      <div class="creator-details">
-        <h3>Today's puzzle</h3>
-        <p>Created by <span id="puzzle-setter" class="creator-name">Kit Cat</span></p>
+      <div class="puzzle-submission">
+        <p>Have a great idea for a puzzle?</p>
+        <a href="https://forms.gle/swMG478WZwXgjkRS6" target="_blank" class="submit-button">Submit your own</a>
       </div>
     </div>
-    <div class="puzzle-submission">
-      <p>Have a great idea for a puzzle?</p>
-      <a href="https://forms.gle/swMG478WZwXgjkRS6" target="_blank" class="submit-button">Submit your own</a>
+  </div>
+  
+  <!-- Other puzzles section -->
+  <div id="Puzzles" class="other-puzzles-section">
+    <h3>More Games</h3>
+    <div class="puzzle-cards-container">
+      <a href="https://downwordsgame.com/wordfinder/" target="_blank" class="puzzle-card">
+        <div class="new-badge">NEW</div>
+        <div class="puzzle-icon">🔍</div>
+        <h4>Word Finder</h4>
+        <p>Find the biggest words in the grid</p>
+      </a>
+
+      <!-- New enticing button linking to Puzzle Pairs -->
+      <a
+        href="https://downwordsgame.com/PuzzlePairs/"
+        target="_blank"
+        class="puzzle-card"
+      >
+        <div class="new-badge">DAILY</div>
+        <div class="puzzle-icon">🧩</div>
+        <h4>Puzzle Pairs</h4>
+        <p>
+          Match hidden pairs on a shifting grid with wild daily rulebreakers.
+        </p>
+      </a>
+      <!-- You can add more puzzle cards here in the future -->
     </div>
   </div>
-</div>
-  
-<!-- Other puzzles section -->
-<div id="Puzzles" class="other-puzzles-section">
-  <h3>More Games</h3>
-  <div class="puzzle-cards-container">
-    <a href="https://downwordsgame.com/wordfinder/" target="_blank" class="puzzle-card">
-      <div class="new-badge">NEW</div>
-      <div class="puzzle-icon">🔍</div>
-      <h4>Word Finder</h4>
-      <p>Find the biggest words in the grid</p>
-    </a>
-    <!-- You can add more puzzle cards here in the future -->
-  </div>
-</div>
   
   <!-- Footer with contact and copyright information -->
   <div id="linkedin-connect" style="text-align: center; margin-top: 20px;">
