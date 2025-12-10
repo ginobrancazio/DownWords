@@ -243,6 +243,14 @@ function hashStringToSeed(str) {
   return hash >>> 0;
 }
 
+// ===== ANALYTICS HELPER =====
+
+function trackEvent(eventName, params = {}) {
+  if (typeof gtag === 'function') {
+    gtag('event', eventName, params);
+  }
+}
+
 // Choose 2 rulebreakers in a deterministic order for a given date,
 // never from the same group.
 function getDailyRulebreakers(date = new Date()) {
@@ -611,6 +619,10 @@ class PuzzlePairsGame {
         );
       });
 
+    trackEvent('mode_change', {
+      mode: this.mode
+    });
+
     this.newGame();
   }
 
@@ -623,6 +635,10 @@ class PuzzlePairsGame {
       () => this.updateTimer(),
       1000
     );
+
+    trackEvent('game_start', {
+      mode: this.mode
+    });
   }
 
   newGame() {
@@ -654,6 +670,10 @@ class PuzzlePairsGame {
       this.dailyRulebreakers = [];
       this.activeEffects = this.computeActiveEffects([]);
     }
+
+    trackEvent('new_game', {
+      mode: this.mode
+    });
 
     this.init();
   }
@@ -1180,8 +1200,7 @@ class PuzzlePairsGame {
       }
     }
 
-    // Mirror effect if active (not used with random-scatter in daily selection,
-    // but kept generic here)
+    // Mirror effect if active
     if (this.activeEffects.scannerMirror) {
       const mirrored = [];
       coords.forEach(({ row, col }) => {
@@ -1215,6 +1234,14 @@ class PuzzlePairsGame {
     this.gameHistory.push({
       type: 'scan',
       revealed: uniqueCoords.length
+    });
+
+    trackEvent('scanner_use', {
+      mode: this.mode,
+      revealed_tiles: uniqueCoords.length,
+      scanner_mode: this.activeEffects.scannerShapeMode || 'normal',
+      icons_only:
+        this.activeEffects.scannerRevealMode === 'icons-only'
     });
 
     let revealedKeys = [];
@@ -1350,6 +1377,14 @@ class PuzzlePairsGame {
         this.playSound('match-sound');
         this.updateStatus('Match found!');
 
+        trackEvent('guess', {
+          mode: this.mode,
+          result: 'correct',
+          total_guesses: this.totalGuesses,
+          incorrect_guesses: this.incorrectGuesses,
+          pairs_found: this.pairsFound
+        });
+
         // Remove from flipped tiles
         this.flippedTiles.delete(guess1.key);
         this.flippedTiles.delete(guess2.key);
@@ -1434,6 +1469,14 @@ class PuzzlePairsGame {
         });
         this.playSound('fail-sound');
         this.updateStatus('No match. Try again!');
+
+        trackEvent('guess', {
+          mode: this.mode,
+          result: 'incorrect',
+          total_guesses: this.totalGuesses,
+          incorrect_guesses: this.incorrectGuesses,
+          pairs_found: this.pairsFound
+        });
 
         // Tiles stay revealed briefly, then hide again (shorter)
         setTimeout(() => {
@@ -1661,6 +1704,15 @@ class PuzzlePairsGame {
     const timeStr =
       minutes > 0 ? `${minutes}m ${seconds}s` : `${seconds}s`;
 
+    trackEvent('game_complete', {
+      mode: this.mode,
+      time_seconds: elapsed,
+      total_guesses: this.totalGuesses,
+      incorrect_guesses: this.incorrectGuesses,
+      scans_used: this.scanUses,
+      rotations: this.rotations
+    });
+
     this.playSound('win-sound');
 
     const gridEl = document.getElementById('tile-grid');
@@ -1683,91 +1735,94 @@ class PuzzlePairsGame {
     }, 800);
   }
 
- generateResultsText() {
-  const elapsed = Math.floor(
-    (Date.now() - this.gameStartTime) / 1000
-  );
-  const minutes = Math.floor(elapsed / 60);
-  const seconds = elapsed % 60;
-  const timeStr =
-    minutes > 0 ? `${minutes}m ${seconds}s` : `${seconds}s`;
+  generateResultsText() {
+    const elapsed = Math.floor(
+      (Date.now() - this.gameStartTime) / 1000
+    );
+    const minutes = Math.floor(elapsed / 60);
+    const seconds = elapsed % 60;
+    const timeStr =
+      minutes > 0 ? `${minutes}m ${seconds}s` : `${seconds}s`;
 
-  const accuracy =
-    this.totalGuesses > 0
-      ? Math.round(
-          ((this.totalGuesses - this.incorrectGuesses) /
-            this.totalGuesses) *
-            100
-        )
-      : 0;
+    const accuracy =
+      this.totalGuesses > 0
+        ? Math.round(
+            ((this.totalGuesses -
+              this.incorrectGuesses) /
+              this.totalGuesses) *
+              100
+          )
+        : 0;
 
-  // Simple 1–6 “attempt” style score (lower is better)
-  const scoreFromIncorrect = (incorrect) => {
-    if (incorrect === 0) return 1;
-    if (incorrect <= 2) return 2;
-    if (incorrect <= 4) return 3;
-    if (incorrect <= 7) return 4;
-    if (incorrect <= 10) return 5;
-    return 6;
-  };
-  const score = scoreFromIncorrect(this.incorrectGuesses);
-  const maxScore = 6;
+    // Simple 1–6 “attempt” style score (lower is better)
+    const scoreFromIncorrect = (incorrect) => {
+      if (incorrect === 0) return 1;
+      if (incorrect <= 2) return 2;
+      if (incorrect <= 4) return 3;
+      if (incorrect <= 7) return 4;
+      if (incorrect <= 10) return 5;
+      return 6;
+    };
+    const score = scoreFromIncorrect(this.incorrectGuesses);
+    const maxScore = 6;
 
-  // Visual score bar: more green squares = better
-  const filled = maxScore - score + 1; // 1→6, 6→1
-  let bar = '';
-  for (let i = 0; i < maxScore; i++) {
-    bar += i < filled ? '🟩' : '⬛';
+    // Visual score bar: more green squares = better
+    const filled = maxScore - score + 1; // 1→6, 6→1
+    let bar = '';
+    for (let i = 0; i < maxScore; i++) {
+      bar += i < filled ? '🟩' : '⬛';
+    }
+
+    const playDate = this.gameStartTime
+      ? new Date(this.gameStartTime)
+      : new Date();
+    const dayStr = playDate.toISOString().slice(0, 10);
+
+    const modeLabel =
+      this.mode === 'challenge'
+        ? 'Daily Challenge'
+        : 'Casual';
+
+    const rbNames =
+      this.mode === 'challenge' && this.dailyRulebreakers.length
+        ? this.dailyRulebreakers.map((rb) => rb.name).join(' + ')
+        : 'None';
+
+    // Compact, copy‑friendly summary (a few lines)
+    const lines = [];
+
+    // Line 1: header
+    lines.push(`🧩 Puzzle Pairs — ${modeLabel}`);
+
+    // Line 2: date + core stats (Wordle-style count)
+    lines.push(
+      `${dayStr} • ${score}/${maxScore} • ⏱ ${timeStr} • ❌ ${this.incorrectGuesses} • 🔍 ${this.scanUses}`
+    );
+
+    // Line 3: visual bar
+    lines.push(bar + `  (${accuracy}% accuracy)`);
+
+    // Line 4: rulebreakers (only if challenge mode)
+    if (this.mode === 'challenge') {
+      lines.push(`RB: ${rbNames}`);
+    }
+
+    const text = lines.join('\n');
+
+    const textarea = document.getElementById(
+      'gameCompletionMessage'
+    );
+    textarea.value = text;
+    textarea.style.display = 'block';
+
+    // Auto-grow animation
+    textarea.classList.add('active');
+
+    document.getElementById('copyButton').style.display =
+      'inline-block';
+    document.getElementById('shareButton').style.display =
+      'inline-block';
   }
-
-  const playDate = this.gameStartTime
-    ? new Date(this.gameStartTime)
-    : new Date();
-  const dayStr = playDate.toISOString().slice(0, 10);
-
-  const modeLabel =
-    this.mode === 'challenge' ? 'Daily Challenge' : 'Casual';
-
-  const rbNames =
-    this.mode === 'challenge' && this.dailyRulebreakers.length
-      ? this.dailyRulebreakers.map((rb) => rb.name).join(' + ')
-      : 'None';
-
-  // --- Compact, copy‑friendly summary (3–4 lines) ---
-  const lines = [];
-
-  // Line 1: header
-  lines.push(`🧩 Puzzle Pairs — ${modeLabel}`);
-
-  // Line 2: date + core stats (Wordle-style count)
-  lines.push(
-    `${dayStr} • ${score}/${maxScore} • ⏱ ${timeStr} • ❌ ${this.incorrectGuesses} • 🔍 ${this.scanUses}`
-  );
-
-  // Line 3: visual bar
-  lines.push(bar + `  (${accuracy}% accuracy)`);
-
-  // Line 4: rulebreakers (only if challenge mode)
-  if (this.mode === 'challenge') {
-    lines.push(`RB: ${rbNames}`);
-  }
-
-  const text = lines.join('\n');
-
-  const textarea = document.getElementById(
-    'gameCompletionMessage'
-  );
-  textarea.value = text;
-  textarea.style.display = 'block';
-
-  // Auto-grow animation
-  textarea.classList.add('active');
-
-  document.getElementById('copyButton').style.display =
-    'inline-block';
-  document.getElementById('shareButton').style.display =
-    'inline-block';
-}
 
   copyResults() {
     const textarea = document.getElementById(
@@ -1776,6 +1831,10 @@ class PuzzlePairsGame {
     textarea.select();
     document.execCommand('copy');
     this.updateStatus('Results copied to clipboard!');
+
+    trackEvent('share_copy_result', {
+      mode: this.mode
+    });
   }
 
   shareResults() {
@@ -1787,6 +1846,10 @@ class PuzzlePairsGame {
       `https://twitter.com/intent/tweet?text=${tweetText}`,
       '_blank'
     );
+
+    trackEvent('share_twitter', {
+      mode: this.mode
+    });
   }
 
   toggleDarkMode() {
