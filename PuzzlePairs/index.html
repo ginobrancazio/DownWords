@@ -9,6 +9,21 @@
     <title>Puzzle Pairs</title>
 
     <link rel="stylesheet" href="style.css" />
+
+    <!-- Google Analytics 4 -->
+    <!-- TODO: replace G-XXXXXXX with your real GA4 Measurement ID -->
+    <script
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=G-6R3CEQKVLF"
+    ></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag('js', new Date());
+      gtag('config', 'G-6R3CEQKVLF');
+    </script>
   </head>
   <body>
     <!-- Audio elements -->
@@ -49,7 +64,10 @@
       </section>
 
       <!-- Daily rulebreakers banner -->
-      <section id="rulebreakers-banner" aria-label="Today's rulebreakers">
+      <section
+        id="rulebreakers-banner"
+        aria-label="Today's rulebreakers"
+      >
         <h3>Today's Rulebreakers</h3>
         <ul id="rulebreakers-list"></ul>
       </section>
@@ -94,7 +112,7 @@
         <button id="new-game-button">New Game</button>
       </div>
 
-       <!-- Result / share area -->
+      <!-- Result / share area -->
       <section aria-label="Game result and sharing">
         <textarea
           id="gameCompletionMessage"
@@ -141,7 +159,6 @@
           <p class="progress-hint">3 incorrect guesses</p>
         </div>
       </section>
-
 
       <!-- Instructions -->
       <section id="instructions-container" aria-label="How to play">
