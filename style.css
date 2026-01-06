@@ -955,3 +955,158 @@ button:active {
     max-width: 250px;
   }
 }
+
+/* ===== iOS APP BANNER ===== */
+#ios-app-banner {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  padding: 12px 15px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: slideDown 0.4s ease-out;
+}
+
+@keyframes slideDown {
+  from {
+    transform: translateY(-100%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+#ios-app-banner.hidden {
+  display: none;
+}
+
+.app-banner-content {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  max-width: 600px;
+  width: 100%;
+}
+
+.app-icon {
+  flex-shrink: 0;
+}
+
+.app-icon img {
+  width: 50px;
+  height: 50px;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+.app-info {
+  flex: 1;
+  text-align: left;
+}
+
+.app-info h4 {
+  margin: 0 0 2px 0;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.app-info p {
+  margin: 0;
+  font-size: 13px;
+  opacity: 0.9;
+}
+
+.app-store-button {
+  background-color: white;
+  color: #667eea;
+  padding: 8px 20px;
+  border-radius: 20px;
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 14px;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  flex-shrink: 0;
+}
+
+.app-store-button:hover {
+  transform: scale(1.05);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+#close-app-banner {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  background: transparent;
+  border: none;
+  color: white;
+  font-size: 20px;
+  cursor: pointer;
+  padding: 4px 8px;
+  line-height: 1;
+  opacity: 0.8;
+  transition: opacity 0.2s ease;
+  box-shadow: none;
+}
+
+#close-app-banner:hover {
+  opacity: 1;
+  background: transparent;
+  transform: none;
+  box-shadow: none;
+}
+
+/* Adjust body padding when banner is visible */
+body.banner-visible {
+  padding-top: 90px;
+}
+
+/* Dark mode adjustments for banner */
+.dark-mode #ios-app-banner {
+  background: linear-gradient(135deg, #4a5a8a 0%, #5a3a72 100%);
+}
+
+.dark-mode .app-store-button {
+  background-color: #f0f0f0;
+  color: #4a5a8a;
+}
+
+/* Mobile responsiveness */
+@media (max-width: 600px) {
+  #ios-app-banner {
+    padding: 10px;
+  }
+  
+  .app-banner-content {
+    gap: 10px;
+  }
+  
+  .app-icon img {
+    width: 40px;
+    height: 40px;
+  }
+  
+  .app-info h4 {
+    font-size: 14px;
+  }
+  
+  .app-info p {
+    font-size: 12px;
+  }
+  
+  .app-store-button {
+    padding: 6px 16px;
+    font-size: 13px;
+  }
+  
+  body.banner-visible {
+    padding-top: 80px;
+  }
+}
