@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>DownWords by Gino Brancazio</title>
+  <title>DownWords by Gino</title>
   
   <!-- Stylesheets -->
   <link rel="stylesheet" href="style.css">
@@ -24,6 +24,26 @@
 </head>
 
 <body>
+  <!-- iOS App Banner -->
+  <div id="ios-app-banner">
+    <button id="close-app-banner" aria-label="Close app banner">✕</button>
+    <div class="app-banner-content">
+      <div class="app-icon">
+        <img src="/DW_Web_Icon_2.png" alt="DownWords App Icon">
+      </div>
+      <div class="app-info">
+        <h4>DownWords</h4>
+        <p>Now available on iOS</p>
+      </div>
+      <a href="https://apps.apple.com/us/app/downwords-daily-word-game/id6756895326" 
+         target="_blank" 
+         class="app-store-button"
+         id="app-store-link">
+        GET
+      </a>
+    </div>
+  </div>
+
   <!-- Audio elements for game sounds -->
   <audio id="click-sound" src="click-sound.mp3"></audio>
   <audio id="match-sound" src="match-sound.mp3"></audio>
@@ -161,7 +181,7 @@
   
   <!-- Footer with contact and copyright information -->
   <div id="linkedin-connect" style="text-align: center; margin-top: 20px;">
-    <p>V3.1 © 2025 Gino Brancazio. All rights reserved. Contact me on <a href="https://www.linkedin.com/in/ginobrancazio/" target="_blank">LinkedIn</a></p>
+    <p>V3.2 © 2025 Gino Brancazio. All rights reserved. Contact me on <a href="https://www.linkedin.com/in/ginobrancazio/" target="_blank">LinkedIn</a></p>
   </div>
   
   <!-- Main game script -->
