@@ -2065,3 +2065,86 @@ const puzzleSetterbyDate = {
 '25 January 2026': ['Gino'],
   'default': ['KitCat']
 };
+
+// ===== iOS APP BANNER FUNCTIONALITY =====
+(function() {
+  const banner = document.getElementById('ios-app-banner');
+  const closeButton = document.getElementById('close-app-banner');
+  const appStoreLink = document.getElementById('app-store-link');
+  const BANNER_DISMISSED_KEY = 'ios-app-banner-dismissed';
+  const BANNER_EXPIRY_DAYS = 7; // Show again after 7 days
+  
+  /**
+   * Checks if the banner should be shown
+   * @returns {boolean} True if banner should be displayed
+   */
+  function shouldShowBanner() {
+    const dismissedData = localStorage.getItem(BANNER_DISMISSED_KEY);
+    if (!dismissedData) return true;
+    
+    try {
+      const { timestamp } = JSON.parse(dismissedData);
+      const daysSinceDismissal = (Date.now() - timestamp) / (1000 * 60 * 60 * 24);
+      return daysSinceDismissal >= BANNER_EXPIRY_DAYS;
+    } catch (e) {
+      return true;
+    }
+  }
+  
+  /**
+   * Shows the iOS app banner
+   */
+  function showBanner() {
+    banner.classList.remove('hidden');
+    document.body.classList.add('banner-visible');
+  }
+  
+  /**
+   * Hides the iOS app banner
+   */
+  function hideBanner() {
+    banner.classList.add('hidden');
+    document.body.classList.remove('banner-visible');
+  }
+  
+  /**
+   * Dismisses the banner and stores the dismissal in localStorage
+   */
+  function dismissBanner() {
+    hideBanner();
+    localStorage.setItem(BANNER_DISMISSED_KEY, JSON.stringify({
+      timestamp: Date.now()
+    }));
+    
+    // Track dismissal event
+    if (typeof gtag === 'function') {
+      gtag('event', 'ios_banner_dismissed', {
+        'event_category': 'app_promotion',
+        'event_label': 'iOS Banner Dismissed'
+      });
+    }
+  }
+  
+  // Initialize banner visibility
+  if (shouldShowBanner()) {
+    showBanner();
+  } else {
+    hideBanner();
+  }
+  
+  // Close button event listener
+  closeButton.addEventListener('click', (e) => {
+    e.preventDefault();
+    dismissBanner();
+  });
+  
+  // Track app store link clicks
+  appStoreLink.addEventListener('click', () => {
+    if (typeof gtag === 'function') {
+      gtag('event', 'ios_app_store_click', {
+        'event_category': 'app_promotion',
+        'event_label': 'iOS App Store Link Clicked'
+      });
+    }
+  });
+})();
