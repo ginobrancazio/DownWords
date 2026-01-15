@@ -2066,28 +2066,96 @@ const puzzleSetterbyDate = {
   'default': ['KitCat']
 };
 
-// ===== iOS APP BANNER FUNCTIONALITY =====
+// ===== iOS DETECTION AND APP PROMOTION =====
 (function() {
   const banner = document.getElementById('ios-app-banner');
   const closeButton = document.getElementById('close-app-banner');
   const appStoreLink = document.getElementById('app-store-link');
+  const popup = document.getElementById('ios-app-popup');
+  const closePopup = document.getElementById('close-popup');
+  const continueWebBtn = document.getElementById('continue-web');
+  const popupAppStoreLink = document.getElementById('popup-app-store-link');
+  
   const BANNER_DISMISSED_KEY = 'ios-app-banner-dismissed';
-  const BANNER_EXPIRY_DAYS = 7; // Show again after 7 days
+  const POPUP_DISMISSED_KEY = 'ios-app-popup-dismissed';
+  const BANNER_EXPIRY_DAYS = 7;
+  const POPUP_EXPIRY_DAYS = 30; // Popup shows less frequently
   
   /**
-   * Checks if the banner should be shown
-   * @returns {boolean} True if banner should be displayed
+   * Detects if the user is on an iOS device
+   * @returns {boolean} True if user is on iOS
    */
-  function shouldShowBanner() {
-    const dismissedData = localStorage.getItem(BANNER_DISMISSED_KEY);
+  function isIOS() {
+    return [
+      'iPad Simulator',
+      'iPhone Simulator',
+      'iPod Simulator',
+      'iPad',
+      'iPhone',
+      'iPod'
+    ].includes(navigator.platform)
+    // iPad on iOS 13+ detection
+    || (navigator.userAgent.includes("Mac") && "ontouchend" in document);
+  }
+  
+  /**
+   * Checks if an item should be shown based on localStorage
+   * @param {string} key - localStorage key
+   * @param {number} expiryDays - Number of days before showing again
+   * @returns {boolean} True if item should be displayed
+   */
+  function shouldShow(key, expiryDays) {
+    const dismissedData = localStorage.getItem(key);
     if (!dismissedData) return true;
     
     try {
       const { timestamp } = JSON.parse(dismissedData);
       const daysSinceDismissal = (Date.now() - timestamp) / (1000 * 60 * 60 * 24);
-      return daysSinceDismissal >= BANNER_EXPIRY_DAYS;
+      return daysSinceDismissal >= expiryDays;
     } catch (e) {
       return true;
+    }
+  }
+  
+  /**
+   * Stores dismissal information in localStorage
+   * @param {string} key - localStorage key
+   */
+  function storeDismissal(key) {
+    localStorage.setItem(key, JSON.stringify({
+      timestamp: Date.now()
+    }));
+  }
+  
+  /**
+   * Shows the iOS app popup
+   */
+  function showPopup() {
+    popup.classList.add('show');
+    document.body.style.overflow = 'hidden'; // Prevent scrolling
+  }
+  
+  /**
+   * Hides the iOS app popup
+   */
+  function hidePopup() {
+    popup.classList.remove('show');
+    document.body.style.overflow = ''; // Restore scrolling
+  }
+  
+  /**
+   * Dismisses the popup and stores the dismissal
+   */
+  function dismissPopup() {
+    hidePopup();
+    storeDismissal(POPUP_DISMISSED_KEY);
+    
+    // Track dismissal event
+    if (typeof gtag === 'function') {
+      gtag('event', 'ios_popup_dismissed', {
+        'event_category': 'app_promotion',
+        'event_label': 'iOS Popup Dismissed'
+      });
     }
   }
   
@@ -2108,13 +2176,11 @@ const puzzleSetterbyDate = {
   }
   
   /**
-   * Dismisses the banner and stores the dismissal in localStorage
+   * Dismisses the banner and stores the dismissal
    */
   function dismissBanner() {
     hideBanner();
-    localStorage.setItem(BANNER_DISMISSED_KEY, JSON.stringify({
-      timestamp: Date.now()
-    }));
+    storeDismissal(BANNER_DISMISSED_KEY);
     
     // Track dismissal event
     if (typeof gtag === 'function') {
@@ -2125,26 +2191,95 @@ const puzzleSetterbyDate = {
     }
   }
   
-  // Initialize banner visibility
-  if (shouldShowBanner()) {
-    showBanner();
+  // Initialize based on device type
+  const userIsOnIOS = isIOS();
+  
+  if (userIsOnIOS) {
+    // iOS users: Show popup first, then banner later
+    if (shouldShow(POPUP_DISMISSED_KEY, POPUP_EXPIRY_DAYS)) {
+      // Show popup after a short delay for better UX
+      setTimeout(() => {
+        showPopup();
+      }, 1000);
+    }
+    
+    // Also show banner if it hasn't been dismissed recently
+    if (shouldShow(BANNER_DISMISSED_KEY, BANNER_EXPIRY_DAYS)) {
+      showBanner();
+    } else {
+      hideBanner();
+    }
   } else {
-    hideBanner();
+    // Non-iOS users: Only show banner
+    if (shouldShow(BANNER_DISMISSED_KEY, BANNER_EXPIRY_DAYS)) {
+      showBanner();
+    } else {
+      hideBanner();
+    }
+    // Hide popup for non-iOS users
+    popup.style.display = 'none';
   }
   
-  // Close button event listener
-  closeButton.addEventListener('click', (e) => {
-    e.preventDefault();
-    dismissBanner();
-  });
+  // Popup event listeners
+  if (closePopup) {
+    closePopup.addEventListener('click', (e) => {
+      e.preventDefault();
+      dismissPopup();
+    });
+  }
   
-  // Track app store link clicks
-  appStoreLink.addEventListener('click', () => {
-    if (typeof gtag === 'function') {
-      gtag('event', 'ios_app_store_click', {
-        'event_category': 'app_promotion',
-        'event_label': 'iOS App Store Link Clicked'
-      });
+  if (continueWebBtn) {
+    continueWebBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      dismissPopup();
+      
+      // Track continue on web event
+      if (typeof gtag === 'function') {
+        gtag('event', 'continue_on_web', {
+          'event_category': 'app_promotion',
+          'event_label': 'Continue on Web Button'
+        });
+      }
+    });
+  }
+  
+  if (popupAppStoreLink) {
+    popupAppStoreLink.addEventListener('click', () => {
+      dismissPopup();
+      
+      // Track app store link clicks from popup
+      if (typeof gtag === 'function') {
+        gtag('event', 'ios_app_store_click', {
+          'event_category': 'app_promotion',
+          'event_label': 'iOS App Store Link Clicked (Popup)'
+        });
+      }
+    });
+  }
+  
+  // Close popup when clicking outside
+  popup.addEventListener('click', (e) => {
+    if (e.target === popup) {
+      dismissPopup();
     }
   });
+  
+  // Banner event listeners
+  if (closeButton) {
+    closeButton.addEventListener('click', (e) => {
+      e.preventDefault();
+      dismissBanner();
+    });
+  }
+  
+  if (appStoreLink) {
+    appStoreLink.addEventListener('click', () => {
+      if (typeof gtag === 'function') {
+        gtag('event', 'ios_app_store_click', {
+          'event_category': 'app_promotion',
+          'event_label': 'iOS App Store Link Clicked (Banner)'
+        });
+      }
+    });
+  }
 })();
