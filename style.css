@@ -1078,6 +1078,241 @@ body.banner-visible {
   color: #4a5a8a;
 }
 
+/* ===== iOS APP POPUP MODAL ===== */
+.popup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.75);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000;
+  padding: 20px;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.popup-overlay.show {
+  opacity: 1;
+  visibility: visible;
+}
+
+.popup-content {
+  background: var(--bg-color);
+  border-radius: 20px;
+  max-width: 400px;
+  width: 100%;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+  position: relative;
+  transform: scale(0.9);
+  transition: transform 0.3s ease;
+  overflow: hidden;
+}
+
+.popup-overlay.show .popup-content {
+  transform: scale(1);
+}
+
+.popup-close {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  background: transparent;
+  border: none;
+  color: var(--text-color);
+  font-size: 24px;
+  cursor: pointer;
+  padding: 5px;
+  line-height: 1;
+  opacity: 0.6;
+  transition: opacity 0.2s ease;
+  z-index: 10;
+  box-shadow: none;
+}
+
+.popup-close:hover {
+  opacity: 1;
+  background: transparent;
+  transform: none;
+  box-shadow: none;
+}
+
+.popup-header {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  padding: 40px 30px 30px;
+  text-align: center;
+  color: white;
+}
+
+.dark-mode .popup-header {
+  background: linear-gradient(135deg, #4a5a8a 0%, #5a3a72 100%);
+}
+
+.popup-app-icon {
+  margin-bottom: 15px;
+}
+
+.popup-app-icon img {
+  width: 80px;
+  height: 80px;
+  border-radius: 18px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+
+.popup-header h2 {
+  margin: 0;
+  font-size: 24px;
+  font-weight: 700;
+}
+
+.popup-body {
+  padding: 25px 30px;
+  color: var(--text-color);
+}
+
+.popup-body p {
+  margin: 0 0 15px 0;
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+.popup-features {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.popup-features li {
+  padding: 8px 0;
+  font-size: 15px;
+  display: flex;
+  align-items: center;
+}
+
+.popup-features li::before {
+  content: '';
+  width: 6px;
+  height: 6px;
+  background: #667eea;
+  border-radius: 50%;
+  margin-right: 10px;
+  flex-shrink: 0;
+}
+
+.dark-mode .popup-features li::before {
+  background: #7eb6ff;
+}
+
+.popup-actions {
+  padding: 0 30px 30px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.popup-app-store-btn {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  padding: 14px 24px;
+  border-radius: 12px;
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 16px;
+  text-align: center;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.popup-app-store-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(102, 126, 234, 0.5);
+}
+
+.dark-mode .popup-app-store-btn {
+  background: linear-gradient(135deg, #4a5a8a 0%, #5a3a72 100%);
+}
+
+.app-store-icon {
+  font-size: 20px;
+}
+
+.popup-continue-btn {
+  background: transparent;
+  color: var(--text-color);
+  padding: 12px 24px;
+  border: 2px solid var(--grid-border);
+  border-radius: 12px;
+  font-weight: 600;
+  font-size: 15px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: none;
+}
+
+.popup-continue-btn:hover {
+  background: var(--grid-bg);
+  transform: none;
+  box-shadow: none;
+}
+
+/* Mobile responsiveness for popup */
+@media (max-width: 600px) {
+  .popup-overlay {
+    padding: 15px;
+  }
+  
+  .popup-content {
+    max-width: 100%;
+  }
+  
+  .popup-header {
+    padding: 35px 20px 25px;
+  }
+  
+  .popup-header h2 {
+    font-size: 20px;
+  }
+  
+  .popup-app-icon img {
+    width: 70px;
+    height: 70px;
+  }
+  
+  .popup-body {
+    padding: 20px;
+  }
+  
+  .popup-body p {
+    font-size: 15px;
+  }
+  
+  .popup-features li {
+    font-size: 14px;
+  }
+  
+  .popup-actions {
+    padding: 0 20px 25px;
+  }
+  
+  .popup-app-store-btn {
+    padding: 12px 20px;
+    font-size: 15px;
+  }
+  
+  .popup-continue-btn {
+    padding: 10px 20px;
+    font-size: 14px;
+  }
+}
+
 /* Mobile responsiveness */
 @media (max-width: 600px) {
   #ios-app-banner {
