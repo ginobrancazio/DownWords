@@ -1406,7 +1406,7 @@ const wordListsByDate = {
 '29 January 2026': ['JACKET', 'COATED', 'SLEEVE', 'ZIPPER', 'LINING', 'POCKET'],
 '30 January 2026': ['ROCKET', 'THRUST', 'LAUNCH', 'ORBITS', 'FUELED', 'ENGINE'],
 '31 January 2026': ['CANDLE', 'WAXING', 'FLAMES', 'WICKED', 'SCENTS', 'BRIGHT'],
-'01 February 2026': ['HARBOR', 'ANCHOR', 'MARINA', 'DOCKED', 'VESSEL', 'PIERSY'],
+'01 February 2026': ['GEMS', 'RUBY', 'JADE', 'OPAL', 'ONYX', 'GOLD'],
 '02 February 2026': ['UMBRELLA', 'RAINWEAR', 'CANOPIES', 'HANDGRIP', 'DRIZZLES', 'OVERCAST'],
 '03 February 2026': ['TELESCOPE', 'STARLIGHT', 'BINOCULAR', 'OBSERVING', 'EYEPIECES', 'ASTRONOMY'],
 '04 February 2026': ['PASSPORT', 'VISALESS', 'CHECKINS', 'TRAVELER', 'IDENTITY', 'DOCUMENT'],
@@ -1426,8 +1426,7 @@ const wordListsByDate = {
 '18 February 2026': ['CARPET', 'FIBERS', 'WEAVES', 'FLOORS', 'NAPPED', 'RUGGED'],
 '19 February 2026': ['SPOON', 'KNIFE', 'FORKS', 'LADLE', 'SCOOP', 'STIRS'],
 '20 February 2026': ['PURSE', 'COINS', 'MONEY', 'STRAP', 'CLASP', 'LINED'],
-'21 February 2026': ['BASKET', 'WICKER', 'HANDLE', 'LINING', 'FILLED', 'HOLDER']
-'22 February 2026': ['GEMS', 'RUBY', 'JADE', 'OPAL', 'ONYX', 'GOLD']
+'21 February 2026': ['BASKET', 'WICKER', 'HANDLE', 'LINING', 'FILLED', 'HOLDER'],
   
   'default': ['SPACE', 'EARTH', 'ALIEN', 'ORBIT', 'COMET', 'SOLAR']
 };
@@ -1711,7 +1710,7 @@ const ThemesByDate = {
   '29 January 2026': ['Theme: JACKET'],
   '30 January 2026': ['Theme: ROCKET'],
   '31 January 2026': ['Theme: CANDLE'],
-  '01 February 2026': ['Theme: HARBOR'],
+  '01 February 2026': ['Theme: GEMS'],
   '02 February 2026': ['Theme: UMBRELLA'],
   '03 February 2026': ['Theme: TELESCOPE'],
   '04 February 2026': ['Theme: PASSPORT'],
@@ -1732,7 +1731,6 @@ const ThemesByDate = {
   '19 February 2026': ['Theme: SPOON'],
   '20 February 2026': ['Theme: PURSE'],
   '21 February 2026': ['Theme: BASKET'],
-  '22 February 2026': ['Theme: GEMS'],
   
   'default': ['Theme: SPACE']
 };
@@ -2016,7 +2014,7 @@ const HintsByDate = {
   '29 January 2026': ['Hint: Outer clothing worn to keep warm or dry.'],
   '30 January 2026': ['Hint: A powerful vehicle launched into the sky or space.'],
   '31 January 2026': ['Hint: A wax light source with a burning wick.'],
-  '01 February 2026': ['Hint: A sheltered place where ships dock.'],
+  '01 February 2026': ['Hint: Shiny things of great value.'],
   '02 February 2026': ['Hint: Used to stay dry during rain.'],
   '03 February 2026': ['Hint: An instrument used to view distant objects in space.'],
   '04 February 2026': ['Hint: An official document for international travel.'],
@@ -2037,7 +2035,6 @@ const HintsByDate = {
   '19 February 2026': ['Hint: A utensil used for eating or serving food.'],
   '20 February 2026': ['Hint: A small bag used to carry money.'],
   '21 February 2026': ['Hint: A woven container used to hold items.'],
-  '22 February 2026': ['Hint: Shiny things of great value'],
   
   'default': ['Hint: The Final Frontier']
 };
