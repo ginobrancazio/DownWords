@@ -511,7 +511,7 @@ const appLink = document.createElement('a');
 appLink.href = 'https://apps.apple.com/us/app/downwords-daily-word-game/id6756895326';
 appLink.target = '_blank';
 appLink.className = 'ios-app-button';
-appLink.textContent = 'Play on iOS app';
+appLink.textContent = 'Play on Free iOS app';
 buttonsContainer.appendChild(appLink);
 
 startOverlay.appendChild(buttonsContainer);
