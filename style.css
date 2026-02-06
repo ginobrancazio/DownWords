@@ -1313,6 +1313,32 @@ body.banner-visible {
   }
 }
 
+.start-buttons {
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.ios-app-button {
+  padding: 15px 30px;
+  font-size: 18px;
+  background-color: #007AFF; /* iOS blue */
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-block;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+}
+
+.ios-app-button:hover {
+  background-color: #0051D5; /* Darker iOS blue on hover */
+}
+
 /* Mobile responsiveness */
 @media (max-width: 600px) {
   #ios-app-banner {
