@@ -492,15 +492,32 @@ function createGrid(words) {
     existingOverlay.remove();
   }
   
-  // Create the start overlay
-  const startOverlay = document.createElement('div');
-  startOverlay.id = 'start-overlay';
+ // Create the start overlay
+const startOverlay = document.createElement('div');
+startOverlay.id = 'start-overlay';
+
+// Create a container for the buttons
+const buttonsContainer = document.createElement('div');
+buttonsContainer.className = 'start-buttons';
+
+// Create Start Puzzle button
+const startButton = document.createElement('button');
+startButton.id = 'start-puzzle-button';
+startButton.textContent = 'Start Puzzle';
+buttonsContainer.appendChild(startButton);
+
+// Create iOS app link
+const appLink = document.createElement('a');
+appLink.href = 'https://apps.apple.com/us/app/downwords-daily-word-game/id6756895326';
+appLink.target = '_blank';
+appLink.className = 'ios-app-button';
+appLink.textContent = 'Play on iOS app';
+buttonsContainer.appendChild(appLink);
+
+startOverlay.appendChild(buttonsContainer);
+
+
   
-  const startButton = document.createElement('button');
-  startButton.id = 'start-puzzle-button';
-  startButton.textContent = 'Start Puzzle';
-  
-  startOverlay.appendChild(startButton);
   gridContainer.appendChild(startOverlay);
   
   // Add event listener to the start button
