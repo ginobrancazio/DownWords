@@ -1388,3 +1388,57 @@ body.banner-visible {
     font-size: 14px;
   }
 }
+
+/* Start overlay styles */
+#start-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+  border-radius: 10px;
+}
+
+.start-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  align-items: center;
+}
+
+#start-puzzle-button,
+.ios-app-button {
+  padding: 15px 30px;
+  font-size: 18px;
+  font-weight: bold;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+  text-decoration: none;
+  display: inline-block;
+  text-align: center;
+  min-width: 200px;
+}
+
+
+#start-puzzle-button {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+}
+
+.ios-app-button {
+  background: linear-gradient(135deg, #9EC186 0%, #6D9E63 100%);
+  color: white;
+}
+
+#start-puzzle-button:hover,
+.ios-app-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
