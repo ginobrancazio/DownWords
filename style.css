@@ -684,6 +684,43 @@ button:active {
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
+/* ===== START OVERLAY BUTTONS ===== */
+.start-buttons {
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.ios-app-button {
+  background-color: #007AFF;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 12px 24px;
+  font-size: 18px;
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-block;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  font-family: 'Poppins', 'Helvetica Neue', sans-serif;
+  letter-spacing: 0.5px;
+}
+
+.ios-app-button:hover {
+  background-color: #0051D5;
+  transform: translateY(-3px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
+}
+
+.ios-app-button:active {
+  transform: translateY(-1px);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
 /* ===== PUZZLE CREATOR AND OTHER PUZZLES STYLING ===== */
 
 /* Puzzle info card */
@@ -867,93 +904,6 @@ button:active {
   font-size: 14px;
   opacity: 0.8;
   text-align: center;
-}
-
-/* ===== RESPONSIVE DESIGN ===== */
-@media (max-width: 600px) {
-  /* Smaller buttons on mobile */
-  button {
-    padding: 8px 14px;
-    font-size: 13px;
-  }
-  
-  .button-container {
-    gap: 8px;
-  }
-
-  /* Adjusted grid for mobile */
-  #letter-grid {
-    grid-template-columns: repeat(5, 65px);
-    gap: 0px;
-  }
-
-  .letter {
-    width: 50px;
-    height: 50px;
-    font-size: 18px;
-  }
-
-  /* Adjusted word container for mobile */
-  #selected-words-container {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 1px;
-    width: 90%;
-    margin-top: 5px;
-    justify-items: start;
-    word-break: break-word;
-  }
-  
-  /* Adjusted instructions for mobile */
-  #instructions {
-    margin-top: 2px;
-    max-width: 600px;
-    text-align: left;
-  }
-
-  #instructions ul {
-    padding-left: 1.2em;
-  }
-
-  /* Adjusted GIF for mobile */
-  .instructions-gif {
-    margin-top: 2px;
-    width: 90%;
-    border: 1px solid var(--grid-border);
-    border-radius: 8px;
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-  }
-  
-  /* Adjusted toggle buttons for mobile */
-  #mode-toggle {
-    top: 10px;
-    right: 10px;
-    font-size: 20px;
-  }
-  
-  #archive-toggle {
-    top: 10px;
-    left: 10px;
-    font-size: 20px;
-  }
-  
-  /* Stacked date picker on mobile */
-  #date-picker-container {
-    flex-direction: column;
-    align-items: center;
-  }
-  
-  .puzzle-info-card {
-    margin: 20px 10px;
-    padding: 15px;
-  }
-  
-  .puzzle-card {
-    width: 100%;
-    max-width: 250px;
-  }
 }
 
 /* ===== iOS APP BANNER ===== */
@@ -1263,8 +1213,134 @@ body.banner-visible {
   box-shadow: none;
 }
 
-/* Mobile responsiveness for popup */
+/* ===== RESPONSIVE DESIGN ===== */
 @media (max-width: 600px) {
+  /* Smaller buttons on mobile */
+  button {
+    padding: 8px 14px;
+    font-size: 13px;
+  }
+  
+  .button-container {
+    gap: 8px;
+  }
+
+  /* Adjusted grid for mobile */
+  #letter-grid {
+    grid-template-columns: repeat(5, 65px);
+    gap: 0px;
+  }
+
+  .letter {
+    width: 50px;
+    height: 50px;
+    font-size: 18px;
+  }
+
+  /* Adjusted word container for mobile */
+  #selected-words-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    width: 90%;
+    margin-top: 5px;
+    justify-items: start;
+    word-break: break-word;
+  }
+  
+  /* Adjusted instructions for mobile */
+  #instructions {
+    margin-top: 2px;
+    max-width: 600px;
+    text-align: left;
+  }
+
+  #instructions ul {
+    padding-left: 1.2em;
+  }
+
+  /* Adjusted GIF for mobile */
+  .instructions-gif {
+    margin-top: 2px;
+    width: 90%;
+    border: 1px solid var(--grid-border);
+    border-radius: 8px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  
+  /* Adjusted toggle buttons for mobile */
+  #mode-toggle {
+    top: 10px;
+    right: 10px;
+    font-size: 20px;
+  }
+  
+  #archive-toggle {
+    top: 10px;
+    left: 10px;
+    font-size: 20px;
+  }
+  
+  /* Stacked date picker on mobile */
+  #date-picker-container {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .puzzle-info-card {
+    margin: 20px 10px;
+    padding: 15px;
+  }
+  
+  .puzzle-card {
+    width: 100%;
+    max-width: 250px;
+  }
+  
+  /* Start buttons mobile responsiveness */
+  .start-buttons {
+    gap: 10px;
+  }
+  
+  .ios-app-button {
+    padding: 10px 20px;
+    font-size: 16px;
+  }
+  
+  /* iOS App Banner Mobile */
+  #ios-app-banner {
+    padding: 10px;
+  }
+  
+  .app-banner-content {
+    gap: 10px;
+  }
+  
+  .app-icon img {
+    width: 40px;
+    height: 40px;
+  }
+  
+  .app-info h4 {
+    font-size: 14px;
+  }
+  
+  .app-info p {
+    font-size: 12px;
+  }
+  
+  .app-store-button {
+    padding: 6px 16px;
+    font-size: 13px;
+  }
+  
+  body.banner-visible {
+    padding-top: 80px;
+  }
+  
+  /* Mobile responsiveness for popup */
   .popup-overlay {
     padding: 15px;
   }
@@ -1310,64 +1386,5 @@ body.banner-visible {
   .popup-continue-btn {
     padding: 10px 20px;
     font-size: 14px;
-  }
-}
-
-.start-buttons {
-  display: flex;
-  gap: 15px;
-  justify-content: center;
-  align-items: center;
-  flex-wrap: wrap;
-}
-
-.ios-app-button {
-  padding: 15px 30px;
-  font-size: 18px;
-  background-color: #007AFF; /* iOS blue */
-  color: white;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  text-decoration: none;
-  display: inline-block;
-  font-weight: bold;
-  transition: background-color 0.3s ease;
-}
-
-.ios-app-button:hover {
-  background-color: #0051D5; /* Darker iOS blue on hover */
-}
-
-/* Mobile responsiveness */
-@media (max-width: 600px) {
-  #ios-app-banner {
-    padding: 10px;
-  }
-  
-  .app-banner-content {
-    gap: 10px;
-  }
-  
-  .app-icon img {
-    width: 40px;
-    height: 40px;
-  }
-  
-  .app-info h4 {
-    font-size: 14px;
-  }
-  
-  .app-info p {
-    font-size: 12px;
-  }
-  
-  .app-store-button {
-    padding: 6px 16px;
-    font-size: 13px;
-  }
-  
-  body.banner-visible {
-    padding-top: 80px;
   }
 }
