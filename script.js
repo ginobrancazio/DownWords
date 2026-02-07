@@ -514,6 +514,17 @@ appLink.className = 'ios-app-button';
 appLink.textContent = 'Play on Free iOS app';
 buttonsContainer.appendChild(appLink);
 
+// GA tracking for Start Overlay iOS App button
+appLink.addEventListener('click', () => {
+  if (typeof gtag === 'function') {
+    gtag('event', 'start ios app button', {
+      event_category: 'app_promotion',
+      event_label: 'Start Overlay iOS App',
+      value: 1
+    });
+  }
+});
+  
 startOverlay.appendChild(buttonsContainer);
 
 
