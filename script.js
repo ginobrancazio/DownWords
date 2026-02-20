@@ -1455,6 +1455,15 @@ const wordListsByDate = {
 '19 February 2026': ['SPOON', 'KNIFE', 'FORKS', 'LADLE', 'SCOOP', 'STIRS'],
 '20 February 2026': ['PURSE', 'COINS', 'MONEY', 'STRAP', 'CLASP', 'LINED'],
 '21 February 2026': ['BASKET', 'WICKER', 'HANDLE', 'LINING', 'FILLED', 'HOLDER'],
+'22 February 2026': ['TROWEL', 'FLOWER', 'GARDEN', 'SOWING', 'GROWTH', 'SHRUBS'],
+'23 February 2026': ['GRAPES', 'MELONS', 'BANANA', 'ORANGE', 'FRUITS', 'CHERRY'],
+'24 February 2026': ['GOALIE', 'HEADER', 'CORNER', 'PLAYER', 'SOCCER', 'KICKED'],
+'25 February 2026': ['MATTER', 'OXYGEN', 'ENERGY', 'NEURON', 'PROTON', 'ATOMIC'],
+'26 February 2026': ['ACTOR', 'SCENE', 'DRAMA', 'STAGE', 'VOICE', 'ROLES'],
+'27 February 2026': ['SCREW', 'STEEL', 'CHUCK', 'TOOLS', 'HOLES', 'DRILL'],
+'28 February 2026': ['TRUCK', 'CARGO', 'DRIVE', 'TIRES', 'LOADS', 'HAULS'],
+'01 March 2026': ['MATCH', 'RACER', 'COACH', 'SCORE', 'MEDAL', 'SPORT'],
+
   
   'default': ['SPACE', 'EARTH', 'ALIEN', 'ORBIT', 'COMET', 'SOLAR']
 };
@@ -1759,6 +1768,14 @@ const ThemesByDate = {
   '19 February 2026': ['Theme: SPOON'],
   '20 February 2026': ['Theme: PURSE'],
   '21 February 2026': ['Theme: BASKET'],
+  '22 February 2026': ['GARDEN'],
+  '23 February 2026': ['FRUITS'],
+  '24 February 2026': ['SOCCER'],
+  '25 February 2026': ['ATOMIC'],
+  '26 February 2026': ['ACTOR'],
+  '27 February 2026': ['DRILL'],
+  '28 February 2026': ['TRUCK]',
+  '01 March 2026': ['SPORT'],
   
   'default': ['Theme: SPACE']
 };
@@ -2063,6 +2080,14 @@ const HintsByDate = {
   '19 February 2026': ['Hint: A utensil used for eating or serving food.'],
   '20 February 2026': ['Hint: A small bag used to carry money.'],
   '21 February 2026': ['Hint: A woven container used to hold items.'],
+  '22 February 2026': ['Hint: A place where plants and flowers are nurtured.'],
+  '23 February 2026': ['Hint: Sweet and often juicy, these are nature's snacks.'],
+'24 February 2026': ['Hint: A popular sport played on a field with a round ball and goals.'],
+'25 February 2026': ['Hint: Relates to the fundamental building blocks of chemistry'],
+'26 February 2026': ['Hint: Performer who portrays characters in films or on stage'],
+'27 February 2026': ['Hint: A power tool used to make holes in various materials.'],
+'28 February 2026': ['Hint: A large vehicle that transports goods.’],
+'01 March 2026': ['Hint: Activities involving competition and physical exertion'],
   
   'default': ['Hint: The Final Frontier']
 };
