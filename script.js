@@ -1462,7 +1462,7 @@ const wordListsByDate = {
 '26 February 2026': ['ACTOR', 'SCENE', 'DRAMA', 'STAGE', 'VOICE', 'ROLES'],
 '27 February 2026': ['SCREW', 'STEEL', 'CHUCK', 'TOOLS', 'HOLES', 'DRILL'],
 '28 February 2026': ['TRUCK', 'CARGO', 'DRIVE', 'TIRES', 'LOADS', 'HAULS'],
-'01 March 2026': ['MATCH', 'RACER', 'COACH', 'SCORE', 'MEDAL', 'SPORT'],
+'1 March 2026': ['MATCH', 'RACER', 'COACH', 'SCORE', 'MEDAL', 'SPORT'],
 
   
   'default': ['SPACE', 'EARTH', 'ALIEN', 'ORBIT', 'COMET', 'SOLAR']
@@ -1774,7 +1774,7 @@ const ThemesByDate = {
   '25 February 2026': ['ATOMIC'],
   '26 February 2026': ['ACTOR'],
   '27 February 2026': ['DRILL'],
-  '28 February 2026': ['TRUCK]',
+  '28 February 2026': ['TRUCK'],
   '01 March 2026': ['SPORT'],
   
   'default': ['Theme: SPACE']
