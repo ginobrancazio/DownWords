@@ -1768,14 +1768,14 @@ const ThemesByDate = {
   '19 February 2026': ['Theme: SPOON'],
   '20 February 2026': ['Theme: PURSE'],
   '21 February 2026': ['Theme: BASKET'],
-  '22 February 2026': ['GARDEN'],
-  '23 February 2026': ['FRUITS'],
-  '24 February 2026': ['SOCCER'],
-  '25 February 2026': ['ATOMIC'],
-  '26 February 2026': ['ACTOR'],
-  '27 February 2026': ['DRILL'],
-  '28 February 2026': ['TRUCK'],
-  '01 March 2026': ['SPORT'],
+  '22 February 2026': ['Theme: GARDEN'],
+  '23 February 2026': ['Theme: FRUITS'],
+  '24 February 2026': ['Theme: SOCCER'],
+  '25 February 2026': ['Theme: ATOMIC'],
+  '26 February 2026': ['Theme: ACTOR'],
+  '27 February 2026': ['Theme: DRILL'],
+  '28 February 2026': ['Theme: TRUCK'],
+  '01 March 2026': ['Theme: SPORT'],
   
   'default': ['Theme: SPACE']
 };
