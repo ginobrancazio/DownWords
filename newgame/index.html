@@ -1,161 +1,965 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>DownWords by Gino Brancazio</title>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Word Game Generator</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
 
-    <!-- Stylesheets -->
-    <link rel="stylesheet" href="style.css" />
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css"
-    />
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+      min-height: 100vh;
+      padding: 40px 20px;
+      color: #fff;
+    }
 
-    <!-- Scripts -->
-    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    .container {
+      max-width: 700px;
+      margin: 0 auto;
+    }
 
-    <!-- Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-6R3CEQKVLF"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag() {
-        dataLayer.push(arguments);
+    h1 {
+      text-align: center;
+      margin-bottom: 10px;
+      font-size: 2.2rem;
+      color: #00d9ff;
+    }
+
+    .subtitle {
+      text-align: center;
+      color: #888;
+      margin-bottom: 40px;
+    }
+
+    .api-section {
+      background: #0f0f23;
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 25px;
+      border: 1px solid #333;
+    }
+
+    .api-section label {
+      display: block;
+      font-size: 0.85rem;
+      color: #aaa;
+      margin-bottom: 8px;
+    }
+
+    .api-input {
+      width: 100%;
+      padding: 12px 15px;
+      font-size: 1rem;
+      border: 2px solid #333;
+      border-radius: 8px;
+      background: #1a1a2e;
+      color: #fff;
+      font-family: monospace;
+    }
+
+    .api-input:focus {
+      outline: none;
+      border-color: #00d9ff;
+    }
+
+    .api-note {
+      font-size: 0.75rem;
+      color: #666;
+      margin-top: 8px;
+    }
+
+    .controls {
+      display: flex;
+      gap: 15px;
+      margin-bottom: 30px;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: flex-end;
+    }
+
+    .control-group {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .control-group label {
+      font-size: 0.85rem;
+      color: #aaa;
+    }
+
+    .date-input, .length-select, .category-select {
+      padding: 12px 20px;
+      font-size: 1rem;
+      border: 2px solid #00d9ff;
+      border-radius: 8px;
+      background: #0f0f23;
+      color: #fff;
+      cursor: pointer;
+    }
+
+    .date-input:focus, .length-select:focus, .category-select:focus {
+      outline: none;
+      box-shadow: 0 0 15px rgba(0, 217, 255, 0.3);
+    }
+
+    .btn {
+      padding: 12px 30px;
+      font-size: 1rem;
+      font-weight: 600;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #00d9ff 0%, #00a8cc 100%);
+      color: #0f0f23;
+    }
+
+    .btn-primary:hover:not(:disabled) {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 20px rgba(0, 217, 255, 0.4);
+    }
+
+    .btn:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .spinner {
+      width: 20px;
+      height: 20px;
+      border: 3px solid transparent;
+      border-top-color: #0f0f23;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+      display: none;
+    }
+
+    .btn.loading .spinner {
+      display: block;
+    }
+
+    .btn.loading .btn-text {
+      display: none;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    .error-message {
+      background: linear-gradient(135deg, #3d1a1a 0%, #4a2020 100%);
+      border: 1px solid #ff6b6b;
+      border-radius: 8px;
+      padding: 15px;
+      margin-bottom: 20px;
+      color: #ff6b6b;
+      display: none;
+    }
+
+    .error-message.visible {
+      display: block;
+      animation: shake 0.5s ease;
+    }
+
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); }
+      25% { transform: translateX(-5px); }
+      75% { transform: translateX(5px); }
+    }
+
+    .result-section {
+      display: none;
+      animation: fadeIn 0.5s ease;
+    }
+
+    .result-section.visible {
+      display: block;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .words-display {
+      background: #0f0f23;
+      border-radius: 12px;
+      padding: 30px;
+      margin-bottom: 25px;
+      border: 1px solid #333;
+    }
+
+    .badges {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 20px;
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 5px 15px;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      font-weight: 600;
+    }
+
+    .word-length-badge {
+      background: #00d9ff;
+      color: #0f0f23;
+    }
+
+    .category-badge {
+      background: #9c27b0;
+      color: #fff;
+    }
+
+    .words-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 15px;
+      margin-bottom: 20px;
+    }
+
+    .word-card {
+      background: linear-gradient(135deg, #1a1a3e 0%, #252550 100%);
+      padding: 20px;
+      border-radius: 8px;
+      text-align: center;
+      font-size: 1.2rem;
+      font-weight: 700;
+      letter-spacing: 2px;
+      border: 2px solid transparent;
+      transition: all 0.3s ease;
+      word-break: break-all;
+    }
+
+    .word-card.theme-word {
+      border-color: #ff6b6b;
+      background: linear-gradient(135deg, #3d1a1a 0%, #4a2020 100%);
+    }
+
+    .theme-label {
+      display: inline-block;
+      background: #ff6b6b;
+      color: #fff;
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 0.7rem;
+      font-weight: 600;
+      margin-bottom: 10px;
+    }
+
+    .hint-display {
+      background: linear-gradient(135deg, #1a3d1a 0%, #204a20 100%);
+      padding: 20px;
+      border-radius: 8px;
+      border: 2px solid #4caf50;
+    }
+
+    .hint-display h3 {
+      color: #4caf50;
+      margin-bottom: 10px;
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .hint-text {
+      font-size: 1.1rem;
+      color: #a5d6a7;
+    }
+
+    .output-section {
+      margin-top: 30px;
+    }
+
+    .output-section h2 {
+      font-size: 1.2rem;
+      color: #00d9ff;
+      margin-bottom: 15px;
+    }
+
+    .output-box {
+      background: #0a0a15;
+      border: 1px solid #333;
+      border-radius: 8px;
+      padding: 15px;
+      margin-bottom: 15px;
+      position: relative;
+    }
+
+    .output-box label {
+      display: block;
+      font-size: 0.8rem;
+      color: #888;
+      margin-bottom: 8px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .output-box code {
+      display: block;
+      font-family: 'Courier New', monospace;
+      font-size: 0.9rem;
+      color: #ffd93d;
+      word-break: break-all;
+      white-space: pre-wrap;
+    }
+
+    .copy-btn {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      padding: 5px 12px;
+      font-size: 0.75rem;
+      background: #333;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .copy-btn:hover {
+      background: #00d9ff;
+      color: #0f0f23;
+    }
+
+    .copy-btn.copied {
+      background: #4caf50;
+    }
+
+    .retry-info {
+      text-align: center;
+      color: #888;
+      font-size: 0.85rem;
+      margin-top: 10px;
+    }
+
+    .history-section {
+      margin-top: 40px;
+      padding-top: 30px;
+      border-top: 1px solid #333;
+    }
+
+    .history-section h2 {
+      font-size: 1.2rem;
+      color: #00d9ff;
+      margin-bottom: 15px;
+    }
+
+    .history-item {
+      background: #0f0f23;
+      border-radius: 8px;
+      padding: 15px;
+      margin-bottom: 10px;
+      border: 1px solid #333;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .history-words {
+      font-family: monospace;
+      color: #ffd93d;
+      font-size: 0.85rem;
+    }
+
+    .history-meta {
+      font-size: 0.8rem;
+      color: #666;
+    }
+
+    .clear-history-btn {
+      padding: 8px 16px;
+      font-size: 0.85rem;
+      background: #333;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      margin-bottom: 15px;
+    }
+
+    .clear-history-btn:hover {
+      background: #ff6b6b;
+    }
+
+    @media (max-width: 600px) {
+      .words-grid {
+        grid-template-columns: repeat(2, 1fr);
       }
-      gtag('js', new Date());
-      gtag('config', 'G-6R3CEQKVLF');
-    </script>
-  </head>
 
-  <body>
-    <!-- Audio elements for game sounds -->
-    <audio id="click-sound" src="click-sound.mp3"></audio>
-    <audio id="match-sound" src="match-sound.mp3"></audio>
-    <audio id="finish-sound" src="finish-sound.mp3"></audio>
+      .controls {
+        flex-direction: column;
+      }
 
-    <!-- Archive toggle button -->
-    <button id="archive-toggle" aria-label="Open puzzle archive">📅</button>
+      .control-group {
+        width: 100%;
+      }
 
-    <!-- Main game container -->
-    <div id="game">
-      <h1>DownWords</h1>
+      .date-input, .length-select, .category-select, .btn {
+        width: 100%;
+      }
 
-      <!-- Date picker for archive puzzles -->
-      <div id="date-picker-container">
-        <label for="puzzle-date">Select puzzle date: </label>
-        <input
-          type="text"
-          id="puzzle-date"
-          name="puzzle-date"
-          placeholder="Select date..."
-        />
+      .word-card {
+        font-size: 1rem;
+        padding: 15px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>🤖 AI Word Game Generator</h1>
+    <p class="subtitle">Generate unique themed word sets using AI</p>
+
+    <div class="api-section">
+      <label for="apiKey">OpenAI API Key</label>
+      <input 
+        type="password" 
+        class="api-input" 
+        id="apiKey" 
+        placeholder="sk-..."
+      >
+      <p class="api-note">Your API key is stored locally and never sent anywhere except OpenAI.</p>
+    </div>
+
+    <div class="controls">
+      <div class="control-group">
+        <label for="dateInput">Date</label>
+        <input type="date" class="date-input" id="dateInput">
+      </div>
+      
+      <div class="control-group">
+        <label for="lengthSelect">Word Length</label>
+        <select class="length-select" id="lengthSelect">
+          <option value="5">5 letters</option>
+          <option value="6" selected>6 letters</option>
+          <option value="7">7 letters</option>
+          <option value="8">8 letters</option>
+        </select>
       </div>
 
-      <!-- Game timer display -->
-      <div id="timer">Time: 0</div>
+      <div class="control-group">
+        <label for="categorySelect">Category</label>
+        <select class="category-select" id="categorySelect">
+          <option value="random">🎲 Random</option>
+          <option value="food">🍕 Food & Cooking</option>
+          <option value="sports">⚽ Sports</option>
+          <option value="music">🎵 Music</option>
+          <option value="travel">✈️ Travel</option>
+          <option value="animals">🦁 Animals</option>
+          <option value="science">🔬 Science</option>
+          <option value="movies">🎬 Movies & TV</option>
+          <option value="technology">💻 Technology</option>
+          <option value="nature">🌲 Nature</option>
+          <option value="household">🏠 Household</option>
+          <option value="clothing">👕 Clothing</option>
+          <option value="vehicles">🚗 Vehicles</option>
+          <option value="weather">🌤️ Weather</option>
+          <option value="jobs">💼 Jobs & Careers</option>
+          <option value="hobbies">🎨 Hobbies</option>
+          <option value="body">🫀 Human Body</option>
+          <option value="buildings">🏛️ Buildings</option>
+          <option value="tools">🔧 Tools</option>
+          <option value="games">🎮 Games</option>
+        </select>
+      </div>
 
-      <!-- Letter grid where the game is played -->
-      <div id="letter-grid"></div>
-    </div>
-
-    <!-- Start overlay with button to begin the puzzle -->
-    <div id="start-overlay">
-      <button id="start-puzzle-button">Start Puzzle</button>
-    </div>
-
-    <!-- Game control buttons -->
-    <div class="button-container">
-      <button id="hint-button">Reveal Hint</button>
-      <button id="theme-button">Reveal Theme</button>
-      <button id="grid-reset-button">Reset Grid</button>
-      <button id="reset-button">Start Over</button>
-      <button id="mute-button">🔇 Mute</button>
-      <button id="mode-toggle" aria-label="Toggle dark/light mode">☀️</button>
-    </div>
-
-    <!-- Hint and theme display areas -->
-    <div id="hint-display"></div>
-    <div id="theme-display"></div>
-
-    <!-- Container for selected words -->
-    <div id="selected-words-container"></div>
-
-    <!-- Game completion elements -->
-    <textarea id="gameCompletionMessage" style="display: none;"></textarea>
-    <button id="copyButton" style="display: none;">Copy</button>
-    <button id="shareButton" style="display: none;">Share to Twitter</button>
-
-    <!-- Puzzle attribution and submission link -->
-    <div id="homepage">
-      <p>
-        Today's puzzle set by <span id="puzzle-setter">Kit Cat</span>
-      </p>
-      <p>
-        Submit your own DownWords puzzle
-        <a
-          href="https://forms.gle/swMG478WZwXgjkRS6"
-          target="_blank"
-          >here</a
-        >
-      </p>
-    </div>
-
-    <!-- Other puzzles section -->
-    <div id="puzzles">
-      <h3>Other Puzzles:</h3>
-      <ul>
-        <li>
-          <span style="font-weight: bold; color: var(--accent-color);"
-            >NEW:</span
-          >
-          <a
-            href="https://downwordsgame.com/wordfinder/"
-            target="_blank"
-            >Word Finder</a
-          >
-        </li>
-      </ul>
-    </div>
-
-    <!-- Game instructions with toggle functionality -->
-    <div id="instructions-container">
-      <button id="instructions-toggle">Show Instructions</button>
-      <div id="instructions" style="display: none;">
-        <h3>Instructions:</h3>
-        <ul>
-          <li>There are 6 hidden words in the grid</li>
-          <li>
-            Each word runs vertically, one letter in each of the rows (top to
-            bottom), but the letters are not necessarily connected.
-          </li>
-          <li>Each letter is only used once.</li>
-          <li>Five of the words are connected by a theme</li>
-          <li>The remaining word is the theme that connects the other words</li>
-        </ul>
-
-        <!-- Example gameplay animation -->
-        <p>Example:</p>
-        <img
-          src="Down Words.gif"
-          alt="Example Gameplay"
-          class="instructions-gif"
-        />
+      <div class="control-group">
+        <label>&nbsp;</label>
+        <button class="btn btn-primary" id="generateBtn">
+          <span class="btn-text">Generate Words</span>
+          <div class="spinner"></div>
+        </button>
       </div>
     </div>
 
-    <!-- Footer with contact and copyright information -->
-    <div id="linkedin-connect" style="text-align: center; margin-top: 20px;">
-      <p>
-        V3.5 © 2025 Gino Brancazio. All rights reserved. Contact me on
-        <a
-          href="https://www.linkedin.com/in/ginobrancazio/"
-          target="_blank"
-          >LinkedIn</a
-        >
-      </p>
+    <div class="error-message" id="errorMessage"></div>
+
+    <div class="result-section" id="resultSection">
+      <div class="words-display">
+        <div class="badges">
+          <span class="badge word-length-badge" id="lengthBadge">6 letters each</span>
+          <span class="badge category-badge" id="categoryBadge">Random</span>
+        </div>
+        <div class="words-grid" id="wordsGrid"></div>
+        <div class="hint-display">
+          <h3>💡 Hint</h3>
+          <p class="hint-text" id="hintText"></p>
+        </div>
+      </div>
+
+      <div class="output-section">
+        <h2>📋 Copy-Ready Output</h2>
+
+        <div class="output-box">
+          <label>Words Array</label>
+          <button class="copy-btn" data-target="wordsOutput">Copy</button>
+          <code id="wordsOutput"></code>
+        </div>
+
+        <div class="output-box">
+          <label>Theme</label>
+          <button class="copy-btn" data-target="themeOutput">Copy</button>
+          <code id="themeOutput"></code>
+        </div>
+
+        <div class="output-box">
+          <label>Hint</label>
+          <button class="copy-btn" data-target="hintOutput">Copy</button>
+          <code id="hintOutput"></code>
+        </div>
+      </div>
+
+      <p class="retry-info" id="retryInfo"></p>
     </div>
 
-    <!-- Main game script -->
-    <script src="script.js"></script>
-  </body>
+    <div class="history-section" id="historySection" style="display: none;">
+      <h2>📜 Recent Generations</h2>
+      <button class="clear-history-btn" id="clearHistoryBtn">Clear History</button>
+      <div id="historyList"></div>
+    </div>
+  </div>
+
+  <script>
+    // Common English words for validation (a subset for quick checking)
+    const commonWords = new Set([
+      // This is just a sample - the AI prompt is the main guard
+    ]);
+
+    const categories = {
+      random: null,
+      food: "Food, cooking, kitchen items, ingredients, or meals",
+      sports: "Sports, athletics, games, or physical activities",
+      music: "Music, instruments, musicians, or musical terms",
+      travel: "Travel, tourism, transportation, or destinations",
+      animals: "Animals, wildlife, pets, or creatures",
+      science: "Science, chemistry, physics, biology, or experiments",
+      movies: "Movies, television, cinema, actors, or film genres",
+      technology: "Technology, computers, gadgets, or electronics",
+      nature: "Nature, outdoors, landscapes, or natural phenomena",
+      household: "Household items, furniture, or home appliances",
+      clothing: "Clothing, fashion, accessories, or fabrics",
+      vehicles: "Vehicles, cars, transportation, or automotive",
+      weather: "Weather, climate, seasons, or atmospheric conditions",
+      jobs: "Jobs, careers, professions, or workplace",
+      hobbies: "Hobbies, crafts, leisure activities, or pastimes",
+      body: "Human body, anatomy, health, or medicine",
+      buildings: "Buildings, architecture, structures, or construction",
+      tools: "Tools, equipment, hardware, or workshop items",
+      games: "Games, toys, puzzles, or entertainment"
+    };
+
+    const categoryEmojis = {
+      random: "🎲",
+      food: "🍕",
+      sports: "⚽",
+      music: "🎵",
+      travel: "✈️",
+      animals: "🦁",
+      science: "🔬",
+      movies: "🎬",
+      technology: "💻",
+      nature: "🌲",
+      household: "🏠",
+      clothing: "👕",
+      vehicles: "🚗",
+      weather: "🌤️",
+      jobs: "💼",
+      hobbies: "🎨",
+      body: "🫀",
+      buildings: "🏛️",
+      tools: "🔧",
+      games: "🎮"
+    };
+
+    const dateInput = document.getElementById('dateInput');
+    const apiKeyInput = document.getElementById('apiKey');
+    const generateBtn = document.getElementById('generateBtn');
+    const errorMessage = document.getElementById('errorMessage');
+    const resultSection = document.getElementById('resultSection');
+    const lengthSelect = document.getElementById('lengthSelect');
+    const categorySelect = document.getElementById('categorySelect');
+
+    let history = JSON.parse(localStorage.getItem('wordGameHistory') || '[]');
+
+    // Set default date to today
+    const today = new Date().toISOString().split('T')[0];
+    dateInput.value = today;
+
+    // Load saved API key
+    const savedKey = localStorage.getItem('openai_api_key');
+    if (savedKey) {
+      apiKeyInput.value = savedKey;
+    }
+
+    // Save API key on change
+    apiKeyInput.addEventListener('change', () => {
+      localStorage.setItem('openai_api_key', apiKeyInput.value);
+    });
+
+    generateBtn.addEventListener('click', generateWords);
+    document.getElementById('clearHistoryBtn').addEventListener('click', clearHistory);
+
+    updateHistoryDisplay();
+
+    async function generateWords() {
+      const apiKey = apiKeyInput.value.trim();
+      const selectedDate = dateInput.value;
+      const wordLength = parseInt(lengthSelect.value);
+      let selectedCategory = categorySelect.value;
+
+      if (!apiKey) {
+        showError('Please enter your OpenAI API key');
+        return;
+      }
+
+      if (!selectedDate) {
+        showError('Please select a date');
+        return;
+      }
+
+      // If random, pick a random category
+      if (selectedCategory === 'random') {
+        const categoryKeys = Object.keys(categories).filter(k => k !== 'random');
+        selectedCategory = categoryKeys[Math.floor(Math.random() * categoryKeys.length)];
+      }
+
+      hideError();
+      setLoading(true);
+      resultSection.classList.remove('visible');
+
+      let attempts = 0;
+      const maxAttempts = 5;
+      let success = false;
+      let lastError = '';
+
+      while (attempts < maxAttempts && !success) {
+        attempts++;
+        try {
+          const result = await fetchWordsFromAI(apiKey, wordLength, selectedCategory);
+          
+          if (result.error) {
+            throw new Error(result.error);
+          }
+
+          // Validate the words
+          const validation = validateWords(result, wordLength);
+          
+          if (validation.valid) {
+            displayResults(result, wordLength, selectedDate, selectedCategory);
+            document.getElementById('retryInfo').textContent = 
+              attempts > 1 ? `✓ Generated successfully after ${attempts} attempts` : '';
+            success = true;
+            
+            // Save to history
+            addToHistory(result, wordLength, selectedDate, selectedCategory);
+          } else {
+            lastError = validation.reason;
+            console.log(`Attempt ${attempts} failed validation: ${validation.reason}`);
+          }
+        } catch (error) {
+          console.error('Error:', error);
+          lastError = error.message;
+        }
+      }
+
+      if (!success) {
+        showError(`Failed after ${maxAttempts} attempts. ${lastError}. Please try again.`);
+      }
+
+      setLoading(false);
+    }
+
+    async function fetchWordsFromAI(apiKey, wordLength, category) {
+      const categoryDescription = categories[category];
+      
+      const prompt = `Generate a word puzzle for the category: ${categoryDescription}
+
+STRICT REQUIREMENTS:
+1. Pick ONE theme word that is EXACTLY ${wordLength} letters (no more, no less)
+2. Pick 5 related words that are ALL EXACTLY ${wordLength} letters each
+3. ALL words must be COMMON, REAL English words found in standard dictionaries
+4. NO made-up words, NO obscure words, NO proper nouns, NO abbreviations
+5. NO hyphenated words, NO compound words with spaces
+6. Words should be recognizable by an average English speaker
+7. The 5 related words must clearly connect to the theme
+8. Create a helpful hint that describes the theme (without using the theme word)
+
+IMPORTANT: Count the letters carefully. "${wordLength}" means exactly ${wordLength} letters.
+
+Before responding, verify EACH word is exactly ${wordLength} letters by counting.
+
+Respond with ONLY this JSON (no explanation):
+{
+  "theme": "XXXXX",
+  "words": ["XXXXX", "XXXXX", "XXXXX", "XXXXX", "XXXXX"],
+  "hint": "Description of theme"
+}
+
+Replace each XXXXX with a real ${wordLength}-letter word.`;
+
+      const response = await fetch('https://api.openai.com/v1/chat/completions', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${apiKey}`
+        },
+        body: JSON.stringify({
+          model: 'gpt-4o',
+          messages: [
+            {
+              role: 'system',
+              content: `You are a word game designer. You MUST:
+1. Return ONLY common, real English dictionary words
+2. Every word MUST be EXACTLY ${wordLength} letters - count carefully!
+3. Avoid obscure, archaic, or technical jargon
+4. Avoid words that are primarily used as proper nouns
+5. Double-check letter counts before responding
+6. Return valid JSON only, no other text`
+            },
+            {
+              role: 'user',
+              content: prompt
+            }
+          ],
+          temperature: 1.0,
+          max_tokens: 400
+        })
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json().catch(() => ({}));
+        throw new Error(errorData.error?.message || `API request failed: ${response.status}`);
+      }
+
+      const data = await response.json();
+      const content = data.choices[0].message.content.trim();
+      
+      // Parse JSON from response
+      const jsonMatch = content.match(/\{[\s\S]*\}/);
+      if (!jsonMatch) {
+        throw new Error('Invalid response format from AI');
+      }
+
+      return JSON.parse(jsonMatch[0]);
+    }
+
+    function validateWords(result, expectedLength) {
+      if (!result.theme || !result.words || !result.hint) {
+        return { valid: false, reason: 'Missing required fields in response' };
+      }
+
+      if (!Array.isArray(result.words) || result.words.length !== 5) {
+        return { valid: false, reason: 'Must have exactly 5 related words' };
+      }
+
+      // Check theme
+      const themeClean = result.theme.toUpperCase().replace(/[^A-Z]/g, '');
+      if (themeClean.length !== expectedLength) {
+        return { 
+          valid: false, 
+          reason: `Theme "${result.theme}" has ${themeClean.length} letters (need ${expectedLength})` 
+        };
+      }
+
+      // Check for invalid characters in theme
+      if (/[^A-Za-z]/.test(result.theme.trim())) {
+        return {
+          valid: false,
+          reason: `Theme "${result.theme}" contains invalid characters`
+        };
+      }
+
+      // Check all related words
+      const allWords = [themeClean];
+      for (const word of result.words) {
+        const wordClean = word.toUpperCase().replace(/[^A-Z]/g, '');
+        
+        if (wordClean.length !== expectedLength) {
+          return { 
+            valid: false, 
+            reason: `Word "${word}" has ${wordClean.length} letters (need ${expectedLength})` 
+          };
+        }
+
+        if (/[^A-Za-z]/.test(word.trim())) {
+          return {
+            valid: false,
+            reason: `Word "${word}" contains invalid characters`
+          };
+        }
+
+        // Check for duplicates
+        if (allWords.includes(wordClean)) {
+          return {
+            valid: false,
+            reason: `Duplicate word found: "${word}"`
+          };
+        }
+        allWords.push(wordClean);
+      }
+
+      return { valid: true };
+    }
+
+    function displayResults(result, wordLength, selectedDate, category) {
+      const theme = result.theme.toUpperCase().replace(/[^A-Z]/g, '');
+      const relatedWords = result.words.map(w => w.toUpperCase().replace(/[^A-Z]/g, ''));
+      const hint = result.hint;
+
+      // Shuffle all words together
+      const allWords = [theme, ...relatedWords];
+      const shuffledWords = shuffleArray(allWords);
+
+      // Format date
+      const formattedDate = formatDate(selectedDate);
+
+      // Update badges
+      document.getElementById('lengthBadge').textContent = `${wordLength} letters each`;
+      document.getElementById('categoryBadge').textContent = `${categoryEmojis[category]} ${category.charAt(0).toUpperCase() + category.slice(1)}`;
+
+      // Display word cards
+      const wordsGrid = document.getElementById('wordsGrid');
+      wordsGrid.innerHTML = '';
+
+      shuffledWords.forEach(word => {
+        const card = document.createElement('div');
+        card.className = 'word-card';
+        if (word === theme) {
+          card.classList.add('theme-word');
+          card.innerHTML = `<span class="theme-label">THEME</span><br>${word}`;
+        } else {
+          card.textContent = word;
+        }
+        wordsGrid.appendChild(card);
+      });
+
+      // Display hint
+      document.getElementById('hintText').textContent = hint;
+
+      // Generate output strings
+      const wordsArray = `'${formattedDate}': ['${shuffledWords.join("', '")}'],`;
+      const themeOutput = `'${formattedDate}': ['${theme}'],`;
+      const hintOutput = `'${formattedDate}': ['Hint: ${hint}'],`;
+
+      document.getElementById('wordsOutput').textContent = wordsArray;
+      document.getElementById('themeOutput').textContent = themeOutput;
+      document.getElementById('hintOutput').textContent = hintOutput;
+
+      resultSection.classList.add('visible');
+    }
+
+    function shuffleArray(array) {
+      const shuffled = [...array];
+      for (let i = shuffled.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+      }
+      return shuffled;
+    }
+
+    function formatDate(dateString) {
+      const date = new Date(dateString);
+      const options = { day: 'numeric', month: 'long', year: 'numeric' };
+      return date.toLocaleDateString('en-GB', options);
+    }
+
+    function setLoading(loading) {
+      generateBtn.disabled = loading;
+      generateBtn.classList.toggle('loading', loading);
+    }
+
+    function showError(message) {
+      errorMessage.textContent = message;
+      errorMessage.classList.add('visible');
+    }
+
+    function hideError() {
+      errorMessage.classList.remove('visible');
+    }
+
+    function addToHistory(result, wordLength, date, category) {
+      const entry = {
+        theme: result.theme.toUpperCase(),
+        words: result.words.map(w => w.toUpperCase()),
+        hint: result.hint,
+        wordLength,
+        date,
+        category,
+        timestamp: Date.now()
+      };
+
+      history.unshift(entry);
+      if (history.length > 20) {
+        history = history.slice(0, 20);
+      }
+      localStorage.setItem('wordGameHistory', JSON.stringify(history));
+      updateHistoryDisplay();
+    }
+
+    function clearHistory() {
+      history = [];
+      localStorage.setItem('wordGameHistory', '[]');
+      updateHistoryDisplay();
+    }
+
+    function updateHistoryDisplay() {
+      const section = document.getElementById('historySection');
+      const list = document.getElementById('historyList');
+
+      if (history.length === 0) {
+        section.style.display = 'none';
+        return;
+      }
+
+      section.style.display = 'block';
+      list.innerHTML = history.map(entry => `
+        <div class="history-item">
+          <div>
+            <div class="history-words">${entry.theme} → ${entry.words.join(', ')}</div>
+            <div class="history-meta">${formatDate(entry.date)} • ${entry.wordLength} letters • ${categoryEmojis[entry.category] || ''} ${entry.category}</div>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    // Copy button functionality
+    document.querySelectorAll('.copy-btn').forEach(btn => {
+      btn.addEventListener('click', function() {
+        const targetId = this.getAttribute('data-target');
+        const text = document.getElementById(targetId).textContent;
+
+        navigator.clipboard.writeText(text).then(() => {
+          this.textContent = 'Copied!';
+          this.classList.add('copied');
+
+          setTimeout(() => {
+            this.textContent = 'Copy';
+            this.classList.remove('copied');
+          }, 2000);
+        });
+      });
+    });
+  </script>
+</body>
 </html>
