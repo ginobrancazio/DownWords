@@ -1462,6 +1462,11 @@ const wordListsByDate = {
 '27 February 2026': ['SCREW', 'STEEL', 'CHUCK', 'TOOLS', 'HOLES', 'DRILL'],
 '28 February 2026': ['TRUCK', 'CARGO', 'DRIVE', 'TIRES', 'LOADS', 'HAULS'],
 '01 March 2026': ['MATCH', 'RACER', 'COACH', 'SCORE', 'MEDAL', 'SPORT'],
+'2 March 2026': ['STRAIN', 'FIBERS', 'BICEPS', 'MUSCLE', 'TISSUE', 'TENDON'],
+'3 March 2026': ['BUTTON', 'ZIPPER', 'VELVET', 'JACKET', 'COTTON', 'WINTER'],
+'4 March 2026': ['RHYTHM', 'MELODY', 'CHORDS', 'GUITAR', 'PICKUP', 'STRING'],
+'5 March 2026': ['WEIGHT', 'THRUST', 'IMPACT', 'FORCES', 'ENERGY', 'MOTION'],
+
   
   'default': ['SPACE', 'EARTH', 'ALIEN', 'ORBIT', 'COMET', 'SOLAR']
 };
@@ -1773,6 +1778,10 @@ const ThemesByDate = {
 '27 February 2026': ['Theme: DRILL'],
 '28 February 2026': ['Theme: TRUCK'],
 '01 March 2026': ['Theme: SPORT'],
+'2 March 2026': ['Theme: MUSCLE'],
+'3 March 2026': ['Theme: JACKET'],
+'4 March 2026': ['Theme: GUITAR'],
+'5 March 2026': ['Theme: FORCES'],
   
   'default': ['Theme: SPACE']
 };
@@ -2084,6 +2093,11 @@ const HintsByDate = {
 '27 February 2026': ['Hint: A power tool used to make holes in various materials.'],
 '28 February 2026': ['Hint: A large vehicle that transports goods.'],
 '01 March 2026': ['Hint: Activities involving competition and physical exertion'],
+'2 March 2026': ['Hint: Related to body movement and exercise'],
+'3 March 2026': ['Hint: Outerwear often worn in cooler weather'],
+'4 March 2026': ['Hint: A popular six-stringed musical instrument'],
+'5 March 2026': ['Hint: Fundamental interactions that govern motion and physical behavior'],
+
   
   'default': ['Hint: The Final Frontier']
 };
