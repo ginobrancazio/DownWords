@@ -2086,7 +2086,7 @@ const HintsByDate = {
 '25 February 2026': ['Hint: Relates to the fundamental building blocks of chemistry'],
 '26 February 2026': ['Hint: Performer who portrays characters in films or on stage'],
 '27 February 2026': ['Hint: A power tool used to make holes in various materials.'],
-'28 February 2026': ['Hint: A large vehicle that transports goods.’],
+'28 February 2026': ['Hint: A large vehicle that transports goods.'],
 '01 March 2026': ['Hint: Activities involving competition and physical exertion'],
   
   'default': ['Hint: The Final Frontier']
