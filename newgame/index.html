@@ -859,7 +859,7 @@ Replace each XXXXX with a real ${wordLength}-letter word.`;
 
       // Generate output strings
       const wordsArray = `'${formattedDate}': ['${shuffledWords.join("', '")}'],`;
-      const themeOutput = `'${formattedDate}': ['${theme}'],`;
+      const themeOutput = `'${formattedDate}': ['Theme: ${theme}'],`;
       const hintOutput = `'${formattedDate}': ['Hint: ${hint}'],`;
 
       document.getElementById('wordsOutput').textContent = wordsArray;
