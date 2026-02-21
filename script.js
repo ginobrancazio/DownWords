@@ -1492,6 +1492,18 @@ const wordListsByDate = {
 '29 March 2026': ['GARAGE', 'REPAIR', 'PARKED', 'DRIVER', 'WRENCH', 'ENGINE'],
 '29 March 2026': ['HEIGHT', 'LADDER', 'STAIRS', 'ASCEND', 'CLIMBS', 'LEVELS'],
 '30 March 2026': ['VENDOR', 'MARKET', 'SPICES', 'AROMAS', 'STREET', 'BAZAAR'],
+'31 March 2026': ['FILMS', 'SCENE', 'STAGE', 'LIGHT', 'REELS', 'ACTOR'],
+'1 April 2026': ['BLOOM', 'PALMS', 'TREES', 'FROND', 'GREEN', 'LEAFY'],
+'2 April 2026': ['RAILS', 'PIVOT', 'HOOKS', 'TOWER', 'CRANE', 'RIGID'],
+'3 April 2026': ['BITER', 'AUGER', 'DRILL', 'SCREW', 'BORER', 'CHUCK'],
+'4 April 2026': ['FABLE', 'STORY', 'MYTHS', 'MORAL', 'TALES', 'BEAST'],
+'5 April 2026': ['BAKER', 'YEAST', 'ROLLS', 'ICING', 'CRUMB', 'OVENS'],
+'6 April 2026': ['BELLS', 'TUNES', 'RINGS', 'CLOCK', 'SOUND', 'CHIME'],
+'7 April 2026': ['GRATE', 'MIXER', 'CRUSH', 'POUND', 'GRIND', 'BLEND'],
+'8 April 2026': ['TRUCK', 'TRAIN', 'CARGO', 'CRANE', 'FERRY', 'BOXES'],
+'9 April 2026': ['SCALE', 'LEVEL', 'DEPTH', 'RULER', 'ANGLE', 'GAUGE'],
+'10 April 2026': ['OPTIC', 'LASER', 'FOCUS', 'BEAMS', 'POWER', 'LIGHT'],
+
   
   'default': ['SPACE', 'EARTH', 'ALIEN', 'ORBIT', 'COMET', 'SOLAR']
 };
@@ -1833,7 +1845,17 @@ const ThemesByDate = {
 '29 March 2026': ['Theme: GARAGE'],
 '29 March 2026': ['Theme: LADDER'],
 '30 March 2026': ['Theme: BAZAAR'],
-
+'31 March 2026': ['Theme: REELS'],
+'1 April 2026': ['Theme: FROND'],
+'2 April 2026': ['Theme: CRANE'],
+'3 April 2026': ['Theme: DRILL'],
+'4 April 2026': ['Theme: FABLE'],
+'5 April 2026': ['Theme: BAKER'],
+'6 April 2026': ['Theme: CHIME'],
+'7 April 2026': ['Theme: GRIND'],
+'8 April 2026': ['Theme: CARGO'],
+'9 April 2026': ['Theme: GAUGE'],
+'10 April 2026': ['Theme: LASER'],
   
   'default': ['Theme: SPACE']
 };
@@ -2175,6 +2197,18 @@ const HintsByDate = {
 '29 March 2026': ['Hint: A building where cars are stored or repaired.'],
 '29 March 2026': ['Hint: An essential item for reaching higher places often used during travel or home improvements.'],
 '30 March 2026': ['Hint: A place where you might find diverse ingredients, vibrant flavors, and lively culinary exchanges.'],
+'31 March 2026': ['Hint: Circular items used to hold film in projectors or cameras.'],
+'1 April 2026': ['Hint: Nature\'s intricate fans in the plant world'],
+'2 April 2026': ['Hint: This is a key piece of machinery used in construction to lift heavy loads and materials.'],
+'3 April 2026': ['Hint: A tool used to create holes in various materials.'],
+'4 April 2026': ['Hint: Short fictional narratives often featuring animals and a lesson.'],
+'5 April 2026': ['Hint: A professional who creates delicious breads and pastries.'],
+'6 April 2026': ['Hint: The pleasant, musical sounds heard in various public places around the world.'],
+'7 April 2026': ['Hint: This is an action commonly performed with substances to break them into smaller pieces.'],
+'8 April 2026': ['Hint: Items transported by various vehicles'],
+'9 April 2026': ['Hint: This is used for measuring and checking precise dimensions or pressures in a workshop.'],
+'10 April 2026': ['Hint: A tool often used in precision cutting and surgeries.'],
+
   
   'default': ['Hint: The Final Frontier']
 };
