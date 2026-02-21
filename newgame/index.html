@@ -20,7 +20,7 @@
     }
 
     .container {
-      max-width: 700px;
+      max-width: 1200px;
       margin: 0 auto;
     }
 
@@ -119,6 +119,7 @@
       transition: all 0.3s ease;
       display: flex;
       align-items: center;
+      justify-content: center;
       gap: 10px;
     }
 
@@ -127,7 +128,17 @@
       color: #0f0f23;
     }
 
-    .btn-primary:hover:not(:disabled) {
+    .btn-secondary {
+      background: linear-gradient(135deg, #9c27b0 0%, #7b1fa2 100%);
+      color: #fff;
+    }
+
+    .btn-success {
+      background: linear-gradient(135deg, #4caf50 0%, #388e3c 100%);
+      color: #fff;
+    }
+
+    .btn:hover:not(:disabled) {
       transform: translateY(-2px);
       box-shadow: 0 5px 20px rgba(0, 217, 255, 0.4);
     }
@@ -142,7 +153,7 @@
       width: 20px;
       height: 20px;
       border: 3px solid transparent;
-      border-top-color: #0f0f23;
+      border-top-color: currentColor;
       border-radius: 50%;
       animation: spin 1s linear infinite;
       display: none;
@@ -181,6 +192,70 @@
       75% { transform: translateX(5px); }
     }
 
+    .progress-section {
+      display: none;
+      margin-bottom: 30px;
+    }
+
+    .progress-section.visible {
+      display: block;
+    }
+
+    .progress-bar-container {
+      background: #0f0f23;
+      border-radius: 10px;
+      padding: 20px;
+      border: 1px solid #333;
+    }
+
+    .progress-bar-bg {
+      background: #1a1a2e;
+      border-radius: 8px;
+      height: 24px;
+      overflow: hidden;
+      margin-bottom: 10px;
+    }
+
+    .progress-bar-fill {
+      background: linear-gradient(135deg, #00d9ff 0%, #00a8cc 100%);
+      height: 100%;
+      width: 0%;
+      transition: width 0.3s ease;
+      border-radius: 8px;
+    }
+
+    .progress-text {
+      text-align: center;
+      color: #aaa;
+      font-size: 0.9rem;
+    }
+
+    .progress-stats {
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+      margin-top: 15px;
+      font-size: 0.85rem;
+    }
+
+    .progress-stat {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .stat-success {
+      color: #4caf50;
+    }
+
+    .stat-failed {
+      color: #ff6b6b;
+    }
+
+    .stat-invalid {
+      color: #ffa726;
+    }
+
     .result-section {
       display: none;
       animation: fadeIn 0.5s ease;
@@ -195,138 +270,179 @@
       to { opacity: 1; transform: translateY(0); }
     }
 
-    .words-display {
-      background: #0f0f23;
-      border-radius: 12px;
-      padding: 30px;
-      margin-bottom: 25px;
-      border: 1px solid #333;
-    }
-
-    .badges {
+    .selection-controls {
       display: flex;
-      gap: 10px;
-      flex-wrap: wrap;
-      margin-bottom: 20px;
-    }
-
-    .badge {
-      display: inline-block;
-      padding: 5px 15px;
-      border-radius: 20px;
-      font-size: 0.8rem;
-      font-weight: 600;
-    }
-
-    .word-length-badge {
-      background: #00d9ff;
-      color: #0f0f23;
-    }
-
-    .category-badge {
-      background: #9c27b0;
-      color: #fff;
-    }
-
-    .words-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
       gap: 15px;
       margin-bottom: 20px;
+      flex-wrap: wrap;
+      align-items: center;
     }
 
-    .word-card {
-      background: linear-gradient(135deg, #1a1a3e 0%, #252550 100%);
-      padding: 20px;
-      border-radius: 8px;
-      text-align: center;
-      font-size: 1.2rem;
-      font-weight: 700;
-      letter-spacing: 2px;
-      border: 2px solid transparent;
-      transition: all 0.3s ease;
-      word-break: break-all;
+    .selection-controls .btn {
+      padding: 8px 16px;
+      font-size: 0.85rem;
     }
 
-    .word-card.theme-word {
-      border-color: #ff6b6b;
-      background: linear-gradient(135deg, #3d1a1a 0%, #4a2020 100%);
-    }
-
-    .theme-label {
-      display: inline-block;
-      background: #ff6b6b;
-      color: #fff;
-      padding: 4px 12px;
-      border-radius: 20px;
-      font-size: 0.7rem;
+    .selection-count {
+      color: #00d9ff;
       font-weight: 600;
-      margin-bottom: 10px;
     }
 
-    .hint-display {
-      background: linear-gradient(135deg, #1a3d1a 0%, #204a20 100%);
-      padding: 20px;
-      border-radius: 8px;
-      border: 2px solid #4caf50;
+    .sets-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+      gap: 15px;
+      margin-bottom: 30px;
     }
 
-    .hint-display h3 {
-      color: #4caf50;
-      margin-bottom: 10px;
-      font-size: 0.9rem;
-      text-transform: uppercase;
-      letter-spacing: 1px;
+    .set-card {
+      background: #0f0f23;
+      border-radius: 12px;
+      border: 2px solid #333;
+      overflow: hidden;
+      transition: all 0.3s ease;
     }
 
-    .hint-text {
+    .set-card.selected {
+      border-color: #4caf50;
+      box-shadow: 0 0 20px rgba(76, 175, 80, 0.3);
+    }
+
+    .set-card-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 15px;
+      background: #1a1a2e;
+      border-bottom: 1px solid #333;
+    }
+
+    .set-checkbox {
+      width: 22px;
+      height: 22px;
+      cursor: pointer;
+      accent-color: #4caf50;
+    }
+
+    .set-number {
+      background: #00d9ff;
+      color: #0f0f23;
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 0.8rem;
+    }
+
+    .set-theme {
       font-size: 1.1rem;
+      font-weight: 700;
+      color: #ff6b6b;
+      letter-spacing: 2px;
+    }
+
+    .set-category {
+      margin-left: auto;
+      font-size: 0.75rem;
+      color: #888;
+    }
+
+    .set-card-body {
+      padding: 15px;
+    }
+
+    .set-words {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 12px;
+    }
+
+    .set-word {
+      background: linear-gradient(135deg, #1a1a3e 0%, #252550 100%);
+      padding: 6px 12px;
+      border-radius: 6px;
+      font-weight: 600;
+      letter-spacing: 1px;
+      font-size: 0.85rem;
+    }
+
+    .set-word.theme {
+      background: linear-gradient(135deg, #3d1a1a 0%, #4a2020 100%);
+      border: 1px solid #ff6b6b;
+    }
+
+    .set-hint {
+      background: linear-gradient(135deg, #1a3d1a 0%, #204a20 100%);
+      padding: 10px 12px;
+      border-radius: 6px;
+      border-left: 3px solid #4caf50;
       color: #a5d6a7;
+      font-size: 0.85rem;
     }
 
     .output-section {
       margin-top: 30px;
+      display: none;
+    }
+
+    .output-section.visible {
+      display: block;
     }
 
     .output-section h2 {
-      font-size: 1.2rem;
+      font-size: 1.4rem;
       color: #00d9ff;
-      margin-bottom: 15px;
+      margin-bottom: 20px;
+      text-align: center;
     }
 
     .output-box {
       background: #0a0a15;
       border: 1px solid #333;
       border-radius: 8px;
-      padding: 15px;
-      margin-bottom: 15px;
+      padding: 20px;
+      margin-bottom: 20px;
       position: relative;
     }
 
-    .output-box label {
-      display: block;
+    .output-box h3 {
+      font-size: 1rem;
+      color: #00d9ff;
+      margin-bottom: 15px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .output-box h3 .count {
+      background: #00d9ff;
+      color: #0f0f23;
+      padding: 2px 10px;
+      border-radius: 12px;
       font-size: 0.8rem;
-      color: #888;
-      margin-bottom: 8px;
-      text-transform: uppercase;
-      letter-spacing: 1px;
     }
 
     .output-box code {
       display: block;
       font-family: 'Courier New', monospace;
-      font-size: 0.9rem;
+      font-size: 0.85rem;
       color: #ffd93d;
-      word-break: break-all;
       white-space: pre-wrap;
+      line-height: 1.8;
+      max-height: 400px;
+      overflow-y: auto;
     }
 
     .copy-btn {
       position: absolute;
-      top: 10px;
-      right: 10px;
-      padding: 5px 12px;
-      font-size: 0.75rem;
+      top: 15px;
+      right: 15px;
+      padding: 8px 16px;
+      font-size: 0.8rem;
       background: #333;
       color: #fff;
       border: none;
@@ -344,67 +460,23 @@
       background: #4caf50;
     }
 
-    .retry-info {
+    .generate-output-section {
       text-align: center;
-      color: #888;
-      font-size: 0.85rem;
-      margin-top: 10px;
-    }
-
-    .history-section {
-      margin-top: 40px;
-      padding-top: 30px;
-      border-top: 1px solid #333;
-    }
-
-    .history-section h2 {
-      font-size: 1.2rem;
-      color: #00d9ff;
-      margin-bottom: 15px;
-    }
-
-    .history-item {
+      padding: 20px;
       background: #0f0f23;
-      border-radius: 8px;
-      padding: 15px;
-      margin-bottom: 10px;
+      border-radius: 12px;
       border: 1px solid #333;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 10px;
+      margin-bottom: 30px;
     }
 
-    .history-words {
-      font-family: monospace;
-      color: #ffd93d;
-      font-size: 0.85rem;
-    }
-
-    .history-meta {
-      font-size: 0.8rem;
-      color: #666;
-    }
-
-    .clear-history-btn {
-      padding: 8px 16px;
-      font-size: 0.85rem;
-      background: #333;
-      color: #fff;
-      border: none;
-      border-radius: 4px;
-      cursor: pointer;
+    .generate-output-section p {
       margin-bottom: 15px;
-    }
-
-    .clear-history-btn:hover {
-      background: #ff6b6b;
+      color: #aaa;
     }
 
     @media (max-width: 600px) {
-      .words-grid {
-        grid-template-columns: repeat(2, 1fr);
+      .sets-grid {
+        grid-template-columns: 1fr;
       }
 
       .controls {
@@ -419,9 +491,14 @@
         width: 100%;
       }
 
-      .word-card {
-        font-size: 1rem;
-        padding: 15px;
+      .set-card-header {
+        flex-wrap: wrap;
+      }
+
+      .set-category {
+        margin-left: 0;
+        width: 100%;
+        margin-top: 10px;
       }
     }
   </style>
@@ -429,7 +506,7 @@
 <body>
   <div class="container">
     <h1>🤖 AI Word Game Generator</h1>
-    <p class="subtitle">Generate unique themed word sets using AI</p>
+    <p class="subtitle">Generate 100 unique themed word sets using AI</p>
 
     <div class="api-section">
       <label for="apiKey">OpenAI API Key</label>
@@ -444,8 +521,8 @@
 
     <div class="controls">
       <div class="control-group">
-        <label for="dateInput">Date</label>
-        <input type="date" class="date-input" id="dateInput">
+        <label for="startDateInput">Starting Date</label>
+        <input type="date" class="date-input" id="startDateInput">
       </div>
       
       <div class="control-group">
@@ -461,7 +538,7 @@
       <div class="control-group">
         <label for="categorySelect">Category</label>
         <select class="category-select" id="categorySelect">
-          <option value="random">🎲 Random</option>
+          <option value="random">🎲 Random (Mixed)</option>
           <option value="food">🍕 Food & Cooking</option>
           <option value="sports">⚽ Sports</option>
           <option value="music">🎵 Music</option>
@@ -487,7 +564,7 @@
       <div class="control-group">
         <label>&nbsp;</label>
         <button class="btn btn-primary" id="generateBtn">
-          <span class="btn-text">Generate Words</span>
+          <span class="btn-text">Generate 100 Sets</span>
           <div class="spinner"></div>
         </button>
       </div>
@@ -495,57 +572,61 @@
 
     <div class="error-message" id="errorMessage"></div>
 
-    <div class="result-section" id="resultSection">
-      <div class="words-display">
-        <div class="badges">
-          <span class="badge word-length-badge" id="lengthBadge">6 letters each</span>
-          <span class="badge category-badge" id="categoryBadge">Random</span>
+    <div class="progress-section" id="progressSection">
+      <div class="progress-bar-container">
+        <div class="progress-bar-bg">
+          <div class="progress-bar-fill" id="progressBar"></div>
         </div>
-        <div class="words-grid" id="wordsGrid"></div>
-        <div class="hint-display">
-          <h3>💡 Hint</h3>
-          <p class="hint-text" id="hintText"></p>
+        <p class="progress-text" id="progressText">Generating set 1 of 100...</p>
+        <div class="progress-stats">
+          <span class="progress-stat stat-success">✓ Valid: <span id="validCount">0</span></span>
+          <span class="progress-stat stat-invalid">⚠ Invalid words: <span id="invalidWordCount">0</span></span>
+          <span class="progress-stat stat-failed">✗ Failed: <span id="failedCount">0</span></span>
         </div>
       </div>
+    </div>
 
-      <div class="output-section">
-        <h2>📋 Copy-Ready Output</h2>
+    <div class="result-section" id="resultSection">
+      <div class="selection-controls">
+        <button class="btn btn-secondary" id="selectAllBtn">Select All</button>
+        <button class="btn btn-secondary" id="deselectAllBtn">Deselect All</button>
+        <span class="selection-count"><span id="selectedCount">0</span> of <span id="totalCount">0</span> selected</span>
+      </div>
+
+      <div class="sets-grid" id="setsGrid"></div>
+
+      <div class="generate-output-section">
+        <p>Select the sets you want to use, then generate the output. Dates will be assigned sequentially from your starting date.</p>
+        <button class="btn btn-success" id="generateOutputBtn">
+          <span class="btn-text">📋 Generate Output for Selected Sets</span>
+        </button>
+      </div>
+
+      <div class="output-section" id="outputSection">
+        <h2>📋 Copy-Ready Output (Grouped by Type)</h2>
 
         <div class="output-box">
-          <label>Words Array</label>
+          <h3>Words Arrays <span class="count" id="wordsCount">0</span></h3>
           <button class="copy-btn" data-target="wordsOutput">Copy</button>
           <code id="wordsOutput"></code>
         </div>
 
         <div class="output-box">
-          <label>Theme</label>
-          <button class="copy-btn" data-target="themeOutput">Copy</button>
-          <code id="themeOutput"></code>
+          <h3>Themes <span class="count" id="themesCount">0</span></h3>
+          <button class="copy-btn" data-target="themesOutput">Copy</button>
+          <code id="themesOutput"></code>
         </div>
 
         <div class="output-box">
-          <label>Hint</label>
-          <button class="copy-btn" data-target="hintOutput">Copy</button>
-          <code id="hintOutput"></code>
+          <h3>Hints <span class="count" id="hintsCount">0</span></h3>
+          <button class="copy-btn" data-target="hintsOutput">Copy</button>
+          <code id="hintsOutput"></code>
         </div>
       </div>
-
-      <p class="retry-info" id="retryInfo"></p>
-    </div>
-
-    <div class="history-section" id="historySection" style="display: none;">
-      <h2>📜 Recent Generations</h2>
-      <button class="clear-history-btn" id="clearHistoryBtn">Clear History</button>
-      <div id="historyList"></div>
     </div>
   </div>
 
   <script>
-    // Common English words for validation (a subset for quick checking)
-    const commonWords = new Set([
-      // This is just a sample - the AI prompt is the main guard
-    ]);
-
     const categories = {
       random: null,
       food: "Food, cooking, kitchen items, ingredients, or meals",
@@ -592,19 +673,26 @@
       games: "🎮"
     };
 
-    const dateInput = document.getElementById('dateInput');
+    const startDateInput = document.getElementById('startDateInput');
     const apiKeyInput = document.getElementById('apiKey');
     const generateBtn = document.getElementById('generateBtn');
     const errorMessage = document.getElementById('errorMessage');
     const resultSection = document.getElementById('resultSection');
     const lengthSelect = document.getElementById('lengthSelect');
     const categorySelect = document.getElementById('categorySelect');
+    const progressSection = document.getElementById('progressSection');
+    const progressBar = document.getElementById('progressBar');
+    const progressText = document.getElementById('progressText');
+    const setsGrid = document.getElementById('setsGrid');
+    const outputSection = document.getElementById('outputSection');
 
-    let history = JSON.parse(localStorage.getItem('wordGameHistory') || '[]');
+    let generatedSets = [];
+    let usedThemes = new Set();
+    let validWordCache = new Map();
 
     // Set default date to today
     const today = new Date().toISOString().split('T')[0];
-    dateInput.value = today;
+    startDateInput.value = today;
 
     // Load saved API key
     const savedKey = localStorage.getItem('openai_api_key');
@@ -617,106 +705,221 @@
       localStorage.setItem('openai_api_key', apiKeyInput.value);
     });
 
-    generateBtn.addEventListener('click', generateWords);
-    document.getElementById('clearHistoryBtn').addEventListener('click', clearHistory);
+    generateBtn.addEventListener('click', generateAllSets);
+    document.getElementById('selectAllBtn').addEventListener('click', selectAll);
+    document.getElementById('deselectAllBtn').addEventListener('click', deselectAll);
+    document.getElementById('generateOutputBtn').addEventListener('click', generateOutput);
 
-    updateHistoryDisplay();
+    // Dictionary API validation
+    async function isValidWord(word) {
+      const cleanWord = word.toLowerCase().trim();
+      
+      // Check cache first
+      if (validWordCache.has(cleanWord)) {
+        return validWordCache.get(cleanWord);
+      }
 
-    async function generateWords() {
+      try {
+        const response = await fetch(`https://api.dictionaryapi.dev/api/v2/entries/en/${cleanWord}`);
+        const isValid = response.ok;
+        validWordCache.set(cleanWord, isValid);
+        return isValid;
+      } catch (error) {
+        // If API fails, assume valid to not block generation
+        console.warn(`Dictionary API check failed for "${cleanWord}":`, error);
+        return true;
+      }
+    }
+
+    async function validateAllWords(words) {
+      const results = await Promise.all(words.map(async (word) => {
+        const isValid = await isValidWord(word);
+        return { word, isValid };
+      }));
+      
+      const invalidWords = results.filter(r => !r.isValid).map(r => r.word);
+      return {
+        allValid: invalidWords.length === 0,
+        invalidWords
+      };
+    }
+
+    async function generateAllSets() {
       const apiKey = apiKeyInput.value.trim();
-      const selectedDate = dateInput.value;
+      const startDate = startDateInput.value;
       const wordLength = parseInt(lengthSelect.value);
-      let selectedCategory = categorySelect.value;
+      const selectedCategory = categorySelect.value;
 
       if (!apiKey) {
         showError('Please enter your OpenAI API key');
         return;
       }
 
-      if (!selectedDate) {
-        showError('Please select a date');
+      if (!startDate) {
+        showError('Please select a starting date');
         return;
-      }
-
-      // If random, pick a random category
-      if (selectedCategory === 'random') {
-        const categoryKeys = Object.keys(categories).filter(k => k !== 'random');
-        selectedCategory = categoryKeys[Math.floor(Math.random() * categoryKeys.length)];
       }
 
       hideError();
       setLoading(true);
       resultSection.classList.remove('visible');
+      outputSection.classList.remove('visible');
+      progressSection.classList.add('visible');
+      
+      generatedSets = [];
+      usedThemes.clear();
+      
+      const totalSets = 100;
+      let successCount = 0;
+      let failedCount = 0;
+      let invalidWordCount = 0;
 
-      let attempts = 0;
-      const maxAttempts = 5;
-      let success = false;
-      let lastError = '';
+      // Update stats display
+      document.getElementById('validCount').textContent = '0';
+      document.getElementById('invalidWordCount').textContent = '0';
+      document.getElementById('failedCount').textContent = '0';
 
-      while (attempts < maxAttempts && !success) {
-        attempts++;
-        try {
-          const result = await fetchWordsFromAI(apiKey, wordLength, selectedCategory);
-          
-          if (result.error) {
-            throw new Error(result.error);
-          }
+      // Generate category rotation for variety
+      const categoryKeys = Object.keys(categories).filter(k => k !== 'random');
+      let categoryIndex = 0;
 
-          // Validate the words
-          const validation = validateWords(result, wordLength);
-          
-          if (validation.valid) {
-            displayResults(result, wordLength, selectedDate, selectedCategory);
-            document.getElementById('retryInfo').textContent = 
-              attempts > 1 ? `✓ Generated successfully after ${attempts} attempts` : '';
-            success = true;
+      for (let i = 0; i < totalSets; i++) {
+        updateProgress(i, totalSets);
+        
+        // Pick category for this set
+        let category = selectedCategory;
+        if (category === 'random') {
+          // Rotate through categories to ensure variety
+          category = categoryKeys[categoryIndex % categoryKeys.length];
+          categoryIndex++;
+        }
+
+        let attempts = 0;
+        const maxAttempts = 5;
+        let success = false;
+
+        while (attempts < maxAttempts && !success) {
+          attempts++;
+          try {
+            const result = await fetchWordsFromAI(apiKey, wordLength, category, Array.from(usedThemes));
             
-            // Save to history
-            addToHistory(result, wordLength, selectedDate, selectedCategory);
-          } else {
-            lastError = validation.reason;
-            console.log(`Attempt ${attempts} failed validation: ${validation.reason}`);
+            if (result.error) {
+              throw new Error(result.error);
+            }
+
+            const validation = validateWords(result, wordLength);
+            
+            if (!validation.valid) {
+              console.warn(`Set ${i + 1}, attempt ${attempts}: ${validation.reason}`);
+              continue;
+            }
+
+            // Check if theme is duplicate
+            const themeClean = result.theme.toUpperCase().replace(/[^A-Z]/g, '');
+            if (usedThemes.has(themeClean)) {
+              console.warn(`Set ${i + 1}, attempt ${attempts}: Duplicate theme "${themeClean}"`);
+              continue;
+            }
+
+            // Validate all words against dictionary
+            const allWords = [result.theme, ...result.words];
+            const dictValidation = await validateAllWords(allWords);
+            
+            if (!dictValidation.allValid) {
+              console.warn(`Set ${i + 1}, attempt ${attempts}: Invalid words found: ${dictValidation.invalidWords.join(', ')}`);
+              invalidWordCount++;
+              document.getElementById('invalidWordCount').textContent = invalidWordCount;
+              continue;
+            }
+
+            // Success - add to sets
+            usedThemes.add(themeClean);
+            generatedSets.push({
+              ...result,
+              category,
+              wordLength,
+              selected: false
+            });
+            
+            successCount++;
+            document.getElementById('validCount').textContent = successCount;
+            success = true;
+          } catch (error) {
+            console.error(`Set ${i + 1}, attempt ${attempts} failed:`, error);
           }
-        } catch (error) {
-          console.error('Error:', error);
-          lastError = error.message;
+        }
+
+        if (!success) {
+          failedCount++;
+          document.getElementById('failedCount').textContent = failedCount;
+          console.warn(`Failed to generate set ${i + 1} after ${maxAttempts} attempts`);
         }
       }
 
-      if (!success) {
-        showError(`Failed after ${maxAttempts} attempts. ${lastError}. Please try again.`);
-      }
-
+      progressSection.classList.remove('visible');
       setLoading(false);
+
+      if (generatedSets.length > 0) {
+        displaySets();
+        resultSection.classList.add('visible');
+      } else {
+        showError('Failed to generate any valid sets. Please try again.');
+      }
     }
 
-    async function fetchWordsFromAI(apiKey, wordLength, category) {
+    function updateProgress(current, total) {
+      const percent = ((current + 1) / total) * 100;
+      progressBar.style.width = `${percent}%`;
+      progressText.textContent = `Generating set ${current + 1} of ${total}...`;
+    }
+
+    async function fetchWordsFromAI(apiKey, wordLength, category, usedThemesList) {
       const categoryDescription = categories[category];
       
-      const prompt = `Generate a word puzzle for the category: ${categoryDescription}
+      // Create a list of recently used themes to avoid
+      const recentThemes = usedThemesList.slice(-50).join(', ');
+      const avoidThemesInstruction = recentThemes 
+        ? `\n\nIMPORTANT: Do NOT use any of these themes (already used): ${recentThemes}` 
+        : '';
+
+      // Random seed word suggestions for variety
+      const seedConcepts = [
+        'everyday objects', 'actions/verbs', 'places', 'materials', 'emotions',
+        'time-related', 'shapes', 'colors', 'textures', 'sounds',
+        'movements', 'containers', 'tools', 'natural things', 'man-made items',
+        'abstract concepts', 'body parts', 'weather phenomena', 'food items', 'animals',
+        'plants', 'furniture', 'clothing', 'vehicles', 'buildings',
+        'professions', 'sports equipment', 'musical terms', 'art supplies', 'kitchen items'
+      ];
+      const randomSeed = seedConcepts[Math.floor(Math.random() * seedConcepts.length)];
+      
+      const prompt = `Generate a UNIQUE and CREATIVE word puzzle for the category: ${categoryDescription}
+
+CREATIVE DIRECTION: Think about ${randomSeed} related to this category. Be creative and unexpected with your theme choice!
 
 STRICT REQUIREMENTS:
-1. Pick ONE theme word that is EXACTLY ${wordLength} letters (no more, no less)
+1. Pick ONE theme word that is EXACTLY ${wordLength} letters - must be UNIQUE and INTERESTING
 2. Pick 5 related words that are ALL EXACTLY ${wordLength} letters each
-3. ALL words must be COMMON, REAL English words found in standard dictionaries
-4. NO made-up words, NO obscure words, NO proper nouns, NO abbreviations
-5. NO hyphenated words, NO compound words with spaces
-6. Words should be recognizable by an average English speaker
-7. The 5 related words must clearly connect to the theme
-8. Create a helpful hint that describes the theme (without using the theme word)
+3. ALL 6 words MUST be common English words found in Merriam-Webster or Oxford dictionaries
+4. Use ONLY words that appear in standard word games like Scrabble or crossword puzzles
+5. NO proper nouns, NO brand names, NO abbreviations, NO slang, NO informal words
+6. NO hyphenated words, NO compound words, NO technical jargon, NO plurals ending in S if singular works
+7. NO archaic, obsolete, rare, or regional dialect words
+8. The theme should be CREATIVE and UNEXPECTED - avoid obvious/common themes
+9. The 5 related words must clearly and logically connect to the theme
+10. Create a helpful hint that describes the theme (without using the theme word)
 
-IMPORTANT: Count the letters carefully. "${wordLength}" means exactly ${wordLength} letters.
+VALIDATION CHECKLIST - For EACH word, verify:
+✓ It appears in major dictionaries (Merriam-Webster, Oxford)
+✓ A typical adult would recognize it immediately  
+✓ It would be accepted in Scrabble
+✓ It has EXACTLY ${wordLength} letters (count carefully!)
+✓ It contains only letters A-Z (no hyphens, spaces, apostrophes)
 
-Before responding, verify EACH word is exactly ${wordLength} letters by counting.
+Count each word's letters carefully: ${wordLength} letters means ${wordLength} letters exactly.${avoidThemesInstruction}
 
-Respond with ONLY this JSON (no explanation):
-{
-  "theme": "XXXXX",
-  "words": ["XXXXX", "XXXXX", "XXXXX", "XXXXX", "XXXXX"],
-  "hint": "Description of theme"
-}
-
-Replace each XXXXX with a real ${wordLength}-letter word.`;
+Respond with ONLY valid JSON (no markdown, no explanation):
+{"theme": "WORD1", "words": ["WORD2", "WORD3", "WORD4", "WORD5", "WORD6"], "hint": "Description of theme"}`;
 
       const response = await fetch('https://api.openai.com/v1/chat/completions', {
         method: 'POST',
@@ -729,20 +932,28 @@ Replace each XXXXX with a real ${wordLength}-letter word.`;
           messages: [
             {
               role: 'system',
-              content: `You are a word game designer. You MUST:
-1. Return ONLY common, real English dictionary words
-2. Every word MUST be EXACTLY ${wordLength} letters - count carefully!
-3. Avoid obscure, archaic, or technical jargon
-4. Avoid words that are primarily used as proper nouns
-5. Double-check letter counts before responding
-6. Return valid JSON only, no other text`
+              content: `You are an expert word game designer for mainstream puzzle games. Your words MUST:
+1. Be real English words found in Merriam-Webster and Oxford dictionaries
+2. Be exactly ${wordLength} letters each - count very carefully!
+3. Be commonly known by average adults
+4. Be valid Scrabble words
+5. Never be made-up, obscure, technical, or archaic
+6. Be creative and varied - avoid repetitive or obvious theme choices
+
+You will be penalized for:
+- Words not in standard dictionaries
+- Wrong letter counts
+- Repeated/similar themes
+- Obscure or unusual words
+
+Return ONLY valid JSON with no additional text.`
             },
             {
               role: 'user',
               content: prompt
             }
           ],
-          temperature: 1.0,
+          temperature: 0.9,
           max_tokens: 400
         })
       });
@@ -755,7 +966,6 @@ Replace each XXXXX with a real ${wordLength}-letter word.`;
       const data = await response.json();
       const content = data.choices[0].message.content.trim();
       
-      // Parse JSON from response
       const jsonMatch = content.match(/\{[\s\S]*\}/);
       if (!jsonMatch) {
         throw new Error('Invalid response format from AI');
@@ -766,55 +976,36 @@ Replace each XXXXX with a real ${wordLength}-letter word.`;
 
     function validateWords(result, expectedLength) {
       if (!result.theme || !result.words || !result.hint) {
-        return { valid: false, reason: 'Missing required fields in response' };
+        return { valid: false, reason: 'Missing required fields' };
       }
 
       if (!Array.isArray(result.words) || result.words.length !== 5) {
         return { valid: false, reason: 'Must have exactly 5 related words' };
       }
 
-      // Check theme
       const themeClean = result.theme.toUpperCase().replace(/[^A-Z]/g, '');
       if (themeClean.length !== expectedLength) {
-        return { 
-          valid: false, 
-          reason: `Theme "${result.theme}" has ${themeClean.length} letters (need ${expectedLength})` 
-        };
+        return { valid: false, reason: `Theme "${result.theme}" has ${themeClean.length} letters, expected ${expectedLength}` };
       }
 
-      // Check for invalid characters in theme
       if (/[^A-Za-z]/.test(result.theme.trim())) {
-        return {
-          valid: false,
-          reason: `Theme "${result.theme}" contains invalid characters`
-        };
+        return { valid: false, reason: `Theme contains invalid characters` };
       }
 
-      // Check all related words
       const allWords = [themeClean];
       for (const word of result.words) {
         const wordClean = word.toUpperCase().replace(/[^A-Z]/g, '');
         
         if (wordClean.length !== expectedLength) {
-          return { 
-            valid: false, 
-            reason: `Word "${word}" has ${wordClean.length} letters (need ${expectedLength})` 
-          };
+          return { valid: false, reason: `Word "${word}" has ${wordClean.length} letters, expected ${expectedLength}` };
         }
 
         if (/[^A-Za-z]/.test(word.trim())) {
-          return {
-            valid: false,
-            reason: `Word "${word}" contains invalid characters`
-          };
+          return { valid: false, reason: `Word "${word}" contains invalid characters` };
         }
 
-        // Check for duplicates
         if (allWords.includes(wordClean)) {
-          return {
-            valid: false,
-            reason: `Duplicate word found: "${word}"`
-          };
+          return { valid: false, reason: `Duplicate word "${word}" found` };
         }
         allWords.push(wordClean);
       }
@@ -822,51 +1013,125 @@ Replace each XXXXX with a real ${wordLength}-letter word.`;
       return { valid: true };
     }
 
-    function displayResults(result, wordLength, selectedDate, category) {
-      const theme = result.theme.toUpperCase().replace(/[^A-Z]/g, '');
-      const relatedWords = result.words.map(w => w.toUpperCase().replace(/[^A-Z]/g, ''));
-      const hint = result.hint;
+    function displaySets() {
+      setsGrid.innerHTML = '';
+      document.getElementById('totalCount').textContent = generatedSets.length;
 
-      // Shuffle all words together
-      const allWords = [theme, ...relatedWords];
-      const shuffledWords = shuffleArray(allWords);
+      generatedSets.forEach((set, index) => {
+        const theme = set.theme.toUpperCase().replace(/[^A-Z]/g, '');
+        const relatedWords = set.words.map(w => w.toUpperCase().replace(/[^A-Z]/g, ''));
+        const allWords = shuffleArray([theme, ...relatedWords]);
 
-      // Format date
-      const formattedDate = formatDate(selectedDate);
-
-      // Update badges
-      document.getElementById('lengthBadge').textContent = `${wordLength} letters each`;
-      document.getElementById('categoryBadge').textContent = `${categoryEmojis[category]} ${category.charAt(0).toUpperCase() + category.slice(1)}`;
-
-      // Display word cards
-      const wordsGrid = document.getElementById('wordsGrid');
-      wordsGrid.innerHTML = '';
-
-      shuffledWords.forEach(word => {
         const card = document.createElement('div');
-        card.className = 'word-card';
-        if (word === theme) {
-          card.classList.add('theme-word');
-          card.innerHTML = `<span class="theme-label">THEME</span><br>${word}`;
-        } else {
-          card.textContent = word;
-        }
-        wordsGrid.appendChild(card);
+        card.className = 'set-card';
+        card.dataset.index = index;
+
+        card.innerHTML = `
+          <div class="set-card-header">
+            <input type="checkbox" class="set-checkbox" data-index="${index}">
+            <span class="set-number">${index + 1}</span>
+            <span class="set-theme">${theme}</span>
+            <span class="set-category">${categoryEmojis[set.category]} ${set.category}</span>
+          </div>
+          <div class="set-card-body">
+            <div class="set-words">
+              ${allWords.map(word => `
+                <span class="set-word ${word === theme ? 'theme' : ''}">${word}</span>
+              `).join('')}
+            </div>
+            <div class="set-hint">💡 ${set.hint}</div>
+          </div>
+        `;
+
+        setsGrid.appendChild(card);
       });
 
-      // Display hint
-      document.getElementById('hintText').textContent = hint;
+      // Add event listeners
+      document.querySelectorAll('.set-checkbox').forEach(checkbox => {
+        checkbox.addEventListener('change', handleCheckboxChange);
+      });
 
-      // Generate output strings
-      const wordsArray = `'${formattedDate}': ['${shuffledWords.join("', '")}'],`;
-      const themeOutput = `'${formattedDate}': ['Theme: ${theme}'],`;
-      const hintOutput = `'${formattedDate}': ['Hint: ${hint}'],`;
+      updateSelectedCount();
+    }
 
-      document.getElementById('wordsOutput').textContent = wordsArray;
-      document.getElementById('themeOutput').textContent = themeOutput;
-      document.getElementById('hintOutput').textContent = hintOutput;
+    function handleCheckboxChange(e) {
+      const index = parseInt(e.target.dataset.index);
+      generatedSets[index].selected = e.target.checked;
+      
+      const card = e.target.closest('.set-card');
+      card.classList.toggle('selected', e.target.checked);
+      
+      updateSelectedCount();
+    }
 
-      resultSection.classList.add('visible');
+    function selectAll() {
+      generatedSets.forEach((set, index) => {
+        set.selected = true;
+        const checkbox = document.querySelector(`.set-checkbox[data-index="${index}"]`);
+        const card = checkbox.closest('.set-card');
+        checkbox.checked = true;
+        card.classList.add('selected');
+      });
+      updateSelectedCount();
+    }
+
+    function deselectAll() {
+      generatedSets.forEach((set, index) => {
+        set.selected = false;
+        const checkbox = document.querySelector(`.set-checkbox[data-index="${index}"]`);
+        const card = checkbox.closest('.set-card');
+        checkbox.checked = false;
+        card.classList.remove('selected');
+      });
+      updateSelectedCount();
+    }
+
+    function updateSelectedCount() {
+      const count = generatedSets.filter(s => s.selected).length;
+      document.getElementById('selectedCount').textContent = count;
+    }
+
+    function generateOutput() {
+      const selectedSets = generatedSets.filter(s => s.selected);
+      
+      if (selectedSets.length === 0) {
+        showError('Please select at least one set');
+        return;
+      }
+
+      // Assign sequential dates to selected sets starting from the chosen date
+      const startDate = startDateInput.value;
+      selectedSets.forEach((set, index) => {
+        const setDate = new Date(startDate);
+        setDate.setDate(setDate.getDate() + index);
+        set.date = setDate.toISOString().split('T')[0];
+      });
+
+      const wordsLines = [];
+      const themesLines = [];
+      const hintsLines = [];
+
+      selectedSets.forEach(set => {
+        const theme = set.theme.toUpperCase().replace(/[^A-Z]/g, '');
+        const relatedWords = set.words.map(w => w.toUpperCase().replace(/[^A-Z]/g, ''));
+        const allWords = shuffleArray([theme, ...relatedWords]);
+        const formattedDate = formatDate(set.date);
+
+        wordsLines.push(`'${formattedDate}': ['${allWords.join("', '")}'],`);
+        themesLines.push(`'${formattedDate}': ['Theme: ${theme}'],`);
+        hintsLines.push(`'${formattedDate}': ['Hint: ${set.hint}'],`);
+      });
+
+      document.getElementById('wordsOutput').textContent = wordsLines.join('\n');
+      document.getElementById('themesOutput').textContent = themesLines.join('\n');
+      document.getElementById('hintsOutput').textContent = hintsLines.join('\n');
+
+      document.getElementById('wordsCount').textContent = selectedSets.length;
+      document.getElementById('themesCount').textContent = selectedSets.length;
+      document.getElementById('hintsCount').textContent = selectedSets.length;
+
+      outputSection.classList.add('visible');
+      outputSection.scrollIntoView({ behavior: 'smooth' });
     }
 
     function shuffleArray(array) {
@@ -896,51 +1161,6 @@ Replace each XXXXX with a real ${wordLength}-letter word.`;
 
     function hideError() {
       errorMessage.classList.remove('visible');
-    }
-
-    function addToHistory(result, wordLength, date, category) {
-      const entry = {
-        theme: result.theme.toUpperCase(),
-        words: result.words.map(w => w.toUpperCase()),
-        hint: result.hint,
-        wordLength,
-        date,
-        category,
-        timestamp: Date.now()
-      };
-
-      history.unshift(entry);
-      if (history.length > 20) {
-        history = history.slice(0, 20);
-      }
-      localStorage.setItem('wordGameHistory', JSON.stringify(history));
-      updateHistoryDisplay();
-    }
-
-    function clearHistory() {
-      history = [];
-      localStorage.setItem('wordGameHistory', '[]');
-      updateHistoryDisplay();
-    }
-
-    function updateHistoryDisplay() {
-      const section = document.getElementById('historySection');
-      const list = document.getElementById('historyList');
-
-      if (history.length === 0) {
-        section.style.display = 'none';
-        return;
-      }
-
-      section.style.display = 'block';
-      list.innerHTML = history.map(entry => `
-        <div class="history-item">
-          <div>
-            <div class="history-words">${entry.theme} → ${entry.words.join(', ')}</div>
-            <div class="history-meta">${formatDate(entry.date)} • ${entry.wordLength} letters • ${categoryEmojis[entry.category] || ''} ${entry.category}</div>
-          </div>
-        </div>
-      `).join('');
     }
 
     // Copy button functionality
