@@ -110,6 +110,19 @@
   margin: 5px;
 }
 
+/* Hide gameplay elements on puzzle completion */
+body.game-complete #letter-grid,
+body.game-complete #hint-display,
+body.game-complete #theme-display,
+body.game-complete #hint-button,
+body.game-complete #theme-button,
+body.game-complete #mute-button,
+body.game-complete #grid-reset-button,
+body.game-complete #date-picker-container,
+body.game-complete #bonus-words-container {
+  display: none !important;
+}
+
 /* Bonus words container heading */
 #bonus-words-container h3 {
   text-align: center;

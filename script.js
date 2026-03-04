@@ -129,34 +129,7 @@ function getHintByDate(selectedDate) {
 }
 
 // ===== INSTRUCTIONS TOGGLE =====
-document.addEventListener('DOMContentLoaded', function() {
-  const instructionsToggle = document.getElementById('instructions-toggle');
-  const instructions = document.getElementById('instructions');
-  
-  // Set up toggle functionality
-  instructionsToggle.addEventListener('click', function() {
-    const isVisible = instructions.style.display !== 'none';
-    
-    if (isVisible) {
-      // Hide instructions
-      instructions.style.display = 'none';
-      instructionsToggle.textContent = 'Show Instructions';
-    } else {
-      // Show instructions
-      instructions.style.display = 'block';
-      instructionsToggle.textContent = 'Hide Instructions';
-    }
-    
-    // Track the event
-    if (typeof gtag === 'function') {
-      gtag('event', 'toggle_instructions', {
-        'event_category': 'navigation',
-        'event_label': isVisible ? 'Hide Instructions' : 'Show Instructions',
-        'value': 1
-      });
-    }
-  });
-});
+// (wired up in window.onload below)
 
 
 /**
@@ -308,6 +281,9 @@ function setupArchiveToggle() {
  * Resets game state and creates a new grid
  */
 function loadPuzzleForDate() {
+  // Remove completion state if replaying or switching date
+  document.body.classList.remove('game-complete');
+
   // Reset game state
   selectedLetters = [];
   matchedWords = [];
@@ -323,11 +299,12 @@ function loadPuzzleForDate() {
   const hintText = getHintByDate(selectedDate);
   const setterName = getPuzzleSetterByDate(selectedDate);
   
-  // Update the puzzle setter display
+  // Update the puzzle setter display and avatar initial
+  const setterText = Array.isArray(setterName) ? setterName[0] : setterName;
   const setterElement = document.getElementById('puzzle-setter');
-  if (setterElement) {
-    setterElement.textContent = Array.isArray(setterName) ? setterName[0] : setterName;
-  }
+  if (setterElement) setterElement.textContent = setterText;
+  const setterInitial = document.getElementById('puzzle-setter-initial');
+  if (setterInitial) setterInitial.textContent = setterText.charAt(0);
   
   // Reset timer
   stopTimer();
@@ -620,7 +597,7 @@ function updateWordGroups() {
 
       // Check if all words are matched - game completion
       if (matchedWords.length === currentWords.length) {
-        handleGameCompletion(currentWords);
+        handleGameCompletion(currentWords, timeLeft);
       }
     } else {
       // Check if it's a bonus word (in dictionary but not in target words)
@@ -700,35 +677,35 @@ function handleBonusWord(word, group) {
 /**
  * Handles game completion when all words are matched
  * @param {Array} words - The list of target words
+ * @param {number} elapsedTime - Player's elapsed time in seconds
  */
-function handleGameCompletion(words) {
+function handleGameCompletion(words, elapsedTime) {
   stopTimer();
   if (!isMuted){
     successSound.play(); // Play success sound
   }
 
-  const playerTimeInSeconds = timeLeft; 
-  const averageTimeInSeconds = 401;     
-  const blocklength = averageTimeInSeconds/8;
-  
+  const averageTimeInSeconds = 401;
+  const blocklength = averageTimeInSeconds / 8;
+
   // Get the selected date
   const selectedDate = document.getElementById('puzzle-date').value;
   const date = new Date(selectedDate);
-  const formattedDate = date.toLocaleDateString('en-US', { 
-    day: 'numeric', 
-    month: 'long', 
-    year: 'numeric' 
+  const formattedDate = date.toLocaleDateString('en-US', {
+    day: 'numeric',
+    month: 'long',
+    year: 'numeric'
   });
-  
+
   // Check if this is today's date or an archive game
   const today = new Date();
-  const isToday = date.getDate() === today.getDate() && 
-                  date.getMonth() === today.getMonth() && 
+  const isToday = date.getDate() === today.getDate() &&
+                  date.getMonth() === today.getMonth() &&
                   date.getFullYear() === today.getFullYear();
-  
+
   // Build the completion message
-  let message = buildCompletionMessage(isToday, formattedDate, playerTimeInSeconds, averageTimeInSeconds, blocklength);
-  
+  let message = buildCompletionMessage(isToday, formattedDate, elapsedTime, averageTimeInSeconds, blocklength);
+
   // Show the text box with the completion message
   showCompletionMessage();
 
@@ -738,7 +715,7 @@ function handleGameCompletion(words) {
   // Show the copy and share buttons
   document.getElementById('shareButton').style.display = 'block';
   document.getElementById('copyButton').style.display = 'block';
-        
+
   // Hide game elements
   hideGameElements();
 
@@ -747,7 +724,7 @@ function handleGameCompletion(words) {
     gtag('event', 'game_completed', {
       'event_category': 'gameplay',
       'event_label': 'DownWords Game Completed',
-      'value': timeLeft
+      'value': elapsedTime
     });
   }
 }
@@ -756,19 +733,19 @@ function handleGameCompletion(words) {
  * Builds the completion message for sharing
  * @param {boolean} isToday - Whether the completed puzzle is today's puzzle
  * @param {string} formattedDate - The formatted date string
- * @param {number} playerTimeInSeconds - Player's completion time in seconds
+ * @param {number} playerTimeInSeconds - Player's elapsed time in seconds
  * @param {number} averageTimeInSeconds - Average completion time in seconds
  * @param {number} blocklength - Length of each block for visualization
  * @returns {string} Formatted completion message
  */
 function buildCompletionMessage(isToday, formattedDate, playerTimeInSeconds, averageTimeInSeconds, blocklength) {
   let message = '';
-  
+
   // Initial message based on whether it's today's puzzle or an archive puzzle
   if (isToday) {
-    message = `I completed today's DownWords in ${formatTime(timeLeft)} compared to the average of ${formatTime(averageTimeInSeconds)}\n`;
+    message = `I completed today's DownWords in ${formatTime(playerTimeInSeconds)} compared to the average of ${formatTime(averageTimeInSeconds)}\n`;
   } else {
-    message = `I completed an archive game of DownWords for ${formattedDate} in ${formatTime(timeLeft)}\n`;
+    message = `I completed an archive game of DownWords for ${formattedDate} in ${formatTime(playerTimeInSeconds)}\n`;
   }
 
   // Convert times to blocks (each block represents one 8th of the average time)
@@ -793,8 +770,8 @@ function buildCompletionMessage(isToday, formattedDate, playerTimeInSeconds, ave
   averageBlocksString = '🟩'.repeat(averageBlocks);
 
   // Format the final message
-  message += `\n${playerBlocksString} - Me (${formatTime(timeLeft)})`;
-  
+  message += `\n${playerBlocksString} - Me (${formatTime(playerTimeInSeconds)})`;
+
   // Only show average comparison for today's puzzle
   if (isToday) {
     message += `\n${averageBlocksString} - Average (${formatTime(averageTimeInSeconds)}) \n`;
@@ -807,41 +784,33 @@ function buildCompletionMessage(isToday, formattedDate, playerTimeInSeconds, ave
     const duckEmojis = '🦆'.repeat(bonusWordsFound.size);
     message += `\n${duckEmojis} - Found ${bonusWordsFound.size} bonus word${bonusWordsFound.size > 1 ? 's' : ''} \n`;
   }
-  
-  // Both hint and theme are hidden, do something here
+
+  // Both hint and theme are hidden, award no-hints badge
   if (getComputedStyle(hintDisplay).display === 'none' && getComputedStyle(themeDisplay).display === 'none') {
     message += `\n🏆 - No hints`;
   }
-  
+
   // Only show player speed comparison for today's puzzle
   if (isToday) {
-    if (timeLeft < averageTimeInSeconds * 0.2) {
+    if (playerTimeInSeconds < averageTimeInSeconds * 0.2) {
       message += `\n👑 - Top 20% of players today!`;
-    } else if (timeLeft < averageTimeInSeconds) {
+    } else if (playerTimeInSeconds < averageTimeInSeconds) {
       message += `\n🏅 - Top 50% of players today`;
     }
   }
-  
+
   message += `\n`;
   message += `\nhttp://www.DownWordsGame.com`;
   message += `\n#DownWordsGame`;
-  
+
   return message;
 }
 
 /**
- * Hides game elements after completion
+ * Hides game elements after completion via a CSS class
  */
 function hideGameElements() {
-  grid.style.display = 'none';  // Hide the grid
-  hintDisplay.style.display = 'none'; // Hide the Hint text
-  themeDisplay.style.display = 'none'; // Hide the theme text
-  document.getElementById('hint-button').style.display = 'none'; // Hide all the buttons
-  document.getElementById('theme-button').style.display = 'none';
-  document.getElementById('mute-button').style.display = 'none';
-  document.getElementById('grid-reset-button').style.display = 'none';
-  document.getElementById('date-picker-container').style.display = 'none'; // Hide date picker
-  bonusWordsContainer.style.display = 'none'; // Hide bonus words container
+  document.body.classList.add('game-complete');
 }
 
 /**
@@ -1024,6 +993,7 @@ document.getElementById('reset-button').addEventListener('click', () => {
 document.getElementById('grid-reset-button').addEventListener('click', () => {
   selectedLetters = [];
   matchedWords = [];
+  bonusWordsFound = new Set();
 
   if (typeof gtag === 'function') {
     gtag('event', 'grid_reset', {
@@ -1032,32 +1002,30 @@ document.getElementById('grid-reset-button').addEventListener('click', () => {
       value: 1
     });
   }
-  
+
+  hintDisplay.style.display = 'none';
+  themeDisplay.style.display = 'none';
+  updateBonusWordsDisplay();
   wordsContainer.innerHTML = '';
   grid.innerHTML = '';
-  
+
   // Get the selected date
   const selectedDate = document.getElementById('puzzle-date').value;
-  
-  // Get words for the selected date
-  const words = getWordsByDate(selectedDate);
-  
-  // Create the grid with these words
-  createGrid(words);
+
+  // Create the grid with cached words
+  createGrid(currentWords);
 });
 
 // Share button event listener
 document.getElementById('shareButton').addEventListener('click', () => {
   const message = document.getElementById('gameCompletionMessage').value;
-  
-  // Twitter URL
-  const twitterUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(message)}`;
-  window.open(twitterUrl, '_blank');
+  const shareUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(message)}`;
+  window.open(shareUrl, '_blank');
 
   if (typeof gtag === 'function') {
-    gtag('event', 'share_to_twitter', {
+    gtag('event', 'share_to_x', {
       event_category: 'social',
-      event_label: 'Twitter Share Button',
+      event_label: 'X Share Button',
       value: 1
     });
   }
@@ -1092,49 +1060,36 @@ window.onload = () => {
 
   // Initialize the date picker
   initializeDatePicker();
-  
+
   // Setup the archive toggle button
   setupArchiveToggle();
-  
-  // Hide the start button since we're loading immediately
-  if (document.getElementById('start-button')) {
-    document.getElementById('start-button').style.display = 'none';
-  }
-  
+
+  // Wire up instructions toggle
+  const instructionsToggle = document.getElementById('instructions-toggle');
+  const instructions = document.getElementById('instructions');
+  instructionsToggle.addEventListener('click', () => {
+    const isVisible = instructions.style.display !== 'none';
+    instructions.style.display = isVisible ? 'none' : 'block';
+    instructionsToggle.textContent = isVisible ? 'Show Instructions' : 'Hide Instructions';
+    if (typeof gtag === 'function') {
+      gtag('event', 'toggle_instructions', {
+        event_category: 'navigation',
+        event_label: isVisible ? 'Hide Instructions' : 'Show Instructions',
+        value: 1
+      });
+    }
+  });
+
   // Load puzzle for the default date (today or most recent available date)
   loadPuzzleForDate();
-  
+
   // Show dark mode toggle
   document.getElementById('mode-toggle').style.display = 'block';
-  
+
   // Show archive toggle
   document.getElementById('archive-toggle').style.display = 'block';
 };
 
-// for the puzzle setter text
-document.addEventListener('DOMContentLoaded', function() {
-  // Get the puzzle setter name and extract the first letter for the avatar
-  const puzzleSetter = document.getElementById('puzzle-setter').textContent;
-  const initial = puzzleSetter.charAt(0);
-  document.getElementById('puzzle-setter-initial').textContent = initial;
-  
-  // Update the initial whenever the puzzle setter changes
-  const observer = new MutationObserver(function(mutations) {
-    mutations.forEach(function(mutation) {
-      if (mutation.type === 'characterData' || mutation.type === 'childList') {
-        const puzzleSetter = document.getElementById('puzzle-setter').textContent;
-        const initial = puzzleSetter.charAt(0);
-        document.getElementById('puzzle-setter-initial').textContent = initial;
-      }
-    });
-  });
-  
-  observer.observe(document.getElementById('puzzle-setter'), {
-    characterData: true,
-    childList: true,
-    subtree: true
-  });
-});
 
 // --- GAME DATA ---
 // Word lists by date
