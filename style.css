@@ -38,6 +38,13 @@
   --box-shadow: rgba(0, 0, 0, 0.1);
   --button-bg: #4a6fa5;
   --button-hover: #3a5a8c;
+
+  /* Word group colours (5 rotating colours for in-progress groups) */
+  --word-color-1: #a0d2eb;
+  --word-color-2: #ffc6a0;
+  --word-color-3: #c8e6a0;
+  --word-color-4: #f7a0eb;
+  --word-color-5: #d0a0ff;
 }
 
 /* Dark mode variables */
@@ -77,6 +84,65 @@
   --completion-bg: #1a1a1a;
   --completion-active-bg: #252525;
   --box-shadow: rgba(0, 0, 0, 0.3);
+
+  /* Word group colours (dark mode versions) */
+  --word-color-1: #2c5282;
+  --word-color-2: #7b341e;
+  --word-color-3: #276749;
+  --word-color-4: #702459;
+  --word-color-5: #44337a;
+}
+
+/* ===== GAME UTILITY CLASSES ===== */
+
+/* Matched word display (green tick row) */
+.word-matched {
+  background-color: var(--matched-word-bg);
+  color: var(--matched-word-text);
+}
+
+/* Bonus word chips inside the bonus words container */
+.bonus-word-item {
+  background-color: var(--bonus-word-bg);
+  color: var(--bonus-word-text);
+  padding: 0.5em;
+  border-radius: 5px;
+  margin: 5px;
+}
+
+/* Bonus words container heading */
+#bonus-words-container h3 {
+  text-align: center;
+  margin-bottom: 10px;
+  margin-top: 20px;
+}
+
+/* Toast notification */
+.toast {
+  position: fixed;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%) translateY(20px);
+  background-color: #333;
+  color: #fff;
+  padding: 12px 24px;
+  border-radius: 8px;
+  font-size: 16px;
+  z-index: 9999;
+  opacity: 0;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  max-width: 90%;
+  text-align: center;
+  pointer-events: none;
+}
+
+.toast.visible {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+.dark-mode .toast {
+  background-color: #555;
 }
 
 /* ===== BASE STYLES ===== */
@@ -1389,56 +1455,3 @@ body.banner-visible {
   }
 }
 
-/* Start overlay styles */
-#start-overlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.8);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 100;
-  border-radius: 10px;
-}
-
-.start-buttons {
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-  align-items: center;
-}
-
-#start-puzzle-button,
-.ios-app-button {
-  padding: 15px 30px;
-  font-size: 18px;
-  font-weight: bold;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: transform 0.2s, box-shadow 0.2s;
-  text-decoration: none;
-  display: inline-block;
-  text-align: center;
-  min-width: 200px;
-}
-
-
-#start-puzzle-button {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  color: white;
-}
-
-.ios-app-button {
-  background: linear-gradient(135deg, #9EC186 0%, #6D9E63 100%);
-  color: white;
-}
-
-#start-puzzle-button:hover,
-.ios-app-button:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-}

@@ -1,8 +1,10 @@
+// ===== CONSTANTS =====
+const APP_STORE_URL = 'https://apps.apple.com/us/app/downwords-daily-word-game/id6756895326';
+
 // ===== DOM ELEMENT REFERENCES =====
 const grid = document.getElementById('letter-grid');
 const wordsContainer = document.getElementById('selected-words-container');
 const timerDisplay = document.getElementById('timer');
-const successMessage = document.getElementById('success-message');
 const hintDisplay = document.getElementById('hint-display');
 const themeDisplay = document.getElementById('theme-display');
 
@@ -16,30 +18,18 @@ const bonusSound = new Audio('bonus.mp3');
 let selectedLetters = [];    // Currently selected letters
 let matchedWords = [];       // Words successfully matched
 let bonusWordsFound = new Set(); // Bonus words discovered
+let currentWords = [];       // Cached word list for the active puzzle
 let isMuted = false;         // Audio state
 let timer;                   // Timer reference
 let timeLeft = 0;            // Time elapsed in seconds
 let isArchiveVisible = false; // Archive visibility state
 let isDarkMode = false;      // Dark mode state
 let dictionary = new Set();  // Dictionary for bonus words validation
-
-// ===== STYLING CONSTANTS =====
-const colours = ['#a0d2eb', '#ffc6a0', '#c8e6a0', '#f7a0eb', '#d0a0ff']; // Colors for word groups
+let wordColors = [];         // Rotating word-group colours (read from CSS variables)
 
 // ===== INITIALIZATION =====
-// Create a container for bonus words
-const bonusWordsContainer = document.createElement('div');
-bonusWordsContainer.id = 'bonus-words-container';
-bonusWordsContainer.style.marginTop = '20px';
-bonusWordsContainer.style.display = 'none';
-document.body.insertBefore(bonusWordsContainer, wordsContainer.nextSibling);
-
-// Add a heading for bonus words
-const bonusWordsHeading = document.createElement('h3');
-bonusWordsHeading.textContent = 'Bonus Words:';
-bonusWordsHeading.style.textAlign = 'center';
-bonusWordsHeading.style.marginBottom = '10px';
-bonusWordsContainer.appendChild(bonusWordsHeading);
+// Bonus words container is in HTML; just grab the reference
+const bonusWordsContainer = document.getElementById('bonus-words-container');
 
 // Set initial UI state
 hintDisplay.style.display = 'none';  // Hide hint by default
@@ -53,6 +43,58 @@ document.getElementById('grid-reset-button').style.display = 'none';
 document.getElementById('reset-button').style.display = 'none';
 document.getElementById('mode-toggle').style.display = 'none';
 
+// ===== UTILITY FUNCTIONS =====
+
+/**
+ * Reads word-group colours from CSS variables into the wordColors array.
+ * Called once on load and again whenever the theme changes.
+ */
+function initWordColors() {
+  const cs = getComputedStyle(document.documentElement);
+  wordColors = [1, 2, 3, 4, 5].map(i => cs.getPropertyValue(`--word-color-${i}`).trim());
+}
+
+/**
+ * Formats a YYYY-MM-DD date string to "D Month YYYY" (no leading zero on day).
+ * @param {string} selectedDate - Date in YYYY-MM-DD format
+ * @returns {string} e.g. "4 March 2026"
+ */
+function formatDateKey(selectedDate) {
+  const date = new Date(selectedDate);
+  const day = date.getDate();
+  const month = date.toLocaleString('en-US', { month: 'long' });
+  const year = date.getFullYear();
+  return `${day} ${month} ${year}`;
+}
+
+/**
+ * Looks up a value in a date-keyed dictionary, handling leading-zero variants.
+ * @param {Object} dict - Dictionary keyed by date strings
+ * @param {string} selectedDate - Date in YYYY-MM-DD format
+ * @returns {*} Matching value, or null if not found
+ */
+function findByDate(dict, selectedDate) {
+  const target = formatDateKey(selectedDate).toLowerCase().replace(/^0(\d)/, '$1');
+  for (const key in dict) {
+    if (key === 'default') continue;
+    const normalizedKey = key.toLowerCase().replace(/^0(\d)/, '$1');
+    if (normalizedKey === target) return dict[key];
+  }
+  return null;
+}
+
+/**
+ * Shows a brief non-blocking toast notification.
+ * @param {string} message - Text to display
+ * @param {number} duration - Milliseconds before auto-dismiss (default 3000)
+ */
+function showToast(message, duration = 3000) {
+  const toast = document.getElementById('toast-notification');
+  toast.textContent = message;
+  toast.classList.add('visible');
+  setTimeout(() => toast.classList.remove('visible'), duration);
+}
+
 // ===== DATA RETRIEVAL FUNCTIONS =====
 /**
  * Gets the word list for a specific date
@@ -60,31 +102,12 @@ document.getElementById('mode-toggle').style.display = 'none';
  * @returns {Array} Array of words for the puzzle
  */
 function getWordsByDate(selectedDate) {
-  // Convert the YYYY-MM-DD format to "DD Month YYYY"
-  const date = new Date(selectedDate);
-  const day = date.getDate();
-  const month = date.toLocaleString('en-US', { month: 'long' });
-  const year = date.getFullYear();
-  const formattedDate = `${day} ${month} ${year}`;
-  
-  console.log("Looking for puzzle for date:", formattedDate);
-  
-  // Check each key in wordListsByDate to find a match (case insensitive)
-  for (const key in wordListsByDate) {
-    // Normalize both strings for comparison (remove leading zeros, lowercase)
-    const normalizedKey = key.toLowerCase().replace(/^0(\d)/, '$1');
-    const normalizedDate = formattedDate.toLowerCase().replace(/^0(\d)/, '$1');
-    
-    if (normalizedKey === normalizedDate) {
-      console.log("Found puzzle for date:", key);
-      return wordListsByDate[key];
-    }
+  const result = findByDate(wordListsByDate, selectedDate);
+  if (!result) {
+    showToast('No puzzle available for this date. Using the default puzzle.');
+    return wordListsByDate['default'];
   }
-  
-  // If no words for this date, use default
-  console.log("No puzzle found for date:", formattedDate, "Using default puzzle.");
-  alert('No puzzle available for this date. Using default puzzle instead.');
-  return wordListsByDate['default'];
+  return result;
 }
 
 /**
@@ -93,21 +116,7 @@ function getWordsByDate(selectedDate) {
  * @returns {string} Theme text for the puzzle
  */
 function getThemeByDate(selectedDate) {
-  const date = new Date(selectedDate);
-  const day = String(date.getDate()).padStart(2, '0'); // Ensure two digits with leading zero if needed
-  const month = date.toLocaleString('en-US', { month: 'long' });
-  const year = date.getFullYear();
-  const formattedDate = `${day} ${month} ${year}`;
-  
-  // Check each key in ThemesByDate to find a match (case insensitive)
-  for (const key in ThemesByDate) {
-    if (key.toLowerCase() === formattedDate.toLowerCase() || 
-        key.toLowerCase() === formattedDate.replace(/^0/, '').toLowerCase()) { // Try without leading zero
-      return ThemesByDate[key];
-    }
-  }
-  
-  return ThemesByDate['default'];
+  return findByDate(ThemesByDate, selectedDate) || ThemesByDate['default'];
 }
 
 /**
@@ -116,21 +125,7 @@ function getThemeByDate(selectedDate) {
  * @returns {string} Hint text for the puzzle
  */
 function getHintByDate(selectedDate) {
-  const date = new Date(selectedDate);
-  const day = String(date.getDate()).padStart(2, '0'); // Ensure two digits with leading zero if needed
-  const month = date.toLocaleString('en-US', { month: 'long' });
-  const year = date.getFullYear();
-  const formattedDate = `${day} ${month} ${year}`;
-  
-  // Check each key in HintsByDate to find a match (case insensitive)
-  for (const key in HintsByDate) {
-    if (key.toLowerCase() === formattedDate.toLowerCase() || 
-        key.toLowerCase() === formattedDate.replace(/^0/, '').toLowerCase()) { // Try without leading zero
-      return HintsByDate[key];
-    }
-  }
-  
-  return HintsByDate['default'];
+  return findByDate(HintsByDate, selectedDate) || HintsByDate['default'];
 }
 
 // ===== INSTRUCTIONS TOGGLE =====
@@ -170,21 +165,7 @@ document.addEventListener('DOMContentLoaded', function() {
  * @returns {string} Name of the puzzle setter
  */
 function getPuzzleSetterByDate(selectedDate) {
-  const date = new Date(selectedDate);
-  const day = String(date.getDate()).padStart(2, '0'); // Ensure two digits with leading zero if needed
-  const month = date.toLocaleString('en-US', { month: 'long' });
-  const year = date.getFullYear();
-  const formattedDate = `${day} ${month} ${year}`;
-  
-  // Check each key in puzzleSetterbyDate to find a match (case insensitive)
-  for (const key in puzzleSetterbyDate) {
-    if (key.toLowerCase() === formattedDate.toLowerCase() || 
-        key.toLowerCase() === formattedDate.replace(/^0/, '').toLowerCase()) { // Try without leading zero
-      return puzzleSetterbyDate[key];
-    }
-  }
-  
-  return puzzleSetterbyDate['default'];
+  return findByDate(puzzleSetterbyDate, selectedDate) || puzzleSetterbyDate['default'];
 }
 
 // ===== DICTIONARY LOADING =====
@@ -337,6 +318,7 @@ function loadPuzzleForDate() {
   
   // Get words, theme, hint, and setter for the selected date
   const words = getWordsByDate(selectedDate);
+  currentWords = words; // Cache for use in updateWordGroups
   const themeText = getThemeByDate(selectedDate);
   const hintText = getHintByDate(selectedDate);
   const setterName = getPuzzleSetterByDate(selectedDate);
@@ -508,7 +490,7 @@ buttonsContainer.appendChild(startButton);
 
 // Create iOS app link
 const appLink = document.createElement('a');
-appLink.href = 'https://apps.apple.com/us/app/downwords-daily-word-game/id6756895326';
+appLink.href = APP_STORE_URL;
 appLink.target = '_blank';
 appLink.className = 'ios-app-button';
 appLink.textContent = 'Play on Free iOS app';
@@ -585,12 +567,6 @@ function formatTime(totalSeconds) {
  * This is the core game logic function
  */
 function updateWordGroups() {
-  // Get the selected date
-  const selectedDate = document.getElementById('puzzle-date').value;
-  
-  // Get words for the selected date
-  const words = getWordsByDate(selectedDate);
-  
   // Clear all previous colours
   selectedLetters.forEach(obj => obj.element.style.backgroundColor = '');
 
@@ -598,7 +574,7 @@ function updateWordGroups() {
   const groups = [];
   let currentIndex = 0;
 
-  words.forEach(word => {
+  currentWords.forEach(word => {
     const group = selectedLetters.slice(currentIndex, currentIndex + word.length);
     groups.push(group);
     currentIndex += word.length;
@@ -612,7 +588,7 @@ function updateWordGroups() {
   // Apply colours and display words
   wordsContainer.innerHTML = '';  // Clear previous words
   const wordGroups = [];
-  
+
   groups.forEach((group, i) => {
     const word = group.map(obj => obj.letter).join('');
     const wordDiv = document.createElement('div');
@@ -623,8 +599,8 @@ function updateWordGroups() {
     wordDiv.style.borderRadius = '5px';
 
     // Check if the selected letters match the word
-    if (words.includes(word)) {
-      wordDiv.style.backgroundColor = '#76e77d';  // Green for a match
+    if (currentWords.includes(word)) {
+      wordDiv.classList.add('word-matched');
       wordDiv.textContent = `✔️ ${word}`;  // Add a checkmark to indicate a valid word
 
       // Make the matched letters invisible but preserve the grid layout
@@ -641,32 +617,31 @@ function updateWordGroups() {
           matchSound.play();
         }
       }
-      
+
       // Check if all words are matched - game completion
-      if (matchedWords.length === words.length) {
-        handleGameCompletion(words);
+      if (matchedWords.length === currentWords.length) {
+        handleGameCompletion(currentWords);
       }
     } else {
       // Check if it's a bonus word (in dictionary but not in target words)
-      if (group.length === words[0].length && // Only check if the group has the right number of letters
-          !words.includes(word) && 
-          dictionary.has(word) && 
+      if (group.length === currentWords[0]?.length &&
+          dictionary.has(word) &&
           word.length >= 3 && // Only consider words of at least 3 letters
-          !bonusWordsFound.has(word)) { // Only show alert for new bonus words
+          !bonusWordsFound.has(word)) { // Only show toast for new bonus words
 
         handleBonusWord(word, group);
         return; // Exit early to prevent adding this word to wordGroups
       } else {
-        wordDiv.style.backgroundColor = colours[i % colours.length];
+        const color = wordColors[i % wordColors.length];
+        wordDiv.style.backgroundColor = color;
+        // Apply the same colour to grid letters
+        group.forEach(obj => {
+          obj.element.style.backgroundColor = color;
+        });
       }
     }
 
     wordGroups.push(wordDiv);
-    
-    // Apply the same colour to grid letters
-    group.forEach(obj => {
-      obj.element.style.backgroundColor = wordDiv.style.backgroundColor;
-    });
   });
 
   // Arrange the words into two columns by splitting the array into two part
@@ -702,10 +677,10 @@ function handleBonusWord(word, group) {
   // Store the current group to unselect later
   const bonusWordLetters = [...group]; // Create a copy of the group
   
-  // Show congratulation alert
+  // Show congratulation toast (non-blocking)
   setTimeout(() => {
-    alert(`Bonus word found: ${word}! Great job finding an extra word!`);
-    
+    showToast(`Bonus word! You found "${word}" 🦆`);
+
     // Unselect only the letters that formed the bonus word
     unselectLetters(bonusWordLetters);
     
@@ -893,10 +868,7 @@ function updateBonusWordsDisplay() {
     [...bonusWordsFound].forEach(word => {
       const wordDiv = document.createElement('div');
       wordDiv.textContent = `⭐ ${word}`;
-      wordDiv.style.backgroundColor = '#f7d358';
-      wordDiv.style.padding = '0.5em';
-      wordDiv.style.borderRadius = '5px';
-      wordDiv.style.margin = '5px';
+      wordDiv.classList.add('bonus-word-item');
       flexContainer.appendChild(wordDiv);
     });
     
@@ -940,6 +912,7 @@ function enableDarkMode() {
   modeToggle.textContent = '🌙';
   isDarkMode = true;
   localStorage.setItem('darkMode', 'true');
+  initWordColors(); // Refresh colours for new theme
   
   if (typeof gtag === 'function') {
     gtag('event', 'dark_mode_enabled', {
@@ -958,6 +931,7 @@ function disableDarkMode() {
   modeToggle.textContent = '☀️';
   isDarkMode = false;
   localStorage.setItem('darkMode', 'false');
+  initWordColors(); // Refresh colours for new theme
   
   if (typeof gtag === 'function') {
     gtag('event', 'light_mode_enabled', {
@@ -971,12 +945,12 @@ function disableDarkMode() {
 // ===== EVENT LISTENERS =====
 // Initialize dark mode toggle
 const modeToggle = document.getElementById('mode-toggle');
-modeToggle.textContent = '☀️';
-localStorage.setItem('darkMode', 'false');
 
-// Check for saved dark mode preference
+// Restore saved dark mode preference (without overwriting it first)
 if (localStorage.getItem('darkMode') === 'true') {
   enableDarkMode();
+} else {
+  modeToggle.textContent = '☀️';
 }
 
 // Dark mode toggle event listener
@@ -1036,8 +1010,6 @@ document.getElementById('mute-button').addEventListener('click', () => {
 
 // Reset Button event listener
 document.getElementById('reset-button').addEventListener('click', () => {
-  location.reload(); // Reloads the page, effectively resetting everything
-
   if (typeof gtag === 'function') {
     gtag('event', 'start_over', {
       event_category: 'game_control',
@@ -1045,6 +1017,7 @@ document.getElementById('reset-button').addEventListener('click', () => {
       value: 1
     });
   }
+  location.reload(); // Reloads the page, effectively resetting everything
 });
 
 // Grid Reset Button event listener
@@ -1092,9 +1065,15 @@ document.getElementById('shareButton').addEventListener('click', () => {
 
 // Copy button event listener
 document.getElementById('copyButton').addEventListener('click', () => {
-  document.getElementById('gameCompletionMessage').select();
-  document.execCommand('copy');
-  alert('Copied to clipboard!');
+  const text = document.getElementById('gameCompletionMessage').value;
+  navigator.clipboard.writeText(text).then(() => {
+    showToast('Copied to clipboard!');
+  }).catch(() => {
+    // Fallback for older browsers
+    document.getElementById('gameCompletionMessage').select();
+    document.execCommand('copy');
+    showToast('Copied to clipboard!');
+  });
 
   if (typeof gtag === 'function') {
     gtag('event', 'copy_result', {
@@ -1108,6 +1087,9 @@ document.getElementById('copyButton').addEventListener('click', () => {
 // ===== INITIALIZATION =====
 // Initialize the game when the page loads
 window.onload = () => {
+  // Initialize word group colours from CSS variables
+  initWordColors();
+
   // Initialize the date picker
   initializeDatePicker();
   
