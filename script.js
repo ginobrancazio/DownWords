@@ -493,7 +493,7 @@ const appLink = document.createElement('a');
 appLink.href = APP_STORE_URL;
 appLink.target = '_blank';
 appLink.className = 'ios-app-button';
-appLink.textContent = 'Play on Free iOS app';
+appLink.textContent = 'Play on iOS app';
 buttonsContainer.appendChild(appLink);
 
 // GA tracking for Start Overlay iOS App button
