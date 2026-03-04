@@ -23,16 +23,16 @@
   
   /* Content areas */
   --instructions-bg: #f9f9f9;
-  --bonus-bg: #fffde7;
-  --bonus-text: #333333;
-  --bonus-word-bg: #f7d358;
-  --bonus-word-text: #000000;
+  --bonus-bg: #fffbeb;
+  --bonus-text: #78350f;
+  --bonus-word-bg: #f59e0b;
+  --bonus-word-text: #ffffff;
   
   /* Word display */
   --selected-word-bg: var(--grid-bg);
   --selected-word-text: #000000;
-  --matched-word-bg: #76e77d;
-  --matched-word-text: #000000;
+  --matched-word-bg: #ddd6fe;
+  --matched-word-text: #4c1d95;
   
   /* UI elements */
   --completion-bg: #ffffff;
@@ -71,16 +71,16 @@
   
   /* Content areas */
   --instructions-bg: #1a1a1a;
-  --bonus-bg: #332b00;
-  --bonus-text: #ffffff;
-  --bonus-word-bg: #d4af37;
-  --bonus-word-text: #000000;
-  
+  --bonus-bg: #1c1500;
+  --bonus-text: #fef3c7;
+  --bonus-word-bg: #b45309;
+  --bonus-word-text: #fef3c7;
+
   /* Word display */
   --selected-word-bg: #3d3d3d;
   --selected-word-text: #ffffff;
-  --matched-word-bg: #388e3c;
-  --matched-word-text: #ffffff;
+  --matched-word-bg: #5b21b6;
+  --matched-word-text: #ede9fe;
   
   /* UI elements */
   --completion-bg: #1a1a1a;
@@ -127,7 +127,6 @@ body.game-complete #hint-display,
 body.game-complete #theme-display,
 body.game-complete #hint-button,
 body.game-complete #theme-button,
-body.game-complete #mute-button,
 body.game-complete #grid-reset-button,
 body.game-complete #date-picker-container,
 body.game-complete #bonus-words-container,
@@ -211,8 +210,8 @@ body {
   margin: 0 auto 10px;
   padding: 8px 12px;
   border-radius: 8px;
-  border: 1px solid #ffd28a;
-  background: #fff7e6;
+  border: 1px solid rgba(74, 111, 165, 0.25);
+  background: rgba(74, 111, 165, 0.06);
   font-size: 14px;
   display: flex;
   flex-wrap: wrap;
@@ -226,7 +225,7 @@ body {
 }
 
 .other-games-link {
-  color: #c45f00;
+  color: #4a6fa5;
   font-weight: 600;
   text-decoration: none;
 }
@@ -236,12 +235,12 @@ body {
 }
 
 .dark-mode #other-games-banner {
-  border-color: #8b5a21;
-  background: #2b2114;
+  border-color: rgba(74, 111, 165, 0.3);
+  background: rgba(74, 111, 165, 0.12);
 }
 
 .dark-mode .other-games-link {
-  color: #ffb74d;
+  color: #7eb6ff;
 }
 
 /* ===== BUTTON STYLES ===== */
@@ -279,7 +278,6 @@ button:active {
 #hint-button,
 #theme-button,
 #grid-reset-button,
-#mute-button,
 #load-date-button {
   background-color: var(--button-bg);
 }
@@ -289,7 +287,6 @@ button:active {
 #hint-button:hover,
 #theme-button:hover,
 #grid-reset-button:hover,
-#mute-button:hover,
 #load-date-button:hover {
   background-color: var(--button-hover);
 }
@@ -300,17 +297,24 @@ button:active {
   padding: 12px 24px;
 }
 
+/* Utility controls group (fixed top-right) */
+.utility-controls {
+  position: fixed;
+  top: 16px;
+  right: 16px;
+  display: flex;
+  gap: 6px;
+  align-items: center;
+  z-index: 100;
+}
+
 /* Mode toggle button */
 #mode-toggle {
-  position: fixed;
-  top: 20px;
-  right: 20px;
   background-color: transparent;
   border: none;
-  font-size: 24px;
+  font-size: 22px;
   cursor: pointer;
-  z-index: 100;
-  padding: 5px;
+  padding: 6px;
   border-radius: 50%;
   box-shadow: 0 2px 5px var(--box-shadow);
   transition: transform 0.3s ease;
@@ -318,6 +322,26 @@ button:active {
 
 #mode-toggle:hover {
   transform: rotate(30deg);
+  background-color: transparent;
+}
+
+/* Mute button — icon-only utility style */
+#mute-button {
+  background-color: transparent;
+  color: var(--text-color);
+  border: none;
+  font-size: 22px;
+  cursor: pointer;
+  padding: 6px;
+  border-radius: 50%;
+  box-shadow: 0 2px 5px var(--box-shadow);
+  transition: background-color 0.2s ease;
+}
+
+#mute-button:hover {
+  background-color: var(--letter-hover);
+  transform: none;
+  box-shadow: 0 2px 5px var(--box-shadow);
 }
 
 /* Archive toggle button */
@@ -356,12 +380,20 @@ button:active {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: 12px;
+  align-items: center;
+  gap: 16px;
   margin: 20px 0;
 }
 
 .button-container button {
   margin: 0;
+}
+
+/* Button group — visually clusters related buttons */
+.btn-group {
+  display: flex;
+  gap: 8px;
+  align-items: center;
 }
 
 /* Ghost button — no fill, just border */
@@ -578,9 +610,14 @@ button.btn-used:hover {
   z-index: 1;
   display: grid;
   grid-template-columns: repeat(5, 50px);
-  gap: 1px;
+  gap: 5px;
   justify-content: center;
-  margin-bottom: 5px;
+  margin-bottom: 12px;
+  padding: 12px;
+  background: var(--grid-bg);
+  border: 1px solid var(--grid-border);
+  border-radius: 14px;
+  box-shadow: 0 6px 24px var(--box-shadow);
 }
 
 /* Individual letter styling */
@@ -617,21 +654,20 @@ button.btn-used:hover {
 /* ===== WORD DISPLAY ===== */
 /* Selected words container */
 #selected-words-container {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+  display: flex;
+  flex-wrap: wrap;
   gap: 8px;
   width: min(90%, 500px);
   margin-top: 10px;
-  justify-items: stretch;
-  word-break: break-word;
+  justify-content: center;
 }
 
 /* Selected word styling */
 #selected-words-container div {
   background-color: var(--selected-word-bg);
   color: var(--selected-word-text);
-  padding: 8px 12px;
-  border-radius: 6px;
+  padding: 6px 16px;
+  border-radius: 20px;
   transition: all 0.2s ease;
   font-weight: 700;
   letter-spacing: 0.5px;
@@ -715,28 +751,30 @@ button.btn-used:hover {
 /* ===== INSTRUCTIONS TOGGLE ===== */
 #instructions-toggle {
   margin: 20px auto 10px;
-  background-color: var(--button-bg);
-  color: white;
+  background: transparent;
+  color: var(--button-bg);
   border: none;
-  border-radius: 8px;
-  padding: 10px 16px;
+  padding: 6px 0;
   font-size: 14px;
   font-weight: 600;
   cursor: pointer;
-  transition: all 0.2s ease;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: color 0.2s ease;
+  box-shadow: none;
   display: block;
+  text-decoration: underline;
+  text-underline-offset: 3px;
 }
 
 #instructions-toggle:hover {
-  background-color: var(--button-hover);
-  transform: translateY(-2px);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+  color: var(--button-hover);
+  background: transparent;
+  transform: none;
+  box-shadow: none;
 }
 
 #instructions-toggle:active {
-  transform: translateY(0);
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+  transform: none;
+  box-shadow: none;
 }
 
 /* Instructions container */
@@ -1437,6 +1475,32 @@ body.banner-visible {
   box-shadow: none;
 }
 
+/* ===== FOOTER ===== */
+#linkedin-connect {
+  text-align: center;
+  margin-top: 40px;
+  padding: 20px;
+  border-top: 1px solid var(--grid-border);
+  width: 100%;
+  max-width: 500px;
+}
+
+#linkedin-connect p {
+  margin: 0;
+  font-size: 12px;
+  opacity: 0.5;
+}
+
+#linkedin-connect a {
+  color: var(--button-bg);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+#linkedin-connect a:hover {
+  text-decoration: underline;
+}
+
 /* ===== RESPONSIVE DESIGN ===== */
 @media (max-width: 600px) {
   /* Smaller buttons on mobile */
@@ -1451,8 +1515,9 @@ body.banner-visible {
 
   /* Adjusted grid for mobile */
   #letter-grid {
-    grid-template-columns: repeat(5, 65px);
-    gap: 0px;
+    grid-template-columns: repeat(5, 50px);
+    gap: 4px;
+    padding: 10px;
   }
 
   .letter {
@@ -1491,12 +1556,18 @@ body.banner-visible {
   }
   
   /* Adjusted toggle buttons for mobile */
-  #mode-toggle {
+  .utility-controls {
     top: 10px;
     right: 10px;
-    font-size: 20px;
+    gap: 4px;
   }
-  
+
+  #mode-toggle,
+  #mute-button {
+    font-size: 20px;
+    padding: 5px;
+  }
+
   #archive-toggle {
     top: 10px;
     left: 10px;

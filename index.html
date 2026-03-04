@@ -84,7 +84,13 @@
   
   <!-- Archive toggle button -->
   <button id="archive-toggle" aria-label="Open puzzle archive">📅</button>
-  
+
+  <!-- Utility controls (fixed top-right) -->
+  <div class="utility-controls">
+    <button id="mute-button" aria-label="Toggle sound">🔊</button>
+    <button id="mode-toggle" aria-label="Toggle dark/light mode">☀️</button>
+  </div>
+
   <!-- Main game container -->
   <div id="game">
     <h1>DownWords</h1>
@@ -117,12 +123,14 @@
   
   <!-- Game control buttons -->
   <div class="button-container">
-    <button id="hint-button">Reveal Hint</button>
-    <button id="theme-button">Reveal Theme</button>
-    <button id="grid-reset-button" class="btn-ghost">Reset Grid</button>
-    <button id="reset-button" class="btn-destructive">Start Over</button>
-    <button id="mute-button">🔇 Mute</button>
-    <button id="mode-toggle" aria-label="Toggle dark/light mode">☀️</button>
+    <div class="btn-group">
+      <button id="hint-button">Reveal Hint</button>
+      <button id="theme-button">Reveal Theme</button>
+    </div>
+    <div class="btn-group">
+      <button id="grid-reset-button" class="btn-ghost">Reset Grid</button>
+      <button id="reset-button" class="btn-destructive">Start Over</button>
+    </div>
   </div>
   
   <!-- Hint and theme display areas -->
@@ -237,7 +245,7 @@
   </div>
   
   <!-- Footer with contact and copyright information -->
-  <div id="linkedin-connect" style="text-align: center; margin-top: 20px;">
+  <div id="linkedin-connect">
     <p>V3.5 © 2025 Gino Brancazio. All rights reserved. Contact me on <a href="https://www.linkedin.com/in/ginobrancazio/" target="_blank">LinkedIn</a></p>
   </div>
   
