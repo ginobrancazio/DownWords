@@ -350,6 +350,16 @@ function loadPuzzleForDate() {
   themeBtn.textContent = 'Reveal Theme';
   themeBtn.disabled = false;
 
+  // Reset action button labels
+  document.getElementById('reset-button').textContent = 'Start Over';
+
+  // Reset and hide progress counter
+  const counter = document.getElementById('progress-counter');
+  if (counter) {
+    counter.textContent = '';
+    counter.style.display = 'none';
+  }
+
   // Reset timer
   stopTimer();
   timeLeft = 0;
@@ -538,7 +548,14 @@ startOverlay.appendChild(buttonsContainer);
   startButton.addEventListener('click', () => {
     // Remove the overlay
     startOverlay.remove();
-    
+
+    // Show progress counter
+    const counter = document.getElementById('progress-counter');
+    if (counter) {
+      counter.textContent = `0 of ${currentWords.length} words`;
+      counter.style.display = 'block';
+    }
+
     // Start the timer
     startTimer();
     
@@ -607,17 +624,12 @@ function updateWordGroups() {
   });
 
   // Apply colours and display words
-  wordsContainer.innerHTML = '';  // Clear previous words
+  wordsContainer.innerHTML = '';
   const wordGroups = [];
 
   groups.forEach((group, i) => {
     const word = group.map(obj => obj.letter).join('');
     const wordDiv = document.createElement('div');
-    wordDiv.textContent = word;
-    wordDiv.style.padding = '0.5em';
-    wordDiv.style.margin = '0.2em auto';
-    wordDiv.style.width = 'fit-content';
-    wordDiv.style.borderRadius = '5px';
 
     // Check if the selected letters match the word
     if (currentWords.includes(word)) {
@@ -665,17 +677,13 @@ function updateWordGroups() {
     wordGroups.push(wordDiv);
   });
 
-  // Arrange the words into two columns by splitting the array into two part
-  const halfIndex = Math.ceil(wordGroups.length / 2);
-  const firstColumn = wordGroups.slice(0, halfIndex);
-  const secondColumn = wordGroups.slice(halfIndex);
+  wordGroups.forEach(wordDiv => wordsContainer.appendChild(wordDiv));
 
-  // Clear the container and add the columns
-  wordsContainer.innerHTML = '';
-
-  // Append the two columns
-  firstColumn.forEach(wordDiv => wordsContainer.appendChild(wordDiv));
-  secondColumn.forEach(wordDiv => wordsContainer.appendChild(wordDiv));
+  // Update progress counter
+  const counter = document.getElementById('progress-counter');
+  if (counter) {
+    counter.textContent = `${matchedWords.length} of ${currentWords.length} words`;
+  }
 }
 
 /**
@@ -746,6 +754,9 @@ function handleGameCompletion(words, elapsedTime) {
   const isToday = date.getDate() === today.getDate() &&
                   date.getMonth() === today.getMonth() &&
                   date.getFullYear() === today.getFullYear();
+
+  // Relabel the reset button for post-game context
+  document.getElementById('reset-button').textContent = 'Play Again';
 
   // Build the completion message
   completionText = buildCompletionMessage(isToday, formattedDate, elapsedTime, averageTimeInSeconds, blocklength);
@@ -823,8 +834,8 @@ function buildCompletionMessage(isToday, formattedDate, playerTimeInSeconds, ave
     message += `\n${duckEmojis} - Found ${bonusWordsFound.size} bonus word${bonusWordsFound.size > 1 ? 's' : ''} \n`;
   }
 
-  // Both hint and theme are hidden, award no-hints badge
-  if (getComputedStyle(hintDisplay).display === 'none' && getComputedStyle(themeDisplay).display === 'none') {
+  // Neither hint nor theme was revealed — award no-hints badge
+  if (!document.getElementById('hint-button').disabled && !document.getElementById('theme-button').disabled) {
     message += `\n🏆 - No hints`;
   }
 

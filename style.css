@@ -130,7 +130,8 @@ body.game-complete #theme-button,
 body.game-complete #mute-button,
 body.game-complete #grid-reset-button,
 body.game-complete #date-picker-container,
-body.game-complete #bonus-words-container {
+body.game-complete #bonus-words-container,
+body.game-complete #progress-counter {
   display: none !important;
 }
 
@@ -183,6 +184,24 @@ body {
   background-color: var(--bg-color);
   color: var(--text-color);
   transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* ===== TITLE AND SUBTITLE ===== */
+#game h1 {
+  background: linear-gradient(135deg, #4a6fa5 0%, #764ba2 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  font-weight: 700;
+}
+
+/* Progress counter (X of N words) */
+#progress-counter {
+  display: none;
+  font-size: 13px;
+  font-weight: 600;
+  opacity: 0.55;
+  margin: 2px 0 6px;
 }
 
 /* ===== TOP OTHER-GAMES BANNER ===== */
