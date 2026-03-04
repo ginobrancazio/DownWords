@@ -1133,6 +1133,20 @@ window.onload = () => {
     }
   });
 
+  // GA tracking for completion card iOS button
+  const resultsAppStoreLink = document.getElementById('results-app-store-link');
+  if (resultsAppStoreLink) {
+    resultsAppStoreLink.addEventListener('click', () => {
+      if (typeof gtag === 'function') {
+        gtag('event', 'results_ios_app_button', {
+          event_category: 'app_promotion',
+          event_label: 'Results Card iOS Button',
+          value: 1
+        });
+      }
+    });
+  }
+
   // Load puzzle for the default date (today or most recent available date)
   loadPuzzleForDate();
 

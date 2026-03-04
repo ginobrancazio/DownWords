@@ -493,6 +493,56 @@ button.btn-used:hover {
   flex-wrap: wrap;
 }
 
+/* iOS download prompt inside the results card */
+.results-card-ios-prompt {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 20px;
+  border-top: 1px solid var(--grid-border);
+  background: linear-gradient(135deg, rgba(74, 111, 165, 0.08) 0%, rgba(118, 75, 162, 0.08) 100%);
+  flex-wrap: wrap;
+}
+
+.results-ios-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 10px;
+  flex-shrink: 0;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+}
+
+.results-ios-text {
+  flex: 1;
+  min-width: 140px;
+  text-align: left;
+}
+
+.results-ios-text p {
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.4;
+  opacity: 0.85;
+}
+
+.results-ios-btn {
+  background: linear-gradient(135deg, #4a6fa5 0%, #764ba2 100%);
+  color: white;
+  text-decoration: none;
+  padding: 9px 16px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 700;
+  white-space: nowrap;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 8px rgba(74, 111, 165, 0.35);
+}
+
+.results-ios-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(74, 111, 165, 0.45);
+}
+
 /* Hint and theme displays */
 #hint-display {
   margin-top: 5px;
