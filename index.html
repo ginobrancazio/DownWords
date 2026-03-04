@@ -88,6 +88,7 @@
   <!-- Main game container -->
   <div id="game">
     <h1>DownWords</h1>
+    <p class="puzzle-subtitle" id="puzzle-subtitle"></p>
 
     <!-- Top banner highlighting other games -->
     <div id="other-games-banner">
@@ -115,8 +116,8 @@
   <div class="button-container">
     <button id="hint-button">Reveal Hint</button>
     <button id="theme-button">Reveal Theme</button>
-    <button id="grid-reset-button">Reset Grid</button>
-    <button id="reset-button">Start Over</button>
+    <button id="grid-reset-button" class="btn-ghost">Reset Grid</button>
+    <button id="reset-button" class="btn-destructive">Start Over</button>
     <button id="mute-button">🔇 Mute</button>
     <button id="mode-toggle" aria-label="Toggle dark/light mode">☀️</button>
   </div>
@@ -136,10 +137,14 @@
   <!-- Toast notification for non-blocking messages -->
   <div id="toast-notification" class="toast" aria-live="polite"></div>
 
-  <!-- Game completion elements -->
-  <textarea id="gameCompletionMessage" style="display:none;"></textarea>
-  <button id="copyButton" style="display:none;">Copy</button>
-  <button id="shareButton" style="display:none;">Share on X</button>
+  <!-- Game completion results card -->
+  <div id="resultsCard" class="results-card">
+    <div class="results-card-body" id="gameCompletionText"></div>
+    <div class="results-card-actions">
+      <button id="copyButton" class="btn-ghost">Copy</button>
+      <button id="shareButton">Share on X</button>
+    </div>
+  </div>
     
   <!-- Game instructions with toggle functionality -->
   <div id="instructions-container">

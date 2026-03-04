@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
+
 /* ===== CSS VARIABLES AND THEME SETTINGS ===== */
 /* Light mode (default) variables */
 :root {
@@ -95,10 +97,19 @@
 
 /* ===== GAME UTILITY CLASSES ===== */
 
+/* Pop animation for matched words */
+@keyframes wordPop {
+  0%   { transform: scale(1); }
+  40%  { transform: scale(1.12); }
+  70%  { transform: scale(0.95); }
+  100% { transform: scale(1); }
+}
+
 /* Matched word display (green tick row) */
 .word-matched {
   background-color: var(--matched-word-bg);
   color: var(--matched-word-text);
+  animation: wordPop 0.35s ease both;
 }
 
 /* Bonus word chips inside the bonus words container */
@@ -161,14 +172,14 @@ body.game-complete #bonus-words-container {
 /* ===== BASE STYLES ===== */
 /* Body styling */
 body {
-  font-family: sans-serif;
+  font-family: 'Poppins', sans-serif;
   text-align: center;
   padding: 1em;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
-  height: 100vh;
+  min-height: 100vh;
   background-color: var(--bg-color);
   color: var(--text-color);
   transition: background-color 0.3s ease, color 0.3s ease;
@@ -250,8 +261,6 @@ button:active {
 #theme-button,
 #grid-reset-button,
 #mute-button,
-#shareButton,
-#copyButton,
 #load-date-button {
   background-color: var(--button-bg);
 }
@@ -262,8 +271,6 @@ button:active {
 #theme-button:hover,
 #grid-reset-button:hover,
 #mute-button:hover,
-#shareButton:hover,
-#copyButton:hover,
 #load-date-button:hover {
   background-color: var(--button-hover);
 }
@@ -338,12 +345,79 @@ button:active {
   margin: 0;
 }
 
+/* Ghost button — no fill, just border */
+button.btn-ghost {
+  background-color: transparent;
+  color: var(--text-color);
+  border: 1.5px solid var(--grid-border);
+  box-shadow: none;
+}
+
+button.btn-ghost:hover {
+  background-color: var(--letter-hover);
+  box-shadow: none;
+}
+
+/* Destructive button — red for dangerous actions */
+button.btn-destructive {
+  background-color: #c0392b;
+}
+
+button.btn-destructive:hover {
+  background-color: #962d22;
+}
+
+/* Used button — greyed out after hint/theme revealed */
+button.btn-used {
+  background-color: var(--grid-bg);
+  color: var(--text-color);
+  opacity: 0.65;
+  border: 1.5px solid var(--grid-border);
+  cursor: default;
+  box-shadow: none;
+}
+
+button.btn-used:hover {
+  transform: none;
+  box-shadow: none;
+  background-color: var(--grid-bg);
+}
+
+/* Share on X button — black / X brand */
+#shareButton {
+  background-color: #000;
+  color: #fff;
+}
+
+#shareButton:hover {
+  background-color: #333;
+}
+
+/* Puzzle subtitle under the title */
+.puzzle-subtitle {
+  font-size: 13px;
+  font-weight: 400;
+  color: var(--text-color);
+  opacity: 0.55;
+  margin: -8px 0 10px;
+  letter-spacing: 0.3px;
+}
+
 /* ===== GAME ELEMENTS ===== */
-/* Timer display */
+/* Timer display — chip/badge */
 #timer {
-  font-size: 16px;
-  font-weight: bold;
-  margin-bottom: 3px;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background: var(--grid-bg);
+  border: 1px solid var(--grid-border);
+  border-radius: 20px;
+  padding: 4px 14px;
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 8px;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.5px;
 }
 
 /* Letter shake animation */
@@ -359,35 +433,45 @@ button:active {
   animation: shake 0.3s ease;
 }
 
-/* Game completion message */
-#gameCompletionMessage {
+/* Results card (shown on game completion) */
+.results-card {
   display: none;
   width: 90%;
-  max-width: 400px;
-  height: 0;
+  max-width: 440px;
+  margin: 16px auto 4px;
+  background: var(--completion-active-bg);
+  border: 1px solid var(--grid-border);
+  border-radius: 14px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.12);
   overflow: hidden;
-  background: var(--completion-bg);
-  color: var(--text-color);
-  padding: 0 20px;
-  border-radius: 10px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-  font-family: 'Poppins', 'Helvetica Neue', Helvetica, Arial, sans-serif;
-  font-size: 16px;
-  text-align: left;
-  opacity: 0;
-  transition: height 1.5s ease, opacity 1.5s ease, padding 1.5s ease;
-  margin: 20px auto;
-  z-index: 10;
 }
 
-#gameCompletionMessage.active {
+.results-card.active {
   display: block;
-  min-height: 270px;
-  opacity: 1;
-  padding: 10px;
-  position: relative;
-  z-index: 2;
-  background: var(--completion-active-bg);
+  animation: fadeInUp 0.35s ease both;
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(14px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.results-card-body {
+  padding: 18px 20px 12px;
+  font-family: 'Courier New', 'Courier', monospace;
+  font-size: 14px;
+  line-height: 1.65;
+  white-space: pre-wrap;
+  color: var(--text-color);
+  text-align: left;
+}
+
+.results-card-actions {
+  display: flex;
+  gap: 10px;
+  padding: 0 20px 18px;
+  justify-content: flex-start;
+  flex-wrap: wrap;
 }
 
 /* Hint and theme displays */
@@ -465,11 +549,11 @@ button:active {
 /* Selected words container */
 #selected-words-container {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 10px;
-  width: 50%;
+  grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+  gap: 8px;
+  width: min(90%, 500px);
   margin-top: 10px;
-  justify-items: start;
+  justify-items: stretch;
   word-break: break-word;
 }
 
@@ -498,14 +582,6 @@ button:active {
   border: none;
 }
 
-/* Matched word styling */
-#selected-words-container div[style*="background-color: #76e77d"] {
-  background-color: var(--matched-word-bg) !important;
-  color: var(--matched-word-text) !important;
-  border: 2px solid var(--matched-word-text);
-  font-weight: 700;
-  text-shadow: 0 0 1px rgba(0, 0, 0, 0.2);
-}
 
 .selected-word {
   font-weight: bold;
@@ -1316,17 +1392,13 @@ body.banner-visible {
     font-size: 18px;
   }
 
-  /* Adjusted word container for mobile */
+  /* Adjusted word container for mobile — auto-fill handles this */
   #selected-words-container {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 1px;
-    width: 90%;
+    width: 95%;
     margin-top: 5px;
-    justify-items: start;
-    word-break: break-word;
+    gap: 6px;
   }
-  
+
   /* Adjusted instructions for mobile */
   #instructions {
     margin-top: 2px;

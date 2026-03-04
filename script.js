@@ -26,6 +26,7 @@ let isArchiveVisible = false; // Archive visibility state
 let isDarkMode = false;      // Dark mode state
 let dictionary = new Set();  // Dictionary for bonus words validation
 let wordColors = [];         // Rotating word-group colours (read from CSS variables)
+let completionText = '';     // Shareable completion message text
 
 // ===== INITIALIZATION =====
 // Bonus words container is in HTML; just grab the reference
@@ -139,6 +140,28 @@ function getHintByDate(selectedDate) {
  */
 function getPuzzleSetterByDate(selectedDate) {
   return findByDate(puzzleSetterbyDate, selectedDate) || puzzleSetterbyDate['default'];
+}
+
+/**
+ * Returns the 1-based puzzle number for a given date, sorted chronologically.
+ * @param {string} selectedDate - Date in YYYY-MM-DD format
+ * @returns {number|null} Puzzle number, or null if not found
+ */
+function getPuzzleNumber(selectedDate) {
+  const sorted = Object.keys(wordListsByDate)
+    .filter(k => k !== 'default')
+    .map(k => {
+      const parts = k.split(' ');
+      const day = parseInt(parts[0], 10);
+      const month = new Date(Date.parse(`${parts[1]} 1, 2000`)).getMonth();
+      const year = parseInt(parts[2], 10);
+      return { key: k, date: new Date(year, month, day) };
+    })
+    .sort((a, b) => a.date - b.date);
+
+  const target = formatDateKey(selectedDate).toLowerCase();
+  const idx = sorted.findIndex(d => d.key.toLowerCase() === target);
+  return idx >= 0 ? idx + 1 : null;
 }
 
 // ===== DICTIONARY LOADING =====
@@ -284,6 +307,10 @@ function loadPuzzleForDate() {
   // Remove completion state if replaying or switching date
   document.body.classList.remove('game-complete');
 
+  // Hide the results card
+  const resultsCard = document.getElementById('resultsCard');
+  if (resultsCard) resultsCard.classList.remove('active');
+
   // Reset game state
   selectedLetters = [];
   matchedWords = [];
@@ -306,10 +333,27 @@ function loadPuzzleForDate() {
   const setterInitial = document.getElementById('puzzle-setter-initial');
   if (setterInitial) setterInitial.textContent = setterText.charAt(0);
   
+  // Update puzzle subtitle (number + date)
+  const subtitleEl = document.getElementById('puzzle-subtitle');
+  if (subtitleEl) {
+    const num = getPuzzleNumber(selectedDate);
+    subtitleEl.textContent = num ? `#${num} · ${formatDateKey(selectedDate)}` : formatDateKey(selectedDate);
+  }
+
+  // Reset hint and theme buttons to their default state
+  const hintBtn = document.getElementById('hint-button');
+  const themeBtn = document.getElementById('theme-button');
+  hintBtn.classList.remove('btn-used');
+  hintBtn.textContent = 'Reveal Hint';
+  hintBtn.disabled = false;
+  themeBtn.classList.remove('btn-used');
+  themeBtn.textContent = 'Reveal Theme';
+  themeBtn.disabled = false;
+
   // Reset timer
   stopTimer();
   timeLeft = 0;
-  timerDisplay.textContent = `Time: ${timeLeft}`;
+  timerDisplay.textContent = `⏱ ${formatTime(0)}`;
   
   // Clear the grid and words container
   grid.innerHTML = '';
@@ -516,7 +560,7 @@ startOverlay.appendChild(buttonsContainer);
 function startTimer() {
   timer = setInterval(() => {
     timeLeft++;
-    timerDisplay.textContent = `Time: ${timeLeft}`;
+    timerDisplay.textContent = `⏱ ${formatTime(timeLeft)}`;
   }, 1000);  // Update the timer every second
 }
 
@@ -704,17 +748,11 @@ function handleGameCompletion(words, elapsedTime) {
                   date.getFullYear() === today.getFullYear();
 
   // Build the completion message
-  let message = buildCompletionMessage(isToday, formattedDate, elapsedTime, averageTimeInSeconds, blocklength);
+  completionText = buildCompletionMessage(isToday, formattedDate, elapsedTime, averageTimeInSeconds, blocklength);
 
-  // Show the text box with the completion message
+  // Populate and show the results card
+  document.getElementById('gameCompletionText').textContent = completionText;
   showCompletionMessage();
-
-  // Populate the text box with the completion message
-  document.getElementById('gameCompletionMessage').value = message;
-
-  // Show the copy and share buttons
-  document.getElementById('shareButton').style.display = 'block';
-  document.getElementById('copyButton').style.display = 'block';
 
   // Hide game elements
   hideGameElements();
@@ -862,14 +900,11 @@ function unselectLetters(lettersToUnselect) {
 }
 
 /**
- * Shows the completion message with animation
+ * Shows the results card with animation
  */
 function showCompletionMessage() {
-  const message = document.getElementById('gameCompletionMessage');
-  message.style.display = 'block'; // Make it block first
-  setTimeout(() => {
-    message.classList.add('active'); // Then animate
-  }, 10); // Tiny delay so the browser can register the transition
+  const card = document.getElementById('resultsCard');
+  card.classList.add('active');
 }
 
 // ===== DARK MODE FUNCTIONS =====
@@ -938,6 +973,12 @@ document.getElementById('hint-button').addEventListener('click', () => {
   hintDisplay.textContent = hintText;
   hintDisplay.style.display = 'block'; // Reveal the hint
 
+  // Mark as used
+  const btn = document.getElementById('hint-button');
+  btn.classList.add('btn-used');
+  btn.textContent = 'Hint Revealed';
+  btn.disabled = true;
+
   if (typeof gtag === 'function') {
     gtag('event', 'reveal_hint', {
       event_category: 'help',
@@ -953,6 +994,12 @@ document.getElementById('theme-button').addEventListener('click', () => {
   const themeText = getThemeByDate(selectedDate);
   themeDisplay.textContent = themeText;
   themeDisplay.style.display = 'block'; // Reveal the theme
+
+  // Mark as used
+  const btn = document.getElementById('theme-button');
+  btn.classList.add('btn-used');
+  btn.textContent = 'Theme Revealed';
+  btn.disabled = true;
 
   if (typeof gtag === 'function') {
     gtag('event', 'reveal_theme', {
@@ -1018,8 +1065,7 @@ document.getElementById('grid-reset-button').addEventListener('click', () => {
 
 // Share button event listener
 document.getElementById('shareButton').addEventListener('click', () => {
-  const message = document.getElementById('gameCompletionMessage').value;
-  const shareUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(message)}`;
+  const shareUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(completionText)}`;
   window.open(shareUrl, '_blank');
 
   if (typeof gtag === 'function') {
@@ -1033,14 +1079,10 @@ document.getElementById('shareButton').addEventListener('click', () => {
 
 // Copy button event listener
 document.getElementById('copyButton').addEventListener('click', () => {
-  const text = document.getElementById('gameCompletionMessage').value;
-  navigator.clipboard.writeText(text).then(() => {
+  navigator.clipboard.writeText(completionText).then(() => {
     showToast('Copied to clipboard!');
   }).catch(() => {
-    // Fallback for older browsers
-    document.getElementById('gameCompletionMessage').select();
-    document.execCommand('copy');
-    showToast('Copied to clipboard!');
+    showToast('Could not copy — please copy manually.');
   });
 
   if (typeof gtag === 'function') {
