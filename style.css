@@ -4,7 +4,7 @@
 /* Light mode (default) variables */
 :root {
   /* Base colors */
-  --bg-color: #ffffff;
+  --bg-color: #f8f9ff;
   --text-color: #333333;
   --text-color-rgb: 51, 51, 51; /* RGB version of #333333 */
   
@@ -52,7 +52,7 @@
 /* Dark mode variables */
 .dark-mode {
   /* Base colors */
-  --bg-color: #121212;
+  --bg-color: #0f1117;
   --text-color: #e0e0e0;
   --text-color-rgb: 224, 224, 224; /* RGB version of #e0e0e0 */
   
@@ -181,8 +181,23 @@ body {
   justify-content: flex-start;
   min-height: 100vh;
   background-color: var(--bg-color);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
+  background-size: 250px;
   color: var(--text-color);
   transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Top accent stripe */
+body::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, #4a6fa5 0%, #764ba2 100%);
+  z-index: 9999;
+  pointer-events: none;
 }
 
 /* ===== TITLE AND SUBTITLE ===== */
@@ -631,7 +646,7 @@ button.btn-used:hover {
   font-size: 20px;
   font-weight: bold;
   border: 2px solid var(--grid-border);
-  border-radius: 8px;
+  border-radius: 12px;
   cursor: pointer;
   transition: all 0.2s ease;
   box-shadow: 0 2px 4px var(--box-shadow);
@@ -645,10 +660,11 @@ button.btn-used:hover {
 }
 
 .letter.selected {
-  background: var(--selected-bg);
-  border-color: var(--selected-border);
+  background: linear-gradient(135deg, #4a6fa5 0%, #764ba2 100%);
+  border-color: transparent;
+  color: #ffffff;
   transform: scale(1.05);
-  box-shadow: 0 4px 8px var(--box-shadow);
+  box-shadow: 0 4px 12px rgba(74, 111, 165, 0.45);
 }
 
 /* ===== WORD DISPLAY ===== */
@@ -1019,7 +1035,7 @@ button.btn-used:hover {
 .avatar {
   width: 50px;
   height: 50px;
-  background-color: var(--button-bg);
+  background: linear-gradient(135deg, #4a6fa5 0%, #764ba2 100%);
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -1027,7 +1043,7 @@ button.btn-used:hover {
   color: white;
   font-size: 24px;
   font-weight: bold;
-  box-shadow: 0 2px 8px var(--box-shadow);
+  box-shadow: 0 2px 8px rgba(74, 111, 165, 0.4);
 }
 
 .creator-details {
@@ -1131,6 +1147,16 @@ button.btn-used:hover {
   display: flex;
   flex-direction: column;
   align-items: center;
+  overflow: hidden;
+}
+
+/* Colored top accent per card */
+.puzzle-cards-container .puzzle-card:nth-child(1) {
+  border-top: 3px solid #14b8a6;
+}
+
+.puzzle-cards-container .puzzle-card:nth-child(2) {
+  border-top: 3px solid #f59e0b;
 }
 
 .puzzle-card:hover {
